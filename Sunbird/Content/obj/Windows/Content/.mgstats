@@ -1,0 +1,5 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/Concept1.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/Concept1.xnb","TextureProcessor","Texture2DContent",11343,968773,0.245358
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testsolid.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/testsolid.xnb","TextureProcessor","Texture2DContent",677,3613,0.2050293
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/testtile.xnb","TextureProcessor","Texture2DContent",679,3613,0.0189727
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile2.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/testtile2.xnb","TextureProcessor","Texture2DContent",678,3613,0.0129628
