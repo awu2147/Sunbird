@@ -14,9 +14,9 @@ namespace Sunbird.Controllers
 {
     public enum AnimationState
     {
-        none,
-        once,
-        loop
+        None,
+        Once,
+        Loop
     }
 
     public class Animator
@@ -27,34 +27,59 @@ namespace Sunbird.Controllers
 
         public Vector2 Position { get; set; }
 
-        public int FrameCount { get; set; }
+        public int FrameCount { get; set; } = 1;
+
+        public int FrameCounter { get; set; }
 
         public float FrameSpeed { get; set; } = 0.1f;
 
-        public AnimationState AnimState { get; set; } = AnimationState.none;
+        public AnimationState AnimState { get; set; } = AnimationState.None;
 
         [XmlIgnore]
-        public Sprite sender;
+        public Sprite Sender { get; set; }
 
         private Dictionary<int, Point> PositionMap { get { return SpriteSheet.PositionMap; } }
 
         public int CurrentFrame { get; set; }
+
+        public int StartFrame { get; set; } = 0;
 
         private Animator()
         {
 
         }
 
-        public Animator(SpriteSheet spriteSheet, int startFrame, int framecount, float framespeed, AnimationState animState, Sprite sender)
+        public Animator(SpriteSheet spriteSheet, Sprite sender)
         {
-            this.sender = sender;
+            this.Sender = sender;
             SpriteSheet = spriteSheet;
+        }
+
+        public Animator(SpriteSheet spriteSheet, Sprite sender, int startFrame, int frameCount, float frameSpeed, AnimationState animState)
+        {
+            this.Sender = sender;
+            SpriteSheet = spriteSheet;
+            StartFrame = startFrame;
+            FrameCount = frameCount;
+            FrameSpeed = frameSpeed;
+            AnimState = animState;
         }
 
         public virtual void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            SpriteSheet.Texture = content.Load<Texture2D>(SpriteSheet.texturePath);
-            SpriteSheet.ConstructPositionMap();
+            SpriteSheet.Texture = content.Load<Texture2D>(SpriteSheet.TexturePath);
+            SpriteSheet.PositionMap = SpriteSheet.ConstructPositionMap();
+        }
+
+        public void SwitchAnimation(int startframe, int framecount, float framespeed, AnimationState animState)
+        {         
+            CurrentFrame = startframe;
+            StartFrame = startframe;              
+            FrameCount = framecount;
+            FrameSpeed = framespeed;
+            FrameCounter = 0;
+            loopTimer = 0;
+            AnimState = animState;          
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -64,9 +89,26 @@ namespace Sunbird.Controllers
             SpriteSheet.FrameWidth, SpriteSheet.FrameHeight), Color.White);
         }
 
-        public void Update(GameTime gametime)
+        public void Update(GameTime gameTime)
         {
-            Position = sender.Position;
+            Position = Sender.Position;
+            if (AnimState == AnimationState.Loop)
+            {
+                loopTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (loopTimer > FrameSpeed)
+                {
+                    loopTimer = 0f;
+
+                    CurrentFrame++;
+                    FrameCounter++;
+
+                    if (FrameCounter >= FrameCount)
+                    {
+                        CurrentFrame = StartFrame;
+                        FrameCounter = 0;
+                    }
+                }
+            }
         }
     }
 }

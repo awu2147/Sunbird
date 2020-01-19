@@ -4,12 +4,22 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_full.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/Concept1.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/dark_bg.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/sunbird.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testplayer.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testsolid.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile2.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

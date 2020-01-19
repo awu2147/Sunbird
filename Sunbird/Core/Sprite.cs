@@ -31,21 +31,26 @@ namespace Sunbird.Core
 
         public Sprite(SpriteSheet spriteSheet)
         {
-            Animator = new Animator(spriteSheet, 0, 1, 0.1f, AnimationState.none, this);
+            Animator = new Animator(spriteSheet, this);
         }
 
-        public void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
+        public Sprite(SpriteSheet spriteSheet, int startFrame, int frameCount, float frameSpeed, AnimationState animState)
+        {
+            Animator = new Animator(spriteSheet, this, startFrame, frameCount, frameSpeed, animState);
+        }
+
+        public virtual void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
             Animator.LoadContent(mainGame, graphicsDevice, content);
-            Animator.sender = this;
+            Animator.Sender = this;
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             Animator.Update(gameTime);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             Animator.Draw(gameTime, spriteBatch);
         }

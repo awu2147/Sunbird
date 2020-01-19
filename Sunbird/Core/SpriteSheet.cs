@@ -15,7 +15,7 @@ namespace Sunbird.Core
     {
         [XmlIgnore]
         public Texture2D Texture { get; set; }
-        public string texturePath;
+        public string TexturePath { get; set; }
         public int Rows { get; set; }
         public int Columns { get; set; }
         public int FrameHeight { get { return Texture.Height / Rows; } }
@@ -34,7 +34,7 @@ namespace Sunbird.Core
             Texture = texture;
             Rows = rows;
             Columns = columns;
-            ConstructPositionMap();
+            PositionMap = ConstructPositionMap();
         }
 
         public void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
@@ -42,9 +42,9 @@ namespace Sunbird.Core
 
         }
 
-        public void ConstructPositionMap()
+        public Dictionary<int, Point> ConstructPositionMap()
         {
-            PositionMap = new Dictionary<int, Point>();
+            var positionMap = new Dictionary<int, Point>();
 
             var columnlist = new List<int>() { };
             for (int j = 0; j < Rows; j++)
@@ -62,8 +62,10 @@ namespace Sunbird.Core
 
             for (int i = 0; i < columnlist.Count(); i++)
             {
-                PositionMap.Add(i, new Point(columnlist[i] * FrameWidth, rowlist[i] * FrameHeight));
+                positionMap.Add(i, new Point(columnlist[i] * FrameWidth, rowlist[i] * FrameHeight));
             }
+
+            return positionMap;
         }
     }
 }

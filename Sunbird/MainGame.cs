@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sunbird.States;
 using Sunbird.Core;
+using Sunbird.External;
+using Sunbird.Controllers;
 
 namespace Sunbird
 {
@@ -20,15 +22,23 @@ namespace Sunbird
     /// </summary>
     public class MainGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        State currentState;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        public State CurrentState { get; set; }
+        public Player Player { get; set; }
+
+        public int Width { get { return graphics.PreferredBackBufferWidth; } }
+        public int Height { get { return graphics.PreferredBackBufferHeight; } }
 
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            graphics.PreferredBackBufferWidth = 900;
+            graphics.PreferredBackBufferHeight = 600;
+
         }
 
         /// <summary>
@@ -40,6 +50,8 @@ namespace Sunbird
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            Templates.InitializeTemplates();
 
             base.Initialize();
         }
@@ -53,10 +65,11 @@ namespace Sunbird
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var testcontent = Content.Load<Texture2D>("Temp/Concept1");
-            //var testsprite = new Fish(this);
-            var gstate = new GameState(this, GraphicsDevice, Content);
-            currentState = gstate;
+            var playerSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testplayer"), 2, 6) { TexturePath = "Temp/testplayer" };
+            Player = new Player(playerSheet, 0, 2, 0.2f, AnimationState.Loop);
+
+            //CurrentState = new LoadingScreen(this, GraphicsDevice, Content);
+            CurrentState = new GameState1(this, GraphicsDevice, Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -80,8 +93,12 @@ namespace Sunbird
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            Peripherals.PreUpdate();
+
             // TODO: Add your update logic here
-            currentState.Update(gameTime);
+            CurrentState.Update(gameTime);
+
+            Peripherals.PostUpdate();
 
             base.Update(gameTime);
         }
@@ -92,11 +109,11 @@ namespace Sunbird
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.LightGray);
 
             spriteBatch.Begin();
             // TODO: Add your drawing code here
-            currentState.Draw(gameTime, spriteBatch);
+            CurrentState.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
 

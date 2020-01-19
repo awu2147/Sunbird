@@ -10,12 +10,18 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Sunbird.States
 {
+    /// <summary>
+    /// A MainGame State; MainGame can only be in one State at a time. 
+    /// </summary>
     public abstract class State
     {
         protected ContentManager Content { get; set; }
         protected GraphicsDevice GraphicsDevice { get; set; }
         protected MainGame MainGame { get; set; } // Create a reference to MainGame to avoid singleton pattern.
 
+        /// <summary>
+        /// Only used for serialization.
+        /// </summary>
         public State()
         {
 
@@ -28,7 +34,8 @@ namespace Sunbird.States
             MainGame = mainGame;
         }
 
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
         public abstract void Update(GameTime gameTime);
+        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+
     }
 }

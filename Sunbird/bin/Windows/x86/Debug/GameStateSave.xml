@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GameState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<GameState1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <spriteList>
     <Sprite>
       <Position>
@@ -9,7 +9,7 @@
       <Animator>
         <loopTimer>0</loopTimer>
         <SpriteSheet>
-          <texturePath>Temp/testsolid</texturePath>
+          <TexturePath>Temp/testsolid</TexturePath>
           <Rows>1</Rows>
           <Columns>1</Columns>
         </SpriteSheet>
@@ -17,33 +17,61 @@
           <X>1</X>
           <Y>2</Y>
         </Position>
-        <FrameCount>0</FrameCount>
+        <FrameCount>1</FrameCount>
+        <FrameCounter>0</FrameCounter>
         <FrameSpeed>0.1</FrameSpeed>
-        <AnimState>none</AnimState>
+        <AnimState>None</AnimState>
         <CurrentFrame>0</CurrentFrame>
+        <StartFrame>0</StartFrame>
       </Animator>
     </Sprite>
     <Sprite>
       <Position>
-        <X>40</X>
+        <X>90</X>
         <Y>50</Y>
       </Position>
       <Animator>
         <loopTimer>0</loopTimer>
         <SpriteSheet>
-          <texturePath>Temp/testtile2</texturePath>
+          <TexturePath>Temp/testtile2</TexturePath>
           <Rows>1</Rows>
           <Columns>1</Columns>
         </SpriteSheet>
         <Position>
-          <X>40</X>
+          <X>90</X>
           <Y>50</Y>
         </Position>
-        <FrameCount>0</FrameCount>
+        <FrameCount>1</FrameCount>
+        <FrameCounter>0</FrameCounter>
         <FrameSpeed>0.1</FrameSpeed>
-        <AnimState>none</AnimState>
+        <AnimState>None</AnimState>
         <CurrentFrame>0</CurrentFrame>
+        <StartFrame>0</StartFrame>
+      </Animator>
+    </Sprite>
+    <Sprite xsi:type="Player">
+      <Position>
+        <X>410</X>
+        <Y>240</Y>
+      </Position>
+      <Animator>
+        <loopTimer>0</loopTimer>
+        <SpriteSheet>
+          <TexturePath>Temp/testplayer</TexturePath>
+          <Rows>2</Rows>
+          <Columns>6</Columns>
+        </SpriteSheet>
+        <Position>
+          <X>410</X>
+          <Y>240</Y>
+        </Position>
+        <FrameCount>2</FrameCount>
+        <FrameCounter>1</FrameCounter>
+        <FrameSpeed>0.2</FrameSpeed>
+        <AnimState>Loop</AnimState>
+        <CurrentFrame>1</CurrentFrame>
+        <StartFrame>0</StartFrame>
       </Animator>
     </Sprite>
   </spriteList>
-</GameState>
+</GameState1>
