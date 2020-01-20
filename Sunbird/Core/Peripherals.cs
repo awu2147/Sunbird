@@ -28,25 +28,30 @@ namespace Sunbird.Core
         }
     }
 
-    public static class Peripherals
+    public class Peripherals
     {
-        public static MouseState currentMouseState { get; set; } = new MouseState();
-        public static MouseState previousMouseState { get; set; } = new MouseState();
-        public static KeyboardState currentKeyboardState { get; set; }
-        public static KeyboardState previousKeyboardState { get; set; }
-        public static Keys[] currentPressedKeys { get; set; }
-        public static Keys[] previousPressedKeys { get; set; }
+        public MouseState currentMouseState { get; set; } = new MouseState();
+        public MouseState previousMouseState { get; set; } = new MouseState();
+        public KeyboardState currentKeyboardState { get; set; }
+        public KeyboardState previousKeyboardState { get; set; }
+        public Keys[] currentPressedKeys { get; set; }
+        public Keys[] previousPressedKeys { get; set; }
 
-        public static event EventHandler<KeyReleasedEventArgs> KeyReleased;
+        public event EventHandler<KeyReleasedEventArgs> KeyReleased;
 
-        public static void PreUpdate()
+        public Peripherals()
+        {
+
+        }
+
+        public void PreUpdate()
         {
             currentMouseState = Mouse.GetState();
             currentKeyboardState = Keyboard.GetState();
             currentPressedKeys = currentKeyboardState.GetPressedKeys();
         }
 
-        public static void PostUpdate()
+        public void PostUpdate()
         {
             CheckForRelease();
             previousMouseState = currentMouseState;
@@ -54,7 +59,7 @@ namespace Sunbird.Core
             previousPressedKeys = currentPressedKeys;
         }
 
-        public static void CheckForRelease()
+        public void CheckForRelease()
         {
             if (previousPressedKeys != null)
             {
@@ -69,19 +74,19 @@ namespace Sunbird.Core
             }
         }
 
-        public static void OnKeyReleased(KeyReleasedEventArgs e)
+        public void OnKeyReleased(KeyReleasedEventArgs e)
         {
             EventHandler<KeyReleasedEventArgs> handler = KeyReleased;
             handler?.Invoke(null, e);
         }
 
-        public static Point MousePositionAsPoint()
+        public Point MousePositionAsPoint()
         {
             MouseState state = Mouse.GetState();
             return new Point(state.X, state.Y);
         }
 
-        public static bool KeyTapped(Keys key)
+        public bool KeyTapped(Keys key)
         {
             return (currentKeyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key)) ? true : false;
         }

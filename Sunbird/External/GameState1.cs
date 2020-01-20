@@ -88,6 +88,7 @@ namespace Sunbird.External
 
         public override void Update(GameTime gameTime)
         {
+            MainGame.Camera.Push();
             if (!IsLoading)
             {
                 foreach (var sprite in spriteList)

@@ -22,18 +22,6 @@ using Sunbird.GUI;
 namespace Sunbird.External
 {
 
-    public enum Direction
-    {
-        North,
-        NorthEast,
-        East,
-        SouthEast,
-        South,
-        SouthWest,
-        West,
-        NorthWest
-    }
-
     public enum Movement
     {
         Standing,
@@ -41,102 +29,109 @@ namespace Sunbird.External
         Running
     }
 
-    public class Player : Sprite
+    public class Player : Sprite, IControllable
     {
 
         public Direction Direction { get; set; } = Direction.South;
         public Movement Movement { get; set; } = Movement.Standing;
-        private List<Keys> MovementKeyList { get; set; } = new List<Keys>() { Keys.W, Keys.A, Keys.D, Keys.S };
+
+        [XmlIgnore]
+        public Peripherals Peripherals { get; set; }
+        private Config Config { get; set; }
+
+        private List<Keys> MovementKeyList => new List<Keys>() { Config.North, Config.East, Config.South, Config.West };
         public float Speed { get; set; } = 3;
 
-        public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_North => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_North, Keys.W); };
-        public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_West => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_West, Keys.A); };
-        public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_South => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_South, Keys.S); };
-        public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_East => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_East, Keys.D); };
+        public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_North => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_North, Config.North); };
+        public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_West => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_West, Config.West); };
+        public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_South => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_South, Config.South); };
+        public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_East => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_East, Config.East); };
 
         private Player()
         {
 
         }
 
-        public Player(SpriteSheet spriteSheet, int startFrame, int frameCount, float frameSpeed, AnimationState animState) : base(spriteSheet, startFrame, frameCount, frameSpeed, animState)
+        public Player(Animator animator, Config config, Peripherals peripherals)
         {
+            Animator = animator;
+            Animator.Sender = this;
+            Config = config;
+            Peripherals = peripherals;
+        }
 
+        public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
+        {
+            Animator.LoadContent(mainGame, graphicsDevice, content);
+            Animator.Sender = this;
+            Config = mainGame.Config;
+            Peripherals = mainGame.Peripherals;
         }
 
         public override void Update(GameTime gameTime)
         {
+            MoveUpdate();
+            MainGame.Camera.Follow(this);
             base.Update(gameTime);
-            if (Peripherals.currentPressedKeys.Contains(Keys.W))
+        }
+
+        private void MoveUpdate()
+        {
+            if (Peripherals.currentPressedKeys.Contains(Config.North))
             {
-                if (Peripherals.KeyTapped(Keys.W))
+                if (Peripherals.KeyTapped(Config.North))
                 {
                     Peripherals.KeyReleased += MovementKeyReleased_North;
+                    Debug.Print(MainGame.Camera.FollowTransform.ToString());
                 }
-                if (Movement == Movement.Standing)
+                if (Movement == Movement.Standing || Direction != Direction.North)
                 {
                     Movement = Movement.Walking;
-                    Animator.SwitchAnimation(2, 2, 0.2f, AnimationState.Loop);
-                }
-                if (Direction != Direction.North)
-                {
                     Direction = Direction.North;
                     Animator.SwitchAnimation(2, 2, 0.2f, AnimationState.Loop);
                 }
                 Position += new Vector2(0, -Speed);
             }
 
-            if (Peripherals.currentPressedKeys.Contains(Keys.A))
+            if (Peripherals.currentPressedKeys.Contains(Config.West))
             {
-                if (Peripherals.KeyTapped(Keys.A))
+                if (Peripherals.KeyTapped(Config.West))
                 {
                     Peripherals.KeyReleased += MovementKeyReleased_West;
                 }
-                if (Movement == Movement.Standing)
+                if (Movement == Movement.Standing || Direction != Direction.West)
                 {
                     Movement = Movement.Walking;
-                    Animator.SwitchAnimation(0, 2, 0.2f, AnimationState.Loop);
-                }
-                if (Direction != Direction.West)
-                {
                     Direction = Direction.West;
                     Animator.SwitchAnimation(0, 2, 0.2f, AnimationState.Loop);
                 }
                 Position += new Vector2(-Speed, 0);
             }
 
-            if (Peripherals.currentPressedKeys.Contains(Keys.S))
+            if (Peripherals.currentPressedKeys.Contains(Config.South))
             {
-                if (Peripherals.KeyTapped(Keys.S))
+                if (Peripherals.KeyTapped(Config.South))
                 {
                     Peripherals.KeyReleased += MovementKeyReleased_South;
                 }
-                if (Movement == Movement.Standing)
+                if (Movement == Movement.Standing || Direction != Direction.South)
                 {
                     Movement = Movement.Walking;
-                    Animator.SwitchAnimation(4, 2, 0.2f, AnimationState.Loop);
-                }
-                if (Direction != Direction.South)
-                {
                     Direction = Direction.South;
                     Animator.SwitchAnimation(4, 2, 0.2f, AnimationState.Loop);
                 }
                 Position += new Vector2(0, Speed);
             }
 
-            if (Peripherals.currentPressedKeys.Contains(Keys.D))
+            if (Peripherals.currentPressedKeys.Contains(Config.East))
             {
-                if (Peripherals.KeyTapped(Keys.D))
+                if (Peripherals.KeyTapped(Config.East))
                 {
                     Peripherals.KeyReleased += MovementKeyReleased_East;
                 }
-                if (Movement == Movement.Standing)
+                if (Movement == Movement.Standing || Direction != Direction.East)
                 {
                     Movement = Movement.Walking;
-                    Animator.SwitchAnimation(6, 2, 0.2f, AnimationState.Loop);
-                }
-                if (Direction != Direction.East)
-                {
                     Direction = Direction.East;
                     Animator.SwitchAnimation(6, 2, 0.2f, AnimationState.Loop);
                 }

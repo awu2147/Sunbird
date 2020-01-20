@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <North>W</North>
+  <East>D</East>
+  <South>S</South>
+  <West>A</West>
+</Config>

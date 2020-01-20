@@ -14,6 +14,7 @@ using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.External;
 using Sunbird.Controllers;
+using Sunbird.Serialization;
 
 namespace Sunbird
 {
@@ -26,6 +27,11 @@ namespace Sunbird
         private SpriteBatch spriteBatch;
         public State CurrentState { get; set; }
         public Player Player { get; set; }
+        public Config Config { get; set; }
+
+        public Peripherals Peripherals { get; set; }
+
+        public static Camera Camera { get; set; }
 
         public int Width { get { return graphics.PreferredBackBufferWidth; } }
         public int Height { get { return graphics.PreferredBackBufferHeight; } }
@@ -38,7 +44,7 @@ namespace Sunbird
 
             graphics.PreferredBackBufferWidth = 900;
             graphics.PreferredBackBufferHeight = 600;
-
+            Camera = new Camera(this);
         }
 
         /// <summary>
@@ -52,7 +58,10 @@ namespace Sunbird
             // TODO: Add your initialization logic here
 
             Templates.InitializeTemplates();
-
+            //Config = new Config(this);
+            Config = Serializer.ReadXML<Config>("Config.xml");
+            Config.LoadContent(this);
+            Peripherals = new Peripherals();
             base.Initialize();
         }
 
@@ -66,7 +75,8 @@ namespace Sunbird
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             var playerSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testplayer"), 2, 6) { TexturePath = "Temp/testplayer" };
-            Player = new Player(playerSheet, 0, 2, 0.2f, AnimationState.Loop);
+            var playerAnimator = new Animator(playerSheet, null, 0, 2, 0.2f, AnimationState.Loop);
+            Player = new Player(playerAnimator, Config, Peripherals);
 
             //CurrentState = new LoadingScreen(this, GraphicsDevice, Content);
             CurrentState = new GameState1(this, GraphicsDevice, Content);
@@ -111,7 +121,8 @@ namespace Sunbird
         {
             GraphicsDevice.Clear(Color.LightGray);
 
-            spriteBatch.Begin();
+            var zm = Matrix.CreateTranslation(0, 0, 0);
+            spriteBatch.Begin(transformMatrix: Camera.FollowTransform);
             // TODO: Add your drawing code here
             CurrentState.Draw(gameTime, spriteBatch);
 

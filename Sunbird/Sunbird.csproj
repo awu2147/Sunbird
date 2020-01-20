@@ -42,13 +42,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controllers\Animator.cs" />
+    <Compile Include="Core\Camera.cs" />
+    <Compile Include="Core\Globals.cs" />
+    <Compile Include="Core\IConfig.cs" />
     <Compile Include="Core\Peripherals.cs" />
     <Compile Include="Core\Sprite.cs" />
     <Compile Include="Core\SpriteSheet.cs" />
+    <Compile Include="External\Config.cs" />
     <Compile Include="External\GameState1.cs" />
     <Compile Include="External\LoadingScreen1.cs" />
     <Compile Include="External\Player.cs" />
     <Compile Include="External\Templates.cs" />
+    <Compile Include="GUI\IControllable.cs" />
     <Compile Include="GUI\ILoadingScreen.cs" />
     <Compile Include="GUI\LoadingBar.cs" />
     <Compile Include="MainGame.cs" />
