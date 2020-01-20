@@ -51,8 +51,8 @@
     </Sprite>
     <Sprite xsi:type="Player">
       <Position>
-        <X>410</X>
-        <Y>240</Y>
+        <X>459</X>
+        <Y>254</Y>
       </Position>
       <Animator>
         <loopTimer>0</loopTimer>
@@ -62,16 +62,19 @@
           <Columns>6</Columns>
         </SpriteSheet>
         <Position>
-          <X>410</X>
-          <Y>240</Y>
+          <X>459</X>
+          <Y>254</Y>
         </Position>
-        <FrameCount>2</FrameCount>
-        <FrameCounter>1</FrameCounter>
+        <FrameCount>1</FrameCount>
+        <FrameCounter>0</FrameCounter>
         <FrameSpeed>0.2</FrameSpeed>
-        <AnimState>Loop</AnimState>
-        <CurrentFrame>1</CurrentFrame>
-        <StartFrame>0</StartFrame>
+        <AnimState>None</AnimState>
+        <CurrentFrame>4</CurrentFrame>
+        <StartFrame>4</StartFrame>
       </Animator>
+      <Direction>South</Direction>
+      <Movement>Standing</Movement>
+      <Speed>3</Speed>
     </Sprite>
   </spriteList>
 </GameState1>
