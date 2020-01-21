@@ -20,8 +20,9 @@ namespace Sunbird.Core
 {
     public enum CameraMode
     {
-        Follow,
-        Push,
+        Follow = 0,
+        Push = 1,
+        Drag = 2,
     }
 
     public class Camera
@@ -30,13 +31,15 @@ namespace Sunbird.Core
 
         public Matrix PushTransform { get; set; } = Matrix.Identity;
 
+        public Matrix DragTransform { get; set; } = Matrix.Identity;
+
         public Matrix CurrentTransform { get; set; } = Matrix.Identity;
 
-        public CameraMode CurrentMode;
+        public CameraMode CurrentMode { get; set; }
 
         private Direction Direction { get; set; }
 
-        private MainGame Sender { get; set; }
+        private MainGame Sender { get; set; }        
 
         private float counter = 3;
 
@@ -46,7 +49,7 @@ namespace Sunbird.Core
         }
 
         public void Update()
-        {
+        {          
             if (CurrentMode == CameraMode.Follow)
             {
                 CurrentTransform = FollowTransform;
@@ -55,11 +58,61 @@ namespace Sunbird.Core
             {
                 CurrentTransform = PushTransform;
             }
+            else if (CurrentMode == CameraMode.Drag)
+            {
+                CurrentTransform = DragTransform;
+            }
+            Push();
+            Drag();
+        }
+
+        public Point GetMousePosition()
+        {
+            MouseState state = Mouse.GetState();
+            return new Point(state.X, state.Y);
         }
 
         public void Follow(Sprite target)
         {
             FollowTransform = Matrix.CreateTranslation(-target.Position.X + Sender.Width / 2, -target.Position.Y + Sender.Height / 2, 0);            
+        }
+
+        private Point anchor;
+
+        private Point lastDrag = Point.Zero;
+
+        private Point dragPositionChange;
+
+        public void Drag()
+        {
+            if (CurrentMode != CameraMode.Drag)
+            {
+                DragTransform = FollowTransform;
+                lastDrag.X = (int)FollowTransform.M41;
+                lastDrag.Y = (int)FollowTransform.M42;
+            }
+            else
+            {
+                var peripherals = Sender.Peripherals;
+                if (peripherals.currentMouseState.MiddleButton == ButtonState.Pressed)
+                {
+                    if (peripherals.MouseTapped(peripherals.currentMouseState.MiddleButton, peripherals.previousMouseState.MiddleButton))
+                    {
+                        peripherals.MiddleButtonReleased += peripherals_MiddleButtonReleased;
+                        anchor = GetMousePosition();
+                    }
+                    var currentPosition = GetMousePosition();
+                    dragPositionChange = currentPosition - anchor;
+                    DragTransform = Matrix.CreateTranslation(lastDrag.X + dragPositionChange.X, lastDrag.Y + dragPositionChange.Y, 0);
+                }
+            }
+        }
+
+        private void peripherals_MiddleButtonReleased(object sender, EventArgs e)
+        {
+            lastDrag += dragPositionChange;
+            dragPositionChange = Point.Zero;
+            Sender.Peripherals.MiddleButtonReleased -= peripherals_MiddleButtonReleased;
         }
 
         public void Push()

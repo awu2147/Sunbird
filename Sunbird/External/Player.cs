@@ -82,7 +82,6 @@ namespace Sunbird.External
                 if (Peripherals.KeyTapped(Config.North))
                 {
                     Peripherals.KeyReleased += MovementKeyReleased_North;
-                    Debug.Print(MainGame.Camera.FollowTransform.ToString());
                 }
                 if (Movement == Movement.Standing || Direction != Direction.North)
                 {

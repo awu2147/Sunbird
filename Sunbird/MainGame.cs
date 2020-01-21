@@ -107,14 +107,13 @@ namespace Sunbird
             CurrentState.Update(gameTime);
             if (Peripherals.KeyTapped(Keys.C))
             {
-                if (Camera.CurrentMode == CameraMode.Follow)
+                var i = (int)Camera.CurrentMode + 1;
+                if (i >= Enum.GetNames(typeof(CameraMode)).Length)
                 {
-                    Camera.CurrentMode = CameraMode.Push;
+                    i = 0;
                 }
-                else if (Camera.CurrentMode == CameraMode.Push)
-                {
-                    Camera.CurrentMode = CameraMode.Follow;
-                }
+                Camera.CurrentMode = (CameraMode)(i);
+                Debug.Print(Camera.CurrentMode.ToString());
             }
             Camera.Update();
             Peripherals.PostUpdate();

@@ -30,14 +30,17 @@ namespace Sunbird.Core
 
     public class Peripherals
     {
-        public MouseState currentMouseState { get; set; } = new MouseState();
-        public MouseState previousMouseState { get; set; } = new MouseState();
+        public MouseState currentMouseState { get; set; }
+        public MouseState previousMouseState { get; set; }
         public KeyboardState currentKeyboardState { get; set; }
         public KeyboardState previousKeyboardState { get; set; }
         public Keys[] currentPressedKeys { get; set; }
         public Keys[] previousPressedKeys { get; set; }
 
         public event EventHandler<KeyReleasedEventArgs> KeyReleased;
+        public event EventHandler<EventArgs> MiddleButtonReleased;
+        public event EventHandler<EventArgs> LeftButtonReleased;
+        public event EventHandler<EventArgs> RightButtonReleased;
 
         public Peripherals()
         {
@@ -54,6 +57,7 @@ namespace Sunbird.Core
         public void PostUpdate()
         {
             CheckForRelease();
+
             previousMouseState = currentMouseState;
             previousKeyboardState = currentKeyboardState;
             previousPressedKeys = currentPressedKeys;
@@ -72,12 +76,42 @@ namespace Sunbird.Core
                     }
                 }
             }
+            if (previousMouseState.MiddleButton == ButtonState.Pressed && currentMouseState.MiddleButton == ButtonState.Released)
+            {
+                OnMiddleMouseButtonReleased();
+            }
+            if (previousMouseState.LeftButton == ButtonState.Pressed && currentMouseState.LeftButton == ButtonState.Released)
+            {
+                OnLeftMouseButtonReleased();
+            }
+            if (previousMouseState.RightButton == ButtonState.Pressed && currentMouseState.RightButton == ButtonState.Released)
+            {
+                OnRightMouseButtonReleased();
+            }
         }
 
         public void OnKeyReleased(KeyReleasedEventArgs e)
         {
             EventHandler<KeyReleasedEventArgs> handler = KeyReleased;
             handler?.Invoke(null, e);
+        }
+
+        public void OnMiddleMouseButtonReleased()
+        {
+            EventHandler<EventArgs> handler = MiddleButtonReleased;
+            handler?.Invoke(null, null);
+        }
+
+        public void OnLeftMouseButtonReleased()
+        {
+            EventHandler<EventArgs> handler = LeftButtonReleased;
+            handler?.Invoke(null, null);
+        }
+
+        public void OnRightMouseButtonReleased()
+        {
+            EventHandler<EventArgs> handler = RightButtonReleased;
+            handler?.Invoke(null, null);
         }
 
         public Point MousePositionAsPoint()
@@ -88,7 +122,12 @@ namespace Sunbird.Core
 
         public bool KeyTapped(Keys key)
         {
-            return (currentKeyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key)) ? true : false;
+            return (currentKeyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key));
+        }
+
+        public bool MouseTapped(ButtonState currentButton, ButtonState previousButton)
+        {          
+            return (currentButton == ButtonState.Pressed && previousButton == ButtonState.Released);
         }
 
     }
