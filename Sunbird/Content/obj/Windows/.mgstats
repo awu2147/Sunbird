@@ -1,10 +1,10 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/bar1_empty.xnb","TextureProcessor","Texture2DContent",712,36805,0.290533
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_full.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/bar1_full.xnb","TextureProcessor","Texture2DContent",713,36805,0.0199149
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/Concept1.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/Concept1.xnb","TextureProcessor","Texture2DContent",11343,968773,0.0718452
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/dark_bg.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/dark_bg.xnb","TextureProcessor","Texture2DContent",3507,2160085,0.1057165
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/sunbird.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/sunbird.xnb","TextureProcessor","Texture2DContent",1958,63589,0.0209464
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testplayer.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/testplayer.xnb","TextureProcessor","Texture2DContent",2676,196693,0.0209446
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testsolid.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/testsolid.xnb","TextureProcessor","Texture2DContent",677,3613,0.014958
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/testtile.xnb","TextureProcessor","Texture2DContent",679,3613,0.0149607
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile2.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/testtile2.xnb","TextureProcessor","Texture2DContent",678,3613,0.0179519
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/bar1_empty.xnb","TextureProcessor","Texture2DContent",747,33133,0.5127273
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_full.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/bar1_full.xnb","TextureProcessor","Texture2DContent",748,33133,0.0159177
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/Concept1.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/Concept1.xnb","TextureProcessor","Texture2DContent",11343,968773,0.0569658
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/dark_bg.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/dark_bg.xnb","TextureProcessor","Texture2DContent",3507,2160085,0.0927543
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/sunbird.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/sunbird.xnb","TextureProcessor","Texture2DContent",2038,69781,0.0248965
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testplayer.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/testplayer.xnb","TextureProcessor","Texture2DContent",2676,196693,0.0219415
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testsolid.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/testsolid.xnb","TextureProcessor","Texture2DContent",677,3613,0.0119677
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/testtile.xnb","TextureProcessor","Texture2DContent",679,3613,0.0179542
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile2.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/testtile2.xnb","TextureProcessor","Texture2DContent",678,3613,0.0159589

@@ -28,9 +28,7 @@ namespace Sunbird
         public State CurrentState { get; set; }
         public Player Player { get; set; }
         public Config Config { get; set; }
-
         public Peripherals Peripherals { get; set; }
-
         public static Camera Camera { get; set; }
 
         public int Width { get { return graphics.PreferredBackBufferWidth; } }
@@ -107,7 +105,18 @@ namespace Sunbird
 
             // TODO: Add your update logic here
             CurrentState.Update(gameTime);
-
+            if (Peripherals.KeyTapped(Keys.C))
+            {
+                if (Camera.CurrentMode == CameraMode.Follow)
+                {
+                    Camera.CurrentMode = CameraMode.Push;
+                }
+                else if (Camera.CurrentMode == CameraMode.Push)
+                {
+                    Camera.CurrentMode = CameraMode.Follow;
+                }
+            }
+            Camera.Update();
             Peripherals.PostUpdate();
 
             base.Update(gameTime);
@@ -122,7 +131,7 @@ namespace Sunbird
             GraphicsDevice.Clear(Color.LightGray);
 
             var zm = Matrix.CreateTranslation(0, 0, 0);
-            spriteBatch.Begin(transformMatrix: Camera.FollowTransform);
+            spriteBatch.Begin(transformMatrix: Camera.CurrentTransform);
             // TODO: Add your drawing code here
             CurrentState.Draw(gameTime, spriteBatch);
 

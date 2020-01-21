@@ -76,7 +76,7 @@ namespace Sunbird.External
 
             for (int i = 0; i < 50; i++)
             {
-                Thread.Sleep(20);
+                Thread.Sleep(50);
                 currentState.LoadingBar.Progress += 2;
             }
 

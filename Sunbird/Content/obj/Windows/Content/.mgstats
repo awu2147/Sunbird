@@ -1,9 +1,9 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/bar1_empty.xnb","TextureProcessor","Texture2DContent",712,36805,0.2044851
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_full.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/bar1_full.xnb","TextureProcessor","Texture2DContent",713,36805,0.0239418
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/bar1_empty.xnb","TextureProcessor","Texture2DContent",747,33133,0.1835177
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_full.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/bar1_full.xnb","TextureProcessor","Texture2DContent",748,33133,0.0149573
 "C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/Concept1.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/Concept1.xnb","TextureProcessor","Texture2DContent",11343,968773,0.245358
 "C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/dark_bg.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/dark_bg.xnb","TextureProcessor","Texture2DContent",3507,2160085,0.1156878
-"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/sunbird.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/sunbird.xnb","TextureProcessor","Texture2DContent",1958,63589,0.0279258
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/sunbird.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/sunbird.xnb","TextureProcessor","Texture2DContent",2038,69781,0.0169551
 "C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testplayer.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/testplayer.xnb","TextureProcessor","Texture2DContent",2676,196693,0.2742668
 "C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testsolid.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/testsolid.xnb","TextureProcessor","Texture2DContent",677,3613,0.2050293
 "C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/testtile.xnb","TextureProcessor","Texture2DContent",679,3613,0.0189727

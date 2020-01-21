@@ -42,7 +42,7 @@ namespace Sunbird.External
 
             var barEmpty = Content.Load<Texture2D>("Temp/bar1_empty");
             var barFull = Content.Load<Texture2D>("Temp/bar1_full");
-            var barPosition = new Vector2(MainGame.Width / 2 - barEmpty.Width / 2, 350);
+            var barPosition = new Vector2(MainGame.Width / 2 - barEmpty.Width / 2, MainGame.Height / 2 - barEmpty.Height + 70);
             LoadingBar = new LoadingBar(barEmpty, barFull, barPosition);
         }
 
