@@ -88,6 +88,7 @@ namespace Sunbird.Core
             {
                 OnRightMouseButtonReleased();
             }
+            //Mouse.GetState().ScrollWheelValue
         }
 
         public void OnKeyReleased(KeyReleasedEventArgs e)
@@ -123,6 +124,16 @@ namespace Sunbird.Core
         public bool KeyTapped(Keys key)
         {
             return (currentKeyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key));
+        }
+
+        public bool KeyPressed(Keys key)
+        {
+            return currentPressedKeys.Contains(key);
+        }
+
+        public bool KeysPressed(Keys key1, Keys key2)
+        {
+            return currentPressedKeys.Contains(key1) && currentPressedKeys.Contains(key2);
         }
 
         public bool MouseTapped(ButtonState currentButton, ButtonState previousButton)

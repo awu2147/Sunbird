@@ -31,7 +31,7 @@ namespace Sunbird.External
 
     public class Player : Sprite, IControllable
     {
-
+        private MainGame MainGame { get; set; }
         public Direction Direction { get; set; } = Direction.South;
         public Movement Movement { get; set; } = Movement.Standing;
 
@@ -52,18 +52,20 @@ namespace Sunbird.External
 
         }
 
-        public Player(Animator animator, Config config, Peripherals peripherals)
+        public Player(MainGame mainGame, Animator animator)
         {
             Animator = animator;
             Animator.Sender = this;
-            Config = config;
-            Peripherals = peripherals;
+            MainGame = mainGame;
+            Config = mainGame.Config;
+            Peripherals = mainGame.Peripherals;
         }
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
             Animator.LoadContent(mainGame, graphicsDevice, content);
             Animator.Sender = this;
+            MainGame = mainGame;
             Config = mainGame.Config;
             Peripherals = mainGame.Peripherals;
         }
@@ -75,14 +77,74 @@ namespace Sunbird.External
             base.Update(gameTime);
         }
 
+        Queue<Direction> priority = new Queue<Direction>();
+        HashSet<Keys> CurrentMovementKeys { get; set; } = new HashSet<Keys>();
+
         private void MoveUpdate()
         {
-            if (Peripherals.currentPressedKeys.Contains(Config.North))
+            if (Peripherals.KeyTapped(Config.North))
             {
-                if (Peripherals.KeyTapped(Config.North))
+                Peripherals.KeyReleased += MovementKeyReleased_North;
+                CurrentMovementKeys.Add(Config.North);
+            }
+            if (Peripherals.KeyTapped(Config.East))
+            {
+                Peripherals.KeyReleased += MovementKeyReleased_East;
+                CurrentMovementKeys.Add(Config.East);
+            }
+            if (Peripherals.KeyTapped(Config.South))
+            {
+                Peripherals.KeyReleased += MovementKeyReleased_South;
+                CurrentMovementKeys.Add(Config.South);
+            }
+            if (Peripherals.KeyTapped(Config.West))
+            {
+                CurrentMovementKeys.Add(Config.West);
+                Peripherals.KeyReleased += MovementKeyReleased_West;
+            }
+
+            if (Peripherals.KeysPressed(Config.North, Config.East))
+            {
+                if (Movement == Movement.Standing || Direction != Direction.NorthEast)
                 {
-                    Peripherals.KeyReleased += MovementKeyReleased_North;
+                    Movement = Movement.Walking;
+                    Direction = Direction.NorthEast;
+                    Animator.SwitchAnimation(2, 2, 0.2f, AnimationState.Loop);
                 }
+                Position += new Vector2(Speed, -Speed / 2);
+            }
+            else if (Peripherals.KeysPressed(Config.North, Config.West))
+            {
+                if (Movement == Movement.Standing || Direction != Direction.NorthWest)
+                {
+                    Movement = Movement.Walking;
+                    Direction = Direction.NorthWest;
+                    Animator.SwitchAnimation(2, 2, 0.2f, AnimationState.Loop);
+                }
+                Position += new Vector2(-Speed, -Speed / 2);
+            }
+            else if (Peripherals.KeysPressed(Config.South, Config.East))
+            {
+                if (Movement == Movement.Standing || Direction != Direction.SouthEast)
+                {
+                    Movement = Movement.Walking;
+                    Direction = Direction.SouthEast;
+                    Animator.SwitchAnimation(4, 2, 0.2f, AnimationState.Loop);
+                }
+                Position += new Vector2(Speed, Speed / 2);
+            }
+            else if (Peripherals.KeysPressed(Config.South, Config.West))
+            {
+                if (Movement == Movement.Standing || Direction != Direction.SouthWest)
+                {
+                    Movement = Movement.Walking;
+                    Direction = Direction.SouthWest;
+                    Animator.SwitchAnimation(4, 2, 0.2f, AnimationState.Loop);
+                }
+                Position += new Vector2(-Speed, Speed / 2);
+            }
+            else if (Peripherals.KeyPressed(Config.North))
+            {
                 if (Movement == Movement.Standing || Direction != Direction.North)
                 {
                     Movement = Movement.Walking;
@@ -91,13 +153,8 @@ namespace Sunbird.External
                 }
                 Position += new Vector2(0, -Speed);
             }
-
-            if (Peripherals.currentPressedKeys.Contains(Config.West))
+            else if (Peripherals.KeyPressed(Config.West))
             {
-                if (Peripherals.KeyTapped(Config.West))
-                {
-                    Peripherals.KeyReleased += MovementKeyReleased_West;
-                }
                 if (Movement == Movement.Standing || Direction != Direction.West)
                 {
                     Movement = Movement.Walking;
@@ -106,13 +163,8 @@ namespace Sunbird.External
                 }
                 Position += new Vector2(-Speed, 0);
             }
-
-            if (Peripherals.currentPressedKeys.Contains(Config.South))
+            else if (Peripherals.KeyPressed(Config.South))
             {
-                if (Peripherals.KeyTapped(Config.South))
-                {
-                    Peripherals.KeyReleased += MovementKeyReleased_South;
-                }
                 if (Movement == Movement.Standing || Direction != Direction.South)
                 {
                     Movement = Movement.Walking;
@@ -121,13 +173,8 @@ namespace Sunbird.External
                 }
                 Position += new Vector2(0, Speed);
             }
-
-            if (Peripherals.currentPressedKeys.Contains(Config.East))
+            else if (Peripherals.KeyPressed(Config.East))
             {
-                if (Peripherals.KeyTapped(Config.East))
-                {
-                    Peripherals.KeyReleased += MovementKeyReleased_East;
-                }
                 if (Movement == Movement.Standing || Direction != Direction.East)
                 {
                     Movement = Movement.Walking;
@@ -136,12 +183,27 @@ namespace Sunbird.External
                 }
                 Position += new Vector2(Speed, 0);
             }
+
+            ApplyMotionBlur(new List<Movement>() { Movement.Walking });
+        }
+
+        private void ApplyMotionBlur(List<Movement> movements)
+        {
+            if (movements.Contains(Movement))
+            {
+                MainGame.SamplerState = SamplerState.AnisotropicClamp;
+            }
+            else
+            {
+                MainGame.SamplerState = SamplerState.PointClamp;
+            }
         }
 
         private void MovementKeyReleased(object sender, KeyReleasedEventArgs e, EventHandler<KeyReleasedEventArgs> self, Keys key)
         {
             if (key == e.key)
             {
+                CurrentMovementKeys.Remove(key);
                 Peripherals.KeyReleased -= self;
                 if (!MovementKeyList.Any(x => Peripherals.currentPressedKeys.Contains(x)))
                 {

@@ -28,7 +28,6 @@ namespace Sunbird.External
         public LoadingScreen1(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
         {
             LoadContent();
-            MainGame.Camera.PushTransform = Matrix.Identity;
         }
 
         private void LoadContent()

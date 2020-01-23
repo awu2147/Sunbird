@@ -37,15 +37,17 @@ namespace Sunbird.Core
 
         public CameraMode CurrentMode { get; set; }
 
-        private Direction Direction { get; set; }
+        private Direction PushDirection { get; set; }
 
-        private MainGame Sender { get; set; }        
+        private MainGame MainGame { get; set; }
+
+        public SamplerState SamplerState { get; set; }
 
         private float counter = 3;
 
         public Camera(MainGame sender)
         {
-            Sender = sender;
+            MainGame = sender;
         }
 
         public void Update()
@@ -74,7 +76,7 @@ namespace Sunbird.Core
 
         public void Follow(Sprite target)
         {
-            FollowTransform = Matrix.CreateTranslation(-target.Position.X + Sender.Width / 2, -target.Position.Y + Sender.Height / 2, 0);            
+            FollowTransform = Matrix.CreateTranslation(-target.Position.X + MainGame.Width / 2, -target.Position.Y + MainGame.Height / 2, 0);            
         }
 
         private Point anchor;
@@ -93,17 +95,22 @@ namespace Sunbird.Core
             }
             else
             {
-                var peripherals = Sender.Peripherals;
+                var peripherals = MainGame.Peripherals;
                 if (peripherals.currentMouseState.MiddleButton == ButtonState.Pressed)
                 {
+                    MainGame.SamplerState = SamplerState.AnisotropicClamp;
                     if (peripherals.MouseTapped(peripherals.currentMouseState.MiddleButton, peripherals.previousMouseState.MiddleButton))
-                    {
+                    {                      
                         peripherals.MiddleButtonReleased += peripherals_MiddleButtonReleased;
                         anchor = GetMousePosition();
                     }
                     var currentPosition = GetMousePosition();
                     dragPositionChange = currentPosition - anchor;
                     DragTransform = Matrix.CreateTranslation(lastDrag.X + dragPositionChange.X, lastDrag.Y + dragPositionChange.Y, 0);
+                }
+                else
+                {
+                    MainGame.SamplerState = SamplerState.PointClamp;
                 }
             }
         }
@@ -112,7 +119,7 @@ namespace Sunbird.Core
         {
             lastDrag += dragPositionChange;
             dragPositionChange = Point.Zero;
-            Sender.Peripherals.MiddleButtonReleased -= peripherals_MiddleButtonReleased;
+            MainGame.Peripherals.MiddleButtonReleased -= peripherals_MiddleButtonReleased;
         }
 
         public void Push()
@@ -124,78 +131,78 @@ namespace Sunbird.Core
             else
             {
                 var ms = Mouse.GetState();
+                MainGame.SamplerState = SamplerState.AnisotropicClamp;
                 if (ms.X >= -100 && ms.X <= 100)
                 {
                     counter = 3;
                     PushTransform = PushTransform * Matrix.CreateTranslation(3, 0, 0);
-                    Direction = Direction.West;
+                    PushDirection = Direction.West;
                 }
-                else if (ms.X >= Sender.Width - 100 && ms.X <= Sender.Width + 100)
+                else if (ms.X >= MainGame.Width - 100 && ms.X <= MainGame.Width + 100)
                 {
                     counter = 3;
                     PushTransform = PushTransform * Matrix.CreateTranslation(-3, 0, 0);
-                    Direction = Direction.East;
+                    PushDirection = Direction.East;
                 }
                 else if (ms.Y >= -100 && ms.Y <= 100)
                 {
                     counter = 3;
                     PushTransform = PushTransform * Matrix.CreateTranslation(0, 3, 0);
-                    Direction = Direction.North;
+                    PushDirection = Direction.North;
                 }
-                else if (ms.Y >= Sender.Height - 100 && ms.Y <= Sender.Height + 100)
+                else if (ms.Y >= MainGame.Height - 100 && ms.Y <= MainGame.Height + 100)
                 {
                     counter = 3;
                     PushTransform = PushTransform * Matrix.CreateTranslation(0, -3, 0);
-                    Direction = Direction.South;
+                    PushDirection = Direction.South;
                 }
                 else
                 {
-                    if (Direction == Direction.West)
+                    if (PushDirection == Direction.West)
                     {
                         PushTransform *= Matrix.CreateTranslation(counter, 0, 0);
                         counter -= 0.1f;
                         if (counter <= 0)
                         {
-                            Direction = Direction.None;
+                            PushDirection = Direction.None;
                             counter = 3;
                         }
                     }
-                    else if (Direction == Direction.East)
+                    else if (PushDirection == Direction.East)
                     {
                         PushTransform *= Matrix.CreateTranslation(-counter, 0, 0);
                         counter -= 0.1f;
                         if (counter <= 0)
                         {
-                            Direction = Direction.None;
+                            PushDirection = Direction.None;
                             counter = 3;
                         }
                     }
-                    else if (Direction == Direction.North)
+                    else if (PushDirection == Direction.North)
                     {
                         PushTransform *= Matrix.CreateTranslation(0, counter, 0);
                         counter -= 0.1f;
                         if (counter <= 0)
                         {
-                            Direction = Direction.None;
+                            PushDirection = Direction.None;
                             counter = 3;
                         }
                     }
-                    else if (Direction == Direction.South)
+                    else if (PushDirection == Direction.South)
                     {
                         PushTransform *= Matrix.CreateTranslation(0, -counter, 0);
                         counter -= 0.1f;
                         if (counter <= 0)
                         {
-                            Direction = Direction.None;
+                            PushDirection = Direction.None;
                             counter = 3;
                         }
                     }
 
-                    if (Direction == Direction.None)
+                    if (PushDirection == Direction.None)
                     {
-                        var x = (float)Math.Round(PushTransform.M41);
-                        var y = (float)Math.Round(PushTransform.M42);
-                        PushTransform = Matrix.CreateTranslation(x, y, 0);
+                        MainGame.SamplerState = SamplerState.PointClamp;
+                        PushTransform = Matrix.CreateTranslation(PushTransform.M41, PushTransform.M42, 0);
                     }
 
                 }

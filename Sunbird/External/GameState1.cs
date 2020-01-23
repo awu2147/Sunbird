@@ -50,11 +50,14 @@ namespace Sunbird.External
         {
             spriteList = new List<Sprite>();
 
-            var spriteSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testsolid"), 1, 1) { TexturePath = "Temp/testsolid" };
-            spriteList.Add(new Sprite(spriteSheet) { Position = new Vector2(1, 2) });
+            var bgSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testfloor"), 1, 1) { TexturePath = "Temp/testfloor" };
+            spriteList.Add(new Sprite(bgSheet) { Position = new Vector2(0, 0) });
 
-            var spriteSheet2 = new SpriteSheet(Content.Load<Texture2D>("Temp/testtile2"), 1, 1) { TexturePath = "Temp/testtile2" };
-            spriteList.Add(new Sprite(spriteSheet2) { Position = new Vector2(90, 50) });
+            //var spriteSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testsolid"), 1, 1) { TexturePath = "Temp/testsolid" };
+            //spriteList.Add(new Sprite(spriteSheet) { Position = new Vector2(1, 2) });
+
+            //var spriteSheet2 = new SpriteSheet(Content.Load<Texture2D>("Temp/testtile2"), 1, 1) { TexturePath = "Temp/testtile2" };
+            //spriteList.Add(new Sprite(spriteSheet2) { Position = new Vector2(90, 50) });
 
             spriteList.Add(MainGame.Player);
 

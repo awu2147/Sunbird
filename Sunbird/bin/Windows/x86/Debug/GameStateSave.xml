@@ -3,43 +3,19 @@
   <spriteList>
     <Sprite>
       <Position>
-        <X>1</X>
-        <Y>2</Y>
+        <X>0</X>
+        <Y>0</Y>
       </Position>
       <Animator>
         <loopTimer>0</loopTimer>
         <SpriteSheet>
-          <TexturePath>Temp/testsolid</TexturePath>
+          <TexturePath>Temp/testfloor</TexturePath>
           <Rows>1</Rows>
           <Columns>1</Columns>
         </SpriteSheet>
         <Position>
-          <X>1</X>
-          <Y>2</Y>
-        </Position>
-        <FrameCount>1</FrameCount>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.1</FrameSpeed>
-        <AnimState>None</AnimState>
-        <CurrentFrame>0</CurrentFrame>
-        <StartFrame>0</StartFrame>
-      </Animator>
-    </Sprite>
-    <Sprite>
-      <Position>
-        <X>90</X>
-        <Y>50</Y>
-      </Position>
-      <Animator>
-        <loopTimer>0</loopTimer>
-        <SpriteSheet>
-          <TexturePath>Temp/testtile2</TexturePath>
-          <Rows>1</Rows>
-          <Columns>1</Columns>
-        </SpriteSheet>
-        <Position>
-          <X>90</X>
-          <Y>50</Y>
+          <X>0</X>
+          <Y>0</Y>
         </Position>
         <FrameCount>1</FrameCount>
         <FrameCounter>0</FrameCounter>
@@ -51,8 +27,8 @@
     </Sprite>
     <Sprite xsi:type="Player">
       <Position>
-        <X>102</X>
-        <Y>-70</Y>
+        <X>546</X>
+        <Y>226.5</Y>
       </Position>
       <Animator>
         <loopTimer>0</loopTimer>
@@ -62,8 +38,8 @@
           <Columns>6</Columns>
         </SpriteSheet>
         <Position>
-          <X>102</X>
-          <Y>-70</Y>
+          <X>546</X>
+          <Y>226.5</Y>
         </Position>
         <FrameCount>1</FrameCount>
         <FrameCounter>0</FrameCounter>

@@ -29,8 +29,8 @@ namespace Sunbird
         public Player Player { get; set; }
         public Config Config { get; set; }
         public Peripherals Peripherals { get; set; }
-        public static Camera Camera { get; set; }
-
+        public Camera Camera { get; set; }
+        public SamplerState SamplerState { get; set; }
         public int Width { get { return graphics.PreferredBackBufferWidth; } }
         public int Height { get { return graphics.PreferredBackBufferHeight; } }
 
@@ -42,7 +42,6 @@ namespace Sunbird
 
             graphics.PreferredBackBufferWidth = 900;
             graphics.PreferredBackBufferHeight = 600;
-            Camera = new Camera(this);
         }
 
         /// <summary>
@@ -59,7 +58,11 @@ namespace Sunbird
             //Config = new Config(this);
             Config = Serializer.ReadXML<Config>("Config.xml");
             Config.LoadContent(this);
+
             Peripherals = new Peripherals();
+            Camera = new Camera(this);
+            SamplerState = SamplerState.PointClamp;
+
             base.Initialize();
         }
 
@@ -74,7 +77,7 @@ namespace Sunbird
 
             var playerSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testplayer"), 2, 6) { TexturePath = "Temp/testplayer" };
             var playerAnimator = new Animator(playerSheet, null, 0, 2, 0.2f, AnimationState.Loop);
-            Player = new Player(playerAnimator, Config, Peripherals);
+            Player = new Player(this, playerAnimator);
 
             //CurrentState = new LoadingScreen(this, GraphicsDevice, Content);
             CurrentState = new GameState1(this, GraphicsDevice, Content);
@@ -130,7 +133,8 @@ namespace Sunbird
             GraphicsDevice.Clear(Color.LightGray);
 
             var zm = Matrix.CreateTranslation(0, 0, 0);
-            spriteBatch.Begin(transformMatrix: Camera.CurrentTransform);
+            var two = 2f / 3f;
+            spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
             // TODO: Add your drawing code here
             CurrentState.Draw(gameTime, spriteBatch);
 
