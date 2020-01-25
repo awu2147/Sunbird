@@ -15,6 +15,7 @@ using Sunbird.Core;
 using Sunbird.External;
 using Sunbird.Controllers;
 using Sunbird.Serialization;
+using System.Reflection;
 
 namespace Sunbird
 {
@@ -26,11 +27,11 @@ namespace Sunbird
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         public State CurrentState { get; set; }
-        public Player Player { get; set; }
         public Config Config { get; set; }
         public Peripherals Peripherals { get; set; }
         public Camera Camera { get; set; }
         public SamplerState SamplerState { get; set; }
+        public SpriteFont DefaultFont { get; set; }
         public int Width { get { return graphics.PreferredBackBufferWidth; } }
         public int Height { get { return graphics.PreferredBackBufferHeight; } }
 
@@ -39,6 +40,7 @@ namespace Sunbird
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            //IsFixedTimeStep = true;
 
             graphics.PreferredBackBufferWidth = 900;
             graphics.PreferredBackBufferHeight = 600;
@@ -62,6 +64,7 @@ namespace Sunbird
             Peripherals = new Peripherals();
             Camera = new Camera(this);
             SamplerState = SamplerState.PointClamp;
+            DefaultFont = Content.Load<SpriteFont>("DefaultFont");
 
             base.Initialize();
         }
@@ -74,10 +77,6 @@ namespace Sunbird
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            var playerSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testplayer"), 2, 6) { TexturePath = "Temp/testplayer" };
-            var playerAnimator = new Animator(playerSheet, null, 0, 2, 0.2f, AnimationState.Loop);
-            Player = new Player(this, playerAnimator);
 
             //CurrentState = new LoadingScreen(this, GraphicsDevice, Content);
             CurrentState = new GameState1(this, GraphicsDevice, Content);
@@ -132,13 +131,39 @@ namespace Sunbird
         {
             GraphicsDevice.Clear(Color.LightGray);
 
-            var zm = Matrix.CreateTranslation(0, 0, 0);
-            var two = 2f / 3f;
             spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
             // TODO: Add your drawing code here
             CurrentState.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
+            if (Camera.CurrentMode == CameraMode.Follow)
+            {
+                spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState.PointClamp);
+                if (CurrentState is GameState1)
+                {
+                    var a = CurrentState as GameState1;
+                    spriteBatch.DrawString(DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(Camera).ToString()}", Peripherals.GetCornerWorldPosition(Camera, 10, 10).ToVector2(), Color.Black);
+                    spriteBatch.DrawString(DefaultFont, $"Player World Position {a.Player.Position.ToString()}", Peripherals.GetCornerWorldPosition(Camera, 10, 30).ToVector2(), Color.Black);
+                    spriteBatch.DrawString(DefaultFont, $"Normalized Position {World.TopFace_NormalizedPoint(Peripherals.GetMouseWorldPosition(Camera))}", Peripherals.GetCornerWorldPosition(Camera, 10, 50).ToVector2(), Color.Black);
+                    spriteBatch.DrawString(DefaultFont, $"Grid Coords {World.TopFace_PointToGridCoord(Peripherals.GetMouseWorldPosition(Camera))}", Peripherals.GetCornerWorldPosition(Camera, 10, 70).ToVector2(), Color.Black);
+                    spriteBatch.DrawString(DefaultFont, $"Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera))}", Peripherals.GetCornerWorldPosition(Camera, 10, 90).ToVector2(), Color.Black);
+                }
+                spriteBatch.End();
+            }
+            else
+            {
+                spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+                if (CurrentState is GameState1)
+                {
+                    var a = CurrentState as GameState1;
+                    spriteBatch.DrawString(DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(Camera).ToString()}", new Vector2(10,10), Color.Black);
+                    spriteBatch.DrawString(DefaultFont, $"Player World Position {a.Player.Position.ToString()}", new Vector2(10, 30), Color.Black);
+                    spriteBatch.DrawString(DefaultFont, $"Normalized Position {World.TopFace_NormalizedPoint(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 50), Color.Black);
+                    spriteBatch.DrawString(DefaultFont, $"Grid Coords {World.TopFace_PointToGridCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 70), Color.Black);
+                    spriteBatch.DrawString(DefaultFont, $"Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 90), Color.Black);
+                }
+                spriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }

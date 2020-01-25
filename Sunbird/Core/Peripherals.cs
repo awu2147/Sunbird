@@ -44,7 +44,7 @@ namespace Sunbird.Core
 
         public Peripherals()
         {
-
+            
         }
 
         public void PreUpdate()
@@ -115,10 +115,70 @@ namespace Sunbird.Core
             handler?.Invoke(null, null);
         }
 
-        public Point MousePositionAsPoint()
+        public static Point GetMouseWindowPosition()
         {
             MouseState state = Mouse.GetState();
             return new Point(state.X, state.Y);
+        }
+
+        public static Point GetCornerWorldPosition(Camera camera)
+        {
+            if (camera.CurrentMode == CameraMode.Follow)
+            {
+                return new Point(-(int)camera.FollowTransform.M41, -(int)camera.FollowTransform.M42);
+            }
+            else if (camera.CurrentMode == CameraMode.Push)
+            {
+                return new Point(-(int)camera.PushTransform.M41, -(int)camera.PushTransform.M42);
+            }
+            else if (camera.CurrentMode == CameraMode.Drag)
+            {
+                return new Point(-(int)camera.DragTransform.M41, -(int)camera.DragTransform.M42);
+            }
+            else
+            {
+                return Point.Zero;
+            }
+        }
+        public static Point GetCornerWorldPosition(Camera camera, int x, int y)
+        {
+            var offset = new Point(x, y);
+            if (camera.CurrentMode == CameraMode.Follow)
+            {
+                return new Point(-(int)camera.FollowTransform.M41, -(int)camera.FollowTransform.M42) + offset;
+            }
+            else if (camera.CurrentMode == CameraMode.Push)
+            {
+                return new Point(-(int)camera.PushTransform.M41, -(int)camera.PushTransform.M42) + offset;
+            }
+            else if (camera.CurrentMode == CameraMode.Drag)
+            {
+                return new Point(-(int)camera.DragTransform.M41, -(int)camera.DragTransform.M42) + offset;
+            }
+            else
+            {
+                return Point.Zero;
+            }
+        }
+
+        public static Point GetMouseWorldPosition(Camera camera)
+        {
+            if (camera.CurrentMode == CameraMode.Follow)
+            {
+                return new Point(-(int)camera.FollowTransform.M41, -(int)camera.FollowTransform.M42) + GetMouseWindowPosition();
+            }
+            else if (camera.CurrentMode == CameraMode.Push)
+            {
+                return new Point(-(int)camera.PushTransform.M41, -(int)camera.PushTransform.M42) + GetMouseWindowPosition();
+            }
+            else if (camera.CurrentMode == CameraMode.Drag)
+            {
+                return new Point(-(int)camera.DragTransform.M41, -(int)camera.DragTransform.M42) + GetMouseWindowPosition();
+            }
+            else
+            {
+                return Point.Zero;
+            }
         }
 
         public bool KeyTapped(Keys key)
@@ -139,6 +199,11 @@ namespace Sunbird.Core
         public bool MouseTapped(ButtonState currentButton, ButtonState previousButton)
         {          
             return (currentButton == ButtonState.Pressed && previousButton == ButtonState.Released);
+        }
+
+        public bool MousePressed(ButtonState currentButton)
+        {
+            return (currentButton == ButtonState.Pressed);
         }
 
     }

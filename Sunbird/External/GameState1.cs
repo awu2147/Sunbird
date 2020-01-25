@@ -27,6 +27,7 @@ namespace Sunbird.External
         public Texture2D Background { get; set; }
 
         public List<Sprite> spriteList;
+        public Player Player { get; set; }
 
         private bool IsLoading;
 
@@ -37,29 +38,32 @@ namespace Sunbird.External
 
         public GameState1(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
         {
-            (new Thread(() => LoadContentFromFile())).Start();
-            //CreateContent();
+            //(new Thread(() => LoadContentFromFile())).Start();
+            CreateContent();
         }
 
         private void MainGame_Exiting(object sender, System.EventArgs e)
         {
-            Serializer.WriteXML<GameState1>(this, "GameStateSave.xml", new Type[] { typeof(Player) });
+            Serializer.WriteXML<GameState1>(this, "GameStateSave.xml", new Type[] { typeof(Player), typeof(Cube) });
         }
 
         private void CreateContent()
         {
             spriteList = new List<Sprite>();
 
-            var bgSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testfloor"), 1, 1) { TexturePath = "Temp/testfloor" };
-            spriteList.Add(new Sprite(bgSheet) { Position = new Vector2(0, 0) });
+            //var bgSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testfloor"), 1, 1) { TexturePath = "Temp/testfloor" };
+            //spriteList.Add(new Sprite(bgSheet) { Position = new Vector2(0, 0) });
 
-            //var spriteSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testsolid"), 1, 1) { TexturePath = "Temp/testsolid" };
-            //spriteList.Add(new Sprite(spriteSheet) { Position = new Vector2(1, 2) });
+            var spriteSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/GrassCube"), 1, 1) { TexturePath = "Temp/GrassCube" };
+            spriteList.Add(new Cube(spriteSheet) { Position = new Vector2(0, 0) });
 
             //var spriteSheet2 = new SpriteSheet(Content.Load<Texture2D>("Temp/testtile2"), 1, 1) { TexturePath = "Temp/testtile2" };
             //spriteList.Add(new Sprite(spriteSheet2) { Position = new Vector2(90, 50) });
 
-            spriteList.Add(MainGame.Player);
+            var playerSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testplayer"), 2, 6) { TexturePath = "Temp/testplayer" };
+            var playerAnimator = new Animator(playerSheet, null, 0, 2, 0.2f, AnimationState.Loop);
+            Player = new Player(MainGame, playerAnimator);
+            spriteList.Add(Player);
 
             MainGame.Exiting += MainGame_Exiting;
         }
@@ -67,19 +71,30 @@ namespace Sunbird.External
         public void LoadContentFromFile()
         {
             IsLoading = true;
+
             MainGame.CurrentState = Templates.LoadingScreenTemplates[0].CreateLoadingScreen(MainGame, GraphicsDevice, Content) as State;
             var currentState = MainGame.CurrentState as ILoadingScreen;
 
-            var XmlData = Serializer.ReadXML<GameState1>("GameStateSave.xml", new Type[] { typeof(Player) });
+            for (int i = 0; i < 25; i++)
+            {
+                Thread.Sleep(20);
+                currentState.LoadingBar.Progress += 2;
+            }
+
+            var XmlData = Serializer.ReadXML<GameState1>("GameStateSave.xml", new Type[] { typeof(Player), typeof(Cube) });
             spriteList = XmlData.spriteList;
             foreach (var sprite in spriteList)
             {
                 sprite.LoadContent(MainGame, GraphicsDevice, Content);
+                if (sprite is Player)
+                {
+                    Player = sprite as Player;
+                }
             }
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 25; i++)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(20);
                 currentState.LoadingBar.Progress += 2;
             }
 
@@ -93,6 +108,13 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+
+                if (MainGame.Peripherals.MouseTapped(MainGame.Peripherals.currentMouseState.LeftButton, MainGame.Peripherals.previousMouseState.LeftButton))
+                {
+                    var spriteSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/GrassCube"), 1, 1) { TexturePath = "Temp/GrassCube" };
+                    spriteList.Add(new Cube(spriteSheet) { Position = World.TopFace_CoordToLocalOrigin(World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera))) });
+                }
+
                 foreach (var sprite in spriteList)
                 {
                     sprite.Update(gameTime);

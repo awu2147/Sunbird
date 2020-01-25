@@ -43,6 +43,12 @@ namespace Sunbird.Core
 
         public SamplerState SamplerState { get; set; }
 
+        private Point Anchor { get; set; }
+
+        public Point lastDrag = Point.Zero;
+
+        private Point dragPositionChange;
+
         private float counter = 3;
 
         public Camera(MainGame sender)
@@ -68,22 +74,10 @@ namespace Sunbird.Core
             Drag();
         }
 
-        public Point GetMousePosition()
+        public void Follow(Sprite target, Vector2 offset)
         {
-            MouseState state = Mouse.GetState();
-            return new Point(state.X, state.Y);
+            FollowTransform = Matrix.CreateTranslation(MainGame.Width / 2 - target.Position.X - offset.X, MainGame.Height / 2 - target.Position.Y - offset.Y, 0);            
         }
-
-        public void Follow(Sprite target)
-        {
-            FollowTransform = Matrix.CreateTranslation(-target.Position.X + MainGame.Width / 2, -target.Position.Y + MainGame.Height / 2, 0);            
-        }
-
-        private Point anchor;
-
-        private Point lastDrag = Point.Zero;
-
-        private Point dragPositionChange;
 
         public void Drag()
         {
@@ -102,10 +96,10 @@ namespace Sunbird.Core
                     if (peripherals.MouseTapped(peripherals.currentMouseState.MiddleButton, peripherals.previousMouseState.MiddleButton))
                     {                      
                         peripherals.MiddleButtonReleased += peripherals_MiddleButtonReleased;
-                        anchor = GetMousePosition();
+                        Anchor = Peripherals.GetMouseWindowPosition();
                     }
-                    var currentPosition = GetMousePosition();
-                    dragPositionChange = currentPosition - anchor;
+                    var currentPosition = Peripherals.GetMouseWindowPosition();
+                    dragPositionChange = currentPosition - Anchor;
                     DragTransform = Matrix.CreateTranslation(lastDrag.X + dragPositionChange.X, lastDrag.Y + dragPositionChange.Y, 0);
                 }
                 else

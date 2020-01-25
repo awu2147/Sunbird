@@ -73,7 +73,7 @@ namespace Sunbird.External
         public override void Update(GameTime gameTime)
         {
             MoveUpdate();
-            MainGame.Camera.Follow(this);
+            MainGame.Camera.Follow(this, new Vector2(10,10));
             base.Update(gameTime);
         }
 
@@ -231,7 +231,7 @@ namespace Sunbird.External
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            base.Draw(gameTime, spriteBatch);
+            //base.Draw(gameTime, spriteBatch);
         }
     }
 }

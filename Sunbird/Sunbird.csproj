@@ -43,11 +43,14 @@
   <ItemGroup>
     <Compile Include="Controllers\Animator.cs" />
     <Compile Include="Core\Camera.cs" />
+    <Compile Include="Core\Coord.cs" />
+    <Compile Include="Core\Cube.cs" />
     <Compile Include="Core\Globals.cs" />
     <Compile Include="Core\IConfig.cs" />
     <Compile Include="Core\Peripherals.cs" />
     <Compile Include="Core\Sprite.cs" />
     <Compile Include="Core\SpriteSheet.cs" />
+    <Compile Include="Core\World.cs" />
     <Compile Include="External\Config.cs" />
     <Compile Include="External\GameState1.cs" />
     <Compile Include="External\LoadingScreen1.cs" />
@@ -63,6 +66,7 @@
     <Compile Include="States\State.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
