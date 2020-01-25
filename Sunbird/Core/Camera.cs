@@ -89,13 +89,12 @@ namespace Sunbird.Core
             }
             else
             {
-                var peripherals = MainGame.Peripherals;
-                if (peripherals.currentMouseState.MiddleButton == ButtonState.Pressed)
+                if (Peripherals.currentMouseState.MiddleButton == ButtonState.Pressed)
                 {
                     MainGame.SamplerState = SamplerState.AnisotropicClamp;
-                    if (peripherals.MouseTapped(peripherals.currentMouseState.MiddleButton, peripherals.previousMouseState.MiddleButton))
+                    if (Peripherals.MouseTapped(Peripherals.currentMouseState.MiddleButton, Peripherals.previousMouseState.MiddleButton))
                     {                      
-                        peripherals.MiddleButtonReleased += peripherals_MiddleButtonReleased;
+                        Peripherals.MiddleButtonReleased += peripherals_MiddleButtonReleased;
                         Anchor = Peripherals.GetMouseWindowPosition();
                     }
                     var currentPosition = Peripherals.GetMouseWindowPosition();
@@ -113,7 +112,7 @@ namespace Sunbird.Core
         {
             lastDrag += dragPositionChange;
             dragPositionChange = Point.Zero;
-            MainGame.Peripherals.MiddleButtonReleased -= peripherals_MiddleButtonReleased;
+            Peripherals.MiddleButtonReleased -= peripherals_MiddleButtonReleased;
         }
 
         public void Push()

@@ -86,7 +86,14 @@ namespace Sunbird.Controllers
         {
             spriteBatch.Draw(SpriteSheet.Texture, Position,
             new Rectangle(PositionMap[CurrentFrame].X, PositionMap[CurrentFrame].Y,
-            SpriteSheet.FrameWidth, SpriteSheet.FrameHeight), Color.White);
+            SpriteSheet.FrameWidth, SpriteSheet.FrameHeight), Color.White * 0.5f);
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, float alpha)
+        {
+            spriteBatch.Draw(SpriteSheet.Texture, Position,
+            new Rectangle(PositionMap[CurrentFrame].X, PositionMap[CurrentFrame].Y,
+            SpriteSheet.FrameWidth, SpriteSheet.FrameHeight), Color.White * alpha);
         }
 
         public void Update(GameTime gameTime)

@@ -15,17 +15,25 @@ using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
-
 namespace Sunbird.Core
 {
-    public interface IConfig
+    public class GhostMarker : Sprite
     {
-        Keys North { get; set; }
-        Keys East { get; set; }
-        Keys South { get; set; }
-        Keys West { get; set; }
+        private GhostMarker()
+        {
 
-        int WindowWidth { get; set; }
-        int WindowHeight { get; set; }
+        }
+
+        public GhostMarker(SpriteSheet spriteSheet) : base(spriteSheet)
+        {
+
+        }
+
+        public static GhostMarker CreateGhostMarker(MainGame mainGame, string path)
+        {
+            var spriteSheet = new SpriteSheet(mainGame.Content.Load<Texture2D>(path), 1, 1) { TexturePath = path };
+            return new GhostMarker(spriteSheet) { Alpha = 0.25f };
+        }
+
     }
 }

@@ -28,33 +28,28 @@ namespace Sunbird.Core
         }
     }
 
-    public class Peripherals
+    public static class Peripherals
     {
-        public MouseState currentMouseState { get; set; }
-        public MouseState previousMouseState { get; set; }
-        public KeyboardState currentKeyboardState { get; set; }
-        public KeyboardState previousKeyboardState { get; set; }
-        public Keys[] currentPressedKeys { get; set; }
-        public Keys[] previousPressedKeys { get; set; }
+        public static MouseState currentMouseState { get; set; }
+        public static MouseState previousMouseState { get; set; }
+        public static KeyboardState currentKeyboardState { get; set; }
+        public static KeyboardState previousKeyboardState { get; set; }
+        public static Keys[] currentPressedKeys { get; set; }
+        public static Keys[] previousPressedKeys { get; set; }
 
-        public event EventHandler<KeyReleasedEventArgs> KeyReleased;
-        public event EventHandler<EventArgs> MiddleButtonReleased;
-        public event EventHandler<EventArgs> LeftButtonReleased;
-        public event EventHandler<EventArgs> RightButtonReleased;
+        public static event EventHandler<KeyReleasedEventArgs> KeyReleased;
+        public static event EventHandler<EventArgs> MiddleButtonReleased;
+        public static event EventHandler<EventArgs> LeftButtonReleased;
+        public static event EventHandler<EventArgs> RightButtonReleased;
 
-        public Peripherals()
-        {
-            
-        }
-
-        public void PreUpdate()
+        public static void PreUpdate()
         {
             currentMouseState = Mouse.GetState();
             currentKeyboardState = Keyboard.GetState();
             currentPressedKeys = currentKeyboardState.GetPressedKeys();
         }
 
-        public void PostUpdate()
+        public static void PostUpdate()
         {
             CheckForRelease();
 
@@ -63,7 +58,7 @@ namespace Sunbird.Core
             previousPressedKeys = currentPressedKeys;
         }
 
-        public void CheckForRelease()
+        public static void CheckForRelease()
         {
             if (previousPressedKeys != null)
             {
@@ -91,25 +86,25 @@ namespace Sunbird.Core
             //Mouse.GetState().ScrollWheelValue
         }
 
-        public void OnKeyReleased(KeyReleasedEventArgs e)
+        public static void OnKeyReleased(KeyReleasedEventArgs e)
         {
             EventHandler<KeyReleasedEventArgs> handler = KeyReleased;
             handler?.Invoke(null, e);
         }
 
-        public void OnMiddleMouseButtonReleased()
+        public static void OnMiddleMouseButtonReleased()
         {
             EventHandler<EventArgs> handler = MiddleButtonReleased;
             handler?.Invoke(null, null);
         }
 
-        public void OnLeftMouseButtonReleased()
+        public static void OnLeftMouseButtonReleased()
         {
             EventHandler<EventArgs> handler = LeftButtonReleased;
             handler?.Invoke(null, null);
         }
 
-        public void OnRightMouseButtonReleased()
+        public static void OnRightMouseButtonReleased()
         {
             EventHandler<EventArgs> handler = RightButtonReleased;
             handler?.Invoke(null, null);
@@ -181,27 +176,27 @@ namespace Sunbird.Core
             }
         }
 
-        public bool KeyTapped(Keys key)
+        public static bool KeyTapped(Keys key)
         {
             return (currentKeyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key));
         }
 
-        public bool KeyPressed(Keys key)
+        public static bool KeyPressed(Keys key)
         {
             return currentPressedKeys.Contains(key);
         }
 
-        public bool KeysPressed(Keys key1, Keys key2)
+        public static bool KeysPressed(Keys key1, Keys key2)
         {
             return currentPressedKeys.Contains(key1) && currentPressedKeys.Contains(key2);
         }
 
-        public bool MouseTapped(ButtonState currentButton, ButtonState previousButton)
+        public static bool MouseTapped(ButtonState currentButton, ButtonState previousButton)
         {          
             return (currentButton == ButtonState.Pressed && previousButton == ButtonState.Released);
         }
 
-        public bool MousePressed(ButtonState currentButton)
+        public static bool MousePressed(ButtonState currentButton)
         {
             return (currentButton == ButtonState.Pressed);
         }

@@ -15,14 +15,17 @@ using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
+using Sunbird.Serialization;
+
+//TODO: LocalOriginToCoord().
 
 namespace Sunbird.Core
 {
     public static class World
     {
-        public static int Scale { get; set; } = 3;
-        public static int TopFaceGridWidth { get; set; } = 24;
-        public static int TopFaceGridHeight { get; set; } = 12;
+        private static int Scale { get; set; } = 3;
+        private static int TopFaceGridWidth { get; set; } = 24;
+        private static int TopFaceGridHeight { get; set; } = 12;
 
         private static List<Rectangle> TopFaceAreaC { get; set; } = new List<Rectangle>()
         {

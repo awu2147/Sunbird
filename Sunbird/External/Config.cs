@@ -23,13 +23,13 @@ namespace Sunbird.External
 {
     public class Config : IConfig
     {
-        [XmlIgnore]
-        public MainGame MainGame { get; set; }
-
         public Keys North { get; set; }
         public Keys East { get; set; }
         public Keys South { get; set; }
         public Keys West { get; set; }
+
+        public int WindowWidth { get; set; }
+        public int WindowHeight { get; set; }
 
         public Config()
         {
@@ -38,12 +38,15 @@ namespace Sunbird.External
 
         public Config(MainGame mainGame)
         {
-            MainGame = mainGame;
             mainGame.Exiting += MainGame_Exiting;
+
+            // Default values here;
             North = Keys.W;
             East = Keys.D;
             South = Keys.S;
             West = Keys.A;
+            WindowWidth = 1200;
+            WindowHeight = 800;
         }
 
         public void LoadContent(MainGame mainGame)

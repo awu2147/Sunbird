@@ -28,22 +28,31 @@ namespace Sunbird
         private SpriteBatch spriteBatch;
         public State CurrentState { get; set; }
         public Config Config { get; set; }
-        public Peripherals Peripherals { get; set; }
         public Camera Camera { get; set; }
         public SamplerState SamplerState { get; set; }
         public SpriteFont DefaultFont { get; set; }
         public int Width { get { return graphics.PreferredBackBufferWidth; } }
         public int Height { get { return graphics.PreferredBackBufferHeight; } }
+        public bool CleanLoad { get; set; } = true;
 
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            //IsFixedTimeStep = true;
 
-            graphics.PreferredBackBufferWidth = 900;
-            graphics.PreferredBackBufferHeight = 600;
+            if (CleanLoad == true)
+            {
+                Config = new Config(this);
+            }
+            else
+            {
+                Config = Serializer.ReadXML<Config>("Config.xml");
+                Config.LoadContent(this);
+            }
+
+            graphics.PreferredBackBufferWidth = Config.WindowWidth;
+            graphics.PreferredBackBufferHeight = Config.WindowHeight;
         }
 
         /// <summary>
@@ -57,16 +66,31 @@ namespace Sunbird
             // TODO: Add your initialization logic here
 
             Templates.InitializeTemplates();
-            //Config = new Config(this);
-            Config = Serializer.ReadXML<Config>("Config.xml");
-            Config.LoadContent(this);
 
-            Peripherals = new Peripherals();
             Camera = new Camera(this);
             SamplerState = SamplerState.PointClamp;
             DefaultFont = Content.Load<SpriteFont>("DefaultFont");
 
+            if (CleanLoad == true)
+            {
+
+            }
+            else
+            {
+                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml");
+                cubeFactoryData.SyncOut();
+            }
+
+            Exiting += MainGame_Exiting;
+
             base.Initialize();
+        }
+
+        private void MainGame_Exiting(object sender, EventArgs e)
+        {
+            var cubeFactoryData = new CubeFactoryData();
+            cubeFactoryData.SyncIn();
+            cubeFactoryData.Serialize();
         }
 
         /// <summary>
@@ -79,7 +103,7 @@ namespace Sunbird
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //CurrentState = new LoadingScreen(this, GraphicsDevice, Content);
-            CurrentState = new GameState1(this, GraphicsDevice, Content);
+            CurrentState = new MapBuilder(this, GraphicsDevice, Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -107,6 +131,7 @@ namespace Sunbird
 
             // TODO: Add your update logic here
             CurrentState.Update(gameTime);
+
             if (Peripherals.KeyTapped(Keys.C))
             {
                 var i = (int)Camera.CurrentMode + 1;
@@ -118,6 +143,7 @@ namespace Sunbird
                 Debug.Print(Camera.CurrentMode.ToString());
             }
             Camera.Update();
+
             Peripherals.PostUpdate();
 
             base.Update(gameTime);
@@ -131,39 +157,27 @@ namespace Sunbird
         {
             GraphicsDevice.Clear(Color.LightGray);
 
+            // Primary batch
             spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-            // TODO: Add your drawing code here
+
             CurrentState.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
-            if (Camera.CurrentMode == CameraMode.Follow)
+
+            // Overlay batch
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            if (CurrentState is MapBuilder)
             {
-                spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState.PointClamp);
-                if (CurrentState is GameState1)
-                {
-                    var a = CurrentState as GameState1;
-                    spriteBatch.DrawString(DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(Camera).ToString()}", Peripherals.GetCornerWorldPosition(Camera, 10, 10).ToVector2(), Color.Black);
-                    spriteBatch.DrawString(DefaultFont, $"Player World Position {a.Player.Position.ToString()}", Peripherals.GetCornerWorldPosition(Camera, 10, 30).ToVector2(), Color.Black);
-                    spriteBatch.DrawString(DefaultFont, $"Normalized Position {World.TopFace_NormalizedPoint(Peripherals.GetMouseWorldPosition(Camera))}", Peripherals.GetCornerWorldPosition(Camera, 10, 50).ToVector2(), Color.Black);
-                    spriteBatch.DrawString(DefaultFont, $"Grid Coords {World.TopFace_PointToGridCoord(Peripherals.GetMouseWorldPosition(Camera))}", Peripherals.GetCornerWorldPosition(Camera, 10, 70).ToVector2(), Color.Black);
-                    spriteBatch.DrawString(DefaultFont, $"Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera))}", Peripherals.GetCornerWorldPosition(Camera, 10, 90).ToVector2(), Color.Black);
-                }
-                spriteBatch.End();
+                var a = CurrentState as MapBuilder;
+                spriteBatch.DrawString(DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(Camera).ToString()}", new Vector2(10, 10), Color.Black);
+                spriteBatch.DrawString(DefaultFont, $"Player World Position {a.Player.Position.ToString()}", new Vector2(10, 30), Color.Black);
+                spriteBatch.DrawString(DefaultFont, $"Normalized Position {World.TopFace_NormalizedPoint(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 50), Color.Black);
+                spriteBatch.DrawString(DefaultFont, $"Grid Coords {World.TopFace_PointToGridCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 70), Color.Black);
+                spriteBatch.DrawString(DefaultFont, $"Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 90), Color.Black);
+                spriteBatch.DrawString(DefaultFont, $"Items in Sprite List: { a.SpriteList.Count().ToString()}", new Vector2(10, 110), Color.Black);
+                spriteBatch.Draw(Content.Load<Texture2D>(CubeFactory.CurrentPath), new Vector2(10, 130), Color.White);
             }
-            else
-            {
-                spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                if (CurrentState is GameState1)
-                {
-                    var a = CurrentState as GameState1;
-                    spriteBatch.DrawString(DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(Camera).ToString()}", new Vector2(10,10), Color.Black);
-                    spriteBatch.DrawString(DefaultFont, $"Player World Position {a.Player.Position.ToString()}", new Vector2(10, 30), Color.Black);
-                    spriteBatch.DrawString(DefaultFont, $"Normalized Position {World.TopFace_NormalizedPoint(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 50), Color.Black);
-                    spriteBatch.DrawString(DefaultFont, $"Grid Coords {World.TopFace_PointToGridCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 70), Color.Black);
-                    spriteBatch.DrawString(DefaultFont, $"Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 90), Color.Black);
-                }
-                spriteBatch.End();
-            }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

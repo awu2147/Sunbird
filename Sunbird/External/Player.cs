@@ -29,18 +29,15 @@ namespace Sunbird.External
         Running
     }
 
-    public class Player : Sprite, IControllable
+    public class Player : Sprite
     {
         private MainGame MainGame { get; set; }
         public Direction Direction { get; set; } = Direction.South;
         public Movement Movement { get; set; } = Movement.Standing;
-
-        [XmlIgnore]
-        public Peripherals Peripherals { get; set; }
         private Config Config { get; set; }
 
         private List<Keys> MovementKeyList => new List<Keys>() { Config.North, Config.East, Config.South, Config.West };
-        public float Speed { get; set; } = 3;
+        public float Speed { get; set; } = 5;
 
         public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_North => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_North, Config.North); };
         public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_West => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_West, Config.West); };
@@ -58,7 +55,6 @@ namespace Sunbird.External
             Animator.Sender = this;
             MainGame = mainGame;
             Config = mainGame.Config;
-            Peripherals = mainGame.Peripherals;
         }
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
@@ -67,7 +63,6 @@ namespace Sunbird.External
             Animator.Sender = this;
             MainGame = mainGame;
             Config = mainGame.Config;
-            Peripherals = mainGame.Peripherals;
         }
 
         public override void Update(GameTime gameTime)

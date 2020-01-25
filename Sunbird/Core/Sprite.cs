@@ -26,6 +26,10 @@ namespace Sunbird.Core
 
         public Coord Coords { get; set; }
 
+        public bool IsHidden { get; set; }
+
+        public float Alpha { get; set; } = 1f;
+
         public Sprite()
         {
 
@@ -47,6 +51,11 @@ namespace Sunbird.Core
             Animator.Sender = this;
         }
 
+        public void ReplaceSpriteSheet(SpriteSheet newSheet)
+        {
+            Animator.SpriteSheet = newSheet;
+        }
+
         public virtual void Update(GameTime gameTime)
         {
             Animator.Update(gameTime);
@@ -54,7 +63,10 @@ namespace Sunbird.Core
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Animator.Draw(gameTime, spriteBatch);
+            if (IsHidden == false)
+            {
+                Animator.Draw(gameTime, spriteBatch, Alpha);
+            }
         }
     }
 }

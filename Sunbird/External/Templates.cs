@@ -18,6 +18,7 @@ namespace Sunbird.External
 
         public static Dictionary<int, ILoadingScreenFactory> LoadingScreenTemplates { get; set; } = new Dictionary<int, ILoadingScreenFactory>();
 
+
         public static void InitializeTemplates()
         {
             CreateLoadingScreenTemplates();
@@ -26,6 +27,11 @@ namespace Sunbird.External
         private static void CreateLoadingScreenTemplates()
         {
             LoadingScreenTemplates.Add(0, new LoadingScreen1_Factory());
+        }
+
+        private static void CompileCubeLibrary()
+        {
+
         }
 
     }
