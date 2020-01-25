@@ -21,7 +21,6 @@ namespace Sunbird.Core
     public static class World
     {
         public static int Scale { get; set; } = 3;
-
         public static int TopFaceGridWidth { get; set; } = 24;
         public static int TopFaceGridHeight { get; set; } = 12;
 
@@ -93,7 +92,7 @@ namespace Sunbird.Core
         }
 
         /// <summary>
-        /// Maps a point in the world to a position in rectangle of size (Scaled(TopFaceGridWidth), Scaled(TopFaceGridWidth)), with top left corner at the origin.
+        /// Maps a point in the world to a position in rectangle of size (Scaled(TopFaceGridWidth), Scaled(TopFaceGridWidth)), with the top left corner at the origin.
         /// </summary>
         /// <param name="gridCoord">Top Face grid coord.</param>
         /// <returns></returns>
@@ -141,21 +140,21 @@ namespace Sunbird.Core
         }
 
         /// <summary>
-        /// Takes a point in the world returns the corresponding Top Face grid coord.
+        /// Takes a point in the world and returns the corresponding Top Face grid coord.
         /// </summary>
         /// <param name="point">World position as a point.</param>
         /// <returns></returns>
         public static Coord TopFace_PointToGridCoord(Point point)
         {
             var x = point.X / Scaled(TopFaceGridWidth);
-            var xQuo = point.X % Scaled(TopFaceGridWidth);
-            if (point.X < 0 && xQuo != 0)
+            var xRem = point.X % Scaled(TopFaceGridWidth); // We need remainder check to preserve grid edge schema after translation.
+            if (point.X < 0 && xRem != 0)
             {
                 x -= 1;
             }
             var y = point.Y / Scaled(TopFaceGridHeight);
-            var yQuo = point.Y % Scaled(TopFaceGridHeight);
-            if (point.Y < 0 && yQuo != 0)
+            var yRem = point.Y % Scaled(TopFaceGridHeight);
+            if (point.Y < 0 && yRem != 0)
             {
                 y -= 1;
             }

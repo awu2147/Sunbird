@@ -55,7 +55,8 @@ namespace Sunbird.External
             //spriteList.Add(new Sprite(bgSheet) { Position = new Vector2(0, 0) });
 
             var spriteSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/GrassCube"), 1, 1) { TexturePath = "Temp/GrassCube" };
-            spriteList.Add(new Cube(spriteSheet) { Position = new Vector2(0, 0) });
+            //TODO: LocalOriginToCoord().
+            spriteList.Add(new Cube(spriteSheet) { Position = Vector2.Zero, Coords = Coord.Zero});
 
             //var spriteSheet2 = new SpriteSheet(Content.Load<Texture2D>("Temp/testtile2"), 1, 1) { TexturePath = "Temp/testtile2" };
             //spriteList.Add(new Sprite(spriteSheet2) { Position = new Vector2(90, 50) });
@@ -112,7 +113,8 @@ namespace Sunbird.External
                 if (MainGame.Peripherals.MouseTapped(MainGame.Peripherals.currentMouseState.LeftButton, MainGame.Peripherals.previousMouseState.LeftButton))
                 {
                     var spriteSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/GrassCube"), 1, 1) { TexturePath = "Temp/GrassCube" };
-                    spriteList.Add(new Cube(spriteSheet) { Position = World.TopFace_CoordToLocalOrigin(World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera))) });
+                    var cubeCoords = World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera));
+                    spriteList.Add(new Cube(spriteSheet) { Position = World.TopFace_CoordToLocalOrigin(cubeCoords), Coords = cubeCoords});
                 }
 
                 foreach (var sprite in spriteList)
@@ -126,6 +128,18 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+
+                spriteList.Sort((x, y) =>
+                {
+                    //int result = decimal.Compare((decimal)x.positionBase.Y, (decimal)y.positionBase.Y);
+                    int result = decimal.Compare(x.Coords.X - x.Coords.Y, y.Coords.X - y.Coords.Y);
+                    //if (result == 0)
+                    //{
+                    //    result = decimal.Compare((decimal)x.positionBase.Y, (decimal)y.positionBase.Y);
+                    //}
+                    return result;
+                });
+
                 foreach (var sprite in spriteList)
                 {
                     sprite.Draw(gameTime, spriteBatch);

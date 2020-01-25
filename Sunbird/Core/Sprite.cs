@@ -24,6 +24,8 @@ namespace Sunbird.Core
 
         public Animator Animator { get; set; }
 
+        public Coord Coords { get; set; }
+
         public Sprite()
         {
 
