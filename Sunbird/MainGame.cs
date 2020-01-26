@@ -175,7 +175,7 @@ namespace Sunbird
                 spriteBatch.DrawString(DefaultFont, $"Mouse Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera), a.Altitude)}", new Vector2(10, 30), Color.Black);
                 spriteBatch.DrawString(DefaultFont, $"Player Coords: { a.Player.Coords.ToString()}", new Vector2(10, 50), Color.Black);
                 spriteBatch.DrawString(DefaultFont, $"Altitude: { a.Altitude.ToString()}", new Vector2(10, 70), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Sprites in List: { a.MapList[0].Count().ToString()}", new Vector2(10, 90), Color.Black);
+                spriteBatch.DrawString(DefaultFont, $"Sprites in List: { a.MapList[a.Altitude].Count().ToString()}", new Vector2(10, 90), Color.Black);
                 spriteBatch.Draw(Content.Load<Texture2D>(CubeFactory.CurrentPath), new Vector2(10, 110), Color.White);
             }
 

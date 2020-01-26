@@ -15,11 +15,6 @@ namespace Sunbird.Core
         public XDictionary(int capacity) : base(capacity) { }
         public XDictionary(int capacity, IEqualityComparer<TKey> comparer) : base(capacity, comparer) { }
 
-        public void SetAltitude()
-        {
-
-        }
-
         #region IXmlSerializable Members
         public System.Xml.Schema.XmlSchema GetSchema()
         {
