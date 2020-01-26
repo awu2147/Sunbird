@@ -33,7 +33,7 @@ namespace Sunbird
         public SpriteFont DefaultFont { get; set; }
         public int Width { get { return graphics.PreferredBackBufferWidth; } }
         public int Height { get { return graphics.PreferredBackBufferHeight; } }
-        public bool CleanLoad { get; set; } = true;
+        public bool CleanLoad { get; set; } = false;
 
         public MainGame()
         {
@@ -63,8 +63,6 @@ namespace Sunbird
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             Templates.InitializeTemplates();
 
             Camera = new Camera(this);
@@ -99,13 +97,11 @@ namespace Sunbird
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            // CORE: Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //CurrentState = new LoadingScreen(this, GraphicsDevice, Content);
             CurrentState = new MapBuilder(this, GraphicsDevice, Content);
 
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -114,7 +110,7 @@ namespace Sunbird
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
@@ -129,7 +125,6 @@ namespace Sunbird
 
             Peripherals.PreUpdate();
 
-            // TODO: Add your update logic here
             CurrentState.Update(gameTime);
 
             if (Peripherals.KeyTapped(Keys.C))
@@ -166,17 +161,17 @@ namespace Sunbird
 
             // Overlay batch
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
             if (CurrentState is MapBuilder)
             {
                 var a = CurrentState as MapBuilder;
                 spriteBatch.DrawString(DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(Camera).ToString()}", new Vector2(10, 10), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Player World Position {a.Player.Position.ToString()}", new Vector2(10, 30), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Normalized Position {World.TopFace_NormalizedPoint(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 50), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Grid Coords {World.TopFace_PointToGridCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 70), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 90), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Items in Sprite List: { a.SpriteList.Count().ToString()}", new Vector2(10, 110), Color.Black);
-                spriteBatch.Draw(Content.Load<Texture2D>(CubeFactory.CurrentPath), new Vector2(10, 130), Color.White);
+                spriteBatch.DrawString(DefaultFont, $"Mouse Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera))}", new Vector2(10, 30), Color.Black);
+                spriteBatch.DrawString(DefaultFont, $"Player Coords: { a.Player.Coords.ToString()}", new Vector2(10, 50), Color.Black);
+                spriteBatch.DrawString(DefaultFont, $"Sprites in List: { a.SpriteList.Count().ToString()}", new Vector2(10, 70), Color.Black);
+                spriteBatch.Draw(Content.Load<Texture2D>(CubeFactory.CurrentPath), new Vector2(10, 90), Color.White);
             }
+
             spriteBatch.End();
 
             base.Draw(gameTime);

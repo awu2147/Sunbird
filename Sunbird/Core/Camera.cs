@@ -45,11 +45,12 @@ namespace Sunbird.Core
 
         private Point Anchor { get; set; }
 
-        public Point lastDrag = Point.Zero;
+        public Point LastDrag { get; set; }  = Point.Zero;
 
-        private Point dragPositionChange;
+        private Point DragPositionChange { get; set; }
 
-        private float counter = 3;
+        // TODO: Rework Push() mode.
+        private float counter { get; set; } = 3;
 
         public Camera(MainGame sender)
         {
@@ -84,8 +85,7 @@ namespace Sunbird.Core
             if (CurrentMode != CameraMode.Drag)
             {
                 DragTransform = FollowTransform;
-                lastDrag.X = (int)FollowTransform.M41;
-                lastDrag.Y = (int)FollowTransform.M42;
+                LastDrag = new Point((int)FollowTransform.M41, (int)FollowTransform.M42);
             }
             else
             {
@@ -98,8 +98,8 @@ namespace Sunbird.Core
                         Anchor = Peripherals.GetMouseWindowPosition();
                     }
                     var currentPosition = Peripherals.GetMouseWindowPosition();
-                    dragPositionChange = currentPosition - Anchor;
-                    DragTransform = Matrix.CreateTranslation(lastDrag.X + dragPositionChange.X, lastDrag.Y + dragPositionChange.Y, 0);
+                    DragPositionChange = currentPosition - Anchor;
+                    DragTransform = Matrix.CreateTranslation(LastDrag.X + DragPositionChange.X, LastDrag.Y + DragPositionChange.Y, 0);
                 }
                 else
                 {
@@ -110,8 +110,8 @@ namespace Sunbird.Core
 
         private void peripherals_MiddleButtonReleased(object sender, EventArgs e)
         {
-            lastDrag += dragPositionChange;
-            dragPositionChange = Point.Zero;
+            LastDrag += DragPositionChange;
+            DragPositionChange = Point.Zero;
             Peripherals.MiddleButtonReleased -= peripherals_MiddleButtonReleased;
         }
 

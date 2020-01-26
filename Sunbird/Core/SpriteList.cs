@@ -20,7 +20,11 @@ namespace Sunbird.Core
 {
     public class SpriteList<T> : List<T>
     {
-
+        /// <summary>
+        /// Add to list if coord unoccupied.
+        /// </summary>
+        /// <param name="sprite">The sprite to be added.</param>
+        /// <param name="gameState">The state instance that this list belongs to.</param>
         public void Add(Sprite sprite, IWorldState gameState)
         {
             if (!gameState.OccupiedCoords.Contains(sprite.Coords))
@@ -30,19 +34,20 @@ namespace Sunbird.Core
             }
             else
             {
-                Debug.Print($"Already a sprite at {sprite.Coords} ");
+                //Debug.Print($"Already a sprite at {sprite.Coords}");
             }
         }
 
-        public void AddIgnore(Sprite sprite, IWorldState gameState)
+        public void Remove(Sprite sprite, IWorldState gameState)
         {
-            if (!gameState.OccupiedCoords.Contains(sprite.Coords))
+            if (gameState.OccupiedCoords.Contains(sprite.Coords))
             {
-                gameState.SpriteList.Add(sprite);
+                gameState.SpriteList.Remove(sprite);
+                gameState.OccupiedCoords.Remove(sprite.Coords);
             }
             else
             {
-                Debug.Print($"Already a sprite at {sprite.Coords} ");
+                //Debug.Print($"Already a sprite at {sprite.Coords}");
             }
         }
 

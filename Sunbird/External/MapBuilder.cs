@@ -58,12 +58,13 @@ namespace Sunbird.External
             var cube = CubeFactory.CreateCube(MainGame, "Temp/GrassCube", Vector2.Zero);
             SpriteList.Add(cube, this);
 
-            var playerSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/testplayer"), 2, 6) { TexturePath = "Temp/testplayer" };
-            var playerAnimator = new Animator(playerSheet, null, 0, 2, 0.2f, AnimationState.Loop);
-            Player = new Player(MainGame, playerAnimator);
+            var playerSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/PirateGirlSheet"), 1, 4) { TexturePath = "Temp/PirateGirlSheet" };
+            var playerAnimator = new Animator(playerSheet, null, 0, 1, 0.2f, AnimationState.Loop);
+            Player = new Player(MainGame, playerAnimator) { DrawPriority = 2 };
             SpriteList.Add(Player);
 
             GhostMarker = GhostMarker.CreateGhostMarker(MainGame, "Temp/GrassCube");
+            GhostMarker.DrawPriority = 1;
             SpriteList.Add(GhostMarker);
 
             MainGame.Exiting += MainGame_Exiting;
@@ -130,6 +131,19 @@ namespace Sunbird.External
                     SpriteList.Add(cube, this);
                 }
 
+                if (Peripherals.MousePressed(Peripherals.currentMouseState.RightButton) && MainGame.IsActive == true)
+                {
+                    for (int i = 0; i < SpriteList.Count(); i++)
+                    {
+                        var sprite = SpriteList[i];
+                        if (sprite is Cube && sprite.Coords == topFaceCoords)
+                        {
+                            SpriteList.Remove(sprite, this);
+                            i--;
+                        }
+                    }
+                }
+
                 //if (Peripherals.KeyPressed(Keys.F))
                 //{
                 //    CubeMarker.Coords = topFaceCoords;
@@ -148,11 +162,13 @@ namespace Sunbird.External
                 GhostMarker.Update(gameTime);
                 if (OccupiedCoords.Contains(topFaceCoords))
                 {
-                    GhostMarker.IsHidden = true;
+                    //GhostMarker.IsHidden = true;
+                    GhostMarker.ReplaceSpriteSheet(new SpriteSheet(MainGame.Content.Load<Texture2D>("Temp/TopFaceSelectionMarker"), 1, 1));
                 }
                 else
                 {
-                    GhostMarker.IsHidden = false;
+                    GhostMarker.ReplaceSpriteSheet(new SpriteSheet(Content.Load<Texture2D>(CubeFactory.CurrentPath), 1, 1) { TexturePath = CubeFactory.CurrentPath });
+                    //GhostMarker.IsHidden = false;
                 }            
 
                 foreach (var sprite in SpriteList)
@@ -164,7 +180,7 @@ namespace Sunbird.External
 
         private void Marker_KeyReleased(object sender, KeyReleasedEventArgs e)
         {
-            if (e.key == Keys.F)
+            if (e.Key == Keys.F)
             {            
                 SpriteList.Remove(GhostMarker);
                 GhostMarker.IsHidden = true;
@@ -180,10 +196,10 @@ namespace Sunbird.External
                 SpriteList.Sort((x, y) =>
                 {
                     int result = decimal.Compare(x.Coords.X - x.Coords.Y, y.Coords.X - y.Coords.Y);
-                    //if (result == 0)
-                    //{
-                    //    result = decimal.Compare((decimal)x.positionBase.Y, (decimal)y.positionBase.Y);
-                    //}
+                    if (result == 0)
+                    {
+                        result = decimal.Compare(x.DrawPriority, y.DrawPriority);
+                    }
                     return result;
                 });
 

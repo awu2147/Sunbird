@@ -32,7 +32,7 @@ namespace Sunbird.Core
         public static GhostMarker CreateGhostMarker(MainGame mainGame, string path)
         {
             var spriteSheet = new SpriteSheet(mainGame.Content.Load<Texture2D>(path), 1, 1) { TexturePath = path };
-            return new GhostMarker(spriteSheet) { Alpha = 0.25f };
+            return new GhostMarker(spriteSheet) { Alpha = 0.3f };
         }
 
     }

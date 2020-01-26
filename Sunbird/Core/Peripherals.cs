@@ -20,11 +20,11 @@ namespace Sunbird.Core
 {
     public class KeyReleasedEventArgs : EventArgs
     {
-        public Keys key { get; set; }
+        public Keys Key { get; set; }
 
         public KeyReleasedEventArgs(Keys key)
         {
-            this.key = key;
+            Key = key;
         }
     }
 

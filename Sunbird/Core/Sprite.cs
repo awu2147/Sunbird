@@ -30,6 +30,8 @@ namespace Sunbird.Core
 
         public float Alpha { get; set; } = 1f;
 
+        public int DrawPriority { get; set; }
+
         public Sprite()
         {
 
