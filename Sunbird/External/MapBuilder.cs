@@ -29,6 +29,7 @@ namespace Sunbird.External
         public Player Player { get; set; }
         private bool IsLoading { get; set; }
         public int Altitude { get; set; } = 0;
+        public bool LayerMode { get; set; }
 
         private MapBuilder()
         {
@@ -68,6 +69,8 @@ namespace Sunbird.External
             GhostMarker.DrawPriority = 1;
             MapList[Altitude].Add(GhostMarker);
 
+            Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
+            Peripherals.ScrollWheelDown += Peripherals_ScrollWheelDown;
             MainGame.Exiting += MainGame_Exiting;
         }
 
@@ -88,6 +91,7 @@ namespace Sunbird.External
             //OccupiedCoords = XmlData.OccupiedCoords;
             MapList = XmlData.MapList;
             Altitude = XmlData.Altitude;
+            LayerMode = XmlData.LayerMode;
             foreach (var layer in MapList)
             {
                 foreach (var sprite in layer.Value)
@@ -113,7 +117,25 @@ namespace Sunbird.External
             IsLoading = false;
             MainGame.CurrentState = this;
 
+            Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
+            Peripherals.ScrollWheelDown += Peripherals_ScrollWheelDown;
             MainGame.Exiting += MainGame_Exiting;
+        }
+
+        private void Peripherals_ScrollWheelDown(object sender, EventArgs e)
+        {
+            if (MainGame.IsActive == true)
+            {
+                Altitude--;
+            }
+        }
+
+        private void Peripherals_ScrollWheelUp(object sender, EventArgs e)
+        {
+            if (MainGame.IsActive == true)
+            {
+                Altitude++;
+            }
         }
 
         public GhostMarker GhostMarker { get; set; }
@@ -134,13 +156,13 @@ namespace Sunbird.External
 
                 if (Peripherals.KeyTapped(Keys.Q))
                 {
-                    if (Altitude == 0)
+                    if (LayerMode == false)
                     {
-                        Altitude++;
+                        LayerMode = true;
                     }
                     else
                     {
-                        Altitude--;
+                        LayerMode = false;
                     }
                 }
 
@@ -251,12 +273,12 @@ namespace Sunbird.External
 
                     foreach (var sprite in MapList[key])
                     {
-                        if (Altitude != key && sprite is Cube)
+                        if (Altitude != key && sprite is Cube && LayerMode == true)
                         {
-                            sprite.Alpha = 0.2f;
+                            sprite.Alpha = 0.1f;
                             sprite.Draw(gameTime, spriteBatch);
                         }
-                        else if (Altitude == key && sprite is Cube)
+                        else if ((Altitude == key || LayerMode == false) && sprite is Cube)
                         {
                             sprite.Alpha = 1f;
                             sprite.Draw(gameTime, spriteBatch);

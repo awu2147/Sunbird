@@ -36,26 +36,33 @@ namespace Sunbird.Core
         public static KeyboardState previousKeyboardState { get; set; }
         public static Keys[] currentPressedKeys { get; set; }
         public static Keys[] previousPressedKeys { get; set; }
+        public static int currentScrollWheelValue { get; set; }
+        public static int previousScrollWheelValue { get; set; }
 
         public static event EventHandler<KeyReleasedEventArgs> KeyReleased;
         public static event EventHandler<EventArgs> MiddleButtonReleased;
         public static event EventHandler<EventArgs> LeftButtonReleased;
         public static event EventHandler<EventArgs> RightButtonReleased;
+        public static event EventHandler<EventArgs> ScrollWheelUp;
+        public static event EventHandler<EventArgs> ScrollWheelDown;
 
         public static void PreUpdate()
         {
             currentMouseState = Mouse.GetState();
             currentKeyboardState = Keyboard.GetState();
             currentPressedKeys = currentKeyboardState.GetPressedKeys();
+            currentScrollWheelValue = Mouse.GetState().ScrollWheelValue;
         }
 
         public static void PostUpdate()
         {
             CheckForRelease();
+            CheckForScroll();
 
             previousMouseState = currentMouseState;
             previousKeyboardState = currentKeyboardState;
             previousPressedKeys = currentPressedKeys;
+            previousScrollWheelValue = currentScrollWheelValue;
         }
 
         public static void CheckForRelease()
@@ -83,7 +90,31 @@ namespace Sunbird.Core
             {
                 OnRightMouseButtonReleased();
             }
-            //Mouse.GetState().ScrollWheelValue
+        }
+
+        public static void CheckForScroll()
+        {
+            var change = previousMouseState.ScrollWheelValue - currentScrollWheelValue;
+            if (change > 0)
+            {
+                OnScrollWheelDown();
+            }
+            else if (change < 0)
+            {
+                OnScrollWheelUp();
+            }
+        }
+
+        public static void OnScrollWheelUp()
+        {
+            EventHandler<EventArgs> handler = ScrollWheelUp;
+            handler?.Invoke(null, null);
+        }
+
+        public static void OnScrollWheelDown()
+        {
+            EventHandler<EventArgs> handler = ScrollWheelDown;
+            handler?.Invoke(null, null);
         }
 
         public static void OnKeyReleased(KeyReleasedEventArgs e)
