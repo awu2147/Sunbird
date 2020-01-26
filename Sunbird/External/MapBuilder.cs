@@ -21,18 +21,18 @@ using Sunbird.GUI;
 
 namespace Sunbird.External
 {
-    public class MapBuilder : State, IWorldState
+    public class MapBuilder : State, IWorld
     {
         [XmlIgnore]
         public Texture2D Background { get; set; }
-        public SpriteList<Sprite> SpriteList { get; set; } = new SpriteList<Sprite>();
+        public XDictionary<int, SpriteList<Sprite>> MapList { get; set; } = new XDictionary<int, SpriteList<Sprite>>();
         public Player Player { get; set; }
-        public HashSet<Coord> OccupiedCoords { get; set; } = new HashSet<Coord>();
         private bool IsLoading { get; set; }
+        public int Altitude { get; set; } = 0;
 
         private MapBuilder()
         {
-
+            
         }
 
         public MapBuilder(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
@@ -53,19 +53,20 @@ namespace Sunbird.External
         }
 
         private void CreateContent()
-        {    
+        {
+            MapList.Add(Altitude, new SpriteList<Sprite>());
 
-            var cube = CubeFactory.CreateCube(MainGame, "Temp/GrassCube", Vector2.Zero);
-            SpriteList.Add(cube, this);
+            var cube = CubeFactory.CreateCube(MainGame, "Temp/GrassCube", Coord.Zero, World.GetRelativeCoord(Coord.Zero, Altitude), Altitude);
+            MapList[Altitude].AddCheck(cube);
 
-            var playerSheet = new SpriteSheet(Content.Load<Texture2D>("Temp/PirateGirlSheet"), 1, 4) { TexturePath = "Temp/PirateGirlSheet" };
+            var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 4);
             var playerAnimator = new Animator(playerSheet, null, 0, 1, 0.2f, AnimationState.Loop);
             Player = new Player(MainGame, playerAnimator) { DrawPriority = 2 };
-            SpriteList.Add(Player);
+            MapList[Altitude].Add(Player);
 
-            GhostMarker = GhostMarker.CreateGhostMarker(MainGame, "Temp/GrassCube");
+            GhostMarker = GhostMarker.CreateNew(MainGame, "Temp/GrassCube");
             GhostMarker.DrawPriority = 1;
-            SpriteList.Add(GhostMarker);
+            MapList[Altitude].Add(GhostMarker);
 
             MainGame.Exiting += MainGame_Exiting;
         }
@@ -84,18 +85,22 @@ namespace Sunbird.External
             }
 
             var XmlData = Serializer.ReadXML<MapBuilder>("MapBuilderSave.xml", new Type[] { typeof(Player), typeof(Cube), typeof(GhostMarker) });
-            OccupiedCoords = XmlData.OccupiedCoords;
-            SpriteList = XmlData.SpriteList;
-            foreach (var sprite in SpriteList)
+            //OccupiedCoords = XmlData.OccupiedCoords;
+            MapList = XmlData.MapList;
+            Altitude = XmlData.Altitude;
+            foreach (var layer in MapList)
             {
-                sprite.LoadContent(MainGame, GraphicsDevice, Content);
-                if (sprite is Player)
+                foreach (var sprite in layer.Value)
                 {
-                    Player = sprite as Player;
-                }
-                else if (sprite is GhostMarker)
-                {
-                    GhostMarker = sprite as GhostMarker;
+                    sprite.LoadContent(MainGame, GraphicsDevice, Content);
+                    if (sprite is Player)
+                    {
+                        Player = sprite as Player;
+                    }
+                    else if (sprite is GhostMarker)
+                    {
+                        GhostMarker = sprite as GhostMarker;
+                    }
                 }
             }
 
@@ -117,28 +122,48 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+
+                var relativeTopFaceCoords = World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude);
                 var topFaceCoords = World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera));
 
                 if (Peripherals.KeyTapped(Keys.E))
                 {
                     CubeFactory.FindNext();
-                    GhostMarker.ReplaceSpriteSheet(new SpriteSheet(Content.Load<Texture2D>(CubeFactory.CurrentPath), 1, 1) { TexturePath = CubeFactory.CurrentPath });
+                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CubeFactory.CurrentPath));
+                }
+
+                if (Peripherals.KeyTapped(Keys.Q))
+                {
+                    if (Altitude == 0)
+                    {
+                        Altitude++;
+                    }
+                    else
+                    {
+                        Altitude--;
+                    }
+                }
+
+                if (MapList.ContainsKey(Altitude) == false)
+                {
+                    MapList.Add(Altitude, new SpriteList<Sprite>());
                 }
 
                 if (Peripherals.MousePressed(Peripherals.currentMouseState.LeftButton) && MainGame.IsActive == true)
                 {
-                    var cube = CubeFactory.CreateCube(MainGame, CubeFactory.CurrentPath, World.TopFace_CoordToLocalOrigin(topFaceCoords), topFaceCoords);
-                    SpriteList.Add(cube, this);
+                    var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                    MapList[Altitude].AddCheck(cube);
+                    Debug.Print(cube.Altitude.ToString());
                 }
 
                 if (Peripherals.MousePressed(Peripherals.currentMouseState.RightButton) && MainGame.IsActive == true)
                 {
-                    for (int i = 0; i < SpriteList.Count(); i++)
+                    for (int i = 0; i < MapList[Altitude].Count(); i++)
                     {
-                        var sprite = SpriteList[i];
-                        if (sprite is Cube && sprite.Coords == topFaceCoords)
+                        var sprite = MapList[Altitude][i];
+                        if (sprite is Cube && sprite.Coords == relativeTopFaceCoords)
                         {
-                            SpriteList.Remove(sprite, this);
+                            MapList[Altitude].RemoveCheck(sprite);
                             i--;
                         }
                     }
@@ -157,23 +182,40 @@ namespace Sunbird.External
                 //    }
                 //}
 
-                GhostMarker.Coords = topFaceCoords;
+                Player.Coords = relativeTopFaceCoords;
+                Player.Altitude = Altitude; 
+
+                GhostMarker.Coords = relativeTopFaceCoords;
                 GhostMarker.Position = World.TopFace_CoordToLocalOrigin(topFaceCoords);
                 GhostMarker.Update(gameTime);
-                if (OccupiedCoords.Contains(topFaceCoords))
+                GhostMarker.Altitude = Altitude;
+                if (MapList[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords))
                 {
                     //GhostMarker.IsHidden = true;
-                    GhostMarker.ReplaceSpriteSheet(new SpriteSheet(MainGame.Content.Load<Texture2D>("Temp/TopFaceSelectionMarker"), 1, 1));
+                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker"));
                 }
                 else
                 {
-                    GhostMarker.ReplaceSpriteSheet(new SpriteSheet(Content.Load<Texture2D>(CubeFactory.CurrentPath), 1, 1) { TexturePath = CubeFactory.CurrentPath });
+                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CubeFactory.CurrentPath));
                     //GhostMarker.IsHidden = false;
-                }            
+                }
 
-                foreach (var sprite in SpriteList)
+                var keyList = MapList.Keys.ToList();
+                keyList.Sort();
+
+                foreach (var key in keyList)
                 {
-                    sprite.Update(gameTime);
+                    for (int i = 0; i < MapList[key].Count(); i++) 
+                    {
+                        var sprite = MapList[key][i];
+                        if (sprite.Altitude != key)
+                        {
+                            MapList[key].Remove(sprite);
+                            i--;
+                            MapList[sprite.Altitude].Add(sprite);
+                        }
+                        sprite.Update(gameTime);
+                    }
                 }
             }
         }
@@ -181,8 +223,8 @@ namespace Sunbird.External
         private void Marker_KeyReleased(object sender, KeyReleasedEventArgs e)
         {
             if (e.Key == Keys.F)
-            {            
-                SpriteList.Remove(GhostMarker);
+            {
+                MapList[Altitude].Remove(GhostMarker);
                 GhostMarker.IsHidden = true;
                 Peripherals.KeyReleased -= Marker_KeyReleased;
             }
@@ -192,20 +234,38 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+                var keyList = MapList.Keys.ToList();
+                keyList.Sort();
 
-                SpriteList.Sort((x, y) =>
+                foreach (var key in keyList)
                 {
-                    int result = decimal.Compare(x.Coords.X - x.Coords.Y, y.Coords.X - y.Coords.Y);
-                    if (result == 0)
+                    MapList[key].Sort((x, y) =>
                     {
-                        result = decimal.Compare(x.DrawPriority, y.DrawPriority);
-                    }
-                    return result;
-                });
+                        int result = decimal.Compare(x.Coords.X - x.Coords.Y, y.Coords.X - y.Coords.Y);
+                        if (result == 0)
+                        {
+                            result = decimal.Compare(x.DrawPriority, y.DrawPriority);
+                        }
+                        return result;
+                    });
 
-                foreach (var sprite in SpriteList)
-                {
-                    sprite.Draw(gameTime, spriteBatch);
+                    foreach (var sprite in MapList[key])
+                    {
+                        if (Altitude != key && sprite is Cube)
+                        {
+                            sprite.Alpha = 0.2f;
+                            sprite.Draw(gameTime, spriteBatch);
+                        }
+                        else if (Altitude == key && sprite is Cube)
+                        {
+                            sprite.Alpha = 1f;
+                            sprite.Draw(gameTime, spriteBatch);
+                        }
+                        else
+                        {
+                            sprite.Draw(gameTime, spriteBatch);
+                        }
+                    }
                 }
 
             }

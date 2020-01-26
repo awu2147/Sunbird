@@ -26,6 +26,32 @@ namespace Sunbird.GUI
             Position = position;
         }
 
+        public LoadingBar(Texture2D barEmpty, Texture2D barFull, Vector2 position, Alignment alignment)
+        {
+            BarEmpty = barEmpty;
+            BarFull = barFull;
+            if (alignment == Alignment.TopLeft)
+            {
+                Position = position;
+            }
+            else if (alignment == Alignment.TopRight)
+            {
+                Position = position + new Vector2(-barEmpty.Width, 0);
+            }
+            else if (alignment == Alignment.Center)
+            {
+                Position = position + new Vector2(-barEmpty.Width / 2, -barEmpty.Height / 2);
+            }
+            else if (alignment == Alignment.BottomLeft)
+            {
+                Position = position + new Vector2(0, -barEmpty.Height);
+            }
+            else if (alignment == Alignment.BottomRight)
+            {
+                Position = position + new Vector2(-barEmpty.Width, -barEmpty.Height);
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             

@@ -2,4 +2,22 @@
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentPath>Temp/GrassCube</CurrentPath>
   <CurrentIndex>0</CurrentIndex>
+  <CubePathLibrary>
+    <item>
+      <key>
+        <int>0</int>
+      </key>
+      <value>
+        <string>Temp/GrassCube</string>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>1</int>
+      </key>
+      <value>
+        <string>Temp/WaterCube</string>
+      </value>
+    </item>
+  </CubePathLibrary>
 </CubeFactoryData>

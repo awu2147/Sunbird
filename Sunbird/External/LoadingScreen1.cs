@@ -34,15 +34,14 @@ namespace Sunbird.External
         {
             BackgroundColor = new Color(51, 57, 65);
 
-            var centerIconTexture = Content.Load<Texture2D>("Temp/sunbird");
-            var centerIconPosition = new Vector2(MainGame.Width / 2 - centerIconTexture.Width / 2, MainGame.Height / 2 - centerIconTexture.Height / 2 - 60);
-            var centerIcon = new Sprite(new SpriteSheet(centerIconTexture, 1, 1)) { Position = centerIconPosition };
+            var centerIconPosition = new Vector2(MainGame.Width / 2, MainGame.Height / 2 - 60);
+            var centerIcon = new Sprite(SpriteSheet.CreateNew(MainGame, "Temp/sunbird", 1, 1), centerIconPosition, Alignment.Center);
             spriteList.Add(centerIcon);
 
             var barEmpty = Content.Load<Texture2D>("Temp/bar1_empty");
             var barFull = Content.Load<Texture2D>("Temp/bar1_full");
-            var barPosition = new Vector2(MainGame.Width / 2 - barEmpty.Width / 2, MainGame.Height / 2 - barEmpty.Height + 70);
-            LoadingBar = new LoadingBar(barEmpty, barFull, barPosition);
+            var barPosition = new Vector2(MainGame.Width / 2 , MainGame.Height / 2  + 70);
+            LoadingBar = new LoadingBar(barEmpty, barFull, barPosition, Alignment.Center);
         }
 
         public override void Update(GameTime gameTime)

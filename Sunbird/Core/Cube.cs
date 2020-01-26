@@ -19,55 +19,42 @@ using Sunbird.Serialization;
 
 namespace Sunbird.Core
 {
-
     public class Cube : Sprite
     {
+        private Cube() { }
 
-        public Cube()
-        {
-
-        }
-
-        public Cube(SpriteSheet spriteSheet) : base(spriteSheet)
-        {
-            
-        }
+        public Cube(SpriteSheet spriteSheet) : base(spriteSheet) { }
 
     }
 
     public static class CubeFactory
     {
-        public static string CurrentPath { get; set; } = "Temp/GrassCube";
+        public static string CurrentPath { get; set; }
 
         public static int CurrentIndex { get; set; } = 0;
 
-        public static Dictionary<int, string> CubePathLibrary { get; set; } = new Dictionary<int, string>()
-        {
-            {0, "Temp/GrassCube" },
-            {1, "Temp/WaterCube" },
-        };
+        public static XDictionary<int, string> CubePathLibrary { get; set; }
 
-        public static Cube CreateCube(MainGame mainGame, string path, Vector2 position)
+        public static Cube CreateCube(MainGame mainGame, string path, Coord coords, Coord relativeCoords, int altitude)
         {
-            var spriteSheet = new SpriteSheet(mainGame.Content.Load<Texture2D>(path), 1, 1) { TexturePath = path };
-            return new Cube(spriteSheet) { Position = position };
+            var spriteSheet = SpriteSheet.CreateNew(mainGame, path, 1, 1);
+            return new Cube(spriteSheet) { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
         }
 
-        public static Cube CreateCube(MainGame mainGame, string path, Vector2 position, Coord coords)
+        public static Cube CreateCube(MainGame mainGame, string path, int rows, int columns, Coord coords, Coord relativeCoords, int altitude)
         {
-            var spriteSheet = new SpriteSheet(mainGame.Content.Load<Texture2D>(path), 1, 1) { TexturePath = path };
-            return new Cube(spriteSheet) { Position = position, Coords = coords };
+            var spriteSheet = SpriteSheet.CreateNew(mainGame, path, rows, columns);
+            return new Cube(spriteSheet) { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
         }
 
-        public static Cube CreateCube(MainGame mainGame, string path, int rows, int columns, Vector2 position, Coord coords)
+        public static Cube CreateCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
         {
-            var spriteSheet = new SpriteSheet(mainGame.Content.Load<Texture2D>(path), rows, columns) { TexturePath = path };
-            return new Cube(spriteSheet) { Position = position, Coords = coords };
+            return CreateCube(mainGame, CurrentPath, coords, relativeCoords, altitude);
         }
-        public static Cube CreateCurrentCube(MainGame mainGame, int rows, int columns, Vector2 position, Coord coords)
+
+        public static Cube CreateCurrentCube(MainGame mainGame, int rows, int columns, Coord coords, Coord relativeCoords, int altitude)
         {
-            var spriteSheet = new SpriteSheet(mainGame.Content.Load<Texture2D>(CurrentPath), rows, columns) { TexturePath = CurrentPath };
-            return new Cube(spriteSheet) { Position = position, Coords = coords };
+            return CreateCube(mainGame, CurrentPath, rows, columns, coords, relativeCoords, altitude);
         }
 
         public static void FindNext()
@@ -82,17 +69,22 @@ namespace Sunbird.Core
 
     }
 
+    /// <summary>
+    /// Acts as a data store for the static class CubeFactory during serialization.
+    /// </summary>
     public class CubeFactoryData
     {
-
         public string CurrentPath { get; set; }
 
         public int CurrentIndex { get; set; }
+
+        public XDictionary<int, string> CubePathLibrary { get; set;}
 
         public CubeFactoryData()
         {
             CurrentPath = CubeFactory.CurrentPath;
             CurrentIndex = CubeFactory.CurrentIndex;
+            CubePathLibrary = CubeFactory.CubePathLibrary;
         }
 
         public void Serialize()
@@ -104,13 +96,16 @@ namespace Sunbird.Core
         {
             CurrentPath = CubeFactory.CurrentPath;
             CurrentIndex = CubeFactory.CurrentIndex;
+            CubePathLibrary = CubeFactory.CubePathLibrary;
         }
 
         public void SyncOut()
         {
             CubeFactory.CurrentPath = CurrentPath;
             CubeFactory.CurrentIndex = CurrentIndex;
-        }
-    
+            CubeFactory.CubePathLibrary = CubePathLibrary;
+        }  
+
     }
+
 }

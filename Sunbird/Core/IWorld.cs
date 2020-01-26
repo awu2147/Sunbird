@@ -15,25 +15,12 @@ using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
+
 namespace Sunbird.Core
 {
-    public class GhostMarker : Sprite
+    public interface IWorld
     {
-        private GhostMarker()
-        {
-
-        }
-
-        public GhostMarker(SpriteSheet spriteSheet) : base(spriteSheet)
-        {
-
-        }
-
-        public static GhostMarker CreateNew(MainGame mainGame, string path)
-        {
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, path, 1, 1);
-            return new GhostMarker(spriteSheet) { Alpha = 0.3f };
-        }
+        int Altitude { get; set; }
 
     }
 }

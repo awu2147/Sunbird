@@ -78,7 +78,22 @@ namespace Sunbird.Core
             new Rectangle(ScaledPoint(23, 6), ScaledPoint(1, 6)),
         };
 
+        public static Coord GetRelativeCoord(Coord coord, int altitude)
+        {
+            return coord + (new Coord(1, 1) * altitude);
+        }
+
         public static Coord TopFace_PointToCoord(Point point)
+        {
+            return TopFace_PointToCoord(point, 0);
+        }
+
+        public static Coord TopFace_PositionToCoord(Vector2 position)
+        {
+            return TopFace_PointToCoord(position.ToPoint());
+        }
+
+        public static Coord TopFace_PointToCoord(Point point, int altitude)
         {
             var normalizedPoint = TopFace_NormalizedPoint(point);
             var offset = TopFace_CoordOffset(normalizedPoint, point);
@@ -86,12 +101,14 @@ namespace Sunbird.Core
             var gridCoord = TopFace_PointToGridCoord(point);
             var coord = TopFace_GridCoordToCoord(gridCoord);
 
-            return coord + offset;
+            var altitudeOffset = new Coord(1, 1) * altitude;
+
+            return coord + offset + altitudeOffset;
         }
 
-        public static Coord TopFace_PositionToCoord(Vector2 position)
+        public static Coord TopFace_PositionToCoord(Vector2 position, int altitude)
         {
-            return TopFace_PointToCoord(position.ToPoint());
+            return TopFace_PointToCoord(position.ToPoint(), altitude);
         }
 
         /// <summary>

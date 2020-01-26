@@ -15,22 +15,25 @@ using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
+using Sunbird.External;
 
 namespace Sunbird.Core
 {
-    public class SpriteList<T> : List<T>
+    public class SpriteList<T> : List<T>, IXmlSerializable
     {
+        public HashSet<Coord> OccupiedCoords { get; set; } = new HashSet<Coord>();
+
         /// <summary>
         /// Add to list if coord unoccupied.
         /// </summary>
         /// <param name="sprite">The sprite to be added.</param>
-        /// <param name="gameState">The state instance that this list belongs to.</param>
-        public void Add(Sprite sprite, IWorldState gameState)
+        public void AddCheck(T sprite)
         {
-            if (!gameState.OccupiedCoords.Contains(sprite.Coords))
+            var s = sprite as Sprite;
+            if (!OccupiedCoords.Contains(s.Coords))
             {
-                gameState.SpriteList.Add(sprite);
-                gameState.OccupiedCoords.Add(sprite.Coords);
+                Add(sprite);
+                OccupiedCoords.Add(s.Coords);
             }
             else
             {
@@ -38,17 +41,70 @@ namespace Sunbird.Core
             }
         }
 
-        public void Remove(Sprite sprite, IWorldState gameState)
+        public void RemoveCheck(T sprite)
         {
-            if (gameState.OccupiedCoords.Contains(sprite.Coords))
+            var s = sprite as Sprite;
+            if (OccupiedCoords.Contains(s.Coords))
             {
-                gameState.SpriteList.Remove(sprite);
-                gameState.OccupiedCoords.Remove(sprite.Coords);
+                Remove(sprite);
+                OccupiedCoords.Remove(s.Coords);
             }
             else
             {
                 //Debug.Print($"Already a sprite at {sprite.Coords}");
             }
+        }
+
+        public XmlSchema GetSchema() { return null; }
+
+        public void ReadXml(XmlReader reader)
+        {
+            XmlSerializer spriteSerializer = new XmlSerializer(typeof(T), new Type[] { typeof(GhostMarker), typeof(Player), typeof(Cube) });
+            XmlSerializer occupiedCoordsSerializer = new XmlSerializer(typeof(HashSet<Coord>));
+
+            bool wasEmpty = reader.IsEmptyElement;
+            reader.Read();
+
+            if (wasEmpty)
+                return;
+
+            while (reader.NodeType != XmlNodeType.EndElement)
+            {
+                if (reader.Name == "Sprite")
+                {
+                    reader.ReadStartElement("Sprite");
+                    T sprite = (T)spriteSerializer.Deserialize(reader);
+                    reader.ReadEndElement();
+                    this.Add(sprite);
+                }
+
+                else if (reader.Name == "OccupiedCoords")
+                {
+                    reader.ReadStartElement("OccupiedCoords");
+                    OccupiedCoords = (HashSet<Coord>)occupiedCoordsSerializer.Deserialize(reader);
+                    reader.ReadEndElement();
+                }
+
+                reader.MoveToContent();
+            }
+            reader.ReadEndElement();
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            XmlSerializer spriteSerializer = new XmlSerializer(typeof(T), new Type[] { typeof(GhostMarker), typeof(Player), typeof(Cube) });
+            XmlSerializer occupiedCoordsSerializer = new XmlSerializer(typeof(HashSet<Coord>));
+
+            foreach (var sprite in this)
+            {
+                writer.WriteStartElement("Sprite");
+                spriteSerializer.Serialize(writer, sprite);
+                writer.WriteEndElement();
+            }
+
+            writer.WriteStartElement("OccupiedCoords");
+            occupiedCoordsSerializer.Serialize(writer, OccupiedCoords);
+            writer.WriteEndElement();
         }
 
     }

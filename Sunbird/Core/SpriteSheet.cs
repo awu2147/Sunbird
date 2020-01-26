@@ -42,6 +42,16 @@ namespace Sunbird.Core
 
         }
 
+        public static SpriteSheet CreateNew(MainGame mainGame, string path, int row, int columns)
+        {
+            return new SpriteSheet(mainGame.Content.Load<Texture2D>(path), row, columns) { TexturePath = path };
+        }
+
+        public static SpriteSheet CreateNew(MainGame mainGame, string path)
+        {
+            return CreateNew(mainGame, path, 1, 1);
+        }
+
         public Dictionary<int, Point> ConstructPositionMap()
         {
             var positionMap = new Dictionary<int, Point>();

@@ -35,6 +35,7 @@ namespace Sunbird.External
         public Direction Direction { get; set; } = Direction.South;
         public Movement Movement { get; set; } = Movement.Standing;
         private Config Config { get; set; }
+
         HashSet<Keys> CurrentMovementKeys { get; set; } = new HashSet<Keys>();
 
         private List<Keys> MovementKeyList => new List<Keys>() { Config.North, Config.East, Config.South, Config.West };
@@ -178,7 +179,7 @@ namespace Sunbird.External
             }
 
             ApplyMotionBlur(new List<Movement>() { Movement.Walking });
-            Coords = World.TopFace_PositionToCoord(Position + new Vector2(12*3, 25*3));
+            Coords = World.TopFace_PositionToCoord(Position + new Vector2(12*3, 25*3), Altitude);
         }
 
         private void ApplyMotionBlur(List<Movement> movements)

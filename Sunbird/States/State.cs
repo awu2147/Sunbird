@@ -17,7 +17,7 @@ namespace Sunbird.States
     {
         protected ContentManager Content { get; set; }
         protected GraphicsDevice GraphicsDevice { get; set; }
-        protected MainGame MainGame { get; set; } // Create a reference to MainGame to avoid singleton pattern.
+        protected MainGame MainGame { get; set; }
 
         /// <summary>
         /// Only used for serialization.
