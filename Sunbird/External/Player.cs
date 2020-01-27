@@ -103,7 +103,7 @@ namespace Sunbird.External
                 {
                     Movement = Movement.Walking;
                     Direction = Direction.NorthEast;
-                    Animator.SwitchAnimation(1, 1, 0.2f, AnimationState.Loop);
+                    Animator.SwitchAnimation(4, 4, 0.133f, AnimationState.Loop);
                 }
                 Position += new Vector2(Speed, -Speed / 2);
             }
@@ -113,7 +113,7 @@ namespace Sunbird.External
                 {
                     Movement = Movement.Walking;
                     Direction = Direction.NorthWest;
-                    Animator.SwitchAnimation(3, 1, 0.2f, AnimationState.Loop);
+                    Animator.SwitchAnimation(12, 4, 0.133f, AnimationState.Loop);
                 }
                 Position += new Vector2(-Speed, -Speed / 2);
             }
@@ -123,7 +123,7 @@ namespace Sunbird.External
                 {
                     Movement = Movement.Walking;
                     Direction = Direction.SouthEast;
-                    Animator.SwitchAnimation(1, 1, 0.2f, AnimationState.Loop);
+                    Animator.SwitchAnimation(4, 4, 0.133f, AnimationState.Loop);
                 }
                 Position += new Vector2(Speed, Speed / 2);
             }
@@ -133,7 +133,7 @@ namespace Sunbird.External
                 {
                     Movement = Movement.Walking;
                     Direction = Direction.SouthWest;
-                    Animator.SwitchAnimation(3, 1, 0.2f, AnimationState.Loop);
+                    Animator.SwitchAnimation(12, 4, 0.133f, AnimationState.Loop);
                 }
                 Position += new Vector2(-Speed, Speed / 2);
             }
@@ -143,7 +143,7 @@ namespace Sunbird.External
                 {
                     Movement = Movement.Walking;
                     Direction = Direction.North;
-                    Animator.SwitchAnimation(2, 1, 0.2f, AnimationState.Loop);
+                    Animator.SwitchAnimation(0, 4, 0.133f, AnimationState.Loop);
                 }
                 Position += new Vector2(0, -Speed);
             }
@@ -153,7 +153,7 @@ namespace Sunbird.External
                 {
                     Movement = Movement.Walking;
                     Direction = Direction.West;
-                    Animator.SwitchAnimation(3, 1, 0.2f, AnimationState.Loop);
+                    Animator.SwitchAnimation(12, 4, 0.133f, AnimationState.Loop);
                 }
                 Position += new Vector2(-Speed, 0);
             }
@@ -163,7 +163,7 @@ namespace Sunbird.External
                 {
                     Movement = Movement.Walking;
                     Direction = Direction.South;
-                    Animator.SwitchAnimation(0, 1, 0.2f, AnimationState.Loop);
+                    Animator.SwitchAnimation(8, 4, 0.133f, AnimationState.Loop);
                 }
                 Position += new Vector2(0, Speed);
             }
@@ -173,13 +173,34 @@ namespace Sunbird.External
                 {
                     Movement = Movement.Walking;
                     Direction = Direction.East;
-                    Animator.SwitchAnimation(1, 1, 0.2f, AnimationState.Loop);
+                    Animator.SwitchAnimation(4, 4, 0.133f, AnimationState.Loop);
                 }
                 Position += new Vector2(Speed, 0);
             }
 
             ApplyMotionBlur(new List<Movement>() { Movement.Walking });
             Coords = World.TopFace_PositionToCoord(Position + new Vector2(12*3, 25*3), Altitude);
+
+            if (!MovementKeyList.Any(x => Peripherals.currentPressedKeys.Contains(x)))
+            {
+                Movement = Movement.Standing;
+                if (Direction == Direction.North)
+                {
+                    Animator.SwitchAnimation(0, 1, 0.2f, AnimationState.None);
+                }
+                else if (Direction == Direction.West)
+                {
+                    Animator.SwitchAnimation(12, 1, 0.2f, AnimationState.None);
+                }
+                else if (Direction == Direction.South)
+                {
+                    Animator.SwitchAnimation(8, 1, 0.2f, AnimationState.None);
+                }
+                else if (Direction == Direction.East)
+                {
+                    Animator.SwitchAnimation(4, 1, 0.2f, AnimationState.None);
+                }
+            }
         }
 
         private void ApplyMotionBlur(List<Movement> movements)
@@ -205,19 +226,19 @@ namespace Sunbird.External
                     Movement = Movement.Standing;
                     if (Direction == Direction.North)
                     {
-                        Animator.SwitchAnimation(2, 1, 0.2f, AnimationState.None);
+                        Animator.SwitchAnimation(0, 1, 0.2f, AnimationState.None);
                     }
-                    else if (Direction == Direction.West)
+                    else if (Direction == Direction.West || Direction == Direction.NorthWest || Direction == Direction.SouthWest)
                     {
-                        Animator.SwitchAnimation(3, 1, 0.2f, AnimationState.None);
+                        Animator.SwitchAnimation(12, 1, 0.2f, AnimationState.None);
                     }
                     else if (Direction == Direction.South)
                     {
-                        Animator.SwitchAnimation(0, 1, 0.2f, AnimationState.None);
+                        Animator.SwitchAnimation(8, 1, 0.2f, AnimationState.None);
                     }
-                    else if (Direction == Direction.East)
+                    else if (Direction == Direction.East || Direction == Direction.NorthEast || Direction == Direction.SouthEast)
                     {
-                        Animator.SwitchAnimation(1, 1, 0.2f, AnimationState.None);
+                        Animator.SwitchAnimation(4, 1, 0.2f, AnimationState.None);
                     }
                 }
                 Debug.Print(e.Key.ToString() + " key released. Movement = " + Movement.ToString());

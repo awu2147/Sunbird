@@ -60,7 +60,7 @@ namespace Sunbird.External
             var cube = CubeFactory.CreateCube(MainGame, "Temp/GrassCube", Coord.Zero, World.GetRelativeCoord(Coord.Zero, Altitude), Altitude);
             MapList[Altitude].AddCheck(cube);
 
-            var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 4);
+            var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
             var playerAnimator = new Animator(playerSheet, null, 0, 1, 0.2f, AnimationState.Loop);
             Player = new Player(MainGame, playerAnimator) { DrawPriority = 2 };
             MapList[Altitude].Add(Player);
@@ -127,6 +127,10 @@ namespace Sunbird.External
             if (MainGame.IsActive == true)
             {
                 Altitude--;
+                if (MapList.ContainsKey(Altitude) == false)
+                {
+                    MapList.Add(Altitude, new SpriteList<Sprite>());
+                }
             }
         }
 
@@ -135,6 +139,10 @@ namespace Sunbird.External
             if (MainGame.IsActive == true)
             {
                 Altitude++;
+                if (MapList.ContainsKey(Altitude) == false)
+                {
+                    MapList.Add(Altitude, new SpriteList<Sprite>());
+                }
             }
         }
 
@@ -164,11 +172,6 @@ namespace Sunbird.External
                     {
                         LayerMode = false;
                     }
-                }
-
-                if (MapList.ContainsKey(Altitude) == false)
-                {
-                    MapList.Add(Altitude, new SpriteList<Sprite>());
                 }
 
                 if (Peripherals.MousePressed(Peripherals.currentMouseState.LeftButton) && MainGame.IsActive == true)

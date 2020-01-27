@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentPath>Temp/WaterCube</CurrentPath>
-  <CurrentIndex>1</CurrentIndex>
+  <CurrentPath>Temp/GrassCube</CurrentPath>
+  <CurrentIndex>0</CurrentIndex>
   <CubePathLibrary>
     <item>
       <key>
