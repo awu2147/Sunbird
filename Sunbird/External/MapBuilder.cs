@@ -21,6 +21,12 @@ using Sunbird.GUI;
 
 namespace Sunbird.External
 {
+    public enum Authorization
+    {
+        None,
+        Builder
+    }
+
     public class MapBuilder : State, IWorld
     {
         [XmlIgnore]
@@ -29,11 +35,12 @@ namespace Sunbird.External
         public Player Player { get; set; }
         private bool IsLoading { get; set; }
         public int Altitude { get; set; } = 0;
-        public bool LayerMode { get; set; }
+        public Authorization Authorization { get; set; }
+        public List<Sprite> Overlay { get; set; } = new List<Sprite>();
 
         private MapBuilder()
         {
-            
+
         }
 
         public MapBuilder(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
@@ -69,6 +76,9 @@ namespace Sunbird.External
             GhostMarker.DrawPriority = 1;
             MapList[Altitude].Add(GhostMarker);
 
+            var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
+            Overlay.Add(new Sprite(gridAxisGlyph, new Vector2(20, MainGame.Height - 20), Alignment.BottomLeft));
+
             Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
             Peripherals.ScrollWheelDown += Peripherals_ScrollWheelDown;
             MainGame.Exiting += MainGame_Exiting;
@@ -88,10 +98,11 @@ namespace Sunbird.External
             }
 
             var XmlData = Serializer.ReadXML<MapBuilder>("MapBuilderSave.xml", new Type[] { typeof(Player), typeof(Cube), typeof(GhostMarker) });
-            //OccupiedCoords = XmlData.OccupiedCoords;
-            MapList = XmlData.MapList;
+
             Altitude = XmlData.Altitude;
-            LayerMode = XmlData.LayerMode;
+            Authorization = XmlData.Authorization;
+
+            MapList = XmlData.MapList;
             foreach (var layer in MapList)
             {
                 foreach (var sprite in layer.Value)
@@ -106,6 +117,12 @@ namespace Sunbird.External
                         GhostMarker = sprite as GhostMarker;
                     }
                 }
+            }
+
+            Overlay = XmlData.Overlay;
+            foreach (var sprite in Overlay)
+            {
+                sprite.LoadContent(MainGame, GraphicsDevice, Content);
             }
 
             for (int i = 0; i < 25; i++)
@@ -124,7 +141,7 @@ namespace Sunbird.External
 
         private void Peripherals_ScrollWheelDown(object sender, EventArgs e)
         {
-            if (MainGame.IsActive == true)
+            if (MainGame.IsActive == true && Authorization == Authorization.Builder)
             {
                 Altitude--;
                 if (MapList.ContainsKey(Altitude) == false)
@@ -136,7 +153,7 @@ namespace Sunbird.External
 
         private void Peripherals_ScrollWheelUp(object sender, EventArgs e)
         {
-            if (MainGame.IsActive == true)
+            if (MainGame.IsActive == true && Authorization == Authorization.Builder)
             {
                 Altitude++;
                 if (MapList.ContainsKey(Altitude) == false)
@@ -153,8 +170,8 @@ namespace Sunbird.External
             if (!IsLoading)
             {
 
-                var relativeTopFaceCoords = World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude);
-                var topFaceCoords = World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera));
+                var relativeTopFaceCoords = World.TopFace_PointToRelativeCoord(MainGame.Camera, Altitude);
+                var topFaceCoords = World.TopFace_PointToCoord(MainGame.Camera);
 
                 if (Peripherals.KeyTapped(Keys.E))
                 {
@@ -164,65 +181,80 @@ namespace Sunbird.External
 
                 if (Peripherals.KeyTapped(Keys.Q))
                 {
-                    if (LayerMode == false)
+                    if (Authorization == Authorization.None)
                     {
-                        LayerMode = true;
+                        Authorization = Authorization.Builder;
                     }
                     else
                     {
-                        LayerMode = false;
+                        Authorization = Authorization.None;
                     }
                 }
 
-                if (Peripherals.MousePressed(Peripherals.currentMouseState.LeftButton) && MainGame.IsActive == true)
+                if (Authorization == Authorization.Builder)
                 {
-                    var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                    MapList[Altitude].AddCheck(cube);
-                    Debug.Print(cube.Altitude.ToString());
-                }
-
-                if (Peripherals.MousePressed(Peripherals.currentMouseState.RightButton) && MainGame.IsActive == true)
-                {
-                    for (int i = 0; i < MapList[Altitude].Count(); i++)
+                    if (Peripherals.MousePressed(Peripherals.currentMouseState.LeftButton) && MainGame.IsActive == true)
                     {
-                        var sprite = MapList[Altitude][i];
-                        if (sprite is Cube && sprite.Coords == relativeTopFaceCoords)
+                        var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                        MapList[Altitude].AddCheck(cube);
+                    }
+
+                    if (Peripherals.MousePressed(Peripherals.currentMouseState.RightButton) && MainGame.IsActive == true)
+                    {
+                        for (int i = 0; i < MapList[Altitude].Count(); i++)
                         {
-                            MapList[Altitude].RemoveCheck(sprite);
-                            i--;
+                            var sprite = MapList[Altitude][i];
+                            if (sprite is Cube && sprite.Coords == relativeTopFaceCoords)
+                            {
+                                MapList[Altitude].RemoveCheck(sprite);
+                                i--;
+                            }
+                        }
+                    }
+
+                    GhostMarker.Altitude = Altitude;
+                    GhostMarker.Coords = relativeTopFaceCoords;
+                }
+                else if (Authorization == Authorization.None)
+                {
+                    var l = MapList.Keys.ToList();
+                    l.Sort();
+                    l.Reverse();
+
+                    foreach (var key in l)
+                    {
+                        var targetedCoord = World.TopFace_PointToRelativeCoord(MainGame.Camera, key);
+                        if (MapList[key].OccupiedCoords.Contains(targetedCoord))
+                        {
+                            Altitude = key;
+                            GhostMarker.Altitude = Altitude;
+                            GhostMarker.Coords = targetedCoord;
+                            break;
                         }
                     }
                 }
 
-                //if (Peripherals.KeyPressed(Keys.F))
-                //{
-                //    CubeMarker.Coords = topFaceCoords;
-                //    CubeMarker.Position = World.TopFace_CoordToLocalOrigin(topFaceCoords);
-                //    CubeMarker.Update(gameTime);
-                //    if (Peripherals.KeyTapped(Keys.F))
-                //    {
-                //        CubeMarker.IsVisible = true;
-                //        spriteList.Add(CubeMarker, new OnAddEventArgs(CubeMarker) { AddToOccupied = false });
-                //        Peripherals.KeyReleased += Marker_KeyReleased;
-                //    }
-                //}
-
                 Player.Coords = relativeTopFaceCoords;
-                Player.Altitude = Altitude; 
+                Player.Altitude = Altitude;
 
-                GhostMarker.Coords = relativeTopFaceCoords;
                 GhostMarker.Position = World.TopFace_CoordToLocalOrigin(topFaceCoords);
-                GhostMarker.Update(gameTime);
-                GhostMarker.Altitude = Altitude;
-                if (MapList[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords))
+
+                if (MapList[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.None)
                 {
-                    //GhostMarker.IsHidden = true;
                     GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker"));
                 }
-                else
+                else if (Authorization == Authorization.Builder)
                 {
                     GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CubeFactory.CurrentPath));
-                    //GhostMarker.IsHidden = false;
+                }
+
+                if (MapList[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.Builder)
+                {
+                    GhostMarker.DrawPriority = 1;
+                }
+                else if (Authorization == Authorization.None)
+                {
+                    GhostMarker.DrawPriority = -1000;
                 }
 
                 var keyList = MapList.Keys.ToList();
@@ -230,17 +262,36 @@ namespace Sunbird.External
 
                 foreach (var key in keyList)
                 {
-                    for (int i = 0; i < MapList[key].Count(); i++) 
+                    for (int i = 0; i < MapList[key].Count(); i++)
                     {
                         var sprite = MapList[key][i];
                         if (sprite.Altitude != key)
                         {
                             MapList[key].Remove(sprite);
                             i--;
-                            MapList[sprite.Altitude].Add(sprite);
+                            if (!MapList.ContainsKey(sprite.Altitude))
+                            {
+                                MapList.Add(sprite.Altitude, new SpriteList<Sprite>() { sprite });
+                            }
+                            else
+                            {
+                                if (!(sprite is Cube))
+                                {
+                                    MapList[sprite.Altitude].Add(sprite);
+                                }
+                                else
+                                {
+                                    throw new NotImplementedException("Cube trying to move between layers, is this correct?");
+                                }
+                            }
                         }
                         sprite.Update(gameTime);
                     }
+                }
+
+                foreach (var sprite in Overlay)
+                {
+                    sprite.Update(gameTime);
                 }
             }
         }
@@ -259,12 +310,30 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
-                var keyList = MapList.Keys.ToList();
+
+                var DrawOrder = new Dictionary<int, List<Sprite>>();
+
+                foreach (var layer in MapList)
+                {
+                    foreach (var sprite in layer.Value)
+                    {
+                        if (!DrawOrder.ContainsKey(sprite.DrawAltitude))
+                        {
+                            DrawOrder.Add(sprite.DrawAltitude, new List<Sprite>() { sprite });
+                        }
+                        else
+                        {
+                            DrawOrder[sprite.DrawAltitude].Add(sprite);
+                        }
+                    }
+                }
+
+                var keyList = DrawOrder.Keys.ToList();
                 keyList.Sort();
 
                 foreach (var key in keyList)
                 {
-                    MapList[key].Sort((x, y) =>
+                    DrawOrder[key].Sort((x, y) =>
                     {
                         int result = decimal.Compare(x.Coords.X - x.Coords.Y, y.Coords.X - y.Coords.Y);
                         if (result == 0)
@@ -274,14 +343,14 @@ namespace Sunbird.External
                         return result;
                     });
 
-                    foreach (var sprite in MapList[key])
+                    foreach (var sprite in DrawOrder[key])
                     {
-                        if (Altitude != key && sprite is Cube && LayerMode == true)
+                        if (Altitude != key && sprite is Cube && Authorization == Authorization.Builder)
                         {
                             sprite.Alpha = 0.1f;
                             sprite.Draw(gameTime, spriteBatch);
                         }
-                        else if ((Altitude == key || LayerMode == false) && sprite is Cube)
+                        else if ((Altitude == key || Authorization == Authorization.None) && sprite is Cube)
                         {
                             sprite.Alpha = 1f;
                             sprite.Draw(gameTime, spriteBatch);
@@ -296,5 +365,20 @@ namespace Sunbird.External
             }
         }
 
+        public override void DrawOverlay(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString()}", new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude)}", new Vector2(10, 30), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString()}", new Vector2(10, 50), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString()}", new Vector2(10, 70), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Sprites in List: { MapList[Altitude].Count().ToString()}", new Vector2(10, 90), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", new Vector2(10, 110), Color.Black);
+            spriteBatch.Draw(Content.Load<Texture2D>(CubeFactory.CurrentPath), new Vector2(30, 150), Color.White);
+
+            foreach (var sprite in Overlay)
+            {
+                sprite.Draw(gameTime, spriteBatch);
+            }
+        }
     }
 }

@@ -179,7 +179,7 @@ namespace Sunbird.External
             }
 
             ApplyMotionBlur(new List<Movement>() { Movement.Walking });
-            Coords = World.TopFace_PositionToCoord(Position + new Vector2(12*3, 25*3), Altitude);
+            Coords = World.TopFace_PositionToRelativeCoord(Position + new Vector2(12*3, 25*3), Altitude);
 
             if (!MovementKeyList.Any(x => Peripherals.currentPressedKeys.Contains(x)))
             {

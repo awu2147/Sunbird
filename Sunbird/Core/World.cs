@@ -78,22 +78,13 @@ namespace Sunbird.Core
             new Rectangle(ScaledPoint(23, 6), ScaledPoint(1, 6)),
         };
 
+
         public static Coord GetRelativeCoord(Coord coord, int altitude)
         {
-            return coord + (new Coord(1, 1) * altitude);
+            return coord + (new Coord(1, -1) * altitude);
         }
 
-        public static Coord TopFace_PointToCoord(Point point)
-        {
-            return TopFace_PointToCoord(point, 0);
-        }
-
-        public static Coord TopFace_PositionToCoord(Vector2 position)
-        {
-            return TopFace_PointToCoord(position.ToPoint());
-        }
-
-        public static Coord TopFace_PointToCoord(Point point, int altitude)
+        public static Coord TopFace_PointToRelativeCoord(Point point, int altitude)
         {
             var normalizedPoint = TopFace_NormalizedPoint(point);
             var offset = TopFace_CoordOffset(normalizedPoint, point);
@@ -101,14 +92,34 @@ namespace Sunbird.Core
             var gridCoord = TopFace_PointToGridCoord(point);
             var coord = TopFace_GridCoordToCoord(gridCoord);
 
-            var altitudeOffset = new Coord(1, 1) * altitude;
+            var altitudeOffset = new Coord(1, -1) * altitude;
 
             return coord + offset + altitudeOffset;
         }
 
-        public static Coord TopFace_PositionToCoord(Vector2 position, int altitude)
+        public static Coord TopFace_PointToRelativeCoord(Camera camera, int altitude)
         {
-            return TopFace_PointToCoord(position.ToPoint(), altitude);
+            return TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(camera), altitude);
+        }
+
+        public static Coord TopFace_PositionToRelativeCoord(Vector2 position, int altitude)
+        {
+            return TopFace_PointToRelativeCoord(position.ToPoint(), altitude);
+        }
+
+        public static Coord TopFace_PointToCoord(Point point)
+        {
+            return TopFace_PointToRelativeCoord(point, 0);
+        }
+
+        public static Coord TopFace_PointToCoord(Camera camera)
+        {
+            return TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(camera), 0);
+        }
+
+        public static Coord TopFace_PositionToCoord(Vector2 position)
+        {
+            return TopFace_PointToCoord(position.ToPoint());
         }
 
         /// <summary>

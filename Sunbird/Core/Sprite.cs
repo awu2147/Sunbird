@@ -37,6 +37,8 @@ namespace Sunbird.Core
 
         public int Altitude { get; set; }
 
+        public int DrawAltitude { get { return Altitude + DrawPriority; } }
+
         public bool IsHidden { get; set; }
 
         public float Alpha { get; set; } = 1f;

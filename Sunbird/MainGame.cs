@@ -168,16 +168,7 @@ namespace Sunbird
             // Overlay batch
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-            if (CurrentState is MapBuilder)
-            {
-                var a = CurrentState as MapBuilder;
-                spriteBatch.DrawString(DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(Camera).ToString()}", new Vector2(10, 10), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Mouse Coords {World.TopFace_PointToCoord(Peripherals.GetMouseWorldPosition(Camera), a.Altitude)}", new Vector2(10, 30), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Player Coords: { a.Player.Coords.ToString()}", new Vector2(10, 50), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Altitude: { a.Altitude.ToString()}", new Vector2(10, 70), Color.Black);
-                spriteBatch.DrawString(DefaultFont, $"Sprites in List: { a.MapList[a.Altitude].Count().ToString()}", new Vector2(10, 90), Color.Black);
-                spriteBatch.Draw(Content.Load<Texture2D>(CubeFactory.CurrentPath), new Vector2(10, 110), Color.White);
-            }
+            CurrentState.DrawOverlay(gameTime, spriteBatch);
 
             spriteBatch.End();
 

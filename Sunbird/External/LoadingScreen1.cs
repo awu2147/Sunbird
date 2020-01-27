@@ -66,6 +66,11 @@ namespace Sunbird.External
             LoadingBar.Draw(gameTime, spriteBatch);
         }
 
+        public override void DrawOverlay(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            
+        }
+
     }
 
     public class LoadingScreen1_Factory : ILoadingScreenFactory
