@@ -25,46 +25,69 @@ namespace Sunbird.Core
 
         public Cube(SpriteSheet spriteSheet) : base(spriteSheet) { }
 
+        public Cube(SpriteSheet spriteSheet, int startFrame, int frameCount, float frameSpeed, AnimationState animState)
+        {
+            Animator = new Animator(spriteSheet, this, startFrame, frameCount, frameSpeed, animState);
+        }
+
+    }
+
+    public class CubeMetaData
+    {
+        public string Path { get; set; }
+        public int SheetRows { get; set; } = 1;
+        public int SheetColumns { get; set; } = 1;
+        public int StartFrame { get; set; } = 0;
+        public int FrameCount { get; set; } = 1;
+        public float FrameSpeed { get; set; } = 0.133f;
+        public AnimationState AnimState { get; set; } = AnimationState.None;
+        public CubeMetaData()
+        {
+
+        }
     }
 
     public static class CubeFactory
     {
-        public static string CurrentPath { get; set; }
+        public static CubeMetaData CurrentCubeMetaData{ get; set; }
 
         public static int CurrentIndex { get; set; } = 0;
 
-        public static XDictionary<int, string> CubePathLibrary { get; set; }
+        public static XDictionary<int, CubeMetaData> CubeMetaDataLibrary { get; set; }
 
-        public static Cube CreateCube(MainGame mainGame, string path, Coord coords, Coord relativeCoords, int altitude)
+        public static Cube CreateCube(MainGame mainGame, CubeMetaData cubeMetaData, Coord coords, Coord relativeCoords, int altitude)
         {
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, path, 1, 1);
-            return new Cube(spriteSheet) { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
+            var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMetaData.Path, cubeMetaData.SheetRows, cubeMetaData.SheetColumns);
+            return new Cube(spriteSheet, cubeMetaData.StartFrame, cubeMetaData.FrameCount, cubeMetaData.FrameSpeed, cubeMetaData.AnimState) { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
         }
 
-        public static Cube CreateCube(MainGame mainGame, string path, int rows, int columns, Coord coords, Coord relativeCoords, int altitude)
+        public static Cube CreateRandomCube(MainGame mainGame, CubeMetaData cubeMetaData, Coord coords, Coord relativeCoords, int altitude)
         {
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, path, rows, columns);
-            return new Cube(spriteSheet) { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
+            var r = new Random();
+            var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMetaData.Path, cubeMetaData.SheetRows, cubeMetaData.SheetColumns);
+            var cube = new Cube(spriteSheet, cubeMetaData.StartFrame, cubeMetaData.FrameCount, cubeMetaData.FrameSpeed, cubeMetaData.AnimState) { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
+            cube.Animator.CurrentFrame = r.Next(0, cubeMetaData.FrameCount);
+            return cube;
         }
 
         public static Cube CreateCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
         {
-            return CreateCube(mainGame, CurrentPath, coords, relativeCoords, altitude);
+            return CreateCube(mainGame, CurrentCubeMetaData, coords, relativeCoords, altitude);
         }
 
-        public static Cube CreateCurrentCube(MainGame mainGame, int rows, int columns, Coord coords, Coord relativeCoords, int altitude)
+        public static Cube CreateRandomCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
         {
-            return CreateCube(mainGame, CurrentPath, rows, columns, coords, relativeCoords, altitude);
+            return CreateRandomCube(mainGame, CurrentCubeMetaData, coords, relativeCoords, altitude);
         }
 
         public static void FindNext()
         {
             CurrentIndex++;
-            if (CurrentIndex >= CubePathLibrary.Count())
+            if (CurrentIndex >= CubeMetaDataLibrary.Count())
             {
                 CurrentIndex = 0;
             }
-            CurrentPath = CubePathLibrary[CurrentIndex];
+            CurrentCubeMetaData = CubeMetaDataLibrary[CurrentIndex];
         }
 
     }
@@ -74,36 +97,36 @@ namespace Sunbird.Core
     /// </summary>
     public class CubeFactoryData
     {
-        public string CurrentPath { get; set; }
+        public CubeMetaData CurrentCubeMetaData { get; set; }
 
         public int CurrentIndex { get; set; }
 
-        public XDictionary<int, string> CubePathLibrary { get; set;}
+        public XDictionary<int, CubeMetaData> CubeMetaDataLibrary { get; set;}
 
         public CubeFactoryData()
         {
-            CurrentPath = CubeFactory.CurrentPath;
+            CurrentCubeMetaData = CubeFactory.CurrentCubeMetaData;
             CurrentIndex = CubeFactory.CurrentIndex;
-            CubePathLibrary = CubeFactory.CubePathLibrary;
+            CubeMetaDataLibrary = CubeFactory.CubeMetaDataLibrary;
         }
 
         public void Serialize()
         {
-            Serializer.WriteXML<CubeFactoryData>(this, "CubeFactoryData.xml");
+            Serializer.WriteXML<CubeFactoryData>(this, "CubeFactoryData.xml", new Type[] { typeof(CubeMetaData) });
         }
 
         public void SyncIn()
         {
-            CurrentPath = CubeFactory.CurrentPath;
+            CurrentCubeMetaData = CubeFactory.CurrentCubeMetaData;
             CurrentIndex = CubeFactory.CurrentIndex;
-            CubePathLibrary = CubeFactory.CubePathLibrary;
+            CubeMetaDataLibrary = CubeFactory.CubeMetaDataLibrary;
         }
 
         public void SyncOut()
         {
-            CubeFactory.CurrentPath = CurrentPath;
+            CubeFactory.CurrentCubeMetaData = CurrentCubeMetaData;
             CubeFactory.CurrentIndex = CurrentIndex;
-            CubeFactory.CubePathLibrary = CubePathLibrary;
+            CubeFactory.CubeMetaDataLibrary = CubeMetaDataLibrary;
         }  
 
     }

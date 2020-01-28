@@ -103,6 +103,20 @@ namespace Sunbird.Core
             Animator.SpriteSheet = newSheet;
         }
 
+        public void ReconfigureAnimator()
+        {
+            ReconfigureAnimator(0, 1, 0.133f, AnimationState.None);
+        }
+
+        public void ReconfigureAnimator(int startFrame, int frameCount, float frameSpeed, AnimationState animState)
+        {
+            Animator.StartFrame = startFrame;
+            Animator.CurrentFrame = startFrame;
+            Animator.FrameCount = frameCount;
+            Animator.FrameSpeed = frameSpeed;
+            Animator.AnimState = animState;
+        }
+
         public virtual void Update(GameTime gameTime)
         {
             Animator.Update(gameTime);

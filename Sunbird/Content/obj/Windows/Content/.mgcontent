@@ -12,7 +12,9 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GrassCube.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GrassTopFace.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GridAxisGlyph.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LavaCubeSheet.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/PirateGirlSheet.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/StoneCube.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/sunbird.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testfloor.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testplayer.png</File>
@@ -23,6 +25,8 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCube.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

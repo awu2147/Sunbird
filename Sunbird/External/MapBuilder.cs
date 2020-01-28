@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -34,6 +35,7 @@ namespace Sunbird.External
         public int Altitude { get; set; } = 0;
         public Player Player { get; set; }
         public GhostMarker GhostMarker { get; set; }
+        public Cube CubePreview { get; set; }
         private bool IsLoading { get; set; }
         public Authorization Authorization { get; set; }
 
@@ -63,8 +65,8 @@ namespace Sunbird.External
         {
             LayerMap.Add(Altitude, new SpriteList<Sprite>());
 
-            var cube = CubeFactory.CreateCube(MainGame, "Temp/GrassCube", Coord.Zero, World.GetRelativeCoord(Coord.Zero, Altitude), Altitude);
-            LayerMap[Altitude].AddCheck(cube);
+            //var cube = CubeFactory.CreateCube(MainGame, "Temp/GrassCube", Coord.Zero, World.GetRelativeCoord(Coord.Zero, Altitude), Altitude);
+            //LayerMap[Altitude].AddCheck(cube);
 
             var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
             var playerAnimator = new Animator(playerSheet, null, 0, 1, 0.2f, AnimationState.Loop);
@@ -74,6 +76,10 @@ namespace Sunbird.External
             GhostMarker = GhostMarker.CreateNew(MainGame, "Temp/GrassCube");
             GhostMarker.DrawPriority = 1;
             LayerMap[Altitude].Add(GhostMarker);
+
+            CubePreview = CubeFactory.CreateCurrentCube(MainGame, Coord.Zero, Coord.Zero, 0);
+            CubePreview.Position = new Vector2(30, MainGame.Height - 210);
+            Overlay.Add(CubePreview);
 
             var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
             Overlay.Add(new Sprite(gridAxisGlyph, new Vector2(20, MainGame.Height - 20), Alignment.BottomLeft));
@@ -122,6 +128,10 @@ namespace Sunbird.External
             foreach (var sprite in Overlay)
             {
                 sprite.LoadContent(MainGame, GraphicsDevice, Content);
+                if (sprite is Cube)
+                {
+                    CubePreview = sprite as Cube;
+                }
             }
 
             for (int i = 0; i < 25; i++)
@@ -174,7 +184,12 @@ namespace Sunbird.External
                 if (Peripherals.KeyTapped(Keys.E))
                 {
                     CubeFactory.FindNext();
-                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CubeFactory.CurrentPath));
+                    var CCMD = CubeFactory.CurrentCubeMetaData;
+                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
+                    GhostMarker.ReconfigureAnimator(CCMD.StartFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
+
+                    CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
+                    CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
                 }
 
                 if (Peripherals.KeyTapped(Keys.Q))
@@ -188,7 +203,15 @@ namespace Sunbird.External
                 {
                     if (Peripherals.MousePressed(Peripherals.currentMouseState.LeftButton) && MainGame.IsActive == true)
                     {
-                        var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                        Cube cube = null;
+                        if (CubeFactory.CurrentCubeMetaData.AnimState != AnimationState.None)
+                        {
+                            cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                        }
+                        else
+                        {
+                            cube = CubeFactory.CreateRandomCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                        }
                         LayerMap[Altitude].AddCheck(cube);
                     }
 
@@ -235,10 +258,13 @@ namespace Sunbird.External
                 if (LayerMap[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.None)
                 {
                     GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker"));
+                    GhostMarker.ReconfigureAnimator();
                 }
                 else if (Authorization == Authorization.Builder)
                 {
-                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CubeFactory.CurrentPath));
+                    var CCMD = CubeFactory.CurrentCubeMetaData;
+                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
+                    GhostMarker.ReconfigureAnimator(CCMD.StartFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
                 }
 
                 if (LayerMap[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.Builder)
@@ -252,7 +278,7 @@ namespace Sunbird.External
 
                 // Player management.
                 Player.Coords = relativeTopFaceCoords;
-                Player.Altitude = Altitude;
+                Player.Altitude = Altitude + 30;
 
                 // Rearrange sprites into their correct altitude layer.
                 var altitudeList = LayerMap.Keys.ToList();
@@ -387,13 +413,12 @@ namespace Sunbird.External
                 sprite.Draw(gameTime, spriteBatch);
             }
 
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString()}", new Vector2(10, 10), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude)}", new Vector2(10, 30), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString()}", new Vector2(10, 50), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString()}", new Vector2(10, 70), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Sprites in List: { LayerMap[Altitude].Count().ToString()}", new Vector2(10, 90), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", new Vector2(10, 110), Color.Black);
-            spriteBatch.Draw(Content.Load<Texture2D>(CubeFactory.CurrentPath), new Vector2(30, MainGame.Height - 210), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString()}", new Vector2(10, 10), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude)}", new Vector2(10, 30), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString()}", new Vector2(10, 50), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString()}", new Vector2(10, 70), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Sprites in List: { LayerMap[Altitude].Count().ToString()}", new Vector2(10, 90), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", new Vector2(10, 110), Color.White);
 
         }
     }

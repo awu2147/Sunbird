@@ -71,17 +71,19 @@ namespace Sunbird
 
             if (CleanLoad == true)
             {
-                CubeFactory.CubePathLibrary = new XDictionary<int, string>()
+                CubeFactory.CubeMetaDataLibrary = new XDictionary<int, CubeMetaData>()
                 {
-                    {0, "Temp/GrassCube" },
-                    {1, "Temp/WaterCube" },
+                    {0, new CubeMetaData(){Path = "Temp/GrassCube", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
+                    {1, new CubeMetaData(){Path = "Temp/WaterCube"} },
+                    {2, new CubeMetaData(){Path = "Temp/LavaCubeSheet", SheetRows = 1, SheetColumns = 4, FrameCount = 4, FrameSpeed = 0.5f, AnimState = AnimationState.Loop} },
+                    {3, new CubeMetaData(){Path = "Temp/StoneCube", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} }
                 };
                 // There should be at least one cube in the library.
-                CubeFactory.CurrentPath = CubeFactory.CubePathLibrary[0];
+                CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
             }
             else
             {
-                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml");
+                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml", new Type[] { typeof(CubeMetaData) });
                 cubeFactoryData.SyncOut();
             }
 

@@ -40,7 +40,7 @@ namespace Sunbird.Controllers
 
         private Dictionary<int, Point> PositionMap { get { return SpriteSheet.PositionMap; } }
 
-        public int CurrentFrame { get; set; }
+        public int CurrentFrame { get; set; } = 0;
 
         public int StartFrame { get; set; } = 0;
 

@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentPath>Temp/GrassCube</CurrentPath>
-  <CurrentIndex>0</CurrentIndex>
-  <CubePathLibrary>
+  <CurrentCubeMetaData>
+    <Path>Temp/LavaCubeSheet</Path>
+    <SheetRows>1</SheetRows>
+    <SheetColumns>4</SheetColumns>
+    <StartFrame>0</StartFrame>
+    <FrameCount>4</FrameCount>
+    <FrameSpeed>0.5</FrameSpeed>
+    <AnimState>Loop</AnimState>
+  </CurrentCubeMetaData>
+  <CurrentIndex>2</CurrentIndex>
+  <CubeMetaDataLibrary>
     <item>
       <key>
         <int>0</int>
       </key>
       <value>
-        <string>Temp/GrassCube</string>
+        <CubeMetaData>
+          <Path>Temp/GrassCube</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>3</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <FrameCount>3</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
       </value>
     </item>
     <item>
@@ -16,8 +32,48 @@
         <int>1</int>
       </key>
       <value>
-        <string>Temp/WaterCube</string>
+        <CubeMetaData>
+          <Path>Temp/WaterCube</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>1</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <FrameCount>1</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
       </value>
     </item>
-  </CubePathLibrary>
+    <item>
+      <key>
+        <int>2</int>
+      </key>
+      <value>
+        <CubeMetaData>
+          <Path>Temp/LavaCubeSheet</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>4</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <FrameCount>4</FrameCount>
+          <FrameSpeed>0.5</FrameSpeed>
+          <AnimState>Loop</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>3</int>
+      </key>
+      <value>
+        <CubeMetaData>
+          <Path>Temp/StoneCube</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>3</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <FrameCount>3</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
+  </CubeMetaDataLibrary>
 </CubeFactoryData>
