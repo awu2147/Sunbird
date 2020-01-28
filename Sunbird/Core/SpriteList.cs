@@ -21,7 +21,11 @@ namespace Sunbird.Core
 {
     public class SpriteList<T> : List<T>, IXmlSerializable
     {
+        /// <summary>
+        /// Current set of occupied coords.
+        /// </summary>
         public HashSet<Coord> OccupiedCoords { get; set; } = new HashSet<Coord>();
+
 
         /// <summary>
         /// Add to list if coord unoccupied.
@@ -35,12 +39,12 @@ namespace Sunbird.Core
                 Add(sprite);
                 OccupiedCoords.Add(s.Coords);
             }
-            else
-            {
-                //Debug.Print($"Already a sprite at {sprite.Coords}");
-            }
         }
 
+        /// <summary>
+        /// Remove from list if coord occupied. Call this instead of Remove() where appropriate for extra safety.
+        /// </summary>
+        /// <param name="sprite">The sprite to be removed.</param>
         public void RemoveCheck(T sprite)
         {
             var s = sprite as Sprite;
@@ -48,10 +52,6 @@ namespace Sunbird.Core
             {
                 Remove(sprite);
                 OccupiedCoords.Remove(s.Coords);
-            }
-            else
-            {
-                //Debug.Print($"Already a sprite at {sprite.Coords}");
             }
         }
 

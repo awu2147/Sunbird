@@ -29,9 +29,11 @@ namespace Sunbird.Core
 
     public class Sprite
     {
-        public Vector2 Position { get; set; }
-
         public Animator Animator { get; set; }
+
+        public float Alpha { get; set; } = 1f;
+
+        public Vector2 Position { get; set; }
 
         public Coord Coords { get; set; }
 
@@ -39,11 +41,10 @@ namespace Sunbird.Core
 
         public int DrawAltitude { get { return Altitude + DrawPriority; } }
 
+        public int DrawPriority { get; set; }
+
         public bool IsHidden { get; set; }
 
-        public float Alpha { get; set; } = 1f;
-
-        public int DrawPriority { get; set; }
 
         public Sprite()
         {

@@ -179,7 +179,7 @@ namespace Sunbird.External
             }
 
             ApplyMotionBlur(new List<Movement>() { Movement.Walking });
-            Coords = World.TopFace_PositionToRelativeCoord(Position + new Vector2(12*3, 25*3), Altitude);
+            Coords = World.TopFace_PositionToRelativeCoord(Position + new Vector2(12*3, 25*3), Altitude); // Clean me up.
 
             if (!MovementKeyList.Any(x => Peripherals.currentPressedKeys.Contains(x)))
             {
@@ -205,14 +205,7 @@ namespace Sunbird.External
 
         private void ApplyMotionBlur(List<Movement> movements)
         {
-            if (movements.Contains(Movement))
-            {
-                MainGame.SamplerState = SamplerState.AnisotropicClamp;
-            }
-            else
-            {
-                MainGame.SamplerState = SamplerState.PointClamp;
-            }
+            MainGame.SamplerState = movements.Contains(Movement) ? SamplerState.AnisotropicClamp : SamplerState.PointClamp;
         }
 
         private void MovementKeyReleased(object sender, KeyReleasedEventArgs e, EventHandler<KeyReleasedEventArgs> self, Keys key)
@@ -228,20 +221,20 @@ namespace Sunbird.External
                     {
                         Animator.SwitchAnimation(0, 1, 0.2f, AnimationState.None);
                     }
-                    else if (Direction == Direction.West || Direction == Direction.NorthWest || Direction == Direction.SouthWest)
+                    else if (Direction == Direction.East || Direction == Direction.NorthEast || Direction == Direction.SouthEast)
                     {
-                        Animator.SwitchAnimation(12, 1, 0.2f, AnimationState.None);
+                        Animator.SwitchAnimation(4, 1, 0.2f, AnimationState.None);
                     }
                     else if (Direction == Direction.South)
                     {
                         Animator.SwitchAnimation(8, 1, 0.2f, AnimationState.None);
                     }
-                    else if (Direction == Direction.East || Direction == Direction.NorthEast || Direction == Direction.SouthEast)
+                    else if (Direction == Direction.West || Direction == Direction.NorthWest || Direction == Direction.SouthWest)
                     {
-                        Animator.SwitchAnimation(4, 1, 0.2f, AnimationState.None);
+                        Animator.SwitchAnimation(12, 1, 0.2f, AnimationState.None);
                     }
                 }
-                Debug.Print(e.Key.ToString() + " key released. Movement = " + Movement.ToString());
+                //Debug.Print($"{e.Key.ToString()} key released. Movement = {Movement.ToString()}.");
             }
         }
 

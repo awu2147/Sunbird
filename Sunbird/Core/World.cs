@@ -92,9 +92,7 @@ namespace Sunbird.Core
             var gridCoord = TopFace_PointToGridCoord(point);
             var coord = TopFace_GridCoordToCoord(gridCoord);
 
-            var altitudeOffset = new Coord(1, -1) * altitude;
-
-            return coord + offset + altitudeOffset;
+            return GetRelativeCoord(coord, altitude) + offset;
         }
 
         public static Coord TopFace_PointToRelativeCoord(Camera camera, int altitude)
