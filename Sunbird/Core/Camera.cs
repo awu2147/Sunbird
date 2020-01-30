@@ -29,6 +29,8 @@ namespace Sunbird.Core
     {
         public Matrix FollowTransform { get; set; } = Matrix.Identity;
 
+        private Matrix BaseFollowTransform { get; set; } = Matrix.Identity;
+
         public Matrix PushTransform { get; set; } = Matrix.Identity;
 
         public Matrix DragTransform { get; set; } = Matrix.Identity;
@@ -77,7 +79,8 @@ namespace Sunbird.Core
 
         public void Follow(Sprite target, Vector2 offset)
         {
-            FollowTransform = Matrix.CreateTranslation(MainGame.Width / 2 - target.Position.X - offset.X, MainGame.Height / 2 - target.Position.Y - offset.Y, 0);            
+            FollowTransform = Matrix.CreateTranslation((MainGame.Width / 2) / World.ZoomRatio - target.Position.X - offset.X, (MainGame.Height / 2) / World.ZoomRatio - target.Position.Y - offset.Y, 0) * Matrix.CreateScale(World.ZoomRatio);
+            BaseFollowTransform = Matrix.CreateTranslation((MainGame.Width / 2) / World.ZoomRatio - target.Position.X - offset.X, (MainGame.Height / 2) / World.ZoomRatio - target.Position.Y - offset.Y, 0);
         }
 
         public void Drag()
@@ -85,7 +88,7 @@ namespace Sunbird.Core
             if (CurrentMode != CameraMode.Drag)
             {
                 DragTransform = FollowTransform;
-                LastDrag = new Point((int)FollowTransform.M41, (int)FollowTransform.M42);
+                LastDrag = new Point((int)BaseFollowTransform.M41, (int)BaseFollowTransform.M42);
             }
             else
             {
@@ -98,11 +101,12 @@ namespace Sunbird.Core
                         Anchor = Peripherals.GetMouseWindowPosition();
                     }
                     var currentPosition = Peripherals.GetMouseWindowPosition();
-                    DragPositionChange = currentPosition - Anchor;
-                    DragTransform = Matrix.CreateTranslation(LastDrag.X + DragPositionChange.X, LastDrag.Y + DragPositionChange.Y, 0);
+                    DragPositionChange = (currentPosition - Anchor) * new Point(World.Scale, World.Scale) / new Point(World.Zoom, World.Zoom);
+                    DragTransform = Matrix.CreateTranslation(LastDrag.X + DragPositionChange.X, LastDrag.Y + DragPositionChange.Y, 0) * Matrix.CreateScale(World.ZoomRatio);
                 }
                 else
                 {
+                    DragTransform = Matrix.CreateTranslation(LastDrag.X + DragPositionChange.X, LastDrag.Y + DragPositionChange.Y, 0) * Matrix.CreateScale(World.ZoomRatio);
                     MainGame.SamplerState = SamplerState.PointClamp;
                 }
             }
@@ -195,7 +199,7 @@ namespace Sunbird.Core
                     if (PushDirection == Direction.None)
                     {
                         MainGame.SamplerState = SamplerState.PointClamp;
-                        PushTransform = Matrix.CreateTranslation(PushTransform.M41, PushTransform.M42, 0);
+                        PushTransform = Matrix.CreateTranslation(PushTransform.M41, PushTransform.M42, 0) * Matrix.CreateScale(World.ZoomRatio);
                     }
 
                 }

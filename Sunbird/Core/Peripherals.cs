@@ -191,7 +191,7 @@ namespace Sunbird.Core
         {
             if (camera.CurrentMode == CameraMode.Follow)
             {
-                return new Point(-(int)camera.FollowTransform.M41, -(int)camera.FollowTransform.M42) + GetMouseWindowPosition();
+                return (new Point(-(int)camera.FollowTransform.M41, -(int)camera.FollowTransform.M42)) + GetMouseWindowPosition();
             }
             else if (camera.CurrentMode == CameraMode.Push)
             {

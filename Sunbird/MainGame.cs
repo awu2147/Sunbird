@@ -160,6 +160,10 @@ namespace Sunbird
         {
             GraphicsDevice.Clear(Color.LightGray);
 
+            if (World.ZoomRatio > 1)
+            {
+                SamplerState = SamplerState.PointClamp;
+            }
             // Primary batch
             spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
 

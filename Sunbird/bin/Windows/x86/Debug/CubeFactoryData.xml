@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Temp/LavaCubeSheet</Path>
+    <Path>Temp/StoneCube</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>4</SheetColumns>
+    <SheetColumns>3</SheetColumns>
     <StartFrame>0</StartFrame>
-    <FrameCount>4</FrameCount>
-    <FrameSpeed>0.5</FrameSpeed>
-    <AnimState>Loop</AnimState>
+    <FrameCount>3</FrameCount>
+    <FrameSpeed>0.133</FrameSpeed>
+    <AnimState>None</AnimState>
   </CurrentCubeMetaData>
-  <CurrentIndex>2</CurrentIndex>
+  <CurrentIndex>3</CurrentIndex>
   <CubeMetaDataLibrary>
     <item>
       <key>

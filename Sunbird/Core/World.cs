@@ -23,60 +23,116 @@ namespace Sunbird.Core
 {
     public static class World
     {
-        private static int Scale { get; set; } = 3;
+        public static float ZoomRatio { get { return (float)Zoom / (float)Scale; } }
+        public static int Zoom { get; set; } = 3;
+        public static int Scale { get; private set; } = 3;
         private static int TopFaceGridWidth { get; set; } = 24;
         private static int TopFaceGridHeight { get; set; } = 12;
 
         private static List<Rectangle> TopFaceAreaC { get; set; } = new List<Rectangle>()
         {
-            new Rectangle(ScaledPoint(1, 5), ScaledPoint(2, 2)),
-            new Rectangle(ScaledPoint(3, 4), ScaledPoint(2, 4)),
-            new Rectangle(ScaledPoint(5, 3), ScaledPoint(2, 6)),
-            new Rectangle(ScaledPoint(7, 2), ScaledPoint(2, 8)),
-            new Rectangle(ScaledPoint(9, 1), ScaledPoint(2, 10)),
-            new Rectangle(ScaledPoint(11, 0), ScaledPoint(2, 12)),
-            new Rectangle(ScaledPoint(13, 1), ScaledPoint(2, 10)),
-            new Rectangle(ScaledPoint(15, 2), ScaledPoint(2, 8)),
-            new Rectangle(ScaledPoint(17, 3), ScaledPoint(2, 6)),
-            new Rectangle(ScaledPoint(19, 4), ScaledPoint(2, 4)),
-            new Rectangle(ScaledPoint(21, 5), ScaledPoint(2, 2))
+            new Rectangle(ScaledPointZoom(1, 5), ScaledPointZoom(2, 2)),
+            new Rectangle(ScaledPointZoom(3, 4), ScaledPointZoom(2, 4)),
+            new Rectangle(ScaledPointZoom(5, 3), ScaledPointZoom(2, 6)),
+            new Rectangle(ScaledPointZoom(7, 2), ScaledPointZoom(2, 8)),
+            new Rectangle(ScaledPointZoom(9, 1), ScaledPointZoom(2, 10)),
+            new Rectangle(ScaledPointZoom(11, 0), ScaledPointZoom(2, 12)),
+            new Rectangle(ScaledPointZoom(13, 1), ScaledPointZoom(2, 10)),
+            new Rectangle(ScaledPointZoom(15, 2), ScaledPointZoom(2, 8)),
+            new Rectangle(ScaledPointZoom(17, 3), ScaledPointZoom(2, 6)),
+            new Rectangle(ScaledPointZoom(19, 4), ScaledPointZoom(2, 4)),
+            new Rectangle(ScaledPointZoom(21, 5), ScaledPointZoom(2, 2))
         };
         private static List<Rectangle> TopFaceAreaTL { get; set; } = new List<Rectangle>()
         {
-            new Rectangle(ScaledPoint(0, 0), ScaledPoint(1, 6)),
-            new Rectangle(ScaledPoint(1, 0), ScaledPoint(2, 5)),
-            new Rectangle(ScaledPoint(3, 0), ScaledPoint(2, 4)),
-            new Rectangle(ScaledPoint(5, 0), ScaledPoint(2, 3)),
-            new Rectangle(ScaledPoint(7, 0), ScaledPoint(2, 2)),
-            new Rectangle(ScaledPoint(9, 0), ScaledPoint(2, 1))
+            new Rectangle(ScaledPointZoom(0, 0), ScaledPointZoom(1, 6)),
+            new Rectangle(ScaledPointZoom(1, 0), ScaledPointZoom(2, 5)),
+            new Rectangle(ScaledPointZoom(3, 0), ScaledPointZoom(2, 4)),
+            new Rectangle(ScaledPointZoom(5, 0), ScaledPointZoom(2, 3)),
+            new Rectangle(ScaledPointZoom(7, 0), ScaledPointZoom(2, 2)),
+            new Rectangle(ScaledPointZoom(9, 0), ScaledPointZoom(2, 1))
         };                                                      
         private static List<Rectangle> TopFaceAreaTR { get; set; } = new List<Rectangle>()
         {
-            new Rectangle(ScaledPoint(13, 0), ScaledPoint(2, 1)),
-            new Rectangle(ScaledPoint(15, 0), ScaledPoint(2, 2)),
-            new Rectangle(ScaledPoint(17, 0), ScaledPoint(2, 3)),
-            new Rectangle(ScaledPoint(19, 0), ScaledPoint(2, 4)),
-            new Rectangle(ScaledPoint(21, 0), ScaledPoint(2, 5)),
-            new Rectangle(ScaledPoint(23, 0), ScaledPoint(1, 6)),
+            new Rectangle(ScaledPointZoom(13, 0), ScaledPointZoom(2, 1)),
+            new Rectangle(ScaledPointZoom(15, 0), ScaledPointZoom(2, 2)),
+            new Rectangle(ScaledPointZoom(17, 0), ScaledPointZoom(2, 3)),
+            new Rectangle(ScaledPointZoom(19, 0), ScaledPointZoom(2, 4)),
+            new Rectangle(ScaledPointZoom(21, 0), ScaledPointZoom(2, 5)),
+            new Rectangle(ScaledPointZoom(23, 0), ScaledPointZoom(1, 6)),
         };
         private static List<Rectangle> TopFaceAreaBL { get; set; } = new List<Rectangle>()
         {
-            new Rectangle(ScaledPoint(0, 6), ScaledPoint(1, 6)),
-            new Rectangle(ScaledPoint(1, 7), ScaledPoint(2, 5)),
-            new Rectangle(ScaledPoint(3, 8), ScaledPoint(2, 4)),
-            new Rectangle(ScaledPoint(5, 9), ScaledPoint(2, 3)),
-            new Rectangle(ScaledPoint(7, 10), ScaledPoint(2, 2)),
-            new Rectangle(ScaledPoint(9, 11), ScaledPoint(2, 1))
+            new Rectangle(ScaledPointZoom(0, 6), ScaledPointZoom(1, 6)),
+            new Rectangle(ScaledPointZoom(1, 7), ScaledPointZoom(2, 5)),
+            new Rectangle(ScaledPointZoom(3, 8), ScaledPointZoom(2, 4)),
+            new Rectangle(ScaledPointZoom(5, 9), ScaledPointZoom(2, 3)),
+            new Rectangle(ScaledPointZoom(7, 10), ScaledPointZoom(2, 2)),
+            new Rectangle(ScaledPointZoom(9, 11), ScaledPointZoom(2, 1))
         };
         private static List<Rectangle> TopFaceAreaBR { get; set; } = new List<Rectangle>()
         {
-            new Rectangle(ScaledPoint(13, 11), ScaledPoint(2, 1)),
-            new Rectangle(ScaledPoint(15, 10), ScaledPoint(2, 2)),
-            new Rectangle(ScaledPoint(17, 9), ScaledPoint(2, 3)),
-            new Rectangle(ScaledPoint(19, 8), ScaledPoint(2, 4)),
-            new Rectangle(ScaledPoint(21, 7), ScaledPoint(2, 5)),
-            new Rectangle(ScaledPoint(23, 6), ScaledPoint(1, 6)),
+            new Rectangle(ScaledPointZoom(13, 11), ScaledPointZoom(2, 1)),
+            new Rectangle(ScaledPointZoom(15, 10), ScaledPointZoom(2, 2)),
+            new Rectangle(ScaledPointZoom(17, 9), ScaledPointZoom(2, 3)),
+            new Rectangle(ScaledPointZoom(19, 8), ScaledPointZoom(2, 4)),
+            new Rectangle(ScaledPointZoom(21, 7), ScaledPointZoom(2, 5)),
+            new Rectangle(ScaledPointZoom(23, 6), ScaledPointZoom(1, 6)),
         };
+
+        public static void ReconstructTopFaceArea()
+        {
+            TopFaceAreaC = new List<Rectangle>()
+            {
+                new Rectangle(ScaledPointZoom(1, 5), ScaledPointZoom(2, 2)),
+                new Rectangle(ScaledPointZoom(3, 4), ScaledPointZoom(2, 4)),
+                new Rectangle(ScaledPointZoom(5, 3), ScaledPointZoom(2, 6)),
+                new Rectangle(ScaledPointZoom(7, 2), ScaledPointZoom(2, 8)),
+                new Rectangle(ScaledPointZoom(9, 1), ScaledPointZoom(2, 10)),
+                new Rectangle(ScaledPointZoom(11, 0), ScaledPointZoom(2, 12)),
+                new Rectangle(ScaledPointZoom(13, 1), ScaledPointZoom(2, 10)),
+                new Rectangle(ScaledPointZoom(15, 2), ScaledPointZoom(2, 8)),
+                new Rectangle(ScaledPointZoom(17, 3), ScaledPointZoom(2, 6)),
+                new Rectangle(ScaledPointZoom(19, 4), ScaledPointZoom(2, 4)),
+                new Rectangle(ScaledPointZoom(21, 5), ScaledPointZoom(2, 2))
+            };
+            TopFaceAreaTL = new List<Rectangle>()
+            {
+                new Rectangle(ScaledPointZoom(0, 0), ScaledPointZoom(1, 6)),
+                new Rectangle(ScaledPointZoom(1, 0), ScaledPointZoom(2, 5)),
+                new Rectangle(ScaledPointZoom(3, 0), ScaledPointZoom(2, 4)),
+                new Rectangle(ScaledPointZoom(5, 0), ScaledPointZoom(2, 3)),
+                new Rectangle(ScaledPointZoom(7, 0), ScaledPointZoom(2, 2)),
+                new Rectangle(ScaledPointZoom(9, 0), ScaledPointZoom(2, 1))
+            };
+            TopFaceAreaTR = new List<Rectangle>()
+            {
+                new Rectangle(ScaledPointZoom(13, 0), ScaledPointZoom(2, 1)),
+                new Rectangle(ScaledPointZoom(15, 0), ScaledPointZoom(2, 2)),
+                new Rectangle(ScaledPointZoom(17, 0), ScaledPointZoom(2, 3)),
+                new Rectangle(ScaledPointZoom(19, 0), ScaledPointZoom(2, 4)),
+                new Rectangle(ScaledPointZoom(21, 0), ScaledPointZoom(2, 5)),
+                new Rectangle(ScaledPointZoom(23, 0), ScaledPointZoom(1, 6)),
+            };
+            TopFaceAreaBL= new List<Rectangle>()
+            {
+                new Rectangle(ScaledPointZoom(0, 6), ScaledPointZoom(1, 6)),
+                new Rectangle(ScaledPointZoom(1, 7), ScaledPointZoom(2, 5)),
+                new Rectangle(ScaledPointZoom(3, 8), ScaledPointZoom(2, 4)),
+                new Rectangle(ScaledPointZoom(5, 9), ScaledPointZoom(2, 3)),
+                new Rectangle(ScaledPointZoom(7, 10), ScaledPointZoom(2, 2)),
+                new Rectangle(ScaledPointZoom(9, 11), ScaledPointZoom(2, 1))
+            };
+            TopFaceAreaBR = new List<Rectangle>()
+            {
+                new Rectangle(ScaledPointZoom(13, 11), ScaledPointZoom(2, 1)),
+                new Rectangle(ScaledPointZoom(15, 10), ScaledPointZoom(2, 2)),
+                new Rectangle(ScaledPointZoom(17, 9), ScaledPointZoom(2, 3)),
+                new Rectangle(ScaledPointZoom(19, 8), ScaledPointZoom(2, 4)),
+                new Rectangle(ScaledPointZoom(21, 7), ScaledPointZoom(2, 5)),
+                new Rectangle(ScaledPointZoom(23, 6), ScaledPointZoom(1, 6)),
+            };
+        }
 
 
         public static Coord GetRelativeCoord(Coord coord, int altitude)
@@ -127,15 +183,15 @@ namespace Sunbird.Core
         /// <returns></returns>
         public static Point TopFace_NormalizedPoint(Point point)
         {
-            var x = point.X % Scaled(TopFaceGridWidth);
+            var x = point.X % ScaledZoom(TopFaceGridWidth);
             if (x < 0)
             {
-                x = Scaled(TopFaceGridWidth) + x;
+                x = ScaledZoom(TopFaceGridWidth) + x;
             }
-            var y = point.Y % Scaled(TopFaceGridHeight);
+            var y = point.Y % ScaledZoom(TopFaceGridHeight);
             if (y < 0)
             {
-                y = Scaled(TopFaceGridHeight) + y;
+                y = ScaledZoom(TopFaceGridHeight) + y;
             }
             return new Point(x, y);
         }
@@ -175,14 +231,14 @@ namespace Sunbird.Core
         /// <returns></returns>
         public static Coord TopFace_PointToGridCoord(Point point)
         {
-            var x = point.X / Scaled(TopFaceGridWidth);
-            var xRem = point.X % Scaled(TopFaceGridWidth); // We need remainder check to preserve grid edge schema after translation.
+            var x = point.X / ScaledZoom(TopFaceGridWidth);
+            var xRem = point.X % ScaledZoom(TopFaceGridWidth); // We need remainder check to preserve grid edge schema after translation.
             if (point.X < 0 && xRem != 0)
             {
                 x -= 1;
             }
-            var y = point.Y / Scaled(TopFaceGridHeight);
-            var yRem = point.Y % Scaled(TopFaceGridHeight);
+            var y = point.Y / ScaledZoom(TopFaceGridHeight);
+            var yRem = point.Y % ScaledZoom(TopFaceGridHeight);
             if (point.Y < 0 && yRem != 0)
             {
                 y -= 1;
@@ -215,6 +271,11 @@ namespace Sunbird.Core
             return new Point(x, y) * new Point(Scale, Scale);
         }
 
+        public static Point ScaledPointZoom(int x, int y)
+        {
+            return new Point(x, y) * new Point(Zoom, Zoom);
+        }
+
         public static Vector2 ScaledVector(int x, int y)
         {
             return new Vector2(x, y) * Scale;
@@ -223,6 +284,11 @@ namespace Sunbird.Core
         public static int Scaled(int value)
         {
             return value * Scale;
+        }
+
+        public static int ScaledZoom(int value)
+        {
+            return value * Zoom;
         }
     }
 }

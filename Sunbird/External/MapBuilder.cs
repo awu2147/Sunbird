@@ -150,24 +150,41 @@ namespace Sunbird.External
 
         private void Peripherals_ScrollWheelDown(object sender, EventArgs e)
         {
-            if (MainGame.IsActive == true && Authorization == Authorization.Builder)
+            if (MainGame.IsActive == true)
             {
-                Altitude--;
-                if (LayerMap.ContainsKey(Altitude) == false)
+                if (Authorization == Authorization.Builder)
                 {
-                    LayerMap.Add(Altitude, new SpriteList<Sprite>());
+                    Altitude--;
+                    if (LayerMap.ContainsKey(Altitude) == false)
+                    {
+                        LayerMap.Add(Altitude, new SpriteList<Sprite>());
+                    }
+                }
+                else if (Authorization == Authorization.None && World.Zoom > 1)
+                {
+                    World.Zoom--;
+                    World.ReconstructTopFaceArea();
                 }
             }
+            
         }
 
         private void Peripherals_ScrollWheelUp(object sender, EventArgs e)
         {
-            if (MainGame.IsActive == true && Authorization == Authorization.Builder)
+            if (MainGame.IsActive == true)
             {
-                Altitude++;
-                if (LayerMap.ContainsKey(Altitude) == false)
+                if (Authorization == Authorization.Builder)
                 {
-                    LayerMap.Add(Altitude, new SpriteList<Sprite>());
+                    Altitude++;
+                    if (LayerMap.ContainsKey(Altitude) == false)
+                    {
+                        LayerMap.Add(Altitude, new SpriteList<Sprite>());
+                    }
+                }
+                else if (Authorization == Authorization.None && World.Zoom < 5)
+                {
+                    World.Zoom++;
+                    World.ReconstructTopFaceArea();
                 }
             }
         }
@@ -413,12 +430,12 @@ namespace Sunbird.External
                 sprite.Draw(gameTime, spriteBatch);
             }
 
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString()}", new Vector2(10, 10), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude)}", new Vector2(10, 30), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString()}", new Vector2(10, 50), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString()}", new Vector2(10, 70), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Sprites in List: { LayerMap[Altitude].Count().ToString()}", new Vector2(10, 90), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", new Vector2(10, 110), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString()}", new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude)}", new Vector2(10, 30), Color.Black);            
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString()}", new Vector2(10, 50), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Sprites in List: { LayerMap[Altitude].Count().ToString()}", new Vector2(10, 70), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Zoom: { Convert.ToInt32(Math.Floor(World.ZoomRatio * 100))} %", new Vector2(10, 90), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", new Vector2(10, 110), Color.Black);
 
         }
     }
