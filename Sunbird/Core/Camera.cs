@@ -21,38 +21,32 @@ namespace Sunbird.Core
     public enum CameraMode
     {
         Follow = 0,
-        Push = 1,
-        Drag = 2,
+        Drag = 1,
+        Push = 2,
     }
 
     public class Camera
     {
-        public Matrix FollowTransform { get; set; } = Matrix.Identity;
-
-        private Matrix BaseFollowTransform { get; set; } = Matrix.Identity;
-
-        public Matrix PushTransform { get; set; } = Matrix.Identity;
-
-        public Matrix DragTransform { get; set; } = Matrix.Identity;
-
         public Matrix CurrentTransform { get; set; } = Matrix.Identity;
-
         public CameraMode CurrentMode { get; set; }
 
+        // Follow
+        public Matrix FollowTransform { get; set; } = Matrix.Identity;
+        private Vector2 FollowOffset { get; set; }
+
+        // Drag
+        public Matrix DragTransform { get; set; } = Matrix.Identity;
+        private Vector2 DragTargetPosition { get; set; }
+        private Point DragPositionChange { get; set; }
+        private Point Anchor { get; set; }
+
+        // TODO: Push
+        public Matrix PushTransform { get; set; } = Matrix.Identity;
         private Direction PushDirection { get; set; }
+        private float Counter { get; set; } = 3;
 
         private MainGame MainGame { get; set; }
 
-        public SamplerState SamplerState { get; set; }
-
-        private Point Anchor { get; set; }
-
-        public Point LastDrag { get; set; }  = Point.Zero;
-
-        private Point DragPositionChange { get; set; }
-
-        // TODO: Rework Push() mode.
-        private float counter { get; set; } = 3;
 
         public Camera(MainGame sender)
         {
@@ -73,14 +67,18 @@ namespace Sunbird.Core
             {
                 CurrentTransform = DragTransform;
             }
-            Push();
             Drag();
+            Push();
         }
 
         public void Follow(Sprite target, Vector2 offset)
         {
             FollowTransform = Matrix.CreateTranslation((MainGame.Width / 2) / World.ZoomRatio - target.Position.X - offset.X, (MainGame.Height / 2) / World.ZoomRatio - target.Position.Y - offset.Y, 0) * Matrix.CreateScale(World.ZoomRatio);
-            BaseFollowTransform = Matrix.CreateTranslation((MainGame.Width / 2) / World.ZoomRatio - target.Position.X - offset.X, (MainGame.Height / 2) / World.ZoomRatio - target.Position.Y - offset.Y, 0);
+            FollowOffset = offset;
+            if (CurrentMode != CameraMode.Drag)
+            {
+                DragTargetPosition = target.Position;
+            }
         }
 
         public void Drag()
@@ -88,7 +86,6 @@ namespace Sunbird.Core
             if (CurrentMode != CameraMode.Drag)
             {
                 DragTransform = FollowTransform;
-                LastDrag = new Point((int)BaseFollowTransform.M41, (int)BaseFollowTransform.M42);
             }
             else
             {
@@ -102,11 +99,10 @@ namespace Sunbird.Core
                     }
                     var currentPosition = Peripherals.GetMouseWindowPosition();
                     DragPositionChange = (currentPosition - Anchor) * new Point(World.Scale, World.Scale) / new Point(World.Zoom, World.Zoom);
-                    DragTransform = Matrix.CreateTranslation(LastDrag.X + DragPositionChange.X, LastDrag.Y + DragPositionChange.Y, 0) * Matrix.CreateScale(World.ZoomRatio);
+                    DragTransform = CreateDragTransform();
                 }
                 else
                 {
-                    DragTransform = Matrix.CreateTranslation(LastDrag.X + DragPositionChange.X, LastDrag.Y + DragPositionChange.Y, 0) * Matrix.CreateScale(World.ZoomRatio);
                     MainGame.SamplerState = SamplerState.PointClamp;
                 }
             }
@@ -114,9 +110,15 @@ namespace Sunbird.Core
 
         private void peripherals_MiddleButtonReleased(object sender, EventArgs e)
         {
-            LastDrag += DragPositionChange;
+            DragTargetPosition -= DragPositionChange.ToVector2();
             DragPositionChange = Point.Zero;
             Peripherals.MiddleButtonReleased -= peripherals_MiddleButtonReleased;
+        }
+
+        public Matrix CreateDragTransform()
+        {
+            return Matrix.CreateTranslation((MainGame.Width / 2) / World.ZoomRatio - DragTargetPosition.X - FollowOffset.X + DragPositionChange.X, 
+                                            (MainGame.Height / 2) / World.ZoomRatio - DragTargetPosition.Y - FollowOffset.Y + DragPositionChange.Y, 0) * Matrix.CreateScale(World.ZoomRatio);
         }
 
         public void Push()
@@ -131,25 +133,25 @@ namespace Sunbird.Core
                 MainGame.SamplerState = SamplerState.AnisotropicClamp;
                 if (ms.X >= -100 && ms.X <= 100)
                 {
-                    counter = 3;
+                    Counter = 3;
                     PushTransform = PushTransform * Matrix.CreateTranslation(3, 0, 0);
                     PushDirection = Direction.West;
                 }
                 else if (ms.X >= MainGame.Width - 100 && ms.X <= MainGame.Width + 100)
                 {
-                    counter = 3;
+                    Counter = 3;
                     PushTransform = PushTransform * Matrix.CreateTranslation(-3, 0, 0);
                     PushDirection = Direction.East;
                 }
                 else if (ms.Y >= -100 && ms.Y <= 100)
                 {
-                    counter = 3;
+                    Counter = 3;
                     PushTransform = PushTransform * Matrix.CreateTranslation(0, 3, 0);
                     PushDirection = Direction.North;
                 }
                 else if (ms.Y >= MainGame.Height - 100 && ms.Y <= MainGame.Height + 100)
                 {
-                    counter = 3;
+                    Counter = 3;
                     PushTransform = PushTransform * Matrix.CreateTranslation(0, -3, 0);
                     PushDirection = Direction.South;
                 }
@@ -157,42 +159,42 @@ namespace Sunbird.Core
                 {
                     if (PushDirection == Direction.West)
                     {
-                        PushTransform *= Matrix.CreateTranslation(counter, 0, 0);
-                        counter -= 0.1f;
-                        if (counter <= 0)
+                        PushTransform *= Matrix.CreateTranslation(Counter, 0, 0);
+                        Counter -= 0.1f;
+                        if (Counter <= 0)
                         {
                             PushDirection = Direction.None;
-                            counter = 3;
+                            Counter = 3;
                         }
                     }
                     else if (PushDirection == Direction.East)
                     {
-                        PushTransform *= Matrix.CreateTranslation(-counter, 0, 0);
-                        counter -= 0.1f;
-                        if (counter <= 0)
+                        PushTransform *= Matrix.CreateTranslation(-Counter, 0, 0);
+                        Counter -= 0.1f;
+                        if (Counter <= 0)
                         {
                             PushDirection = Direction.None;
-                            counter = 3;
+                            Counter = 3;
                         }
                     }
                     else if (PushDirection == Direction.North)
                     {
-                        PushTransform *= Matrix.CreateTranslation(0, counter, 0);
-                        counter -= 0.1f;
-                        if (counter <= 0)
+                        PushTransform *= Matrix.CreateTranslation(0, Counter, 0);
+                        Counter -= 0.1f;
+                        if (Counter <= 0)
                         {
                             PushDirection = Direction.None;
-                            counter = 3;
+                            Counter = 3;
                         }
                     }
                     else if (PushDirection == Direction.South)
                     {
-                        PushTransform *= Matrix.CreateTranslation(0, -counter, 0);
-                        counter -= 0.1f;
-                        if (counter <= 0)
+                        PushTransform *= Matrix.CreateTranslation(0, -Counter, 0);
+                        Counter -= 0.1f;
+                        if (Counter <= 0)
                         {
                             PushDirection = Direction.None;
-                            counter = 3;
+                            Counter = 3;
                         }
                     }
 

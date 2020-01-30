@@ -138,7 +138,7 @@ namespace Sunbird
             if (Peripherals.KeyTapped(Keys.C))
             {
                 var i = (int)Camera.CurrentMode + 1;
-                if (i >= Enum.GetNames(typeof(CameraMode)).Length)
+                if (i >= Enum.GetNames(typeof(CameraMode)).Length - 1)
                 {
                     i = 0;
                 }

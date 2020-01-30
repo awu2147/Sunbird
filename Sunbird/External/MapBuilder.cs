@@ -164,6 +164,10 @@ namespace Sunbird.External
                 {
                     World.Zoom--;
                     World.ReconstructTopFaceArea();
+                    if (MainGame.Camera.CurrentMode == CameraMode.Drag)
+                    {
+                        MainGame.Camera.DragTransform = MainGame.Camera.CreateDragTransform();
+                    }
                 }
             }
             
@@ -185,6 +189,10 @@ namespace Sunbird.External
                 {
                     World.Zoom++;
                     World.ReconstructTopFaceArea();
+                    if (MainGame.Camera.CurrentMode == CameraMode.Drag)
+                    {
+                        MainGame.Camera.DragTransform = MainGame.Camera.CreateDragTransform();
+                    }
                 }
             }
         }
