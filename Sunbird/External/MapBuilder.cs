@@ -73,13 +73,14 @@ namespace Sunbird.External
             Player = new Player(MainGame, playerAnimator) { DrawPriority = 2 };
             LayerMap[Altitude].Add(Player);
 
-            GhostMarker = GhostMarker.CreateNew(MainGame, "Temp/GrassCube");
-            GhostMarker.DrawPriority = 1;
-            LayerMap[Altitude].Add(GhostMarker);
-
             CubePreview = CubeFactory.CreateCurrentCube(MainGame, Coord.Zero, Coord.Zero, 0);
             CubePreview.Position = new Vector2(30, MainGame.Height - 210);
             Overlay.Add(CubePreview);
+
+            GhostMarker = new GhostMarker(SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker"));
+            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            GhostMarker.DrawPriority = 1;
+            LayerMap[Altitude].Add(GhostMarker);
 
             var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
             Overlay.Add(new Sprite(gridAxisGlyph, new Vector2(20, MainGame.Height - 20), Alignment.BottomLeft));
@@ -120,6 +121,7 @@ namespace Sunbird.External
                     else if (sprite is GhostMarker)
                     {
                         GhostMarker = sprite as GhostMarker;
+                        GhostMarker.Image.LoadContent(MainGame, GraphicsDevice, Content);
                     }
                 }
             }
@@ -210,11 +212,22 @@ namespace Sunbird.External
                 {
                     CubeFactory.FindNext();
                     var CCMD = CubeFactory.CurrentCubeMetaData;
-                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
-                    GhostMarker.ReconfigureAnimator(CCMD.StartFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
 
                     CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
                     CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
+
+                    GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+                }
+
+                if (Peripherals.KeyTapped(Keys.R))
+                {
+                    CubeFactory.FindNextBase();
+                    var CCBMD = CubeFactory.CurrentCubeBaseMetaData;
+
+                    CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCBMD.Path, CCBMD.SheetRows, CCBMD.SheetColumns), CubePreview.AnimatorBase);
+                    CubePreview.ReconfigureAnimator(CCBMD.StartFrame, CCBMD.FrameCount, CCBMD.FrameSpeed, CCBMD.AnimState, CubePreview.AnimatorBase);
+
+                    GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
                 }
 
                 if (Peripherals.KeyTapped(Keys.Q))
@@ -235,7 +248,7 @@ namespace Sunbird.External
                         }
                         else
                         {
-                            cube = CubeFactory.CreateRandomCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            cube = CubeFactory.CreateRandomTopCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
                         }
                         LayerMap[Altitude].AddCheck(cube);
                     }
@@ -282,14 +295,11 @@ namespace Sunbird.External
 
                 if (LayerMap[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.None)
                 {
-                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker"));
-                    GhostMarker.ReconfigureAnimator();
+                    GhostMarker.DrawDefaultMarker = true;
                 }
                 else if (Authorization == Authorization.Builder)
                 {
-                    var CCMD = CubeFactory.CurrentCubeMetaData;
-                    GhostMarker.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
-                    GhostMarker.ReconfigureAnimator(CCMD.StartFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
+                    GhostMarker.DrawDefaultMarker = false;
                 }
 
                 if (LayerMap[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.Builder)

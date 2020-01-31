@@ -19,15 +19,34 @@ using Sunbird.Serialization;
 
 namespace Sunbird.Core
 {
+    [Serializable]
     public class Cube : Sprite
     {
-        private Cube() { }
+        public Animator AnimatorBase { get; set; }
 
-        public Cube(SpriteSheet spriteSheet) : base(spriteSheet) { }
+        public Cube() { }
 
-        public Cube(SpriteSheet spriteSheet, int startFrame, int frameCount, float frameSpeed, AnimationState animState)
+        public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            Animator = new Animator(spriteSheet, this, startFrame, frameCount, frameSpeed, animState);
+            Animator.LoadContent(mainGame, graphicsDevice, content);
+            Animator.Sender = this;
+            AnimatorBase.LoadContent(mainGame, graphicsDevice, content);
+            AnimatorBase.Sender = this;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            Animator.Update(gameTime);
+            AnimatorBase.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (IsHidden == false)
+            {             
+                AnimatorBase.Draw(gameTime, spriteBatch, Alpha);
+                Animator.Draw(gameTime, spriteBatch, Alpha);
+            }
         }
 
     }
@@ -47,37 +66,76 @@ namespace Sunbird.Core
         }
     }
 
+    public class CubeBaseMetaData
+    {
+        public string Path { get; set; }
+        public int SheetRows { get; set; } = 1;
+        public int SheetColumns { get; set; } = 1;
+        public int StartFrame { get; set; } = 0;
+        public int FrameCount { get; set; } = 1;
+        public float FrameSpeed { get; set; } = 0.133f;
+        public AnimationState AnimState { get; set; } = AnimationState.None;
+
+        public CubeBaseMetaData()
+        {
+
+        }
+    }
+
     public static class CubeFactory
     {
         public static CubeMetaData CurrentCubeMetaData{ get; set; }
+        public static CubeBaseMetaData CurrentCubeBaseMetaData { get; set; }
 
         public static int CurrentIndex { get; set; } = 0;
+        public static int CurrentBaseIndex { get; set; } = 0;
 
         public static XDictionary<int, CubeMetaData> CubeMetaDataLibrary { get; set; }
+        public static XDictionary<int, CubeBaseMetaData> CubeBaseMetaDataLibrary { get; set; }
 
-        public static Cube CreateCube(MainGame mainGame, CubeMetaData cubeMetaData, Coord coords, Coord relativeCoords, int altitude)
+        public static Cube CreateCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
         {
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMetaData.Path, cubeMetaData.SheetRows, cubeMetaData.SheetColumns);
-            return new Cube(spriteSheet, cubeMetaData.StartFrame, cubeMetaData.FrameCount, cubeMetaData.FrameSpeed, cubeMetaData.AnimState) { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
+            var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
+            var spriteSheetBase = SpriteSheet.CreateNew(mainGame, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
+            var cube = new Cube() { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
+            cube.Animator = new Animator(spriteSheet, cube, cubeMD.StartFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
+            cube.AnimatorBase = new Animator(spriteSheetBase, cube, cubeBaseMD.StartFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);
+            return cube;
         }
 
-        public static Cube CreateRandomCube(MainGame mainGame, CubeMetaData cubeMetaData, Coord coords, Coord relativeCoords, int altitude)
+        public static Cube CreateRandomCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
         {
-            var r = new Random();
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMetaData.Path, cubeMetaData.SheetRows, cubeMetaData.SheetColumns);
-            var cube = new Cube(spriteSheet, cubeMetaData.StartFrame, cubeMetaData.FrameCount, cubeMetaData.FrameSpeed, cubeMetaData.AnimState) { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
-            cube.Animator.CurrentFrame = r.Next(0, cubeMetaData.FrameCount);
+            var cube = CreateCube(mainGame, cubeMD, cubeBaseMD, coords, relativeCoords, altitude);
+            var rand = new Random();
+            cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FrameCount);
+            cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FrameCount);
+            return cube;
+        }
+
+        public static Cube CreateRandomTopCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
+        {
+            var cube = CreateCube(mainGame, cubeMD, cubeBaseMD, coords, relativeCoords, altitude);
+            var rand = new Random();
+            cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FrameCount);
+            return cube;
+        }
+
+        public static Cube CreateRandomBaseCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
+        {
+            var cube = CreateCube(mainGame, cubeMD, cubeBaseMD, coords, relativeCoords, altitude);
+            var rand = new Random();
+            cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FrameCount);
             return cube;
         }
 
         public static Cube CreateCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
         {
-            return CreateCube(mainGame, CurrentCubeMetaData, coords, relativeCoords, altitude);
+            return CreateCube(mainGame, CurrentCubeMetaData, CurrentCubeBaseMetaData, coords, relativeCoords, altitude);
         }
 
-        public static Cube CreateRandomCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
+        public static Cube CreateRandomTopCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
         {
-            return CreateRandomCube(mainGame, CurrentCubeMetaData, coords, relativeCoords, altitude);
+            return CreateRandomCube(mainGame, CurrentCubeMetaData, CurrentCubeBaseMetaData, coords, relativeCoords, altitude);
         }
 
         public static void FindNext()
@@ -90,6 +148,16 @@ namespace Sunbird.Core
             CurrentCubeMetaData = CubeMetaDataLibrary[CurrentIndex];
         }
 
+        public static void FindNextBase()
+        {
+            CurrentBaseIndex++;
+            if (CurrentBaseIndex >= CubeBaseMetaDataLibrary.Count())
+            {
+                CurrentBaseIndex = 0;
+            }
+            CurrentCubeBaseMetaData = CubeBaseMetaDataLibrary[CurrentBaseIndex];
+        }
+
     }
 
     /// <summary>
@@ -98,35 +166,53 @@ namespace Sunbird.Core
     public class CubeFactoryData
     {
         public CubeMetaData CurrentCubeMetaData { get; set; }
+        public CubeBaseMetaData CurrentCubeBaseMetaData { get; set; }
 
         public int CurrentIndex { get; set; }
+        public int CurrentBaseIndex { get; set; }
 
         public XDictionary<int, CubeMetaData> CubeMetaDataLibrary { get; set;}
+        public XDictionary<int, CubeBaseMetaData> CubeBaseMetaDataLibrary { get; set; }
 
         public CubeFactoryData()
         {
             CurrentCubeMetaData = CubeFactory.CurrentCubeMetaData;
+            CurrentCubeBaseMetaData = CubeFactory.CurrentCubeBaseMetaData;
+
             CurrentIndex = CubeFactory.CurrentIndex;
+            CurrentBaseIndex = CubeFactory.CurrentBaseIndex;
+
             CubeMetaDataLibrary = CubeFactory.CubeMetaDataLibrary;
+            CubeBaseMetaDataLibrary = CubeFactory.CubeBaseMetaDataLibrary;
         }
 
         public void Serialize()
         {
-            Serializer.WriteXML<CubeFactoryData>(this, "CubeFactoryData.xml", new Type[] { typeof(CubeMetaData) });
+            Serializer.WriteXML<CubeFactoryData>(this, "CubeFactoryData.xml", new Type[] { typeof(CubeMetaData), typeof(CubeBaseMetaData) });
         }
 
         public void SyncIn()
         {
             CurrentCubeMetaData = CubeFactory.CurrentCubeMetaData;
+            CurrentCubeBaseMetaData = CubeFactory.CurrentCubeBaseMetaData;
+
             CurrentIndex = CubeFactory.CurrentIndex;
+            CurrentBaseIndex = CubeFactory.CurrentBaseIndex;
+
             CubeMetaDataLibrary = CubeFactory.CubeMetaDataLibrary;
+            CubeBaseMetaDataLibrary = CubeFactory.CubeBaseMetaDataLibrary;
         }
 
         public void SyncOut()
         {
             CubeFactory.CurrentCubeMetaData = CurrentCubeMetaData;
+            CubeFactory.CurrentCubeBaseMetaData = CurrentCubeBaseMetaData;
+
             CubeFactory.CurrentIndex = CurrentIndex;
+            CubeFactory.CurrentBaseIndex = CurrentBaseIndex;
+
             CubeFactory.CubeMetaDataLibrary = CubeMetaDataLibrary;
+            CubeFactory.CubeBaseMetaDataLibrary = CubeBaseMetaDataLibrary;
         }  
 
     }

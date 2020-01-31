@@ -19,6 +19,7 @@ namespace Sunbird.Controllers
         Loop
     }
 
+    [Serializable]
     public class Animator
     {
         public SpriteSheet SpriteSheet { get; set; }

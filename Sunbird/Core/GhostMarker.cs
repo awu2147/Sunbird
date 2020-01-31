@@ -14,11 +14,17 @@ using Microsoft.Xna.Framework.Content;
 using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.Controllers;
+using Sunbird.Serialization;
 using System.Xml.Schema;
+
 namespace Sunbird.Core
 {
     public class GhostMarker : Sprite
     {
+        public Sprite Image;
+
+        public bool DrawDefaultMarker;
+
         private GhostMarker()
         {
 
@@ -26,13 +32,35 @@ namespace Sunbird.Core
 
         public GhostMarker(SpriteSheet spriteSheet) : base(spriteSheet)
         {
-
+            Alpha = 0.3f;
         }
 
-        public static GhostMarker CreateNew(MainGame mainGame, string path)
+        public void MorphImage(Sprite image, MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, path, 1, 1);
-            return new GhostMarker(spriteSheet) { Alpha = 0.3f };
+            Serializer.WriteXML<Sprite>(image, "DynamicCache.xml", new Type[] { typeof(Cube) });
+            Image = Serializer.ReadXML<Sprite>("DynamicCache.xml", new Type[] { typeof(Cube) });
+            Image.LoadContent(mainGame, graphicsDevice, content);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            // Do we always want to update here? I guess we need to update so that the animator position updates.
+            base.Update(gameTime);
+            Image.Position = Position;
+            Image.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (DrawDefaultMarker == true)
+            {
+                base.Draw(gameTime, spriteBatch);
+            }
+            else
+            {
+                Image.Alpha = 0.3f;
+                Image.Draw(gameTime, spriteBatch);
+            }
         }
 
     }

@@ -27,6 +27,7 @@ namespace Sunbird.Core
         BottomRight
     }
 
+    [Serializable]
     public class Sprite
     {
         public Animator Animator { get; set; }
@@ -94,27 +95,58 @@ namespace Sunbird.Core
 
         public virtual void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            Animator.LoadContent(mainGame, graphicsDevice, content);
-            Animator.Sender = this;
+            if (Animator != null)
+            {
+                Animator.LoadContent(mainGame, graphicsDevice, content);
+                Animator.Sender = this;
+            }
         }
 
+        /// <summary>
+        /// Replace the SpriteSheet of the default Sprite Animator. This is usually followed by a ReconfigureAnimator method call.
+        /// </summary>
+        /// <param name="newSheet"></param>
         public void ReplaceSpriteSheet(SpriteSheet newSheet)
         {
-            Animator.SpriteSheet = newSheet;
+            ReplaceSpriteSheet(newSheet, Animator);
         }
 
+        /// <summary>
+        /// Replace the SpriteSheet of a specified Animator. This is usually followed by a ReconfigureAnimator method call.
+        /// </summary>
+        /// <param name="newSheet"></param>
+        /// <param name="animator"></param>
+        public void ReplaceSpriteSheet(SpriteSheet newSheet, Animator animator)
+        {
+            animator.SpriteSheet = newSheet;
+        }
+
+        /// <summary>
+        /// Reconfigure the default Sprite Animator (SINGLE STATIC FRAME).
+        /// </summary>
         public void ReconfigureAnimator()
         {
             ReconfigureAnimator(0, 1, 0.133f, AnimationState.None);
         }
 
+        /// <summary>
+        /// Reconfigure the default Sprite Animator.
+        /// </summary>
         public void ReconfigureAnimator(int startFrame, int frameCount, float frameSpeed, AnimationState animState)
         {
-            Animator.StartFrame = startFrame;
-            Animator.CurrentFrame = startFrame;
-            Animator.FrameCount = frameCount;
-            Animator.FrameSpeed = frameSpeed;
-            Animator.AnimState = animState;
+            ReconfigureAnimator(startFrame, frameCount, frameSpeed, animState, Animator);
+        }
+
+        /// <summary>
+        /// Reconfigure the specified Animator.
+        /// </summary>
+        public void ReconfigureAnimator(int startFrame, int frameCount, float frameSpeed, AnimationState animState, Animator animator)
+        {
+            animator.StartFrame = startFrame;
+            animator.CurrentFrame = startFrame;
+            animator.FrameCount = frameCount;
+            animator.FrameSpeed = frameSpeed;
+            animator.AnimState = animState;
         }
 
         public virtual void Update(GameTime gameTime)

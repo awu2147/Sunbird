@@ -73,17 +73,21 @@ namespace Sunbird
             {
                 CubeFactory.CubeMetaDataLibrary = new XDictionary<int, CubeMetaData>()
                 {
-                    {0, new CubeMetaData(){Path = "Temp/GrassCube", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
-                    {1, new CubeMetaData(){Path = "Temp/WaterCube"} },
-                    {2, new CubeMetaData(){Path = "Temp/LavaCubeSheet", SheetRows = 1, SheetColumns = 4, FrameCount = 4, FrameSpeed = 0.5f, AnimState = AnimationState.Loop} },
-                    {3, new CubeMetaData(){Path = "Temp/StoneCube", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} }
+                    {0, new CubeMetaData(){Path = "Temp/GrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None} },
+                    {1, new CubeMetaData(){Path = "Temp/LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
+                };
+                CubeFactory.CubeBaseMetaDataLibrary = new XDictionary<int, CubeBaseMetaData>()
+                {
+                    {0, new CubeBaseMetaData(){Path = "Temp/GrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
+                    {1, new CubeBaseMetaData(){Path = "Temp/LightStoneCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
                 };
                 // There should be at least one cube in the library.
                 CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
+                CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];
             }
             else
             {
-                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml", new Type[] { typeof(CubeMetaData) });
+                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml", new Type[] { typeof(CubeMetaData), typeof(CubeBaseMetaData) });
                 cubeFactoryData.SyncOut();
             }
 
