@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Temp/WaterCube</Path>
+    <Path>Temp/GrassCube</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>1</SheetColumns>
+    <SheetColumns>3</SheetColumns>
     <StartFrame>0</StartFrame>
-    <FrameCount>1</FrameCount>
+    <FrameCount>3</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>
-  <CurrentIndex>1</CurrentIndex>
+  <CurrentIndex>0</CurrentIndex>
   <CubeMetaDataLibrary>
     <item>
       <key>
@@ -70,6 +70,22 @@
           <SheetColumns>3</SheetColumns>
           <StartFrame>0</StartFrame>
           <FrameCount>3</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>4</int>
+      </key>
+      <value>
+        <CubeMetaData>
+          <Path>Temp/DirtCube</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>8</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <FrameCount>8</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>
         </CubeMetaData>
