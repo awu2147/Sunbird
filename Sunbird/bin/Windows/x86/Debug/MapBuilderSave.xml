@@ -14018,8 +14018,8 @@
                   <Columns>1</Columns>
                 </SpriteSheet>
                 <Position>
-                  <X>252</X>
-                  <Y>-306</Y>
+                  <X>360</X>
+                  <Y>-252</Y>
                 </Position>
                 <FrameCount>1</FrameCount>
                 <FrameCounter>2</FrameCounter>
@@ -14030,12 +14030,12 @@
               </Animator>
               <Alpha>0.3</Alpha>
               <Position>
-                <X>252</X>
-                <Y>-306</Y>
+                <X>360</X>
+                <Y>-252</Y>
               </Position>
               <Coords>
                 <X>-1</X>
-                <Y>7</Y>
+                <Y>8</Y>
               </Coords>
               <Altitude>1</Altitude>
               <DrawPriority>-1000</DrawPriority>
@@ -14325,8 +14325,8 @@
                   <Columns>16</Columns>
                 </SpriteSheet>
                 <Position>
-                  <X>-90</X>
-                  <Y>69</Y>
+                  <X>-51</X>
+                  <Y>132</Y>
                 </Position>
                 <FrameCount>1</FrameCount>
                 <FrameCounter>0</FrameCounter>
@@ -14337,12 +14337,12 @@
               </Animator>
               <Alpha>1</Alpha>
               <Position>
-                <X>-90</X>
-                <Y>69</Y>
+                <X>-51</X>
+                <Y>132</Y>
               </Position>
               <Coords>
-                <X>33</X>
-                <Y>-36</Y>
+                <X>36</X>
+                <Y>-37</Y>
               </Coords>
               <Altitude>31</Altitude>
               <DrawPriority>2</DrawPriority>
@@ -16905,7 +16905,7 @@
   <Overlay>
     <Sprite xsi:type="Cube">
       <Animator>
-        <loopTimer>0.283333868</loopTimer>
+        <loopTimer>0.450000972</loopTimer>
         <SpriteSheet>
           <TexturePath>Temp/GrassCube</TexturePath>
           <Rows>1</Rows>
@@ -16916,7 +16916,7 @@
           <Y>590</Y>
         </Position>
         <FrameCount>3</FrameCount>
-        <FrameCounter>0</FrameCounter>
+        <FrameCounter>2</FrameCounter>
         <FrameSpeed>0.133</FrameSpeed>
         <AnimState>None</AnimState>
         <CurrentFrame>0</CurrentFrame>
@@ -16978,8 +16978,8 @@
         <Columns>16</Columns>
       </SpriteSheet>
       <Position>
-        <X>-90</X>
-        <Y>69</Y>
+        <X>-51</X>
+        <Y>132</Y>
       </Position>
       <FrameCount>1</FrameCount>
       <FrameCounter>0</FrameCounter>
@@ -16990,12 +16990,12 @@
     </Animator>
     <Alpha>1</Alpha>
     <Position>
-      <X>-90</X>
-      <Y>69</Y>
+      <X>-51</X>
+      <Y>132</Y>
     </Position>
     <Coords>
-      <X>33</X>
-      <Y>-36</Y>
+      <X>36</X>
+      <Y>-37</Y>
     </Coords>
     <Altitude>31</Altitude>
     <DrawPriority>2</DrawPriority>
@@ -17013,8 +17013,8 @@
         <Columns>1</Columns>
       </SpriteSheet>
       <Position>
-        <X>252</X>
-        <Y>-306</Y>
+        <X>360</X>
+        <Y>-252</Y>
       </Position>
       <FrameCount>1</FrameCount>
       <FrameCounter>2</FrameCounter>
@@ -17025,12 +17025,12 @@
     </Animator>
     <Alpha>0.3</Alpha>
     <Position>
-      <X>252</X>
-      <Y>-306</Y>
+      <X>360</X>
+      <Y>-252</Y>
     </Position>
     <Coords>
       <X>-1</X>
-      <Y>7</Y>
+      <Y>8</Y>
     </Coords>
     <Altitude>1</Altitude>
     <DrawPriority>-1000</DrawPriority>
@@ -17038,7 +17038,7 @@
   </GhostMarker>
   <CubePreview>
     <Animator>
-      <loopTimer>0.283333868</loopTimer>
+      <loopTimer>0.450000972</loopTimer>
       <SpriteSheet>
         <TexturePath>Temp/GrassCube</TexturePath>
         <Rows>1</Rows>
@@ -17049,7 +17049,7 @@
         <Y>590</Y>
       </Position>
       <FrameCount>3</FrameCount>
-      <FrameCounter>0</FrameCounter>
+      <FrameCounter>2</FrameCounter>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
       <CurrentFrame>0</CurrentFrame>
