@@ -57,12 +57,22 @@ namespace Sunbird.Core
         public int SheetRows { get; set; } = 1;
         public int SheetColumns { get; set; } = 1;
         public int StartFrame { get; set; } = 0;
+        public int CurrentFrame { get; set; } = 0;
         public int FrameCount { get; set; } = 1;
         public float FrameSpeed { get; set; } = 0.133f;
         public AnimationState AnimState { get; set; } = AnimationState.None;
         public CubeMetaData()
         {
 
+        }
+
+        public void NextFrame()
+        {
+            CurrentFrame++;
+            if (CurrentFrame >= FrameCount)
+            {
+                CurrentFrame = 0;
+            }
         }
     }
 
@@ -72,6 +82,7 @@ namespace Sunbird.Core
         public int SheetRows { get; set; } = 1;
         public int SheetColumns { get; set; } = 1;
         public int StartFrame { get; set; } = 0;
+        public int CurrentFrame { get; set; } = 0;
         public int FrameCount { get; set; } = 1;
         public float FrameSpeed { get; set; } = 0.133f;
         public AnimationState AnimState { get; set; } = AnimationState.None;
@@ -87,6 +98,9 @@ namespace Sunbird.Core
         public static CubeMetaData CurrentCubeMetaData{ get; set; }
         public static CubeBaseMetaData CurrentCubeBaseMetaData { get; set; }
 
+        public static bool IsRandomTop { get; set; }
+        public static bool IsRandomBottom { get; set; }
+
         public static int CurrentIndex { get; set; } = 0;
         public static int CurrentBaseIndex { get; set; } = 0;
 
@@ -98,44 +112,31 @@ namespace Sunbird.Core
             var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
             var spriteSheetBase = SpriteSheet.CreateNew(mainGame, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
             var cube = new Cube() { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
+            var rand = new Random();
             cube.Animator = new Animator(spriteSheet, cube, cubeMD.StartFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
+            if (IsRandomTop == true)
+            {
+                cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FrameCount);
+            }
+            else
+            {
+                cube.Animator.CurrentFrame = cubeMD.CurrentFrame;
+            }
             cube.AnimatorBase = new Animator(spriteSheetBase, cube, cubeBaseMD.StartFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);
-            return cube;
-        }
-
-        public static Cube CreateRandomCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
-        {
-            var cube = CreateCube(mainGame, cubeMD, cubeBaseMD, coords, relativeCoords, altitude);
-            var rand = new Random();
-            cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FrameCount);
-            cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FrameCount);
-            return cube;
-        }
-
-        public static Cube CreateRandomTopCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
-        {
-            var cube = CreateCube(mainGame, cubeMD, cubeBaseMD, coords, relativeCoords, altitude);
-            var rand = new Random();
-            cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FrameCount);
-            return cube;
-        }
-
-        public static Cube CreateRandomBaseCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
-        {
-            var cube = CreateCube(mainGame, cubeMD, cubeBaseMD, coords, relativeCoords, altitude);
-            var rand = new Random();
-            cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FrameCount);
+            if (IsRandomBottom == true)
+            {
+                cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FrameCount);
+            }
+            else
+            {
+                cube.AnimatorBase.CurrentFrame = cubeBaseMD.CurrentFrame;
+            }
             return cube;
         }
 
         public static Cube CreateCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
         {
             return CreateCube(mainGame, CurrentCubeMetaData, CurrentCubeBaseMetaData, coords, relativeCoords, altitude);
-        }
-
-        public static Cube CreateRandomTopCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
-        {
-            return CreateRandomCube(mainGame, CurrentCubeMetaData, CurrentCubeBaseMetaData, coords, relativeCoords, altitude);
         }
 
         public static void FindNext()
@@ -168,6 +169,9 @@ namespace Sunbird.Core
         public CubeMetaData CurrentCubeMetaData { get; set; }
         public CubeBaseMetaData CurrentCubeBaseMetaData { get; set; }
 
+        public bool IsRandomTop { get; set; }
+        public bool IsRandomBottom { get; set; }
+
         public int CurrentIndex { get; set; }
         public int CurrentBaseIndex { get; set; }
 
@@ -176,14 +180,7 @@ namespace Sunbird.Core
 
         public CubeFactoryData()
         {
-            CurrentCubeMetaData = CubeFactory.CurrentCubeMetaData;
-            CurrentCubeBaseMetaData = CubeFactory.CurrentCubeBaseMetaData;
-
-            CurrentIndex = CubeFactory.CurrentIndex;
-            CurrentBaseIndex = CubeFactory.CurrentBaseIndex;
-
-            CubeMetaDataLibrary = CubeFactory.CubeMetaDataLibrary;
-            CubeBaseMetaDataLibrary = CubeFactory.CubeBaseMetaDataLibrary;
+            SyncIn();
         }
 
         public void Serialize()
@@ -196,6 +193,9 @@ namespace Sunbird.Core
             CurrentCubeMetaData = CubeFactory.CurrentCubeMetaData;
             CurrentCubeBaseMetaData = CubeFactory.CurrentCubeBaseMetaData;
 
+            IsRandomTop = CubeFactory.IsRandomTop;
+            IsRandomBottom = CubeFactory.IsRandomBottom;
+
             CurrentIndex = CubeFactory.CurrentIndex;
             CurrentBaseIndex = CubeFactory.CurrentBaseIndex;
 
@@ -207,6 +207,9 @@ namespace Sunbird.Core
         {
             CubeFactory.CurrentCubeMetaData = CurrentCubeMetaData;
             CubeFactory.CurrentCubeBaseMetaData = CurrentCubeBaseMetaData;
+
+            CubeFactory.IsRandomTop = IsRandomTop;
+            CubeFactory.IsRandomBottom = IsRandomBottom;
 
             CubeFactory.CurrentIndex = CurrentIndex;
             CubeFactory.CurrentBaseIndex = CurrentBaseIndex;

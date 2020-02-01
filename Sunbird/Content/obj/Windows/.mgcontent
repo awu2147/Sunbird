@@ -10,6 +10,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/Concept1.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/dark_bg.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/DirtCube.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/EmptyCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GrassCube.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GrassCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GrassCubeTop.png</File>
@@ -28,8 +29,15 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/testtile2.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/TopFaceSelectionMarker.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCube.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeBase.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

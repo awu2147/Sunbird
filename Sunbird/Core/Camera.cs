@@ -89,7 +89,7 @@ namespace Sunbird.Core
             }
             else
             {
-                if (Peripherals.currentMouseState.MiddleButton == ButtonState.Pressed)
+                if (Peripherals.currentMouseState.MiddleButton == ButtonState.Pressed && MainGame.IsActive == true)
                 {
                     MainGame.SamplerState = SamplerState.AnisotropicClamp;
                     if (Peripherals.MouseTapped(Peripherals.currentMouseState.MiddleButton, Peripherals.previousMouseState.MiddleButton))

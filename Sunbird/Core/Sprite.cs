@@ -126,24 +126,24 @@ namespace Sunbird.Core
         /// </summary>
         public void ReconfigureAnimator()
         {
-            ReconfigureAnimator(0, 1, 0.133f, AnimationState.None);
+            ReconfigureAnimator(0, 0, 1, 0.133f, AnimationState.None);
         }
 
         /// <summary>
         /// Reconfigure the default Sprite Animator.
         /// </summary>
-        public void ReconfigureAnimator(int startFrame, int frameCount, float frameSpeed, AnimationState animState)
+        public void ReconfigureAnimator(int startFrame, int currentFrame, int frameCount, float frameSpeed, AnimationState animState)
         {
-            ReconfigureAnimator(startFrame, frameCount, frameSpeed, animState, Animator);
+            ReconfigureAnimator(startFrame, currentFrame, frameCount, frameSpeed, animState, Animator);
         }
 
         /// <summary>
         /// Reconfigure the specified Animator.
         /// </summary>
-        public void ReconfigureAnimator(int startFrame, int frameCount, float frameSpeed, AnimationState animState, Animator animator)
+        public void ReconfigureAnimator(int startFrame, int currentFrame, int frameCount, float frameSpeed, AnimationState animState, Animator animator)
         {
             animator.StartFrame = startFrame;
-            animator.CurrentFrame = startFrame;
+            animator.CurrentFrame = currentFrame;
             animator.FrameCount = frameCount;
             animator.FrameSpeed = frameSpeed;
             animator.AnimState = animState;

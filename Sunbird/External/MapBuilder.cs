@@ -214,7 +214,7 @@ namespace Sunbird.External
                     var CCMD = CubeFactory.CurrentCubeMetaData;
 
                     CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
-                    CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
+                    CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
 
                     GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
                 }
@@ -225,7 +225,7 @@ namespace Sunbird.External
                     var CCBMD = CubeFactory.CurrentCubeBaseMetaData;
 
                     CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCBMD.Path, CCBMD.SheetRows, CCBMD.SheetColumns), CubePreview.AnimatorBase);
-                    CubePreview.ReconfigureAnimator(CCBMD.StartFrame, CCBMD.FrameCount, CCBMD.FrameSpeed, CCBMD.AnimState, CubePreview.AnimatorBase);
+                    CubePreview.ReconfigureAnimator(CCBMD.StartFrame, CCBMD.CurrentFrame, CCBMD.FrameCount, CCBMD.FrameSpeed, CCBMD.AnimState, CubePreview.AnimatorBase);
 
                     GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
                 }
@@ -237,19 +237,18 @@ namespace Sunbird.External
                     Authorization = (Authorization)(i);
                 }
 
+                if (Peripherals.KeyTapped(Keys.T))
+                {
+                    CubeFactory.CurrentCubeMetaData.NextFrame();               
+                    CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeMetaData.CurrentFrame; // The CubePreview animator must correspond to the CurrentCubeMetaData at this point in time.
+                    GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+                }
+
                 if (Authorization == Authorization.Builder)
                 {
                     if (Peripherals.MousePressed(Peripherals.currentMouseState.LeftButton) && MainGame.IsActive == true)
                     {
-                        Cube cube = null;
-                        if (CubeFactory.CurrentCubeMetaData.AnimState != AnimationState.None)
-                        {
-                            cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                        }
-                        else
-                        {
-                            cube = CubeFactory.CreateRandomTopCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                        }
+                        var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
                         LayerMap[Altitude].AddCheck(cube);
                     }
 
