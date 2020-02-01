@@ -99,7 +99,7 @@ namespace Sunbird.External
 
             //pendant left
             var pLBN1s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
-            var pLBN1 = new Button(pLBN1s, null, pendantPosition + new Vector2(9, -138));
+            var pLBN1 = new Button(pLBN1s, null, pendantPosition + new Vector2(9, -144));
             pLBN1.Clicked += PLBN1_Clicked;
             Overlay.Add(pLBN1);
 
@@ -114,13 +114,13 @@ namespace Sunbird.External
             Overlay.Add(pLBN3);
 
             var pLBN4s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
-            var pLBN4 = new Button(pLBN4s, null, pendantPosition + new Vector2(9, -48));
+            var pLBN4 = new Button(pLBN4s, null, pendantPosition + new Vector2(9, -42));
             pLBN4.Clicked += PLBN4_Clicked;
             Overlay.Add(pLBN4);
 
             //pendant right
             var pRBN1s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
-            var pRBN1 = new Button(pRBN1s, null, pendantPosition + new Vector2(138, -138));
+            var pRBN1 = new Button(pRBN1s, null, pendantPosition + new Vector2(138, -144));
             pRBN1.Clicked += PRBN1_Clicked;
             Overlay.Add(pRBN1);
 
@@ -135,9 +135,42 @@ namespace Sunbird.External
             Overlay.Add(pRBN3);
 
             var pRBN4s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
-            var pRBN4 = new Button(pRBN4s, null, pendantPosition + new Vector2(138, -48));
+            var pRBN4 = new Button(pRBN4s, null, pendantPosition + new Vector2(138, -42));
             pRBN4.Clicked += PRBN4_Clicked;
             Overlay.Add(pRBN4);
+
+            //pendant random
+            var pRandTs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
+            var pRandT = new Button(pRandTs, null, pendantPosition + new Vector2(57, -144)) { ButtonType = ButtonType.CheckBox };
+            pRandT.Checked += PRandTop_Checked;
+            pRandT.Unchecked += PRandTop_Unchecked;
+            Overlay.Add(pRandT);
+
+            var pRandBs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
+            var pRandB = new Button(pRandBs, null, pendantPosition + new Vector2(57, -33)) { ButtonType = ButtonType.CheckBox };
+            pRandB.Checked += PRandB_Checked;
+            pRandB.Unchecked += PRandB_Unchecked;
+            Overlay.Add(pRandB);
+        }
+
+        private void PRandB_Unchecked(object sender, ButtonClickedEventArgs e)
+        {
+            CubeFactory.IsRandomBottom = false;
+        }
+
+        private void PRandB_Checked(object sender, ButtonClickedEventArgs e)
+        {
+            CubeFactory.IsRandomBottom = true;
+        }
+
+        private void PRandTop_Unchecked(object sender, ButtonClickedEventArgs e)
+        {
+            CubeFactory.IsRandomTop = false;
+        }
+
+        private void PRandTop_Checked(object sender, ButtonClickedEventArgs e)
+        {
+            CubeFactory.IsRandomTop = true;
         }
 
         #region Cube Pendant Event Handlers

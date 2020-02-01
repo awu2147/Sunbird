@@ -54,3 +54,4 @@ C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\Left
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\LeftArrowMinusBN_Silver.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\RightArrowPlusBN_Brown.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\RightArrowPlusBN_Silver.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\RandBN.xnb

@@ -15,7 +15,7 @@
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
-    <CurrentFrame>1</CurrentFrame>
+    <CurrentFrame>0</CurrentFrame>
     <StartFrame>0</StartFrame>
   </Animator>
   <Alpha>1</Alpha>

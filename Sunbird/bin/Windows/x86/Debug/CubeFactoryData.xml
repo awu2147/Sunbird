@@ -5,7 +5,7 @@
     <SheetRows>3</SheetRows>
     <SheetColumns>4</SheetColumns>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>1</CurrentFrame>
+    <CurrentFrame>0</CurrentFrame>
     <FrameCount>12</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
@@ -20,7 +20,7 @@
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
-  <IsRandomTop>false</IsRandomTop>
+  <IsRandomTop>true</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
   <CurrentIndex>0</CurrentIndex>
   <CurrentBaseIndex>2</CurrentBaseIndex>
@@ -35,7 +35,7 @@
           <SheetRows>3</SheetRows>
           <SheetColumns>4</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>1</CurrentFrame>
+          <CurrentFrame>0</CurrentFrame>
           <FrameCount>12</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>
@@ -67,10 +67,10 @@
         <CubeMetaData>
           <Path>Temp/WaterCubeTop</Path>
           <SheetRows>1</SheetRows>
-          <SheetColumns>10</SheetColumns>
+          <SheetColumns>11</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>1</CurrentFrame>
-          <FrameCount>10</FrameCount>
+          <CurrentFrame>5</CurrentFrame>
+          <FrameCount>11</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>
         </CubeMetaData>

@@ -75,7 +75,7 @@ namespace Sunbird
                 {
                     {0, new CubeMetaData(){Path = "Temp/GrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None} },
                     {1, new CubeMetaData(){Path = "Temp/LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
-                    {2, new CubeMetaData(){Path = "Temp/WaterCubeTop", SheetRows = 1, SheetColumns = 10, FrameCount = 10, AnimState = AnimationState.None} },
+                    {2, new CubeMetaData(){Path = "Temp/WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None} },
                 };
                 CubeFactory.CubeBaseMetaDataLibrary = new XDictionary<int, CubeBaseMetaData>()
                 {
