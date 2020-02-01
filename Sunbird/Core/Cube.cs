@@ -68,10 +68,25 @@ namespace Sunbird.Core
 
         public void NextFrame()
         {
-            CurrentFrame++;
-            if (CurrentFrame >= FrameCount)
+            if (AnimState == AnimationState.None)
             {
-                CurrentFrame = 0;
+                CurrentFrame++;
+                if (CurrentFrame >= FrameCount)
+                {
+                    CurrentFrame = 0;
+                }
+            }
+        }
+
+        public void PreviousFrame()
+        {
+            if (AnimState == AnimationState.None)
+            {
+                CurrentFrame--;
+                if (CurrentFrame < 0)
+                {
+                    CurrentFrame = FrameCount - 1;
+                }
             }
         }
     }
@@ -90,6 +105,30 @@ namespace Sunbird.Core
         public CubeBaseMetaData()
         {
 
+        }
+
+        public void NextFrame()
+        {
+            if (AnimState == AnimationState.None)
+            {
+                CurrentFrame++;
+                if (CurrentFrame >= FrameCount)
+                {
+                    CurrentFrame = 0;
+                }
+            }
+        }
+
+        public void PreviousFrame()
+        {
+            if (AnimState == AnimationState.None)
+            {
+                CurrentFrame--;
+                if (CurrentFrame < 0)
+                {
+                    CurrentFrame = FrameCount - 1;
+                }
+            }
         }
     }
 
@@ -149,12 +188,32 @@ namespace Sunbird.Core
             CurrentCubeMetaData = CubeMetaDataLibrary[CurrentIndex];
         }
 
+        public static void FindPrevious()
+        {
+            CurrentIndex--;
+            if (CurrentIndex < 0)
+            {
+                CurrentIndex = CubeMetaDataLibrary.Count() - 1;
+            }
+            CurrentCubeMetaData = CubeMetaDataLibrary[CurrentIndex];
+        }
+
         public static void FindNextBase()
         {
             CurrentBaseIndex++;
             if (CurrentBaseIndex >= CubeBaseMetaDataLibrary.Count())
             {
                 CurrentBaseIndex = 0;
+            }
+            CurrentCubeBaseMetaData = CubeBaseMetaDataLibrary[CurrentBaseIndex];
+        }
+
+        public static void FindPreviousBase()
+        {
+            CurrentBaseIndex--;
+            if (CurrentBaseIndex < 0)
+            {
+                CurrentBaseIndex = CubeBaseMetaDataLibrary.Count() - 1;
             }
             CurrentCubeBaseMetaData = CubeBaseMetaDataLibrary[CurrentBaseIndex];
         }

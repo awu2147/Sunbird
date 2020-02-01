@@ -53,6 +53,7 @@
     <Compile Include="Core\Sprite.cs" />
     <Compile Include="Core\SpriteList.cs" />
     <Compile Include="Core\SpriteSheet.cs" />
+    <Compile Include="Core\Timer.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="Core\XDictionary.cs" />
     <Compile Include="External\Config.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="External\LoadingScreen1.cs" />
     <Compile Include="External\Player.cs" />
     <Compile Include="External\Templates.cs" />
+    <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\IControllable.cs" />
     <Compile Include="GUI\ILoadingScreen.cs" />
     <Compile Include="GUI\LoadingBar.cs" />

@@ -30,7 +30,7 @@ namespace Sunbird
         public Config Config { get; set; }
         public Camera Camera { get; set; }
         public SamplerState SamplerState { get; set; }
-        public SpriteFont DefaultFont { get; set; }
+        public static SpriteFont DefaultFont { get; set; }
         public int Width { get { return graphics.PreferredBackBufferWidth; } }
         public int Height { get { return graphics.PreferredBackBufferHeight; } }
         public bool CleanLoad { get; set; } = false;

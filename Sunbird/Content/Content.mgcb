@@ -164,6 +164,30 @@
 /processorParam:TextureFormat=Color
 /build:Temp/LavaCubeSheet.png
 
+#begin Temp/LeftArrowMinusBN_Brown.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/LeftArrowMinusBN_Brown.png
+
+#begin Temp/LeftArrowMinusBN_Silver.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/LeftArrowMinusBN_Silver.png
+
 #begin Temp/LightStoneCubeBase.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -188,6 +212,18 @@
 /processorParam:TextureFormat=Color
 /build:Temp/LightStoneCubeTop.png
 
+#begin Temp/PendantBackground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/PendantBackground.png
+
 #begin Temp/PirateGirlSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -199,6 +235,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Temp/PirateGirlSheet.png
+
+#begin Temp/RightArrowPlusBN_Brown.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/RightArrowPlusBN_Brown.png
+
+#begin Temp/RightArrowPlusBN_Silver.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/RightArrowPlusBN_Silver.png
 
 #begin Temp/StoneCube.png
 /importer:TextureImporter
@@ -223,6 +283,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Temp/sunbird.png
+
+#begin Temp/testbutton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/testbutton.png
 
 #begin Temp/testfloor.png
 /importer:TextureImporter

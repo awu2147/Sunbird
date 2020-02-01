@@ -19,6 +19,32 @@ namespace Sunbird.Controllers
         Loop
     }
 
+    public class SwitchAnimArgs
+    {
+        public int StartFrame { get; set; } = 0;
+        public int FrameCount { get; set; } = 1;
+        public float FrameSpeed { get; set; } = 0.133f;
+        public AnimationState AnimState { get; set; } = AnimationState.None;
+
+        public SwitchAnimArgs()
+        {
+
+        }
+
+        public SwitchAnimArgs(int startFrame)
+        {
+            StartFrame = startFrame;
+        }
+
+        public SwitchAnimArgs(int startFrame, int frameCount, float frameSpeed, AnimationState animState)
+        {
+            StartFrame = startFrame;
+            FrameCount = frameCount;
+            FrameSpeed = frameSpeed;
+            AnimState = animState;
+        }
+    }
+
     [Serializable]
     public class Animator
     {
@@ -32,7 +58,7 @@ namespace Sunbird.Controllers
 
         public int FrameCounter { get; set; }
 
-        public float FrameSpeed { get; set; } = 0.1f;
+        public float FrameSpeed { get; set; } = 0.133f;
 
         public AnimationState AnimState { get; set; } = AnimationState.None;
 
@@ -72,6 +98,11 @@ namespace Sunbird.Controllers
             SpriteSheet.PositionMap = SpriteSheet.ConstructPositionMap();
         }
 
+        public Rectangle VisibleArea()
+        {
+            return new Rectangle(Position.ToPoint(), new Point(SpriteSheet.FrameWidth, SpriteSheet.FrameHeight));
+        }
+
         public void SwitchAnimation(int startframe, int framecount, float framespeed, AnimationState animState)
         {         
             CurrentFrame = startframe;
@@ -81,6 +112,11 @@ namespace Sunbird.Controllers
             FrameCounter = 0;
             loopTimer = 0;
             AnimState = animState;          
+        }
+
+        public void SwitchAnimation(SwitchAnimArgs args)
+        {
+            SwitchAnimation(args.StartFrame, args.FrameCount, args.FrameSpeed, args.AnimState);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

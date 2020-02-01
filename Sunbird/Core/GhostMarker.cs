@@ -42,6 +42,12 @@ namespace Sunbird.Core
             Image.LoadContent(mainGame, graphicsDevice, content);
         }
 
+        public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
+        {
+            base.LoadContent(mainGame, graphicsDevice, content);
+            Image.LoadContent(mainGame, graphicsDevice, content);
+        }
+
         public override void Update(GameTime gameTime)
         {
             // Do we always want to update here? I guess we need to update so that the animator position updates.

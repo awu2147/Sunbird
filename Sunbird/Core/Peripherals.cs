@@ -222,14 +222,44 @@ namespace Sunbird.Core
             return currentPressedKeys.Contains(key1) && currentPressedKeys.Contains(key2);
         }
 
-        public static bool MouseTapped(ButtonState currentButton, ButtonState previousButton)
+        public static bool MouseButtonTapped(ButtonState currentButton, ButtonState previousButton)
         {          
             return (currentButton == ButtonState.Pressed && previousButton == ButtonState.Released);
         }
 
-        public static bool MousePressed(ButtonState currentButton)
+        public static bool MouseButtonPressed(ButtonState currentButton)
         {
             return (currentButton == ButtonState.Pressed);
+        }
+
+        public static bool LeftButtonTapped()
+        {
+            return MouseButtonTapped(currentMouseState.LeftButton, previousMouseState.LeftButton);
+        }
+
+        public static bool LeftButtonPressed()
+        {
+            return MouseButtonPressed(currentMouseState.LeftButton);
+        }
+
+        public static bool RightButtonTapped()
+        {
+            return MouseButtonTapped(currentMouseState.RightButton, previousMouseState.RightButton);
+        }
+
+        public static bool RightButtonPressed()
+        {
+            return MouseButtonPressed(currentMouseState.RightButton);
+        }
+
+        public static bool MiddleButtonTapped()
+        {
+            return MouseButtonTapped(currentMouseState.MiddleButton, previousMouseState.MiddleButton);
+        }
+
+        public static bool MiddleButtonPressed()
+        {
+            return MouseButtonPressed(currentMouseState.MiddleButton);
         }
 
     }
