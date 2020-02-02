@@ -50,8 +50,8 @@ namespace Sunbird.Core
 
         public override void Update(GameTime gameTime)
         {
-            // Do we always want to update here? I guess we need to update so that the animator position updates.
             base.Update(gameTime);
+            Image.IsHidden = IsHidden;
             Image.Position = Position;
             Image.Update(gameTime);
         }

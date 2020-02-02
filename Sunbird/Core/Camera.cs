@@ -87,25 +87,25 @@ namespace Sunbird.Core
             {
                 DragTransform = FollowTransform;
             }
+            //Wrap this in else block if toggling.
+            if (Peripherals.MiddleButtonPressed() && MainGame.IsActive == true)
+            {
+                CurrentMode = CameraMode.Drag;
+                MainGame.SamplerState = SamplerState.AnisotropicClamp;
+                if (Peripherals.MiddleButtonTapped())
+                {
+                    Peripherals.MiddleButtonReleased += peripherals_MiddleButtonReleased;
+                    Anchor = Peripherals.GetMouseWindowPosition();
+                }
+                var currentPosition = Peripherals.GetMouseWindowPosition();
+                DragPositionChange = (currentPosition - Anchor) * new Point(World.Scale, World.Scale) / new Point(World.Zoom, World.Zoom);
+                DragTransform = CreateDragTransform();
+            }
             else
             {
-                if (Peripherals.MiddleButtonPressed() && MainGame.IsActive == true)
-                {
-                    MainGame.SamplerState = SamplerState.AnisotropicClamp;
-                    if (Peripherals.MiddleButtonTapped())
-                    {                      
-                        Peripherals.MiddleButtonReleased += peripherals_MiddleButtonReleased;
-                        Anchor = Peripherals.GetMouseWindowPosition();
-                    }
-                    var currentPosition = Peripherals.GetMouseWindowPosition();
-                    DragPositionChange = (currentPosition - Anchor) * new Point(World.Scale, World.Scale) / new Point(World.Zoom, World.Zoom);
-                    DragTransform = CreateDragTransform();
-                }
-                else
-                {
-                    MainGame.SamplerState = SamplerState.PointClamp;
-                }
+                MainGame.SamplerState = SamplerState.PointClamp;
             }
+            //Wrap this in else block if toggling.
         }
 
         private void peripherals_MiddleButtonReleased(object sender, EventArgs e)

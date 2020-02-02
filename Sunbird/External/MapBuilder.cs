@@ -73,7 +73,7 @@ namespace Sunbird.External
 
             CreateOverlay();
 
-            //GhostMarker relies on CubePreview so we must create it after the latter (which belongs to the overlay).
+            // GhostMarker relies on CubePreview so we must create it after the latter (which belongs to the overlay).
             GhostMarker = new GhostMarker(SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker"));
             GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
             GhostMarker.DrawPriority = 1;
@@ -86,92 +86,83 @@ namespace Sunbird.External
 
         private void CreateOverlay()
         {
+            CreateCubePendant();
+
+            var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
+            Overlay.Add(new Sprite(gridAxisGlyph, new Vector2(MainGame.Width - 20, 20), Alignment.TopRight));
+        }
+
+        #region Cube Pendant
+
+        private void CreateCubePendant()
+        {
+            // Pendant background.
             var pendantBg = SpriteSheet.CreateNew(MainGame, "Temp/PendantBackGround");
             var pendantPosition = new Vector2(20, MainGame.Height - 20);
             Overlay.Add(new Sprite(pendantBg, pendantPosition, Alignment.BottomLeft));
 
+            // The cube image.
             CubePreview = CubeFactory.CreateCurrentCube(MainGame, Coord.Zero, Coord.Zero, 0);
             CubePreview.Position = pendantPosition + new Vector2(57, -117);
             Overlay.Add(CubePreview);
 
-            var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
-            Overlay.Add(new Sprite(gridAxisGlyph, new Vector2(MainGame.Width - 20, 20), Alignment.TopRight));
-
-            //pendant left
-            var pLBN1s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
+            // Pendant left.
+            var pLBN1s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
             var pLBN1 = new Button(pLBN1s, null, pendantPosition + new Vector2(9, -144));
             pLBN1.Clicked += PLBN1_Clicked;
             Overlay.Add(pLBN1);
 
-            var pLBN2s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
+            var pLBN2s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
             var pLBN2 = new Button(pLBN2s, null, pendantPosition + new Vector2(9, -108));
             pLBN2.Clicked += PLBN2_Clicked;
             Overlay.Add(pLBN2);
 
-            var pLBN3s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
+            var pLBN3s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
             var pLBN3 = new Button(pLBN3s, null, pendantPosition + new Vector2(9, -78));
             pLBN3.Clicked += PLBN3_Clicked;
             Overlay.Add(pLBN3);
 
-            var pLBN4s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
+            var pLBN4s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
             var pLBN4 = new Button(pLBN4s, null, pendantPosition + new Vector2(9, -42));
             pLBN4.Clicked += PLBN4_Clicked;
             Overlay.Add(pLBN4);
 
-            //pendant right
-            var pRBN1s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
+            // Pendant right.
+            var pRBN1s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
             var pRBN1 = new Button(pRBN1s, null, pendantPosition + new Vector2(138, -144));
             pRBN1.Clicked += PRBN1_Clicked;
             Overlay.Add(pRBN1);
 
-            var pRBN2s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
+            var pRBN2s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
             var pRBN2 = new Button(pRBN2s, null, pendantPosition + new Vector2(138, -108));
             pRBN2.Clicked += PRBN2_Clicked;
             Overlay.Add(pRBN2);
 
-            var pRBN3s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
+            var pRBN3s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
             var pRBN3 = new Button(pRBN3s, null, pendantPosition + new Vector2(138, -78));
             pRBN3.Clicked += PRBN3_Clicked;
             Overlay.Add(pRBN3);
 
-            var pRBN4s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
+            var pRBN4s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
             var pRBN4 = new Button(pRBN4s, null, pendantPosition + new Vector2(138, -42));
             pRBN4.Clicked += PRBN4_Clicked;
             Overlay.Add(pRBN4);
 
-            //pendant random
+            // Pendant random.
             var pRandTs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
-            var pRandT = new Button(pRandTs, null, pendantPosition + new Vector2(57, -144)) { ButtonType = ButtonType.CheckBox };
+            var pRandT = new Button(pRandTs, null, pendantPosition + new Vector2(57, -144)) { ButtonType = ButtonType.CheckBox, IsPressed = CubeFactory.IsRandomTop };
             pRandT.Checked += PRandTop_Checked;
             pRandT.Unchecked += PRandTop_Unchecked;
             Overlay.Add(pRandT);
 
             var pRandBs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
-            var pRandB = new Button(pRandBs, null, pendantPosition + new Vector2(57, -33)) { ButtonType = ButtonType.CheckBox };
+            var pRandB = new Button(pRandBs, null, pendantPosition + new Vector2(57, -33)) { ButtonType = ButtonType.CheckBox, IsPressed = CubeFactory.IsRandomBottom };
             pRandB.Checked += PRandB_Checked;
             pRandB.Unchecked += PRandB_Unchecked;
             Overlay.Add(pRandB);
         }
 
-        private void PRandB_Unchecked(object sender, ButtonClickedEventArgs e)
-        {
-            CubeFactory.IsRandomBottom = false;
-        }
-
-        private void PRandB_Checked(object sender, ButtonClickedEventArgs e)
-        {
-            CubeFactory.IsRandomBottom = true;
-        }
-
-        private void PRandTop_Unchecked(object sender, ButtonClickedEventArgs e)
-        {
-            CubeFactory.IsRandomTop = false;
-        }
-
-        private void PRandTop_Checked(object sender, ButtonClickedEventArgs e)
-        {
-            CubeFactory.IsRandomTop = true;
-        }
+        #endregion
 
         #region Cube Pendant Event Handlers
 
@@ -247,6 +238,26 @@ namespace Sunbird.External
             GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
         }
 
+        private void PRandB_Unchecked(object sender, ButtonClickedEventArgs e)
+        {
+            CubeFactory.IsRandomBottom = false;
+        }
+
+        private void PRandB_Checked(object sender, ButtonClickedEventArgs e)
+        {
+            CubeFactory.IsRandomBottom = true;
+        }
+
+        private void PRandTop_Unchecked(object sender, ButtonClickedEventArgs e)
+        {
+            CubeFactory.IsRandomTop = false;
+        }
+
+        private void PRandTop_Checked(object sender, ButtonClickedEventArgs e)
+        {
+            CubeFactory.IsRandomTop = true;
+        }
+
         #endregion
 
         private void LoadContentFromFile()
@@ -304,7 +315,7 @@ namespace Sunbird.External
         {
             if (MainGame.IsActive == true)
             {
-                if (Peripherals.KeyPressed(Keys.LeftAlt) && World.Zoom > 1)
+                if (Peripherals.KeyPressed(Keys.LeftControl) && World.Zoom > 1)
                 {
                     World.Zoom--;
                     World.ReconstructTopFaceArea();
@@ -329,7 +340,7 @@ namespace Sunbird.External
         {
             if (MainGame.IsActive == true)
             {
-                if (Peripherals.KeyPressed(Keys.LeftAlt) && World.Zoom < 5)
+                if (Peripherals.KeyPressed(Keys.LeftControl) && World.Zoom < 5)
                 {
                     World.Zoom++;
                     World.ReconstructTopFaceArea();
@@ -357,6 +368,7 @@ namespace Sunbird.External
                 var relativeTopFaceCoords = World.TopFace_PointToRelativeCoord(MainGame.Camera, Altitude);
                 var topFaceCoords = World.TopFace_PointToCoord(MainGame.Camera);
 
+                // Check if cursor on Overlay sprite.
                 foreach (var sprite in Overlay)
                 {
                     if (sprite.Animator.VisibleArea().Contains(Peripherals.GetMouseWindowPosition()))
@@ -370,6 +382,7 @@ namespace Sunbird.External
                     }
                 }
 
+                // User input actions.
                 if (Peripherals.KeyTapped(Keys.Q))
                 {
                     var i = (int)Authorization + 1;
@@ -424,7 +437,7 @@ namespace Sunbird.External
                 }
 
                 GhostMarker.Position = World.TopFace_CoordToLocalOrigin(topFaceCoords);
-                GhostMarker.Image.IsHidden = !InFocus;
+                GhostMarker.IsHidden = !InFocus;
 
                 if (LayerMap[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.None)
                 {

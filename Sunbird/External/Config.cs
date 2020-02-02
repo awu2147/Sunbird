@@ -31,6 +31,8 @@ namespace Sunbird.External
         public int WindowWidth { get; set; }
         public int WindowHeight { get; set; }
 
+        public int WorldZoom { get; set; } = 3;
+
         public Config()
         {
 
@@ -52,11 +54,23 @@ namespace Sunbird.External
         public void LoadContent(MainGame mainGame)
         {
             mainGame.Exiting += MainGame_Exiting;
+            SyncOut();
         }
 
         private void MainGame_Exiting(object sender, EventArgs e)
         {
+            SyncIn();
             Serializer.WriteXML<Config>(this, "Config.xml");
+        }
+
+        public void SyncIn()
+        {
+            WorldZoom = World.Zoom;
+        }
+
+        public void SyncOut()
+        {
+            World.Zoom = WorldZoom;
         }
     }
 

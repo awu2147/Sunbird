@@ -51,6 +51,7 @@ namespace Sunbird.Core
 
     }
 
+    [Serializable]
     public class CubeMetaData
     {
         public string Path { get; set; }
@@ -91,6 +92,7 @@ namespace Sunbird.Core
         }
     }
 
+    [Serializable]
     public class CubeBaseMetaData
     {
         public string Path { get; set; }
@@ -223,6 +225,7 @@ namespace Sunbird.Core
     /// <summary>
     /// Acts as a data store for the static class CubeFactory during serialization.
     /// </summary>
+    [Serializable]
     public class CubeFactoryData
     {
         public CubeMetaData CurrentCubeMetaData { get; set; }
