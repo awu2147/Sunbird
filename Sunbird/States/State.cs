@@ -36,6 +36,7 @@ namespace Sunbird.States
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void DrawShadow(GameTime gameTime, SpriteBatch spriteBatch);
         public abstract void DrawOverlay(GameTime gameTime, SpriteBatch spriteBatch);
 
     }

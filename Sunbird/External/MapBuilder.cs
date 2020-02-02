@@ -19,6 +19,7 @@ using Sunbird.Core;
 using Sunbird.Controllers;
 using Sunbird.Serialization;
 using Sunbird.GUI;
+using Microsoft.Win32;
 
 namespace Sunbird.External
 {
@@ -584,6 +585,61 @@ namespace Sunbird.External
                     }
                 }
 
+            }
+        }
+
+        public override void DrawShadow(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+
+            if (!IsLoading)
+            {
+                var altitudeList = LayerMap.Keys.ToList();
+                altitudeList.Sort();
+
+                Dictionary<Coord, List<Sprite>> ShadowDict = new Dictionary<Coord, List<Sprite>>();
+
+                foreach (var altitude in altitudeList)
+                {
+                    foreach (var sprite in LayerMap[altitude])
+                    {
+                        if (ShadowDict.ContainsKey(sprite.Coords) == false)
+                        {
+                            ShadowDict.Add(sprite.Coords, new List<Sprite>() {});
+                        }
+                        else
+                        {
+                            ShadowDict[sprite.Coords].Add(sprite);
+                        }
+                    }
+                }
+
+                foreach (var altitude in altitudeList)
+                {
+                    LayerMap[altitude].Sort((x, y) =>
+                    {
+                        int result = decimal.Compare(x.Coords.X - x.Coords.Y, y.Coords.X - y.Coords.Y);
+                        if (result == 0)
+                        {
+                            result = decimal.Compare(x.DrawPriority, y.DrawPriority);
+                        }
+                        return result;
+                    });
+
+                    foreach (var sprite in LayerMap[altitude])
+                    {
+                        if (sprite.AntiShadow != null)
+                        {
+                            spriteBatch.Draw(sprite.AntiShadow, sprite.Position, Color.White);
+                        }
+                        foreach (var higherSprite in ShadowDict[sprite.Coords])
+                        {
+                            if (higherSprite.Altitude > sprite.Altitude && higherSprite.Shadow != null)
+                            {
+                                spriteBatch.Draw(higherSprite.Shadow, sprite.Position, Color.White);
+                            }
+                        }
+                    }
+                }
             }
         }
 

@@ -28,8 +28,7 @@ namespace Sunbird.Core
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            Animator.LoadContent(mainGame, graphicsDevice, content);
-            Animator.Sender = this;
+            base.LoadContent(mainGame, graphicsDevice, content);
             AnimatorBase.LoadContent(mainGame, graphicsDevice, content);
             AnimatorBase.Sender = this;
         }
@@ -172,6 +171,12 @@ namespace Sunbird.Core
             {
                 cube.AnimatorBase.CurrentFrame = cubeBaseMD.CurrentFrame;
             }
+
+            cube.Shadow = mainGame.Content.Load<Texture2D>("Temp/CubeShadow");
+            cube.ShadowPath = "Temp/CubeShadow";
+            cube.AntiShadow = mainGame.Content.Load<Texture2D>("Temp/CubeAntiShadow");
+            cube.AntiShadowPath = "Temp/CubeAntiShadow";
+
             return cube;
         }
 

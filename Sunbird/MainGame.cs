@@ -33,6 +33,18 @@ namespace Sunbird
         public static SpriteFont DefaultFont { get; set; }
         public int Width { get { return graphics.PreferredBackBufferWidth; } }
         public int Height { get { return graphics.PreferredBackBufferHeight; } }
+
+        public Texture2D LightingRender { get; set; }
+        public RenderTarget2D LightingRenderTarget { get; set; }
+
+        public Texture2D ShadowRender { get; set; }
+        public RenderTarget2D ShadowRenderTarget { get; set; }
+
+        public Texture2D GameRender { get; set; }
+        public RenderTarget2D GameRenderTarget { get; set; }
+
+        public BlendState Subtractive { get; set; }
+
         public bool CleanLoad { get; set; } = false;
 
         public MainGame()
@@ -93,6 +105,31 @@ namespace Sunbird
                 CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml", new Type[] { typeof(CubeMetaData), typeof(CubeBaseMetaData) });
                 cubeFactoryData.SyncOut();
             }
+
+            GameRenderTarget = new RenderTarget2D(
+            GraphicsDevice,
+            GraphicsDevice.PresentationParameters.BackBufferWidth,
+            GraphicsDevice.PresentationParameters.BackBufferHeight,
+            true,
+            GraphicsDevice.PresentationParameters.BackBufferFormat,
+            DepthFormat.Depth24);
+
+            ShadowRenderTarget = new RenderTarget2D(
+            GraphicsDevice,
+            GraphicsDevice.PresentationParameters.BackBufferWidth,
+            GraphicsDevice.PresentationParameters.BackBufferHeight,
+            true,
+            GraphicsDevice.PresentationParameters.BackBufferFormat,
+            DepthFormat.Depth24);
+
+            Subtractive = new BlendState
+            {
+                ColorSourceBlend = Blend.Zero,
+                ColorDestinationBlend = Blend.InverseSourceColor,
+
+                AlphaSourceBlend = Blend.Zero,
+                AlphaDestinationBlend = Blend.InverseSourceColor
+            };
 
             Exiting += MainGame_Exiting;
 
@@ -165,17 +202,46 @@ namespace Sunbird
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LightGray);
-
             if (World.ZoomRatio > 1)
             {
                 SamplerState = SamplerState.PointClamp;
             }
+
+            // Game Render
+            GraphicsDevice.SetRenderTarget(GameRenderTarget);
+            GraphicsDevice.Clear(Color.LightGray);
+
             // Primary batch
             spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
 
             CurrentState.Draw(gameTime, spriteBatch);
 
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            GameRender = GameRenderTarget;
+
+            // Shadow Render
+            GraphicsDevice.SetRenderTarget(ShadowRenderTarget);
+            GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+
+            CurrentState.DrawShadow(gameTime, spriteBatch);
+
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            ShadowRender = ShadowRenderTarget;
+
+            // Game Render Texture
+            spriteBatch.Begin();
+            spriteBatch.Draw(GameRender, Vector2.Zero, Color.White);
+            spriteBatch.End();
+
+            // Shadow Render Texture
+            spriteBatch.Begin(blendState: Subtractive);
+            spriteBatch.Draw(ShadowRender, Vector2.Zero, Color.White);
             spriteBatch.End();
 
             // Overlay batch

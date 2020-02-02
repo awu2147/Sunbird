@@ -15,7 +15,7 @@
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
-    <CurrentFrame>11</CurrentFrame>
+    <CurrentFrame>0</CurrentFrame>
     <StartFrame>0</StartFrame>
   </Animator>
   <Alpha>1</Alpha>
@@ -30,10 +30,12 @@
   <Altitude>0</Altitude>
   <DrawPriority>0</DrawPriority>
   <IsHidden>false</IsHidden>
+  <ShadowPath>Temp/CubeShadow</ShadowPath>
+  <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
   <AnimatorBase>
     <loopTimer>0</loopTimer>
     <SpriteSheet>
-      <TexturePath>Temp/WaterCubeBase</TexturePath>
+      <TexturePath>Temp/LightStoneCubeBase</TexturePath>
       <Rows>1</Rows>
       <Columns>1</Columns>
     </SpriteSheet>

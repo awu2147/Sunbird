@@ -5,13 +5,13 @@
     <SheetRows>3</SheetRows>
     <SheetColumns>4</SheetColumns>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>11</CurrentFrame>
+    <CurrentFrame>0</CurrentFrame>
     <FrameCount>12</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>
   <CurrentCubeBaseMetaData>
-    <Path>Temp/WaterCubeBase</Path>
+    <Path>Temp/LightStoneCubeBase</Path>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
     <StartFrame>0</StartFrame>
@@ -23,7 +23,7 @@
   <IsRandomTop>false</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
   <CurrentIndex>0</CurrentIndex>
-  <CurrentBaseIndex>3</CurrentBaseIndex>
+  <CurrentBaseIndex>2</CurrentBaseIndex>
   <CubeMetaDataLibrary>
     <item>
       <key>
@@ -35,7 +35,7 @@
           <SheetRows>3</SheetRows>
           <SheetColumns>4</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>11</CurrentFrame>
+          <CurrentFrame>0</CurrentFrame>
           <FrameCount>12</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>
@@ -52,7 +52,7 @@
           <SheetRows>1</SheetRows>
           <SheetColumns>3</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>0</CurrentFrame>
+          <CurrentFrame>2</CurrentFrame>
           <FrameCount>3</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>

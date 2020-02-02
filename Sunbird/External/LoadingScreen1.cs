@@ -66,6 +66,11 @@ namespace Sunbird.External
             LoadingBar.Draw(gameTime, spriteBatch);
         }
 
+        public override void DrawShadow(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            
+        }
+
         public override void DrawOverlay(GameTime gameTime, SpriteBatch spriteBatch)
         {
             

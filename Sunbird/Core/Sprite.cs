@@ -46,6 +46,14 @@ namespace Sunbird.Core
 
         public bool IsHidden { get; set; }
 
+        [XmlIgnore]
+        public Texture2D Shadow { get; set; }
+        public string ShadowPath { get; set; }
+
+        [XmlIgnore]
+        public Texture2D AntiShadow { get; set; }
+        public string AntiShadowPath { get; set; }
+
 
         public Sprite()
         {
@@ -99,6 +107,14 @@ namespace Sunbird.Core
             {
                 Animator.LoadContent(mainGame, graphicsDevice, content);
                 Animator.Sender = this;
+            }
+            if (ShadowPath != null)
+            {
+                Shadow = content.Load<Texture2D>(ShadowPath);
+            }
+            if (AntiShadowPath != null)
+            {
+                AntiShadow = content.Load<Texture2D>(AntiShadowPath);
             }
         }
 
