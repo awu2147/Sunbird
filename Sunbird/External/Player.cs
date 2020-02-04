@@ -29,14 +29,13 @@ namespace Sunbird.External
     }
 
     public class Player : Sprite
-    {
+    {       
         private MainGame MainGame { get; set; }
+        private Config Config { get { return MainGame.Config; } }
         public Direction Direction { get; set; } = Direction.South;
         public Movement Movement { get; set; } = Movement.Standing;
-        private Config Config { get; set; }
 
         HashSet<Keys> CurrentMovementKeys { get; set; } = new HashSet<Keys>();
-
         private List<Keys> MovementKeyList => new List<Keys>() { Config.North, Config.East, Config.South, Config.West };
         public float Speed { get; set; } = 3;
 
@@ -52,18 +51,17 @@ namespace Sunbird.External
 
         public Player(MainGame mainGame, Animator animator)
         {
+            MainGame = mainGame;
             Animator = animator;
             Animator.Sender = this;
-            MainGame = mainGame;
-            Config = mainGame.Config;
+            PositionOffset = new Vector2(0, -18);
+            GenerateShadowTextures(mainGame);
         }
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            Animator.LoadContent(mainGame, graphicsDevice, content);
-            Animator.Sender = this;
             MainGame = mainGame;
-            Config = mainGame.Config;
+            base.LoadContent(mainGame, graphicsDevice, content);
         }
 
         public override void Update(GameTime gameTime)
@@ -178,7 +176,7 @@ namespace Sunbird.External
             }
 
             ApplyMotionBlur(new List<Movement>() { Movement.Walking });
-            Coords = World.TopFace_PositionToRelativeCoord(Position + new Vector2(12*3, 25*3), Altitude); // Clean me up.
+            Coords = World.TopFace_PositionToRelativeCoord(Position + new Vector2(12*3, 18), Altitude); // Clean me up.
 
             if (!MovementKeyList.Any(x => Peripherals.currentPressedKeys.Contains(x)))
             {

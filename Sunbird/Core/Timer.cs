@@ -17,6 +17,12 @@ namespace Sunbird.Core
 
         }
 
+        public void Reset()
+        {
+            TotalElapsedTime = 0;
+            IsDone = true;
+        }
+
         public void WaitForMilliseconds(GameTime gameTime, float waitTime)
         {
             if (IsDone)

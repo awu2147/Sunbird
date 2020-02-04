@@ -57,17 +57,17 @@ namespace Sunbird.GUI
 
         }
 
-        public Button(SpriteSheet spriteSheet, string label) : base(spriteSheet)
+        public Button(MainGame mainGame, SpriteSheet spriteSheet, string label) : base(mainGame, spriteSheet)
         {
             Label = label;
         }
 
-        public Button(SpriteSheet spriteSheet, string label, Vector2 position) : base(spriteSheet, position)
+        public Button(MainGame mainGame, SpriteSheet spriteSheet, string label, Vector2 position) : base(mainGame, spriteSheet, position)
         {
             Label = label;
         }
 
-        public Button(SpriteSheet spriteSheet, string label, Vector2 position, Alignment alignment) : base (spriteSheet, position, alignment)
+        public Button(MainGame mainGame, SpriteSheet spriteSheet, string label, Vector2 position, Alignment alignment) : base (mainGame, spriteSheet, position, alignment)
         {
             Label = label;
         }

@@ -35,7 +35,7 @@ namespace Sunbird.External
             BackgroundColor = new Color(51, 57, 65);
 
             var centerIconPosition = new Vector2(MainGame.Width / 2, MainGame.Height / 2 - 60);
-            var centerIcon = new Sprite(SpriteSheet.CreateNew(MainGame, "Temp/sunbird", 1, 1), centerIconPosition, Alignment.Center);
+            var centerIcon = new Sprite(MainGame, SpriteSheet.CreateNew(MainGame, "Temp/sunbird", 1, 1), centerIconPosition, Alignment.Center);
             spriteList.Add(centerIcon);
 
             var barEmpty = Content.Load<Texture2D>("Temp/bar1_empty");

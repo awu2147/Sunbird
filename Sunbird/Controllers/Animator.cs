@@ -49,27 +49,20 @@ namespace Sunbird.Controllers
     public class Animator
     {
         public SpriteSheet SpriteSheet { get; set; }
-
-        public float loopTimer = 0f;
-
         public Vector2 Position { get; set; }
-
         public int FrameCount { get; set; } = 1;
-
         public int FrameCounter { get; set; }
-
         public float FrameSpeed { get; set; } = 0.133f;
-
         public AnimationState AnimState { get; set; } = AnimationState.None;
 
         [XmlIgnore]
         public Sprite Sender { get; set; }
 
-        private Dictionary<int, Point> PositionMap { get { return SpriteSheet.PositionMap; } }
-
-        public int CurrentFrame { get; set; } = 0;
-
-        public int StartFrame { get; set; } = 0;
+        [XmlIgnore]
+        public Dictionary<int, Point> PositionMap { get { return SpriteSheet.PositionMap; } }
+        public int CurrentFrame { get; set; }
+        public int StartFrame { get; set; }
+        public Timer Timer { get; set; } = new Timer();
 
         private Animator()
         {
@@ -80,6 +73,11 @@ namespace Sunbird.Controllers
         {
             this.Sender = sender;
             SpriteSheet = spriteSheet;
+            Timer.OnCompleted = () =>
+            {
+                CurrentFrame++;
+                FrameCounter++;
+            };
         }
 
         public Animator(SpriteSheet spriteSheet, Sprite sender, int startFrame, int frameCount, float frameSpeed, AnimationState animState)
@@ -90,12 +88,22 @@ namespace Sunbird.Controllers
             FrameCount = frameCount;
             FrameSpeed = frameSpeed;
             AnimState = animState;
+            Timer.OnCompleted = () =>
+            {
+                CurrentFrame++;
+                FrameCounter++;
+            };
         }
 
         public virtual void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
             SpriteSheet.Texture = content.Load<Texture2D>(SpriteSheet.TexturePath);
             SpriteSheet.PositionMap = SpriteSheet.ConstructPositionMap();
+            Timer.OnCompleted = () =>
+            {
+                CurrentFrame++;
+                FrameCounter++;
+            };
         }
 
         public Rectangle VisibleArea()
@@ -103,15 +111,20 @@ namespace Sunbird.Controllers
             return new Rectangle(Position.ToPoint(), new Point(SpriteSheet.FrameWidth, SpriteSheet.FrameHeight));
         }
 
+        public Rectangle ViewRectangle()
+        {
+            return new Rectangle(PositionMap[CurrentFrame].X, PositionMap[CurrentFrame].Y, SpriteSheet.FrameWidth, SpriteSheet.FrameHeight);
+        }
+
         public void SwitchAnimation(int startframe, int framecount, float framespeed, AnimationState animState)
         {         
+            StartFrame = startframe;
             CurrentFrame = startframe;
-            StartFrame = startframe;              
+            FrameCounter = 0;
             FrameCount = framecount;
             FrameSpeed = framespeed;
-            FrameCounter = 0;
-            loopTimer = 0;
-            AnimState = animState;          
+            AnimState = animState;
+            Timer.Reset();
         }
 
         public void SwitchAnimation(SwitchAnimArgs args)
@@ -135,22 +148,14 @@ namespace Sunbird.Controllers
 
         public void Update(GameTime gameTime)
         {
-            Position = Sender.Position;
+            Position = Sender.Position + Sender.PositionOffset;
             if (AnimState == AnimationState.Loop)
             {
-                loopTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (loopTimer > FrameSpeed)
+                Timer.WaitForSeconds(gameTime, FrameSpeed);
+                if (FrameCounter >= FrameCount)
                 {
-                    loopTimer = 0f;
-
-                    CurrentFrame++;
-                    FrameCounter++;
-
-                    if (FrameCounter >= FrameCount)
-                    {
-                        CurrentFrame = StartFrame;
-                        FrameCounter = 0;
-                    }
+                    CurrentFrame = StartFrame;
+                    FrameCounter = 0;
                 }
             }
         }

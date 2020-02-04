@@ -158,7 +158,7 @@ namespace Sunbird.Core
 
         public static Coord TopFace_PositionToRelativeCoord(Vector2 position, int altitude)
         {
-            return TopFace_PointToRelativeCoord(position.ToPoint(), altitude);
+            return TopFace_PointToRelativeCoord(position.ToPoint() * new Point(Zoom, Zoom) / new Point(Scale, Scale), altitude);
         }
 
         public static Coord TopFace_PointToCoord(Point point)

@@ -69,15 +69,14 @@ namespace Sunbird.External
 
             var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
             var playerAnimator = new Animator(playerSheet, null, 0, 1, 0.2f, AnimationState.Loop);
-            Player = new Player(MainGame, playerAnimator) { DrawPriority = 2 };
+            Player = new Player(MainGame, playerAnimator) { DrawPriority = 1 };
             LayerMap[Altitude].Add(Player);
 
             CreateOverlay();
 
             // GhostMarker relies on CubePreview so we must create it after the latter (which belongs to the overlay).
-            GhostMarker = new GhostMarker(SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker"));
+            GhostMarker = new GhostMarker(MainGame, SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker")) { DrawPriority = 1 };
             GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
-            GhostMarker.DrawPriority = 1;
             LayerMap[Altitude].Add(GhostMarker);
 
             Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
@@ -90,7 +89,7 @@ namespace Sunbird.External
             CreateCubePendant();
 
             var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
-            Overlay.Add(new Sprite(gridAxisGlyph, new Vector2(MainGame.Width - 20, 20), Alignment.TopRight));
+            Overlay.Add(new Sprite(MainGame, gridAxisGlyph, new Vector2(MainGame.Width - 20, 20), Alignment.TopRight));
         }
 
         #region Cube Pendant
@@ -100,7 +99,7 @@ namespace Sunbird.External
             // Pendant background.
             var pendantBg = SpriteSheet.CreateNew(MainGame, "Temp/PendantBackGround");
             var pendantPosition = new Vector2(20, MainGame.Height - 20);
-            Overlay.Add(new Sprite(pendantBg, pendantPosition, Alignment.BottomLeft));
+            Overlay.Add(new Sprite(MainGame, pendantBg, pendantPosition, Alignment.BottomLeft));
 
             // The cube image.
             CubePreview = CubeFactory.CreateCurrentCube(MainGame, Coord.Zero, Coord.Zero, 0);
@@ -109,55 +108,55 @@ namespace Sunbird.External
 
             // Pendant left.
             var pLBN1s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
-            var pLBN1 = new Button(pLBN1s, null, pendantPosition + new Vector2(9, -144));
+            var pLBN1 = new Button(MainGame, pLBN1s, null, pendantPosition + new Vector2(9, -144));
             pLBN1.Clicked += PLBN1_Clicked;
             Overlay.Add(pLBN1);
 
             var pLBN2s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
-            var pLBN2 = new Button(pLBN2s, null, pendantPosition + new Vector2(9, -108));
+            var pLBN2 = new Button(MainGame, pLBN2s, null, pendantPosition + new Vector2(9, -108));
             pLBN2.Clicked += PLBN2_Clicked;
             Overlay.Add(pLBN2);
 
             var pLBN3s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
-            var pLBN3 = new Button(pLBN3s, null, pendantPosition + new Vector2(9, -78));
+            var pLBN3 = new Button(MainGame, pLBN3s, null, pendantPosition + new Vector2(9, -78));
             pLBN3.Clicked += PLBN3_Clicked;
             Overlay.Add(pLBN3);
 
             var pLBN4s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
-            var pLBN4 = new Button(pLBN4s, null, pendantPosition + new Vector2(9, -42));
+            var pLBN4 = new Button(MainGame, pLBN4s, null, pendantPosition + new Vector2(9, -42));
             pLBN4.Clicked += PLBN4_Clicked;
             Overlay.Add(pLBN4);
 
             // Pendant right.
             var pRBN1s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
-            var pRBN1 = new Button(pRBN1s, null, pendantPosition + new Vector2(138, -144));
+            var pRBN1 = new Button(MainGame, pRBN1s, null, pendantPosition + new Vector2(138, -144));
             pRBN1.Clicked += PRBN1_Clicked;
             Overlay.Add(pRBN1);
 
             var pRBN2s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
-            var pRBN2 = new Button(pRBN2s, null, pendantPosition + new Vector2(138, -108));
+            var pRBN2 = new Button(MainGame, pRBN2s, null, pendantPosition + new Vector2(138, -108));
             pRBN2.Clicked += PRBN2_Clicked;
             Overlay.Add(pRBN2);
 
             var pRBN3s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
-            var pRBN3 = new Button(pRBN3s, null, pendantPosition + new Vector2(138, -78));
+            var pRBN3 = new Button(MainGame, pRBN3s, null, pendantPosition + new Vector2(138, -78));
             pRBN3.Clicked += PRBN3_Clicked;
             Overlay.Add(pRBN3);
 
             var pRBN4s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
-            var pRBN4 = new Button(pRBN4s, null, pendantPosition + new Vector2(138, -42));
+            var pRBN4 = new Button(MainGame, pRBN4s, null, pendantPosition + new Vector2(138, -42));
             pRBN4.Clicked += PRBN4_Clicked;
             Overlay.Add(pRBN4);
 
             // Pendant random.
             var pRandTs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
-            var pRandT = new Button(pRandTs, null, pendantPosition + new Vector2(57, -144)) { ButtonType = ButtonType.CheckBox, IsPressed = CubeFactory.IsRandomTop };
+            var pRandT = new Button(MainGame, pRandTs, null, pendantPosition + new Vector2(57, -144)) { ButtonType = ButtonType.CheckBox, IsPressed = CubeFactory.IsRandomTop };
             pRandT.Checked += PRandTop_Checked;
             pRandT.Unchecked += PRandTop_Unchecked;
             Overlay.Add(pRandT);
 
             var pRandBs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
-            var pRandB = new Button(pRandBs, null, pendantPosition + new Vector2(57, -33)) { ButtonType = ButtonType.CheckBox, IsPressed = CubeFactory.IsRandomBottom };
+            var pRandB = new Button(MainGame, pRandBs, null, pendantPosition + new Vector2(57, -33)) { ButtonType = ButtonType.CheckBox, IsPressed = CubeFactory.IsRandomBottom };
             pRandB.Checked += PRandB_Checked;
             pRandB.Unchecked += PRandB_Unchecked;
             Overlay.Add(pRandB);
@@ -296,7 +295,7 @@ namespace Sunbird.External
                 }
             }
 
-            CreateOverlay();
+            CreateOverlay();      
 
             for (int i = 0; i < 25; i++)
             {
@@ -431,14 +430,13 @@ namespace Sunbird.External
                         {
                             Altitude = key;
                             GhostMarker.Altitude = Altitude;
-                            GhostMarker.Coords = targetedCoord;
                             break;
                         }
                     }
+                    GhostMarker.Coords = World.TopFace_PointToRelativeCoord(MainGame.Camera, Altitude);
                 }
 
                 GhostMarker.Position = World.TopFace_CoordToLocalOrigin(topFaceCoords);
-                GhostMarker.IsHidden = !InFocus;
 
                 if (LayerMap[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.None)
                 {
@@ -449,18 +447,23 @@ namespace Sunbird.External
                     GhostMarker.DrawDefaultMarker = false;
                 }
 
-                if (LayerMap[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords) || Authorization == Authorization.Builder)
+                if (LayerMap[Altitude].OccupiedCoords.Contains(relativeTopFaceCoords))
                 {
                     GhostMarker.DrawPriority = 1;
+                }
+                else if (Authorization == Authorization.Builder)
+                {
+                    GhostMarker.DrawPriority = 0;
                 }
                 else if (Authorization == Authorization.None)
                 {
                     GhostMarker.DrawPriority = -1000;
                 }
 
+                GhostMarker.IsHidden = !InFocus;
+
                 // Player management.
-                Player.Coords = relativeTopFaceCoords;
-                Player.Altitude = Altitude + 30;
+                Player.Altitude = 1;
 
                 // Rearrange sprites into their correct altitude layer.
                 var altitudeList = LayerMap.Keys.ToList();
@@ -590,21 +593,20 @@ namespace Sunbird.External
 
         public override void DrawShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
             if (!IsLoading)
             {
-                var altitudeList = LayerMap.Keys.ToList();
-                altitudeList.Sort();
-
                 Dictionary<Coord, List<Sprite>> ShadowDict = new Dictionary<Coord, List<Sprite>>();
 
-                foreach (var altitude in altitudeList)
+                var AltitudeList = LayerMap.Keys.ToList();
+                AltitudeList.Sort();
+
+                foreach (var altitude in AltitudeList)
                 {
                     foreach (var sprite in LayerMap[altitude])
                     {
                         if (ShadowDict.ContainsKey(sprite.Coords) == false)
                         {
-                            ShadowDict.Add(sprite.Coords, new List<Sprite>() {});
+                            ShadowDict.Add(sprite.Coords, new List<Sprite>() { });
                         }
                         else
                         {
@@ -613,9 +615,29 @@ namespace Sunbird.External
                     }
                 }
 
-                foreach (var altitude in altitudeList)
+                var dLayerMap = new Dictionary<int, List<Sprite>>();
+
+                foreach (var layer in LayerMap)
                 {
-                    LayerMap[altitude].Sort((x, y) =>
+                    foreach (var sprite in layer.Value)
+                    {
+                        if (!dLayerMap.ContainsKey(sprite.DrawAltitude))
+                        {
+                            dLayerMap.Add(sprite.DrawAltitude, new List<Sprite>() { sprite });
+                        }
+                        else
+                        {
+                            dLayerMap[sprite.DrawAltitude].Add(sprite);
+                        }
+                    }
+                }
+
+                var dAltitudeList = dLayerMap.Keys.ToList();
+                dAltitudeList.Sort();
+
+                foreach (var daltitude in dAltitudeList)
+                {
+                    dLayerMap[daltitude].Sort((x, y) =>
                     {
                         int result = decimal.Compare(x.Coords.X - x.Coords.Y, y.Coords.X - y.Coords.Y);
                         if (result == 0)
@@ -625,17 +647,31 @@ namespace Sunbird.External
                         return result;
                     });
 
-                    foreach (var sprite in LayerMap[altitude])
+                    foreach (var sprite in dLayerMap[daltitude])
                     {
-                        if (sprite.AntiShadow != null)
+                        if (sprite.AntiShadow != null && !(sprite is GhostMarker))
                         {
-                            spriteBatch.Draw(sprite.AntiShadow, sprite.Position, Color.White);
+                            if (sprite is Cube)
+                            {
+                                spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                            }
+                            else
+                            {
+                                spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.ViewRectangle(), Color.White);
+                            }
                         }
                         foreach (var higherSprite in ShadowDict[sprite.Coords])
                         {
-                            if (higherSprite.Altitude > sprite.Altitude && higherSprite.Shadow != null)
-                            {
-                                spriteBatch.Draw(higherSprite.Shadow, sprite.Position, Color.White);
+                            if (higherSprite.Altitude > sprite.Altitude && higherSprite.Shadow != null && !(sprite is GhostMarker))
+                            {                        
+                                if (!(sprite is Cube) && sprite.SelfShadow != null)
+                                {                              
+                                    spriteBatch.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.ViewRectangle(), Color.White);
+                                }
+                                else
+                                {
+                                    spriteBatch.Draw(higherSprite.Shadow, sprite.Position, Color.White);
+                                }
                             }
                         }
                     }
@@ -650,11 +686,11 @@ namespace Sunbird.External
                 sprite.Draw(gameTime, spriteBatch);
             }
 
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString()}", new Vector2(10, 10), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude)}", new Vector2(10, 30), Color.Black);            
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString()}", new Vector2(10, 50), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Sprites in List: { LayerMap[Altitude].Count().ToString()}", new Vector2(10, 70), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Zoom: { Convert.ToInt32(Math.Floor(World.ZoomRatio * 100))} %", new Vector2(10, 90), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString() }", new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude) }", new Vector2(10, 30), Color.Black);            
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString() }", new Vector2(10, 50), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", new Vector2(10, 70), Color.Black);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", new Vector2(10, 90), Color.Black);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", new Vector2(10, 110), Color.Black);
 
         }

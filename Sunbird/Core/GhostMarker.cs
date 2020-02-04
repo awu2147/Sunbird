@@ -30,7 +30,7 @@ namespace Sunbird.Core
 
         }
 
-        public GhostMarker(SpriteSheet spriteSheet) : base(spriteSheet)
+        public GhostMarker(MainGame mainGame, SpriteSheet spriteSheet) : base(mainGame, spriteSheet)
         {
             Alpha = 0.3f;
         }

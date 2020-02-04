@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Cube">
   <Animator>
-    <loopTimer>0</loopTimer>
     <SpriteSheet>
-      <TexturePath>Temp/GrassCubeTop</TexturePath>
-      <Rows>3</Rows>
-      <Columns>4</Columns>
+      <TexturePath>Temp/WaterCubeTop</TexturePath>
+      <Rows>1</Rows>
+      <Columns>11</Columns>
     </SpriteSheet>
     <Position>
       <X>77</X>
       <Y>663</Y>
     </Position>
-    <FrameCount>12</FrameCount>
+    <FrameCount>11</FrameCount>
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
     <CurrentFrame>0</CurrentFrame>
     <StartFrame>0</StartFrame>
+    <Timer>
+      <TotalElapsedTime>0</TotalElapsedTime>
+      <IsDone>true</IsDone>
+    </Timer>
   </Animator>
   <Alpha>1</Alpha>
   <Position>
     <X>77</X>
     <Y>663</Y>
   </Position>
+  <PositionOffset>
+    <X>0</X>
+    <Y>0</Y>
+  </PositionOffset>
   <Coords>
     <X>0</X>
     <Y>0</Y>
@@ -33,9 +40,8 @@
   <ShadowPath>Temp/CubeShadow</ShadowPath>
   <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
   <AnimatorBase>
-    <loopTimer>0</loopTimer>
     <SpriteSheet>
-      <TexturePath>Temp/LightStoneCubeBase</TexturePath>
+      <TexturePath>Temp/WaterCubeBase</TexturePath>
       <Rows>1</Rows>
       <Columns>1</Columns>
     </SpriteSheet>
@@ -49,5 +55,9 @@
     <AnimState>None</AnimState>
     <CurrentFrame>0</CurrentFrame>
     <StartFrame>0</StartFrame>
+    <Timer>
+      <TotalElapsedTime>0</TotalElapsedTime>
+      <IsDone>true</IsDone>
+    </Timer>
   </AnimatorBase>
 </Sprite>

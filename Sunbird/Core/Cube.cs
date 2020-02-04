@@ -28,9 +28,13 @@ namespace Sunbird.Core
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            base.LoadContent(mainGame, graphicsDevice, content);
+            // Do not call base here.
+            Animator.LoadContent(mainGame, graphicsDevice, content);
+            Animator.Sender = this;
             AnimatorBase.LoadContent(mainGame, graphicsDevice, content);
             AnimatorBase.Sender = this;
+            Shadow = content.Load<Texture2D>(ShadowPath);
+            AntiShadow = content.Load<Texture2D>(AntiShadowPath);
         }
 
         public override void Update(GameTime gameTime)
@@ -148,11 +152,12 @@ namespace Sunbird.Core
         public static XDictionary<int, CubeBaseMetaData> CubeBaseMetaDataLibrary { get; set; }
 
         public static Cube CreateCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
-        {
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
-            var spriteSheetBase = SpriteSheet.CreateNew(mainGame, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
+        {              
             var cube = new Cube() { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
             var rand = new Random();
+
+            // Create cube top animator.
+            var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
             cube.Animator = new Animator(spriteSheet, cube, cubeMD.StartFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
             if (IsRandomTop == true)
             {
@@ -162,6 +167,9 @@ namespace Sunbird.Core
             {
                 cube.Animator.CurrentFrame = cubeMD.CurrentFrame;
             }
+
+            // Create cube base animator.
+            var spriteSheetBase = SpriteSheet.CreateNew(mainGame, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
             cube.AnimatorBase = new Animator(spriteSheetBase, cube, cubeBaseMD.StartFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);
             if (IsRandomBottom == true)
             {
@@ -172,6 +180,7 @@ namespace Sunbird.Core
                 cube.AnimatorBase.CurrentFrame = cubeBaseMD.CurrentFrame;
             }
 
+            // Should all cubes have the same shadow and antishadow?
             cube.Shadow = mainGame.Content.Load<Texture2D>("Temp/CubeShadow");
             cube.ShadowPath = "Temp/CubeShadow";
             cube.AntiShadow = mainGame.Content.Load<Texture2D>("Temp/CubeAntiShadow");

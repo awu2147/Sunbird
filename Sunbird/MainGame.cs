@@ -24,15 +24,16 @@ namespace Sunbird
     /// </summary>
     public class MainGame : Game
     {
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager Graphics { get; set; }
+        private SpriteBatch SpriteBatch { get; set; }
+
         public State CurrentState { get; set; }
         public Config Config { get; set; }
         public Camera Camera { get; set; }
         public SamplerState SamplerState { get; set; }
         public static SpriteFont DefaultFont { get; set; }
-        public int Width { get { return graphics.PreferredBackBufferWidth; } }
-        public int Height { get { return graphics.PreferredBackBufferHeight; } }
+        public int Width { get { return Graphics.PreferredBackBufferWidth; } }
+        public int Height { get { return Graphics.PreferredBackBufferHeight; } }
 
         public Texture2D LightingRender { get; set; }
         public RenderTarget2D LightingRenderTarget { get; set; }
@@ -49,7 +50,7 @@ namespace Sunbird
 
         public MainGame()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
@@ -63,8 +64,8 @@ namespace Sunbird
                 Config.LoadContent(this);
             }
 
-            graphics.PreferredBackBufferWidth = Config.WindowWidth;
-            graphics.PreferredBackBufferHeight = Config.WindowHeight;
+            Graphics.PreferredBackBufferWidth = Config.WindowWidth;
+            Graphics.PreferredBackBufferHeight = Config.WindowHeight;
         }
 
         /// <summary>
@@ -150,7 +151,7 @@ namespace Sunbird
         protected override void LoadContent()
         {
             // CORE: Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             CurrentState = new MapBuilder(this, GraphicsDevice, Content);
 
@@ -212,11 +213,11 @@ namespace Sunbird
             GraphicsDevice.Clear(Color.LightGray);
 
             // Primary batch
-            spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
 
-            CurrentState.Draw(gameTime, spriteBatch);
+            CurrentState.Draw(gameTime, SpriteBatch);
 
-            spriteBatch.End();
+            SpriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
             GameRender = GameRenderTarget;
@@ -225,31 +226,31 @@ namespace Sunbird
             GraphicsDevice.SetRenderTarget(ShadowRenderTarget);
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
 
-            CurrentState.DrawShadow(gameTime, spriteBatch);
+            CurrentState.DrawShadow(gameTime, SpriteBatch);
 
-            spriteBatch.End();
+            SpriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
             ShadowRender = ShadowRenderTarget;
 
             // Game Render Texture
-            spriteBatch.Begin();
-            spriteBatch.Draw(GameRender, Vector2.Zero, Color.White);
-            spriteBatch.End();
+            SpriteBatch.Begin();
+            SpriteBatch.Draw(GameRender, Vector2.Zero, Color.White);
+            SpriteBatch.End();
 
             // Shadow Render Texture
-            spriteBatch.Begin(blendState: Subtractive);
-            spriteBatch.Draw(ShadowRender, Vector2.Zero, Color.White);
-            spriteBatch.End();
+            SpriteBatch.Begin(blendState: Subtractive);
+            SpriteBatch.Draw(ShadowRender, Vector2.Zero, Color.White);
+            SpriteBatch.End();
 
             // Overlay batch
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-            CurrentState.DrawOverlay(gameTime, spriteBatch);
+            CurrentState.DrawOverlay(gameTime, SpriteBatch);
 
-            spriteBatch.End();
+            SpriteBatch.End();
 
             base.Draw(gameTime);
         }
