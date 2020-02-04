@@ -45,6 +45,7 @@ namespace Sunbird.GUI
         public event EventHandler<ButtonClickedEventArgs> Checked;
         public event EventHandler<ButtonClickedEventArgs> Unchecked;
 
+        private MainGame MainGame { get; set; }
         public string Label { get; set; }
         public ButtonType ButtonType { get; set; } 
         public bool IsPressed { get; set; }
@@ -59,16 +60,19 @@ namespace Sunbird.GUI
 
         public Button(MainGame mainGame, SpriteSheet spriteSheet, string label) : base(mainGame, spriteSheet)
         {
+            MainGame = mainGame;
             Label = label;
         }
 
         public Button(MainGame mainGame, SpriteSheet spriteSheet, string label, Vector2 position) : base(mainGame, spriteSheet, position)
         {
+            MainGame = mainGame;
             Label = label;
         }
 
         public Button(MainGame mainGame, SpriteSheet spriteSheet, string label, Vector2 position, Alignment alignment) : base (mainGame, spriteSheet, position, alignment)
         {
+            MainGame = mainGame;
             Label = label;
         }
 
@@ -93,7 +97,7 @@ namespace Sunbird.GUI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (Animator.VisibleArea().Contains(Peripherals.GetMouseWindowPosition()) && Peripherals.LeftButtonTapped())
+            if (Animator.VisibleArea().Contains(Peripherals.GetMouseWindowPosition()) && Peripherals.LeftButtonTapped() && MainGame.IsActive)
             {
                 if (ButtonType == ButtonType.Default)
                 {

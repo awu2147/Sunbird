@@ -60,20 +60,20 @@ namespace Sunbird.Core
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet)
         {          
             Animator = new Animator(spriteSheet, this);
-            GenerateShadowTextures(mainGame);
+            GenerateShadowTextures(mainGame, Animator);
         }
 
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position)
         {          
             Animator = new Animator(spriteSheet, this);
-            GenerateShadowTextures(mainGame);
+            GenerateShadowTextures(mainGame, Animator);
             Position = position;
         }
 
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment)
         {
             Animator = new Animator(spriteSheet, this);
-            GenerateShadowTextures(mainGame);
+            GenerateShadowTextures(mainGame, Animator);
             if (alignment == Alignment.TopLeft)
             {
                 Position = position;
@@ -99,17 +99,17 @@ namespace Sunbird.Core
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, int startFrame, int frameCount, float frameSpeed, AnimationState animState)
         {
             Animator = new Animator(spriteSheet, this, startFrame, frameCount, frameSpeed, animState);
-            GenerateShadowTextures(mainGame);
+            GenerateShadowTextures(mainGame, Animator);
         }
 
         /// <summary>
         /// Generate AntiShadow and SelfShadow textures (This requires the base Animator to be instantiated).
         /// </summary>
         /// <param name="mainGame"></param>
-        public void GenerateShadowTextures(MainGame mainGame)
+        public void GenerateShadowTextures(MainGame mainGame, Animator animator)
         {
-            AntiShadow = GetAntiShadow(mainGame);
-            SelfShadow = GetShadow(mainGame);
+            AntiShadow = GetAntiShadow(mainGame, animator);
+            SelfShadow = GetShadow(mainGame, animator);
         }
 
         public virtual void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
@@ -120,8 +120,7 @@ namespace Sunbird.Core
                 Animator.Sender = this;
             }
 
-            // This must be called after Animator but before AntiShadow.
-            GenerateShadowTextures(mainGame);
+            GenerateShadowTextures(mainGame, Animator);
 
             if (ShadowPath != null)
             {
@@ -180,13 +179,13 @@ namespace Sunbird.Core
             animator.AnimState = animState;
         }
 
-        private Texture2D GetMask(MainGame mainGame, Color color)
+        private Texture2D GetMask(MainGame mainGame, Animator animator, Color color)
         {
-            if (Animator != null)
+            if (animator != null)
             {
-                var totalPixels = Animator.SpriteSheet.Texture.Width * Animator.SpriteSheet.Texture.Height;
+                var totalPixels = animator.SpriteSheet.Texture.Width * animator.SpriteSheet.Texture.Height;
                 Color[] antiShadowPixels = new Color[totalPixels];
-                Animator.SpriteSheet.Texture.GetData<Color>(antiShadowPixels);
+                animator.SpriteSheet.Texture.GetData<Color>(antiShadowPixels);
                 for (int i = 0; i < antiShadowPixels.Length; i++)
                 {
                     if (antiShadowPixels[i].A != 0)
@@ -194,7 +193,7 @@ namespace Sunbird.Core
                         antiShadowPixels[i] = color;
                     }
                 }
-                var antiShadow = new Texture2D(mainGame.GraphicsDevice, Animator.SpriteSheet.Texture.Width, Animator.SpriteSheet.Texture.Height);
+                var antiShadow = new Texture2D(mainGame.GraphicsDevice, animator.SpriteSheet.Texture.Width, animator.SpriteSheet.Texture.Height);
                 antiShadow.SetData(antiShadowPixels);
                 return antiShadow;
             }
@@ -204,14 +203,14 @@ namespace Sunbird.Core
             }
         }
 
-        public Texture2D GetAntiShadow(MainGame mainGame)
+        public Texture2D GetAntiShadow(MainGame mainGame, Animator animator)
         {
-            return GetMask(mainGame, Color.Black);
+            return GetMask(mainGame, animator, Color.Black);
         }
 
-        public Texture2D GetShadow(MainGame mainGame)
+        public Texture2D GetShadow(MainGame mainGame, Animator animator)
         {
-            return GetMask(mainGame, new Color(109, 117, 141));
+            return GetMask(mainGame, animator, new Color(109, 117, 141));
         }
 
         public virtual void Update(GameTime gameTime)

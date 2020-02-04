@@ -55,7 +55,7 @@ namespace Sunbird.External
             Animator = animator;
             Animator.Sender = this;
             PositionOffset = new Vector2(0, -18);
-            GenerateShadowTextures(mainGame);
+            GenerateShadowTextures(mainGame, Animator);
         }
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
