@@ -324,7 +324,7 @@ namespace Sunbird.External
                         MainGame.Camera.DragTransform = MainGame.Camera.CreateDragTransform();
                     }
                 }
-                else if (Authorization == Authorization.Builder)
+                else if (!Peripherals.KeyPressed(Keys.LeftControl) && Authorization == Authorization.Builder)
                 {
                     Altitude--;
                     if (LayerMap.ContainsKey(Altitude) == false)
@@ -349,7 +349,7 @@ namespace Sunbird.External
                         MainGame.Camera.DragTransform = MainGame.Camera.CreateDragTransform();
                     }
                 }
-                else if (Authorization == Authorization.Builder)
+                else if (!Peripherals.KeyPressed(Keys.LeftControl) && Authorization == Authorization.Builder)
                 {
                     Altitude++;
                     if (LayerMap.ContainsKey(Altitude) == false)

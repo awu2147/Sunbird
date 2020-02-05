@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Temp/WaterCubeTop</Path>
+    <Path>Temp/LightStoneCubeTop</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>11</SheetColumns>
+    <SheetColumns>3</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>11</FrameCount>
+    <FrameCount>3</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>
   <CurrentCubeBaseMetaData>
-    <Path>Temp/WaterCubeBase</Path>
+    <Path>Temp/LightStoneCubeBase</Path>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
     <StartFrame>0</StartFrame>
@@ -48,6 +48,23 @@
       </key>
       <value>
         <CubeMetaData>
+          <Path>Temp/DirtCubeTop</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>8</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>8</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>2</int>
+      </key>
+      <value>
+        <CubeMetaData>
           <Path>Temp/LightStoneCubeTop</Path>
           <SheetRows>1</SheetRows>
           <SheetColumns>3</SheetColumns>
@@ -61,7 +78,7 @@
     </item>
     <item>
       <key>
-        <int>2</int>
+        <int>3</int>
       </key>
       <value>
         <CubeMetaData>
@@ -69,7 +86,7 @@
           <SheetRows>1</SheetRows>
           <SheetColumns>11</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>0</CurrentFrame>
+          <CurrentFrame>8</CurrentFrame>
           <FrameCount>11</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>
@@ -118,6 +135,23 @@
       </key>
       <value>
         <CubeBaseMetaData>
+          <Path>Temp/DirtCubeBase</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>2</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>2</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeBaseMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>3</int>
+      </key>
+      <value>
+        <CubeBaseMetaData>
           <Path>Temp/LightStoneCubeBase</Path>
           <SheetRows>1</SheetRows>
           <SheetColumns>1</SheetColumns>
@@ -131,7 +165,7 @@
     </item>
     <item>
       <key>
-        <int>3</int>
+        <int>4</int>
       </key>
       <value>
         <CubeBaseMetaData>

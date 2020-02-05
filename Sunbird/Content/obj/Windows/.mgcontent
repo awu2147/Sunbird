@@ -13,6 +13,8 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/CubeShadow.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/dark_bg.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/DirtCube.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/DirtCubeBase.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/DirtCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/EmptyCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GrassCube.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GrassCubeBase.png</File>
@@ -44,6 +46,8 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

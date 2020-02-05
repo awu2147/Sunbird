@@ -2,14 +2,14 @@
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Cube">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Temp/WaterCubeTop</TexturePath>
+      <TexturePath>Temp/LightStoneCubeTop</TexturePath>
       <Rows>1</Rows>
-      <Columns>11</Columns>
+      <Columns>3</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FramesInLoop>11</FramesInLoop>
-    <FrameCounter>0</FrameCounter>
+    <FramesInLoop>3</FramesInLoop>
+    <FrameCounter>2</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
     <Timer>
@@ -37,7 +37,7 @@
   <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
   <AnimatorBase>
     <SpriteSheet>
-      <TexturePath>Temp/WaterCubeBase</TexturePath>
+      <TexturePath>Temp/LightStoneCubeBase</TexturePath>
       <Rows>1</Rows>
       <Columns>1</Columns>
     </SpriteSheet>
