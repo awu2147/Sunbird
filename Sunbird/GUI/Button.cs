@@ -8,7 +8,6 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,17 +17,14 @@ using Sunbird.Core;
 using Sunbird.Controllers;
 using Sunbird.Serialization;
 using Sunbird.GUI;
-using Timer = Sunbird.Core.Timer;
 
 namespace Sunbird.GUI
 {
     public class ButtonClickedEventArgs : EventArgs
     {
-        public bool IsPressed { get; set; }
-
-        public ButtonClickedEventArgs(bool isPressed)
+        public ButtonClickedEventArgs()
         {
-            IsPressed = isPressed;
+
         }
     }
 
@@ -49,26 +45,15 @@ namespace Sunbird.GUI
         public string Label { get; set; }
         public ButtonType ButtonType { get; set; } 
         public bool IsPressed { get; set; }
-        public SwitchAnimArgs PressedArgs { get; set; } = new SwitchAnimArgs(1);
-        public SwitchAnimArgs ReleasedArgs { get; set; } = new SwitchAnimArgs(0);
+        public AnimArgs ReleasedArgs { get; set; } = new AnimArgs(0);
+        public AnimArgs PressedArgs { get; set; } = new AnimArgs(1);
         public Timer Timer { get; set; } = new Timer();
 
-        private Button()
-        {
+        private Button() { }
 
-        }
+        public Button(MainGame mainGame, SpriteSheet spriteSheet, string label) : this(mainGame, spriteSheet, label, Vector2.Zero) { }
 
-        public Button(MainGame mainGame, SpriteSheet spriteSheet, string label) : base(mainGame, spriteSheet)
-        {
-            MainGame = mainGame;
-            Label = label;
-        }
-
-        public Button(MainGame mainGame, SpriteSheet spriteSheet, string label, Vector2 position) : base(mainGame, spriteSheet, position)
-        {
-            MainGame = mainGame;
-            Label = label;
-        }
+        public Button(MainGame mainGame, SpriteSheet spriteSheet, string label, Vector2 position) : this(mainGame, spriteSheet, label, position, Alignment.TopLeft) { }
 
         public Button(MainGame mainGame, SpriteSheet spriteSheet, string label, Vector2 position, Alignment alignment) : base (mainGame, spriteSheet, position, alignment)
         {
@@ -97,15 +82,15 @@ namespace Sunbird.GUI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (Animator.VisibleArea().Contains(Peripherals.GetMouseWindowPosition()) && Peripherals.LeftButtonTapped() && MainGame.IsActive)
+            if (Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()) && Peripherals.LeftButtonTapped() && MainGame.IsActive)
             {
                 if (ButtonType == ButtonType.Default)
                 {
-                    OnClicked();               
+                    OnClicked();
                     IsPressed = true;
                     Timer.OnCompleted = () => 
                     { 
-                        Animator.SwitchAnimation(ReleasedArgs);
+                        ReconfigureAnimator(ReleasedArgs);
                         IsPressed = false;
                     };
                 }
@@ -134,18 +119,18 @@ namespace Sunbird.GUI
             {        
                 if (ButtonType == ButtonType.Default)
                 {
-                    Animator.SwitchAnimation(PressedArgs);
+                    ReconfigureAnimator(PressedArgs);
                     Timer.WaitForMilliseconds(gameTime, 100);                  
                 }
                 else 
                 {
-                    Animator.SwitchAnimation(PressedArgs);
+                    ReconfigureAnimator(PressedArgs);
                 }
 
             }
             else
             {
-                Animator.SwitchAnimation(ReleasedArgs);
+                ReconfigureAnimator(ReleasedArgs);
             }
         }
 
@@ -153,7 +138,7 @@ namespace Sunbird.GUI
         {
             if (!Peripherals.LeftButtonPressed())
             {
-                if (Animator.VisibleArea().Contains(Peripherals.GetMouseWindowPosition()))
+                if (Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()))
                 {
                     OnClicked();
                 }

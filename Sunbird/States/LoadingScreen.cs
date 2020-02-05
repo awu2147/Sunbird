@@ -18,30 +18,21 @@ using Sunbird.GUI;
 
 namespace Sunbird.External
 {
-    public class LoadingScreen1 : State, ILoadingScreen 
+    public class LoadingScreen: State, ILoadingScreen
     {
         public Color BackgroundColor { get; set; } = Color.CornflowerBlue;
         public Texture2D Background { get; set; }
         public List<Sprite> spriteList { get; set; } = new List<Sprite>();
         public LoadingBar LoadingBar { get; set; }
 
-        public LoadingScreen1(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
+        public LoadingScreen(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
         {
             LoadContent();
         }
 
-        private void LoadContent()
+        public virtual void LoadContent()
         {
-            BackgroundColor = new Color(51, 57, 65);
 
-            var centerIconPosition = new Vector2(MainGame.Width / 2, MainGame.Height / 2 - 60);
-            var centerIcon = new Sprite(MainGame, SpriteSheet.CreateNew(MainGame, "Temp/sunbird", 1, 1), centerIconPosition, Alignment.Center);
-            spriteList.Add(centerIcon);
-
-            var barEmpty = Content.Load<Texture2D>("Temp/bar1_empty");
-            var barFull = Content.Load<Texture2D>("Temp/bar1_full");
-            var barPosition = new Vector2(MainGame.Width / 2 , MainGame.Height / 2  + 70);
-            LoadingBar = new LoadingBar(barEmpty, barFull, barPosition, Alignment.Center);
         }
 
         public override void Update(GameTime gameTime)
@@ -68,26 +59,13 @@ namespace Sunbird.External
 
         public override void DrawShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
+
         }
 
         public override void DrawOverlay(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
-        }
-
-    }
-
-    public class LoadingScreen1_Factory : ILoadingScreenFactory
-    {
-        public LoadingScreen1_Factory()
-        {
 
         }
 
-        public ILoadingScreen CreateLoadingScreen(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
-        {
-            return new LoadingScreen1(mainGame, graphicsDevice, content) as ILoadingScreen;
-        }
     }
 }

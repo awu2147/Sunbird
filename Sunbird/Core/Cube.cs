@@ -30,9 +30,9 @@ namespace Sunbird.Core
         {
             // Do not call base here.
             Animator.LoadContent(mainGame, graphicsDevice, content);
-            Animator.Sender = this;
+            Animator.Owner = this;
             AnimatorBase.LoadContent(mainGame, graphicsDevice, content);
-            AnimatorBase.Sender = this;
+            AnimatorBase.Owner = this;
             Shadow = content.Load<Texture2D>(ShadowPath);
             AntiShadow = content.Load<Texture2D>(AntiShadowPath);
         }
@@ -158,10 +158,10 @@ namespace Sunbird.Core
 
             // Create cube top animator.
             var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
-            cube.Animator = new Animator(spriteSheet, cube, cubeMD.StartFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
+            cube.Animator = new Animator(cube, spriteSheet, cubeMD.StartFrame, cubeMD.CurrentFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
             if (IsRandomTop == true)
             {
-                cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FrameCount);
+                cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FramesInLoop);
             }
             else
             {
@@ -170,10 +170,10 @@ namespace Sunbird.Core
 
             // Create cube base animator.
             var spriteSheetBase = SpriteSheet.CreateNew(mainGame, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
-            cube.AnimatorBase = new Animator(spriteSheetBase, cube, cubeBaseMD.StartFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);
+            cube.AnimatorBase = new Animator(cube, spriteSheetBase, cubeBaseMD.StartFrame, cubeBaseMD.CurrentFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);
             if (IsRandomBottom == true)
             {
-                cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FrameCount);
+                cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FramesInLoop);
             }
             else
             {

@@ -26,7 +26,6 @@ namespace Sunbird.Core
         /// </summary>
         public HashSet<Coord> OccupiedCoords { get; set; } = new HashSet<Coord>();
 
-
         /// <summary>
         /// Add to list if coord unoccupied.
         /// </summary>

@@ -33,10 +33,7 @@ namespace Sunbird.External
 
         public int WorldZoom { get; set; } = 3;
 
-        public Config()
-        {
-
-        }
+        public Config() { }
 
         public Config(MainGame mainGame)
         {

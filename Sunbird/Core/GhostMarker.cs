@@ -39,6 +39,8 @@ namespace Sunbird.Core
         {
             Serializer.WriteXML<Sprite>(image, "DynamicCache.xml", new Type[] { typeof(Cube) });
             Image = Serializer.ReadXML<Sprite>("DynamicCache.xml", new Type[] { typeof(Cube) });
+            Image.IsHidden = IsHidden;
+            Image.Position = Position;
             Image.LoadContent(mainGame, graphicsDevice, content);
         }
 
@@ -50,7 +52,7 @@ namespace Sunbird.Core
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
+            base.Update(gameTime); // This is not really needed since animator position now updated through getter, and animstate is none.
             Image.IsHidden = IsHidden;
             Image.Position = Position;
             Image.Update(gameTime);

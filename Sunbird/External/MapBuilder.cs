@@ -68,8 +68,8 @@ namespace Sunbird.External
             LayerMap.Add(Altitude, new SpriteList<Sprite>());
 
             var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
-            var playerAnimator = new Animator(playerSheet, null, 0, 1, 0.2f, AnimationState.Loop);
-            Player = new Player(MainGame, playerAnimator) { DrawPriority = 1 };
+            var playerAnimArgs = new AnimArgs(0, 1, 0.2f, AnimationState.Loop);
+            Player = new Player(MainGame, playerSheet, playerAnimArgs) { DrawPriority = 1 };
             LayerMap[Altitude].Add(Player);
 
             CreateOverlay();
@@ -371,7 +371,7 @@ namespace Sunbird.External
                 // Check if cursor on Overlay sprite.
                 foreach (var sprite in Overlay)
                 {
-                    if (sprite.Animator.VisibleArea().Contains(Peripherals.GetMouseWindowPosition()))
+                    if (sprite.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()))
                     {
                         InFocus = false;
                         break;
@@ -657,7 +657,7 @@ namespace Sunbird.External
                             }
                             else
                             {
-                                spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.ViewRectangle(), Color.White);
+                                spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                             }
                         }
                         foreach (var higherSprite in ShadowDict[sprite.Coords])
@@ -666,7 +666,7 @@ namespace Sunbird.External
                             {                        
                                 if (!(sprite is Cube) && sprite.SelfShadow != null)
                                 {                              
-                                    spriteBatch.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.ViewRectangle(), Color.White);
+                                    spriteBatch.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                                 }
                                 else
                                 {

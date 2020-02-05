@@ -24,7 +24,7 @@ namespace Sunbird.External
 
         private static void CreateLoadingScreenTemplates()
         {
-            LoadingScreenTemplates.Add(0, new LoadingScreen1_Factory());
+            LoadingScreenTemplates.Add(0, new SunbirdLS_Factory());
         }
 
     }

@@ -52,27 +52,23 @@ namespace Sunbird.Core
         public Texture2D SelfShadow { get; set; }
 
 
-        public Sprite()
+        public Sprite() { }
+
+        public Sprite(MainGame mainGame, SpriteSheet spriteSheet) : this(mainGame, spriteSheet, Vector2.Zero) { }
+
+        public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position) : this(mainGame, spriteSheet, position, Alignment.TopLeft, null) { }
+
+        public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment) : this(mainGame, spriteSheet, position, alignment, null) { }
+
+        public Sprite(MainGame mainGame, SpriteSheet spriteSheet, AnimArgs animArgs) : this(mainGame, spriteSheet, Vector2.Zero, Alignment.TopLeft, animArgs) { }
+
+        public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment, AnimArgs animArgs)
         {
-
-        }
-
-        public Sprite(MainGame mainGame, SpriteSheet spriteSheet)
-        {          
-            Animator = new Animator(spriteSheet, this);
-            GenerateShadowTextures(mainGame, Animator);
-        }
-
-        public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position)
-        {          
-            Animator = new Animator(spriteSheet, this);
-            GenerateShadowTextures(mainGame, Animator);
-            Position = position;
-        }
-
-        public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment)
-        {
-            Animator = new Animator(spriteSheet, this);
+            Animator = new Animator(this, spriteSheet);
+            if (animArgs != null)
+            {
+                ReconfigureAnimator(animArgs);
+            }
             GenerateShadowTextures(mainGame, Animator);
             if (alignment == Alignment.TopLeft)
             {
@@ -96,31 +92,14 @@ namespace Sunbird.Core
             }
         }
 
-        public Sprite(MainGame mainGame, SpriteSheet spriteSheet, int startFrame, int frameCount, float frameSpeed, AnimationState animState)
-        {
-            Animator = new Animator(spriteSheet, this, startFrame, frameCount, frameSpeed, animState);
-            GenerateShadowTextures(mainGame, Animator);
-        }
-
-        /// <summary>
-        /// Generate AntiShadow and SelfShadow textures (This requires the base Animator to be instantiated).
-        /// </summary>
-        /// <param name="mainGame"></param>
-        public void GenerateShadowTextures(MainGame mainGame, Animator animator)
-        {
-            AntiShadow = GetAntiShadow(mainGame, animator);
-            SelfShadow = GetShadow(mainGame, animator);
-        }
-
         public virtual void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
-        {          
+        {
             if (Animator != null)
             {
                 Animator.LoadContent(mainGame, graphicsDevice, content);
-                Animator.Sender = this;
+                Animator.Owner = this;
+                GenerateShadowTextures(mainGame, Animator);
             }
-
-            GenerateShadowTextures(mainGame, Animator);
 
             if (ShadowPath != null)
             {
@@ -130,6 +109,16 @@ namespace Sunbird.Core
             {
                 AntiShadow = content.Load<Texture2D>(AntiShadowPath);
             }
+        }
+
+        /// <summary>
+        /// Generate AntiShadow and SelfShadow textures from an Animator.
+        /// </summary>
+        /// <param name="mainGame"></param>
+        public void GenerateShadowTextures(MainGame mainGame, Animator animator)
+        {
+            AntiShadow = GetAntiShadow(mainGame, animator);
+            SelfShadow = GetShadow(mainGame, animator);
         }
 
         /// <summary>
@@ -152,19 +141,35 @@ namespace Sunbird.Core
         }
 
         /// <summary>
-        /// Reconfigure the default Sprite Animator (SINGLE STATIC FRAME).
+        /// Reconfigure the default Sprite Animator using Current frame = Start frame.
         /// </summary>
-        public void ReconfigureAnimator()
+        public void ReconfigureAnimator(int startFrame, int frameCount, float frameSpeed, AnimationState animState)
         {
-            ReconfigureAnimator(0, 0, 1, 0.133f, AnimationState.None);
+            ReconfigureAnimator(startFrame, startFrame, frameCount, frameSpeed, animState, Animator);
         }
 
         /// <summary>
-        /// Reconfigure the default Sprite Animator.
+        /// Reconfigure the default Sprite Animator. 
+        /// </summary>
+        public void ReconfigureAnimator(AnimArgs args)
+        {
+            ReconfigureAnimator(args.StartFrame, args.CurrentFrame, args.FramesInLoop, args.FrameSpeed, args.AnimState);
+        }
+
+        /// <summary>
+        /// Reconfigure the default Sprite Animator. 
         /// </summary>
         public void ReconfigureAnimator(int startFrame, int currentFrame, int frameCount, float frameSpeed, AnimationState animState)
         {
             ReconfigureAnimator(startFrame, currentFrame, frameCount, frameSpeed, animState, Animator);
+        }
+
+        /// <summary>
+        /// Reconfigure the specified Animator using Current frame = Start frame.
+        /// </summary>
+        public void ReconfigureAnimator(int startFrame, int frameCount, float frameSpeed, AnimationState animState, Animator animator)
+        {
+            ReconfigureAnimator(startFrame, startFrame, frameCount, frameSpeed, animState, animator);
         }
 
         /// <summary>
@@ -174,33 +179,33 @@ namespace Sunbird.Core
         {
             animator.StartFrame = startFrame;
             animator.CurrentFrame = currentFrame;
-            animator.FrameCount = frameCount;
+            animator.FrameCounter = currentFrame - startFrame;
+            animator.FramesInLoop = frameCount;
             animator.FrameSpeed = frameSpeed;
             animator.AnimState = animState;
+            animator.Timer.Reset();
         }
 
         private Texture2D GetMask(MainGame mainGame, Animator animator, Color color)
         {
-            if (animator != null)
+            var totalPixels = animator.SpriteSheet.Texture.Width * animator.SpriteSheet.Texture.Height;
+            Color[] maskPixels = new Color[totalPixels];
+            animator.SpriteSheet.Texture.GetData(maskPixels);
+
+            #if DEBUG
+            Debug.Assert(maskPixels.Length == totalPixels);
+            #endif
+
+            for (int i = 0; i < maskPixels.Length; i++)
             {
-                var totalPixels = animator.SpriteSheet.Texture.Width * animator.SpriteSheet.Texture.Height;
-                Color[] antiShadowPixels = new Color[totalPixels];
-                animator.SpriteSheet.Texture.GetData<Color>(antiShadowPixels);
-                for (int i = 0; i < antiShadowPixels.Length; i++)
+                if (maskPixels[i].A != 0)
                 {
-                    if (antiShadowPixels[i].A != 0)
-                    {
-                        antiShadowPixels[i] = color;
-                    }
+                    maskPixels[i] = color;
                 }
-                var antiShadow = new Texture2D(mainGame.GraphicsDevice, animator.SpriteSheet.Texture.Width, animator.SpriteSheet.Texture.Height);
-                antiShadow.SetData(antiShadowPixels);
-                return antiShadow;
             }
-            else
-            {
-                return null;
-            }
+            var mask = new Texture2D(mainGame.GraphicsDevice, animator.SpriteSheet.Texture.Width, animator.SpriteSheet.Texture.Height);
+            mask.SetData(maskPixels);
+            return mask;
         }
 
         public Texture2D GetAntiShadow(MainGame mainGame, Animator animator)
