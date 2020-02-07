@@ -18,6 +18,7 @@ namespace Sunbird.States
         protected ContentManager Content { get; set; }
         protected GraphicsDevice GraphicsDevice { get; set; }
         protected MainGame MainGame { get; set; }
+        public Color CurrentLightingColor { get; set; } = Color.Black;
 
         /// <summary>
         /// Only used for serialization.
@@ -37,6 +38,8 @@ namespace Sunbird.States
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
         public abstract void DrawShadow(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void DrawLighting(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void DrawLightingStencil(GameTime gameTime, SpriteBatch spriteBatch);
         public abstract void DrawOverlay(GameTime gameTime, SpriteBatch spriteBatch);
 
     }

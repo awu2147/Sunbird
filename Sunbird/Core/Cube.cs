@@ -159,7 +159,7 @@ namespace Sunbird.Core
             // Create cube top animator.
             var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
             cube.Animator = new Animator(cube, spriteSheet, cubeMD.StartFrame, cubeMD.CurrentFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
-            if (IsRandomTop == true)
+            if (IsRandomTop == true && cubeMD.AnimState == AnimationState.None)
             {
                 cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FramesInLoop);
             }
@@ -171,7 +171,7 @@ namespace Sunbird.Core
             // Create cube base animator.
             var spriteSheetBase = SpriteSheet.CreateNew(mainGame, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
             cube.AnimatorBase = new Animator(cube, spriteSheetBase, cubeBaseMD.StartFrame, cubeBaseMD.CurrentFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);
-            if (IsRandomBottom == true)
+            if (IsRandomBottom == true && cubeBaseMD.AnimState == AnimationState.None)
             {
                 cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FramesInLoop);
             }

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Temp/LightStoneCubeTop</Path>
+    <Path>Temp/LavaCubeTop</Path>
     <SheetRows>1</SheetRows>
+    <SheetColumns>2</SheetColumns>
+    <StartFrame>0</StartFrame>
+    <CurrentFrame>0</CurrentFrame>
+    <FrameCount>2</FrameCount>
+    <FrameSpeed>1.333</FrameSpeed>
+    <AnimState>Loop</AnimState>
+  </CurrentCubeMetaData>
+  <CurrentCubeBaseMetaData>
+    <Path>Temp/LavaCubeBase</Path>
+    <SheetRows>4</SheetRows>
     <SheetColumns>3</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>3</FrameCount>
+    <FrameCount>11</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
-  </CurrentCubeMetaData>
-  <CurrentCubeBaseMetaData>
-    <Path>Temp/LightStoneCubeBase</Path>
-    <SheetRows>1</SheetRows>
-    <SheetColumns>1</SheetColumns>
-    <StartFrame>0</StartFrame>
-    <CurrentFrame>0</CurrentFrame>
-    <FrameCount>1</FrameCount>
-    <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
+    <AnimState>Loop</AnimState>
   </CurrentCubeBaseMetaData>
   <IsRandomTop>false</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
-  <CurrentIndex>2</CurrentIndex>
-  <CurrentBaseIndex>3</CurrentBaseIndex>
+  <CurrentIndex>4</CurrentIndex>
+  <CurrentBaseIndex>5</CurrentBaseIndex>
   <CubeMetaDataLibrary>
     <item>
       <key>
@@ -86,10 +86,27 @@
           <SheetRows>1</SheetRows>
           <SheetColumns>11</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>8</CurrentFrame>
+          <CurrentFrame>0</CurrentFrame>
           <FrameCount>11</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>4</int>
+      </key>
+      <value>
+        <CubeMetaData>
+          <Path>Temp/LavaCubeTop</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>2</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>2</FrameCount>
+          <FrameSpeed>1.333</FrameSpeed>
+          <AnimState>Loop</AnimState>
         </CubeMetaData>
       </value>
     </item>
@@ -177,6 +194,23 @@
           <FrameCount>1</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>
+        </CubeBaseMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>5</int>
+      </key>
+      <value>
+        <CubeBaseMetaData>
+          <Path>Temp/LavaCubeBase</Path>
+          <SheetRows>4</SheetRows>
+          <SheetColumns>3</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>11</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>Loop</AnimState>
         </CubeBaseMetaData>
       </value>
     </item>

@@ -212,6 +212,18 @@
 /processorParam:TextureFormat=Color
 /build:Temp/GridAxisGlyph.png
 
+#begin Temp/LavaCubeBase.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/LavaCubeBase.png
+
 #begin Temp/LavaCubeSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -223,6 +235,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Temp/LavaCubeSheet.png
+
+#begin Temp/LavaCubeTop.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/LavaCubeTop.png
 
 #begin Temp/LeftArrowMinusBN_Brown.png
 /importer:TextureImporter
@@ -295,6 +319,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Temp/PirateGirlSheet.png
+
+#begin Temp/PlayerLight.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/PlayerLight.png
 
 #begin Temp/RandBN.png
 /importer:TextureImporter

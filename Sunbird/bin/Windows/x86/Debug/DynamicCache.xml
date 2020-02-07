@@ -2,19 +2,19 @@
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Cube">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Temp/LightStoneCubeTop</TexturePath>
+      <TexturePath>Temp/LavaCubeTop</TexturePath>
       <Rows>1</Rows>
-      <Columns>3</Columns>
+      <Columns>2</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FramesInLoop>3</FramesInLoop>
-    <FrameCounter>2</FrameCounter>
-    <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
+    <FramesInLoop>2</FramesInLoop>
+    <FrameCounter>0</FrameCounter>
+    <FrameSpeed>1.333</FrameSpeed>
+    <AnimState>Loop</AnimState>
     <Timer>
-      <TotalElapsedTime>0</TotalElapsedTime>
-      <IsDone>true</IsDone>
+      <TotalElapsedTime>1.05000234</TotalElapsedTime>
+      <IsDone>false</IsDone>
     </Timer>
   </Animator>
   <Alpha>1</Alpha>
@@ -37,16 +37,16 @@
   <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
   <AnimatorBase>
     <SpriteSheet>
-      <TexturePath>Temp/LightStoneCubeBase</TexturePath>
-      <Rows>1</Rows>
-      <Columns>1</Columns>
+      <TexturePath>Temp/LavaCubeBase</TexturePath>
+      <Rows>4</Rows>
+      <Columns>3</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FramesInLoop>1</FramesInLoop>
+    <FramesInLoop>11</FramesInLoop>
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
+    <AnimState>Loop</AnimState>
     <Timer>
       <TotalElapsedTime>0</TotalElapsedTime>
       <IsDone>true</IsDone>

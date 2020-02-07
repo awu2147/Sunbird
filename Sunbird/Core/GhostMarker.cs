@@ -52,10 +52,11 @@ namespace Sunbird.Core
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime); // This is not really needed since animator position now updated through getter, and animstate is none.
+            //base.Update(gameTime); // This is not really needed since animator position now updated through getter, and animstate is none.
+            Image.Update(gameTime);
             Image.IsHidden = IsHidden;
             Image.Position = Position;
-            Image.Update(gameTime);
+            //Image.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

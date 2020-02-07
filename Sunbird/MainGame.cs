@@ -38,6 +38,12 @@ namespace Sunbird
         public Texture2D LightingRender { get; set; }
         public RenderTarget2D LightingRenderTarget { get; set; }
 
+        public Texture2D LightingStencilRender { get; set; }
+        public RenderTarget2D LightingStencilRenderTarget { get; set; }
+
+        public Texture2D LightingCompRender { get; set; }
+        public RenderTarget2D LightingCompRenderTarget { get; set; }
+
         public Texture2D ShadowRender { get; set; }
         public RenderTarget2D ShadowRenderTarget { get; set; }
 
@@ -53,6 +59,7 @@ namespace Sunbird
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            IsFixedTimeStep = true;
 
             if (CleanLoad == true)
             {
@@ -62,6 +69,7 @@ namespace Sunbird
             {
                 Config = Serializer.ReadXML<Config>("Config.xml");
                 Config.LoadContent(this);
+                World.ReconstructTopFaceArea();
             }
 
             Graphics.PreferredBackBufferWidth = Config.WindowWidth;
@@ -90,6 +98,7 @@ namespace Sunbird
                     {1, new CubeMetaData(){Path = "Temp/DirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None} },
                     {2, new CubeMetaData(){Path = "Temp/LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
                     {3, new CubeMetaData(){Path = "Temp/WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None} },
+                    {4, new CubeMetaData(){Path = "Temp/LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f} },
                 };
                 CubeFactory.CubeBaseMetaDataLibrary = new XDictionary<int, CubeBaseMetaData>()
                 {
@@ -98,6 +107,7 @@ namespace Sunbird
                     {2, new CubeBaseMetaData(){Path = "Temp/DirtCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
                     {3, new CubeBaseMetaData(){Path = "Temp/LightStoneCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
                     {4, new CubeBaseMetaData(){Path = "Temp/WaterCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
+                    {5, new CubeBaseMetaData(){Path = "Temp/LavaCubeBase", SheetRows = 4, SheetColumns = 3, FrameCount = 11, AnimState = AnimationState.Loop, } },
                 };
                 // There should be at least one cube in the library.
                 CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
@@ -109,21 +119,10 @@ namespace Sunbird
                 cubeFactoryData.SyncOut();
             }
 
-            GameRenderTarget = new RenderTarget2D(
-            GraphicsDevice,
-            GraphicsDevice.PresentationParameters.BackBufferWidth,
-            GraphicsDevice.PresentationParameters.BackBufferHeight,
-            true,
-            GraphicsDevice.PresentationParameters.BackBufferFormat,
-            DepthFormat.Depth24);
-
-            ShadowRenderTarget = new RenderTarget2D(
-            GraphicsDevice,
-            GraphicsDevice.PresentationParameters.BackBufferWidth,
-            GraphicsDevice.PresentationParameters.BackBufferHeight,
-            true,
-            GraphicsDevice.PresentationParameters.BackBufferFormat,
-            DepthFormat.Depth24);
+            GameRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
+            ShadowRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
+            LightingRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
+            LightingStencilRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
 
             Subtractive = new BlendState
             {
@@ -237,14 +236,45 @@ namespace Sunbird
             GraphicsDevice.SetRenderTarget(null);
             ShadowRender = ShadowRenderTarget;
 
+            // Lighting Render
+            GraphicsDevice.SetRenderTarget(LightingRenderTarget); 
+
+            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+
+            CurrentState.DrawLighting(gameTime, SpriteBatch);
+
+            SpriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            LightingRender = LightingRenderTarget;
+
+            // Lighting Stencil Render
+            GraphicsDevice.SetRenderTarget(LightingStencilRenderTarget);
+
+            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+
+            CurrentState.DrawLightingStencil(gameTime, SpriteBatch);
+
+            SpriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            LightingStencilRender = LightingStencilRenderTarget;
+
+            GraphicsHelper.ApplyStencil(LightingRender, LightingStencilRender, CurrentState.CurrentLightingColor);
+
             // Game Render Texture
             SpriteBatch.Begin();
             SpriteBatch.Draw(GameRender, Vector2.Zero, Color.White);
             SpriteBatch.End();
 
-            // Shadow Render Texture
+            // Shadow Render Texture (Subtractive)
             SpriteBatch.Begin(blendState: Subtractive);
             SpriteBatch.Draw(ShadowRender, Vector2.Zero, Color.White);
+            SpriteBatch.End();
+
+            // Lighting Render Texture (Subtractive)
+            SpriteBatch.Begin(blendState: Subtractive);
+            SpriteBatch.Draw(LightingRender, Vector2.Zero, Color.White);
             SpriteBatch.End();
 
             // Overlay batch

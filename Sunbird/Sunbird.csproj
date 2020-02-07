@@ -46,7 +46,7 @@
     <Compile Include="Core\Coord.cs" />
     <Compile Include="Core\Cube.cs" />
     <Compile Include="Core\GhostMarker.cs" />
-    <Compile Include="Core\Globals.cs" />
+    <Compile Include="Core\GraphicsHelper.cs" />
     <Compile Include="Core\IConfig.cs" />
     <Compile Include="Core\IWorld.cs" />
     <Compile Include="Core\Peripherals.cs" />

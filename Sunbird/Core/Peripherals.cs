@@ -52,12 +52,15 @@ namespace Sunbird.Core
             currentKeyboardState = Keyboard.GetState();
             currentPressedKeys = currentKeyboardState.GetPressedKeys();
             currentScrollWheelValue = Mouse.GetState().ScrollWheelValue;
+
+            CheckForRelease();
+            CheckForScroll();
         }
 
         public static void PostUpdate()
         {
-            CheckForRelease();
-            CheckForScroll();
+            //CheckForRelease();
+            //CheckForScroll();
 
             previousMouseState = currentMouseState;
             previousKeyboardState = currentKeyboardState;

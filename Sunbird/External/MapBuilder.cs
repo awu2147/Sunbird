@@ -70,6 +70,8 @@ namespace Sunbird.External
             var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
             var playerAnimArgs = new AnimArgs(0, 1, 0.2f, AnimationState.Loop);
             Player = new Player(MainGame, playerSheet, playerAnimArgs) { DrawPriority = 1 };
+            Player.Light = Content.Load<Texture2D>("Temp/PlayerLight");
+            Player.LightPath = "Temp/PlayerLight";
             LayerMap[Altitude].Add(Player);
 
             CreateOverlay();
@@ -311,6 +313,7 @@ namespace Sunbird.External
             MainGame.Exiting += MainGame_Exiting;
         }
 
+        // Should these events be state specific?
         private void Peripherals_ScrollWheelDown(object sender, EventArgs e)
         {
             if (MainGame.IsActive == true)
@@ -347,7 +350,7 @@ namespace Sunbird.External
                     if (MainGame.Camera.CurrentMode == CameraMode.Drag)
                     {
                         MainGame.Camera.DragTransform = MainGame.Camera.CreateDragTransform();
-                    }
+                    }                 
                 }
                 else if (!Peripherals.KeyPressed(Keys.LeftControl) && Authorization == Authorization.Builder)
                 {
@@ -388,6 +391,11 @@ namespace Sunbird.External
                     var i = (int)Authorization + 1;
                     if (i >= Enum.GetNames(typeof(Authorization)).Length) { i = 0; }
                     Authorization = (Authorization)(i);
+                }
+
+                if (Peripherals.KeyTapped(Keys.E))
+                {
+                    CurrentLightingColor = CurrentLightingColor == Color.Black ? Color.LightGray : Color.Black;
                 }
 
                 if (Authorization == Authorization.Builder)
@@ -503,7 +511,7 @@ namespace Sunbird.External
                     sprite.Update(gameTime);
                 }
 
-                #if DEBUG  
+#if DEBUG  
                 foreach (var layer in LayerMap)
                 {
                     var l = new HashSet<Coord>();
@@ -517,7 +525,7 @@ namespace Sunbird.External
                     Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != coords of cubes in sprite list, is this correct?");
                 }
                 Debug.Assert(GhostMarker.Altitude == Altitude);
-                #endif
+#endif
             }
         }
 
@@ -536,7 +544,6 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
-
                 var dLayerMap = new Dictionary<int, List<Sprite>>();
 
                 foreach (var layer in LayerMap)
@@ -587,7 +594,6 @@ namespace Sunbird.External
                         }
                     }
                 }
-
             }
         }
 
@@ -674,6 +680,47 @@ namespace Sunbird.External
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        public override void DrawLighting(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            GraphicsDevice.Clear(CurrentLightingColor);
+            var AltitudeList = LayerMap.Keys.ToList();
+            AltitudeList.Sort();
+
+            foreach (var altitude in AltitudeList)
+            {
+                foreach (var sprite in LayerMap[altitude])
+                {
+                    if (sprite.Light != null)
+                    {
+                        spriteBatch.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White);
+                    }
+                }
+            }
+        }
+
+        public override void DrawLightingStencil(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            GraphicsDevice.Clear(CurrentLightingColor);
+
+            var AltitudeList = LayerMap.Keys.ToList();
+            AltitudeList.Sort();
+
+            foreach (var altitude in AltitudeList)
+            {
+                foreach (var sprite in LayerMap[altitude])
+                {
+                    if (!(sprite is Cube))
+                    {
+                        spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
                     }
                 }
             }

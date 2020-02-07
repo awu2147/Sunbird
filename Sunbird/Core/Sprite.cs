@@ -41,6 +41,10 @@ namespace Sunbird.Core
         public bool IsHidden { get; set; }
 
         [XmlIgnore]
+        public Texture2D Light { get; set; }
+        public string LightPath { get; set; }
+
+        [XmlIgnore]
         public Texture2D Shadow { get; set; }
         public string ShadowPath { get; set; }
 
@@ -109,6 +113,10 @@ namespace Sunbird.Core
             {
                 AntiShadow = content.Load<Texture2D>(AntiShadowPath);
             }
+            if (LightPath != null)
+            {
+                Light = content.Load<Texture2D>(LightPath);
+            }
         }
 
         /// <summary>
@@ -117,8 +125,8 @@ namespace Sunbird.Core
         /// <param name="mainGame"></param>
         public void GenerateShadowTextures(MainGame mainGame, Animator animator)
         {
-            AntiShadow = GetAntiShadow(mainGame, animator);
-            SelfShadow = GetShadow(mainGame, animator);
+            AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, animator);
+            SelfShadow = GraphicsHelper.GetShadow(mainGame, animator);
         }
 
         /// <summary>
@@ -184,38 +192,6 @@ namespace Sunbird.Core
             animator.FrameSpeed = frameSpeed;
             animator.AnimState = animState;
             animator.Timer.Reset();
-        }
-
-        private Texture2D GetMask(MainGame mainGame, Animator animator, Color color)
-        {
-            var totalPixels = animator.SpriteSheet.Texture.Width * animator.SpriteSheet.Texture.Height;
-            Color[] maskPixels = new Color[totalPixels];
-            animator.SpriteSheet.Texture.GetData(maskPixels);
-
-            #if DEBUG
-            Debug.Assert(maskPixels.Length == totalPixels);
-            #endif
-
-            for (int i = 0; i < maskPixels.Length; i++)
-            {
-                if (maskPixels[i].A != 0)
-                {
-                    maskPixels[i] = color;
-                }
-            }
-            var mask = new Texture2D(mainGame.GraphicsDevice, animator.SpriteSheet.Texture.Width, animator.SpriteSheet.Texture.Height);
-            mask.SetData(maskPixels);
-            return mask;
-        }
-
-        public Texture2D GetAntiShadow(MainGame mainGame, Animator animator)
-        {
-            return GetMask(mainGame, animator, Color.Black);
-        }
-
-        public Texture2D GetShadow(MainGame mainGame, Animator animator)
-        {
-            return GetMask(mainGame, animator, new Color(109, 117, 141));
         }
 
         public virtual void Update(GameTime gameTime)
