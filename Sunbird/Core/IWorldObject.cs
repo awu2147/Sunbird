@@ -15,12 +15,11 @@ using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
+using Sunbird.Serialization;
 
 namespace Sunbird.Core
 {
-    public interface IWorld
+    public interface IWorldObject
     {
-        int Altitude { get; set; }
-
     }
 }

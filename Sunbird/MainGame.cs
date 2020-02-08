@@ -113,17 +113,20 @@ namespace Sunbird
                 CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
                 CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];
 
-                MultiCubeFactory.MultiCubeMetaDataLibrary = new XDictionary<int, MultiCubeMetaData>()
+                DecoFactory.DecoMetaDataLibrary = new XDictionary<int, DecoMetaData>()
                 {
-                    {0, new MultiCubeMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                    {0, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3) } },
                 };
-                MultiCubeFactory.CurrentMultiCubeMetaData = MultiCubeFactory.MultiCubeMetaDataLibrary[0];
+                DecoFactory.CurrentDecoMetaData = DecoFactory.DecoMetaDataLibrary[0];
             }
             else
             {
                 CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml", new Type[] { typeof(CubeMetaData), typeof(CubeBaseMetaData) });
                 cubeFactoryData.SyncOut();
+
+                DecoFactoryData decoFactoryData = Serializer.ReadXML<DecoFactoryData>("DecoFactoryData.xml", new Type[] { typeof(DecoMetaData) });
+                decoFactoryData.SyncOut();
             }
 
             GameRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
@@ -150,6 +153,10 @@ namespace Sunbird
             var cubeFactoryData = new CubeFactoryData();
             cubeFactoryData.SyncIn();
             cubeFactoryData.Serialize();
+
+            var decoFactoryData = new DecoFactoryData();
+            decoFactoryData.SyncIn();
+            decoFactoryData.Serialize();
         }
 
         /// <summary>

@@ -60,7 +60,7 @@ namespace Sunbird.GUI
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(BarEmpty, Position, Color.White);
-            spriteBatch.Draw(BarFull, Position, new Rectangle(new Point(0, 0), new Point(3 + Progress * BarEmpty.Width / 100, BarEmpty.Height)), Color.White);
+            spriteBatch.Draw(BarFull, Position, new Rectangle(new Point(0, 0), new Point(3 + Progress * (BarEmpty.Width - 6) / 100, BarEmpty.Height)), Color.White);
         }
 
     }

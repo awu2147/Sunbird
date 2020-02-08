@@ -19,10 +19,8 @@ using Sunbird.Serialization;
 
 namespace Sunbird.Core
 {
-    public interface ICube { }
-
     [Serializable]
-    public class Cube : Sprite, ICube
+    public class Cube : Sprite, IWorldObject
     {
         public Animator AnimatorBase { get; set; }
 
@@ -43,6 +41,10 @@ namespace Sunbird.Core
         {
             Animator.Update(gameTime);
             AnimatorBase.Update(gameTime);
+#if DEBUG
+            Debug.Assert(Animator.Position == Position);
+            Debug.Assert(AnimatorBase.Position == Position);
+#endif
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

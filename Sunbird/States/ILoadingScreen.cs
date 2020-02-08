@@ -19,6 +19,10 @@ namespace Sunbird.GUI
         Texture2D Background { get; set; }
         List<Sprite> spriteList { get; set; }
         LoadingBar LoadingBar { get; set; }
+
+        void Update(GameTime gameTime);
+        void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+
     }
 
     public interface ILoadingScreenFactory

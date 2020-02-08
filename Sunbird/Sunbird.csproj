@@ -45,12 +45,12 @@
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\Coord.cs" />
     <Compile Include="Core\Dimension.cs" />
-    <Compile Include="Core\MultiCube.cs" />
+    <Compile Include="Core\Deco.cs" />
     <Compile Include="Core\Cube.cs" />
     <Compile Include="Core\GhostMarker.cs" />
     <Compile Include="Core\GraphicsHelper.cs" />
     <Compile Include="Core\IConfig.cs" />
-    <Compile Include="Core\IWorld.cs" />
+    <Compile Include="Core\IWorldObject.cs" />
     <Compile Include="Core\Peripherals.cs" />
     <Compile Include="Core\Sprite.cs" />
     <Compile Include="Core\SpriteList.cs" />
@@ -81,6 +81,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />

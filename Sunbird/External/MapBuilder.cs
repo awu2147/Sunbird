@@ -20,6 +20,7 @@ using Sunbird.Controllers;
 using Sunbird.Serialization;
 using Sunbird.GUI;
 using Microsoft.Win32;
+using System.Windows.Threading;
 
 namespace Sunbird.External
 {
@@ -29,7 +30,7 @@ namespace Sunbird.External
         Builder
     }
 
-    public class MapBuilder : State, IWorld
+    public class MapBuilder : State
     {
         public XDictionary<int, SpriteList<Sprite>> LayerMap { get; set; } = new XDictionary<int, SpriteList<Sprite>>();
         public List<Sprite> Overlay { get; set; } = new List<Sprite>();
@@ -171,14 +172,14 @@ namespace Sunbird.External
         private void PRBN4_Clicked(object sender, ButtonClickedEventArgs e)
         {
             CubeFactory.CurrentCubeBaseMetaData.NextFrame();
-            CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeBaseMetaData.CurrentFrame;
+            CubePreview.AnimatorBase.CurrentFrame = CubeFactory.CurrentCubeBaseMetaData.CurrentFrame;
             GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
         }
 
         private void PLBN4_Clicked(object sender, ButtonClickedEventArgs e)
         {
             CubeFactory.CurrentCubeBaseMetaData.PreviousFrame();
-            CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeBaseMetaData.CurrentFrame;
+            CubePreview.AnimatorBase.CurrentFrame = CubeFactory.CurrentCubeBaseMetaData.CurrentFrame;
             GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
         }
 
@@ -271,10 +272,11 @@ namespace Sunbird.External
 
             for (int i = 0; i < 25; i++)
             {
-                Thread.Sleep(20);
+                Thread.Sleep(15);
                 currentState.LoadingBar.Progress += 2;
             }
 
+            // Most time is spent here...
             var XmlData = Serializer.ReadXML<MapBuilder>("MapBuilderSave.xml", new Type[] { typeof(Player), typeof(Cube), typeof(GhostMarker), typeof(Button) });
 
             Altitude = XmlData.Altitude;
@@ -292,18 +294,18 @@ namespace Sunbird.External
                     else if (sprite is GhostMarker)
                     {
                         GhostMarker = sprite as GhostMarker;
-                    }
+                    }                  
                     sprite.LoadContent(MainGame, GraphicsDevice, Content);
                 }
             }
 
-            CreateOverlay();      
-
             for (int i = 0; i < 25; i++)
             {
-                Thread.Sleep(20);
+                Thread.Sleep(15);
                 currentState.LoadingBar.Progress += 2;
             }
+
+            CreateOverlay();  
 
             IsLoading = false;
             MainGame.CurrentState = this;
@@ -403,7 +405,7 @@ namespace Sunbird.External
                     if (Peripherals.LeftButtonPressed() && MainGame.IsActive && InFocus)
                     {
                         var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                        LayerMap[Altitude].AddCheck(cube);
+                        LayerMap[Altitude].AddCheck(cube, Altitude);
                     }
 
                     if (Peripherals.RightButtonPressed() && MainGame.IsActive && InFocus)
@@ -413,15 +415,15 @@ namespace Sunbird.External
                             var sprite = LayerMap[Altitude][i];
                             if (sprite is Cube && sprite.Coords == relativeTopFaceCoords)
                             {
-                                LayerMap[Altitude].RemoveCheck(sprite); i--;
+                                LayerMap[Altitude].RemoveCheck(sprite, Altitude); i--;
                             }
                         }
                     }
 
                     if (Peripherals.KeyTapped(Keys.T) && MainGame.IsActive && InFocus)
                     {
-                        var multiCube = MultiCubeFactory.CreateCurrentMultiCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                        LayerMap[Altitude].AddCheckMulti(multiCube, Altitude);
+                        var multiCube = DecoFactory.CreateCurrentDeco(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                        LayerMap[Altitude].AddCheck(multiCube, Altitude);
                     }
 
                     if (Peripherals.KeyTapped(Keys.Y) && MainGame.IsActive && InFocus)
@@ -429,12 +431,12 @@ namespace Sunbird.External
                         for (int i = 0; i < LayerMap[Altitude].Count(); i++)
                         {
                             var sprite = LayerMap[Altitude][i];
-                            if (sprite is MultiCube)
+                            if (sprite is Deco)
                             {
-                                var mc = sprite as MultiCube;
+                                var mc = sprite as Deco;
                                 if (mc.OccupiedCoords[Altitude].Contains(relativeTopFaceCoords))
                                 {
-                                    LayerMap[Altitude].RemoveCheckMulti(sprite, Altitude); i--;
+                                    LayerMap[Altitude].RemoveCheck(sprite, Altitude); i--;
                                 }
                             }
                         }
@@ -534,18 +536,26 @@ namespace Sunbird.External
                 }
 
 #if DEBUG  
-                //foreach (var layer in LayerMap)
-                //{
-                //    var l = new HashSet<Coord>();
-                //    foreach (var sprite in layer.Value)
-                //    {
-                //        if (sprite is Cube)
-                //        {
-                //            l.Add(sprite.Coords);
-                //        }
-                //    }
-                //    Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != coords of cubes in sprite list, is this correct?");
-                //}
+                foreach (var layer in LayerMap)
+                {
+                    var l = new HashSet<Coord>();
+                    foreach (var sprite in layer.Value)
+                    {
+                        if (sprite is Cube)
+                        {
+                            l.Add(sprite.Coords);
+                        }
+                        else if (sprite is Deco)
+                        {
+                            var d = sprite as Deco;
+                            foreach (var coord in d.OccupiedCoords[layer.Key])
+                            {
+                                l.Add(coord);
+                            }
+                        }
+                    }
+                    Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != (occupied) coords of cubes and decos in sprite list, is this correct?");
+                }
                 Debug.Assert(GhostMarker.Altitude == Altitude);
 #endif
             }
@@ -600,12 +610,12 @@ namespace Sunbird.External
 
                     foreach (var sprite in dLayerMap[dAltitude])
                     {
-                        if (Altitude != dAltitude && sprite is ICube && Authorization == Authorization.Builder)
+                        if (Altitude != dAltitude && sprite is IWorldObject && Authorization == Authorization.Builder)
                         {
                             sprite.Alpha = 0.1f;
                             sprite.Draw(gameTime, spriteBatch);
                         }
-                        else if ((Altitude == dAltitude || Authorization == Authorization.None) && sprite is ICube)
+                        else if ((Altitude == dAltitude || Authorization == Authorization.None) && sprite is IWorldObject)
                         {
                             sprite.Alpha = 1f;
                             sprite.Draw(gameTime, spriteBatch);
@@ -623,7 +633,8 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
-                Dictionary<Coord, List<Sprite>> ShadowDict = new Dictionary<Coord, List<Sprite>>();
+                // Create ascending column view of sprites keyed by coord.
+                var ShadowDict = new Dictionary<Coord, List<Sprite>>();
 
                 var AltitudeList = LayerMap.Keys.ToList();
                 AltitudeList.Sort();
@@ -643,6 +654,7 @@ namespace Sunbird.External
                     }
                 }
 
+                // Recreate LayerMap based on DrawAltitude instead of Altitude. (Can we remove this in the future?)
                 var dLayerMap = new Dictionary<int, List<Sprite>>();
 
                 foreach (var layer in LayerMap)
@@ -681,24 +693,29 @@ namespace Sunbird.External
                         {
                             if (sprite is Cube)
                             {
+                                // Special case because number of frames can vary but AntiShadow remains the same.
                                 spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
                             }
                             else
                             {
+                                // Sprites here have AntiShadow generated automatically for entire sheet so use SheetViewArea() to retrieve view rectangle.
                                 spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                             }
                         }
                         foreach (var higherSprite in ShadowDict[sprite.Coords])
                         {
                             if (higherSprite.Altitude > sprite.Altitude && higherSprite.Shadow != null && !(sprite is GhostMarker))
-                            {                        
-                                if (!(sprite is Cube) && sprite.SelfShadow != null)
-                                {                              
-                                    spriteBatch.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                            {          
+                                if (sprite is Cube)
+                                {
+                                    // Special case, same reasoning as above.
+                                    spriteBatch.Draw(higherSprite.Shadow, sprite.Animator.Position, Color.White);
+
                                 }
                                 else
-                                {
-                                    spriteBatch.Draw(higherSprite.Shadow, sprite.Position, Color.White);
+                                {                        
+                                    // Is there ever a valid reason for SelfShadow to be null while the sprite belongs to the LayerMap?
+                                    spriteBatch.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                                 }
                             }
                         }
