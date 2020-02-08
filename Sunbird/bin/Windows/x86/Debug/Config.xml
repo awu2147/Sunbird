@@ -4,7 +4,7 @@
   <East>D</East>
   <South>S</South>
   <West>A</West>
-  <WindowWidth>800</WindowWidth>
+  <WindowWidth>1200</WindowWidth>
   <WindowHeight>800</WindowHeight>
-  <WorldZoom>3</WorldZoom>
+  <WorldZoom>2</WorldZoom>
 </Config>

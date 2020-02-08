@@ -69,7 +69,7 @@ namespace Sunbird.External
 
             var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
             var playerAnimArgs = new AnimArgs(0, 1, 0.2f, AnimationState.Loop);
-            Player = new Player(MainGame, playerSheet, playerAnimArgs) { DrawPriority = 1 };
+            Player = new Player(MainGame, playerSheet, playerAnimArgs) { DrawPriority = 0 };
             Player.Light = Content.Load<Texture2D>("Temp/PlayerLight");
             Player.LightPath = "Temp/PlayerLight";
             LayerMap[Altitude].Add(Player);
@@ -406,7 +406,7 @@ namespace Sunbird.External
                         LayerMap[Altitude].AddCheck(cube);
                     }
 
-                    if (Peripherals.MouseButtonPressed(Peripherals.currentMouseState.RightButton) && MainGame.IsActive && InFocus)
+                    if (Peripherals.RightButtonPressed() && MainGame.IsActive && InFocus)
                     {
                         for (int i = 0; i < LayerMap[Altitude].Count(); i++)
                         {
@@ -414,6 +414,28 @@ namespace Sunbird.External
                             if (sprite is Cube && sprite.Coords == relativeTopFaceCoords)
                             {
                                 LayerMap[Altitude].RemoveCheck(sprite); i--;
+                            }
+                        }
+                    }
+
+                    if (Peripherals.KeyTapped(Keys.T) && MainGame.IsActive && InFocus)
+                    {
+                        var multiCube = MultiCubeFactory.CreateCurrentMultiCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                        LayerMap[Altitude].AddCheckMulti(multiCube, Altitude);
+                    }
+
+                    if (Peripherals.KeyTapped(Keys.Y) && MainGame.IsActive && InFocus)
+                    {
+                        for (int i = 0; i < LayerMap[Altitude].Count(); i++)
+                        {
+                            var sprite = LayerMap[Altitude][i];
+                            if (sprite is MultiCube)
+                            {
+                                var mc = sprite as MultiCube;
+                                if (mc.OccupiedCoords[Altitude].Contains(relativeTopFaceCoords))
+                                {
+                                    LayerMap[Altitude].RemoveCheckMulti(sprite, Altitude); i--;
+                                }
                             }
                         }
                     }
@@ -512,18 +534,18 @@ namespace Sunbird.External
                 }
 
 #if DEBUG  
-                foreach (var layer in LayerMap)
-                {
-                    var l = new HashSet<Coord>();
-                    foreach (var sprite in layer.Value)
-                    {
-                        if (sprite is Cube)
-                        {
-                            l.Add(sprite.Coords);
-                        }
-                    }
-                    Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != coords of cubes in sprite list, is this correct?");
-                }
+                //foreach (var layer in LayerMap)
+                //{
+                //    var l = new HashSet<Coord>();
+                //    foreach (var sprite in layer.Value)
+                //    {
+                //        if (sprite is Cube)
+                //        {
+                //            l.Add(sprite.Coords);
+                //        }
+                //    }
+                //    Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != coords of cubes in sprite list, is this correct?");
+                //}
                 Debug.Assert(GhostMarker.Altitude == Altitude);
 #endif
             }
@@ -578,12 +600,12 @@ namespace Sunbird.External
 
                     foreach (var sprite in dLayerMap[dAltitude])
                     {
-                        if (Altitude != dAltitude && sprite is Cube && Authorization == Authorization.Builder)
+                        if (Altitude != dAltitude && sprite is ICube && Authorization == Authorization.Builder)
                         {
                             sprite.Alpha = 0.1f;
                             sprite.Draw(gameTime, spriteBatch);
                         }
-                        else if ((Altitude == dAltitude || Authorization == Authorization.None) && sprite is Cube)
+                        else if ((Altitude == dAltitude || Authorization == Authorization.None) && sprite is ICube)
                         {
                             sprite.Alpha = 1f;
                             sprite.Draw(gameTime, spriteBatch);

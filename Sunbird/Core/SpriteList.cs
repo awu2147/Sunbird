@@ -40,6 +40,19 @@ namespace Sunbird.Core
             }
         }
 
+        public void AddCheckMulti(T sprite, int altitude)
+        {
+            var multiCube = sprite as MultiCube;
+            if (multiCube.OccupiedCoords[altitude].Any((x) => OccupiedCoords.Contains(x)) == false)
+            {
+                Add(sprite);
+                foreach (var coord in multiCube.OccupiedCoords[altitude])
+                {
+                    OccupiedCoords.Add(coord);
+                }
+            }
+        }
+
         /// <summary>
         /// Remove from list if coord occupied. Call this instead of Remove() where appropriate for extra safety.
         /// </summary>
@@ -54,11 +67,24 @@ namespace Sunbird.Core
             }
         }
 
+        public void RemoveCheckMulti(T sprite, int altitude)
+        {
+            var s = sprite as MultiCube;
+            if (OccupiedCoords.Contains(s.Coords))
+            {
+                Remove(sprite);
+                foreach (var coord in s.OccupiedCoords[altitude])
+                {
+                    OccupiedCoords.Remove(coord);
+                }
+            }
+        }
+
         public XmlSchema GetSchema() { return null; }
 
         public void ReadXml(XmlReader reader)
         {
-            XmlSerializer spriteSerializer = new XmlSerializer(typeof(T), new Type[] { typeof(GhostMarker), typeof(Player), typeof(Cube) });
+            XmlSerializer spriteSerializer = new XmlSerializer(typeof(T), new Type[] { typeof(GhostMarker), typeof(Player), typeof(Cube), typeof(MultiCube) });
             XmlSerializer occupiedCoordsSerializer = new XmlSerializer(typeof(HashSet<Coord>));
 
             bool wasEmpty = reader.IsEmptyElement;
@@ -91,7 +117,7 @@ namespace Sunbird.Core
 
         public void WriteXml(XmlWriter writer)
         {
-            XmlSerializer spriteSerializer = new XmlSerializer(typeof(T), new Type[] { typeof(GhostMarker), typeof(Player), typeof(Cube) });
+            XmlSerializer spriteSerializer = new XmlSerializer(typeof(T), new Type[] { typeof(GhostMarker), typeof(Player), typeof(Cube), typeof(MultiCube) });
             XmlSerializer occupiedCoordsSerializer = new XmlSerializer(typeof(HashSet<Coord>));
 
             foreach (var sprite in this)

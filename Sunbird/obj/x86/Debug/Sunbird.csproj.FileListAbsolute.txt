@@ -63,3 +63,4 @@ C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\Dirt
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\LavaCubeBase.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\LavaCubeTop.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\PlayerLight.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\House.xnb

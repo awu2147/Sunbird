@@ -112,6 +112,13 @@ namespace Sunbird
                 // There should be at least one cube in the library.
                 CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
                 CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];
+
+                MultiCubeFactory.MultiCubeMetaDataLibrary = new XDictionary<int, MultiCubeMetaData>()
+                {
+                    {0, new MultiCubeMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3) } },
+                };
+                MultiCubeFactory.CurrentMultiCubeMetaData = MultiCubeFactory.MultiCubeMetaDataLibrary[0];
             }
             else
             {

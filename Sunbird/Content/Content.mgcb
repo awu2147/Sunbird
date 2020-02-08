@@ -212,6 +212,18 @@
 /processorParam:TextureFormat=Color
 /build:Temp/GridAxisGlyph.png
 
+#begin Temp/House.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/House.png
+
 #begin Temp/LavaCubeBase.png
 /importer:TextureImporter
 /processor:TextureProcessor

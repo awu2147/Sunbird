@@ -44,6 +44,8 @@
     <Compile Include="Controllers\Animator.cs" />
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\Coord.cs" />
+    <Compile Include="Core\Dimension.cs" />
+    <Compile Include="Core\MultiCube.cs" />
     <Compile Include="Core\Cube.cs" />
     <Compile Include="Core\GhostMarker.cs" />
     <Compile Include="Core\GraphicsHelper.cs" />

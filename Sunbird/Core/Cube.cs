@@ -19,8 +19,10 @@ using Sunbird.Serialization;
 
 namespace Sunbird.Core
 {
+    public interface ICube { }
+
     [Serializable]
-    public class Cube : Sprite
+    public class Cube : Sprite, ICube
     {
         public Animator AnimatorBase { get; set; }
 
