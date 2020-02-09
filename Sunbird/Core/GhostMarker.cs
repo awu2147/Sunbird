@@ -37,8 +37,8 @@ namespace Sunbird.Core
 
         public void MorphImage(Sprite image, MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            Serializer.WriteXML<Sprite>(image, "DynamicCache.xml");
-            Image = Serializer.ReadXML<Sprite>("DynamicCache.xml");
+            Serializer.WriteXML<Sprite>(SpriteSerializer, image, "DynamicCache.xml");
+            Image = Serializer.ReadXML<Sprite>(SpriteSerializer, "DynamicCache.xml");
             Image.IsHidden = IsHidden;
             Image.Position = Position;
             Image.LoadContent(mainGame, graphicsDevice, content);
@@ -56,7 +56,6 @@ namespace Sunbird.Core
             Image.Update(gameTime);
             Image.IsHidden = IsHidden;
             Image.Position = Position;
-            //Image.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

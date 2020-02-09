@@ -16,6 +16,7 @@ using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
 using Sunbird.Serialization;
+using Sunbird.Decorations;
 
 namespace Sunbird.Core
 {
@@ -48,6 +49,7 @@ namespace Sunbird.Core
     public class DecoMetaData
     {
         public string Path { get; set; }
+        public string TypeName { get; set; }
         public Vector2 PositionOffset { get; set; }
         public int SheetRows { get; set; } = 1;
         public int SheetColumns { get; set; } = 1;
@@ -90,7 +92,6 @@ namespace Sunbird.Core
 
     public static class DecoFactory
     {
-        public static Type[] Types = new Type[] { typeof(DecoMetaData) };
         public static DecoMetaData CurrentDecoMetaData { get; set; }
 
         public static bool IsRandom { get; set; }
@@ -100,11 +101,16 @@ namespace Sunbird.Core
         public static XDictionary<int, DecoMetaData> DecoMetaDataLibrary { get; set; }
 
         public static Deco CreateDeco(MainGame mainGame, DecoMetaData decoMD, Coord coords, Coord relativeCoords, int altitude)
-        {              
-            var deco = new Deco() { Position = World.TopFace_CoordToLocalOrigin(coords), PositionOffset = decoMD.PositionOffset, Coords = relativeCoords, Altitude = altitude};
-            var rand = new Random();
+        {
+            Type type = Type.GetType(decoMD.TypeName);
+            var deco = Activator.CreateInstance(type) as Deco;
+            deco.Position = World.TopFace_CoordToLocalOrigin(coords);
+            deco.PositionOffset = decoMD.PositionOffset;
+            deco.Coords = relativeCoords;
+            deco.Altitude = altitude;
+            var rand = new Random();            
 
-            // Create multicube animator.
+            // Create deco animator.
             var spriteSheet = SpriteSheet.CreateNew(mainGame, decoMD.Path, decoMD.SheetRows, decoMD.SheetColumns);
             deco.Animator = new Animator(deco, spriteSheet, decoMD.StartFrame, decoMD.CurrentFrame, decoMD.FrameCount, decoMD.FrameSpeed, decoMD.AnimState);
             deco.GenerateShadowTextures(mainGame, deco.Animator);
@@ -170,6 +176,8 @@ namespace Sunbird.Core
     [Serializable]
     public class DecoFactoryData
     {
+        public static readonly XmlSerializer DecoFactoryDataSerializer = Serializer.CreateNew(typeof(DecoFactoryData), new Type[] { typeof(DecoMetaData) });
+
         public DecoMetaData CurrentDecoMetaData { get; set; }
 
         public bool IsRandom { get; set; }
@@ -185,7 +193,7 @@ namespace Sunbird.Core
 
         public void Serialize()
         {
-            Serializer.WriteXML<DecoFactoryData>(this, "DecoFactoryData.xml", DecoFactory.Types);
+            Serializer.WriteXML<DecoFactoryData>(DecoFactoryDataSerializer, this, "DecoFactoryData.xml");
         }
 
         public void SyncIn()

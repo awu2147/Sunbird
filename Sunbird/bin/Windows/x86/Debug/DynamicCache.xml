@@ -2,13 +2,13 @@
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Cube">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Temp/LightStoneCubeTop</TexturePath>
+      <TexturePath>Temp/DirtCubeTop</TexturePath>
       <Rows>1</Rows>
-      <Columns>3</Columns>
+      <Columns>8</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FramesInLoop>3</FramesInLoop>
+    <FramesInLoop>8</FramesInLoop>
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>

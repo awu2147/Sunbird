@@ -2,6 +2,7 @@
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentDecoMetaData>
     <Path>Temp/House</Path>
+    <TypeName>Sunbird.Decorations.House</TypeName>
     <PositionOffset>
       <X>-87</X>
       <Y>-99</Y>
@@ -29,6 +30,7 @@
       <value>
         <DecoMetaData>
           <Path>Temp/House</Path>
+          <TypeName>Sunbird.Decorations.House</TypeName>
           <PositionOffset>
             <X>-87</X>
             <Y>-99</Y>

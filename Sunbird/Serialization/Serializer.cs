@@ -22,38 +22,29 @@ namespace Sunbird.Serialization
     {
         public static Type[] ExtraTypes { get; set; } = new Type[] { };
 
-        public static T ReadXML<T>(string path)
+        public static T ReadXML<T>(XmlSerializer deserializer, string path)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(T), ExtraTypes); 
             TextReader reader = new StreamReader(path);
             object obj = deserializer.Deserialize(reader);
             reader.Close();
             return (T)obj;
         }
 
-        public static T ReadXML<T>(string path, Type[] extraTypes)
+        public static void WriteXML<T>(XmlSerializer serializer, object self, string path)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(T), extraTypes); // <- Inherited classes of Sprite go here.
-            TextReader reader = new StreamReader(path);
-            object obj = deserializer.Deserialize(reader);
-            reader.Close();
-            return (T)obj;
-        }
-
-        public static void WriteXML<T>(object self, string path)
-        {
-            XmlSerializer mySerializer = new XmlSerializer(typeof(T), ExtraTypes);
             StreamWriter myWriter = new StreamWriter(path);
-            mySerializer.Serialize(myWriter, self);
+            serializer.Serialize(myWriter, self);
             myWriter.Close();
         }
 
-        public static void WriteXML<T>(object self, string path, Type[] extraTypes) // <- Inherited classes of Sprite go here.
+        public static XmlSerializer CreateNew(Type type)
         {
-            XmlSerializer mySerializer = new XmlSerializer(typeof(T), extraTypes);
-            StreamWriter myWriter = new StreamWriter(path);
-            mySerializer.Serialize(myWriter, self);
-            myWriter.Close();
+            return new XmlSerializer(type, ExtraTypes);
+        }
+
+        public static XmlSerializer CreateNew(Type type, Type[] extraTypes)
+        {
+            return new XmlSerializer(type, extraTypes);
         }
     }
 }

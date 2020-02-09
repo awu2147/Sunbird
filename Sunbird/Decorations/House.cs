@@ -16,12 +16,21 @@ using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
 using Sunbird.Serialization;
+using Sunbird.Decorations;
 
-namespace Sunbird.Core
+namespace Sunbird.Decorations
 {
-    public interface IWorldObject
+    public class House : Deco
     {
-        void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public House()
+        {
+
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime, spriteBatch);
+        }
 
     }
 }

@@ -40,6 +40,8 @@ namespace Sunbird.External
 
     public class MapBuilder : State
     {
+        public static readonly XmlSerializer MapBuilderSerializer = Serializer.CreateNew(typeof(MapBuilder));
+
         public XDictionary<int, SpriteList<Sprite>> LayerMap { get; set; } = new XDictionary<int, SpriteList<Sprite>>();
         public List<Sprite> Overlay { get; set; } = new List<Sprite>();
         public int Altitude { get; set; } = 0;
@@ -152,7 +154,11 @@ namespace Sunbird.External
 
         #region Ribbon Event Handlers
 
-        private void Build3x3BN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._3x3; }
+        private void Build3x3BN_Clicked(object sender, ButtonClickedEventArgs e) 
+        { 
+            BuildDimensions = BuildDimensions._3x3;
+            //GhostMarker.MorphImage(, MainGame, GraphicsDevice, Content);
+        }
         private void Build2x2BN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._2x2; }
         private void Build1x1BN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._1x1; }
         private void BuildCubeBN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._Cube; }
@@ -363,7 +369,7 @@ namespace Sunbird.External
             }
 
             // Most time is spent here...
-            var XmlData = Serializer.ReadXML<MapBuilder>("MapBuilderSave.xml");
+            var XmlData = Serializer.ReadXML<MapBuilder>(MapBuilderSerializer, "MapBuilderSave.xml");
 
             Altitude = XmlData.Altitude;
             Authorization = XmlData.Authorization;
@@ -404,7 +410,7 @@ namespace Sunbird.External
 
         private void MainGame_Exiting(object sender, System.EventArgs e)
         {
-            Serializer.WriteXML<MapBuilder>(this, "MapBuilderSave.xml");
+            Serializer.WriteXML<MapBuilder>(MapBuilderSerializer, this, "MapBuilderSave.xml");
         }
 
         // Should these events be state specific?
@@ -496,8 +502,16 @@ namespace Sunbird.External
                 {
                     if (Peripherals.LeftButtonPressed() && MainGame.IsActive && InFocus)
                     {
-                        var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                        LayerMap[Altitude].AddCheck(cube, Altitude);
+                        if (BuildDimensions == BuildDimensions._Cube)
+                        {
+                            var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            LayerMap[Altitude].AddCheck(cube, Altitude);
+                        }
+                        else if (BuildDimensions == BuildDimensions._3x3)
+                        {
+                            var multiCube = DecoFactory.CreateCurrentDeco(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            LayerMap[Altitude].AddCheck(multiCube, Altitude);
+                        }
                     }
 
                     if (Peripherals.RightButtonPressed() && MainGame.IsActive && InFocus)
@@ -528,7 +542,8 @@ namespace Sunbird.External
                                 var mc = sprite as Deco;
                                 if (mc.OccupiedCoords[Altitude].Contains(relativeTopFaceCoords))
                                 {
-                                    LayerMap[Altitude].RemoveCheck(sprite, Altitude); i--;
+                                    LayerMap[Altitude].RemoveCheck(sprite, Altitude);
+                                    i--;
                                 }
                             }
                         }

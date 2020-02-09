@@ -15,6 +15,8 @@ using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
+using Sunbird.Decorations;
+using Sunbird.Serialization;
 
 namespace Sunbird.Core
 {
@@ -27,9 +29,10 @@ namespace Sunbird.Core
         BottomRight
     }
 
-    [Serializable]
-    public class Sprite
+    public class Sprite 
     {
+        public static readonly XmlSerializer SpriteSerializer = Serializer.CreateNew(typeof(Sprite));
+
         public Animator Animator { get; set; }
         public float Alpha { get; set; } = 1f;
         public Vector2 Position { get; set; }
@@ -145,7 +148,10 @@ namespace Sunbird.Core
         /// <param name="animator"></param>
         public void ReplaceSpriteSheet(SpriteSheet newSheet, Animator animator)
         {
-            animator.SpriteSheet = newSheet;
+            //animator.SpriteSheet.Dispose();
+            //GC.Collect();
+            //Debug.Print(animator.SpriteSheet.ToString());
+            animator.SpriteSheet = newSheet;          
         }
 
         /// <summary>

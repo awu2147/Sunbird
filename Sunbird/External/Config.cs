@@ -23,6 +23,8 @@ namespace Sunbird.External
 {
     public class Config : IConfig
     {
+        public static readonly XmlSerializer ConfigSerializer = Serializer.CreateNew(typeof(Config));
+
         public Keys North { get; set; }
         public Keys East { get; set; }
         public Keys South { get; set; }
@@ -57,7 +59,7 @@ namespace Sunbird.External
         private void MainGame_Exiting(object sender, EventArgs e)
         {
             SyncIn();
-            Serializer.WriteXML<Config>(this, "Config.xml");
+            Serializer.WriteXML<Config>(ConfigSerializer, this, "Config.xml");
         }
 
         // Static World property piggybacks on the Config file.

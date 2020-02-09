@@ -143,7 +143,6 @@ namespace Sunbird.Core
 
     public static class CubeFactory
     {
-        public static Type[] Types = new Type[] { typeof(CubeMetaData), typeof(CubeBaseMetaData) };
         public static CubeMetaData CurrentCubeMetaData { get; set; }
         public static CubeBaseMetaData CurrentCubeBaseMetaData { get; set; }
 
@@ -247,6 +246,8 @@ namespace Sunbird.Core
     [Serializable]
     public class CubeFactoryData
     {
+        public static readonly XmlSerializer CubeFactoryDataSerializer = Serializer.CreateNew(typeof(CubeFactoryData), new Type[] { typeof(CubeMetaData), typeof(CubeBaseMetaData) });
+
         public CubeMetaData CurrentCubeMetaData { get; set; }
         public CubeBaseMetaData CurrentCubeBaseMetaData { get; set; }
 
@@ -266,7 +267,7 @@ namespace Sunbird.Core
 
         public void Serialize()
         {
-            Serializer.WriteXML<CubeFactoryData>(this, "CubeFactoryData.xml", CubeFactory.Types);
+            Serializer.WriteXML<CubeFactoryData>(CubeFactoryDataSerializer, this, "CubeFactoryData.xml");
         }
 
         public void SyncIn()

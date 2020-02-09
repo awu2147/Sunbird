@@ -16,11 +16,14 @@ using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
 using Sunbird.External;
+using Sunbird.Serialization;
 
 namespace Sunbird.Core
 {
     public class SpriteList<T> : List<T>, IXmlSerializable
     {
+        public static readonly XmlSerializer SpriteListSerializer = Serializer.CreateNew(typeof(T));
+
         /// <summary>
         /// Current set of occupied coords.
         /// </summary>
@@ -96,7 +99,6 @@ namespace Sunbird.Core
 
         public void ReadXml(XmlReader reader)
         {
-            XmlSerializer spriteSerializer = new XmlSerializer(typeof(T), new Type[] { typeof(GhostMarker), typeof(Player), typeof(Cube), typeof(Deco) });
             XmlSerializer occupiedCoordsSerializer = new XmlSerializer(typeof(HashSet<Coord>));
 
             bool wasEmpty = reader.IsEmptyElement;
@@ -110,7 +112,7 @@ namespace Sunbird.Core
                 if (reader.Name == "Sprite")
                 {
                     reader.ReadStartElement("Sprite");
-                    T sprite = (T)spriteSerializer.Deserialize(reader);
+                    T sprite = (T)SpriteListSerializer.Deserialize(reader);
                     reader.ReadEndElement();
                     this.Add(sprite);
                 }
@@ -129,13 +131,12 @@ namespace Sunbird.Core
 
         public void WriteXml(XmlWriter writer)
         {
-            XmlSerializer spriteSerializer = new XmlSerializer(typeof(T), new Type[] { typeof(GhostMarker), typeof(Player), typeof(Cube), typeof(Deco) });
             XmlSerializer occupiedCoordsSerializer = new XmlSerializer(typeof(HashSet<Coord>));
 
             foreach (var sprite in this)
             {
                 writer.WriteStartElement("Sprite");
-                spriteSerializer.Serialize(writer, sprite);
+                SpriteListSerializer.Serialize(writer, sprite);
                 writer.WriteEndElement();
             }
 

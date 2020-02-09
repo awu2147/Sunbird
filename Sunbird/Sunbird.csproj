@@ -58,6 +58,7 @@
     <Compile Include="Core\Timer.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="Core\XDictionary.cs" />
+    <Compile Include="Decorations\House.cs" />
     <Compile Include="External\Config.cs" />
     <Compile Include="External\MapBuilder.cs" />
     <Compile Include="External\SunbirdLS.cs" />

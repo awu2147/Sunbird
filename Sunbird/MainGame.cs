@@ -17,6 +17,7 @@ using Sunbird.Controllers;
 using Sunbird.Serialization;
 using System.Reflection;
 using Sunbird.GUI;
+using Sunbird.Decorations;
 
 namespace Sunbird
 {
@@ -64,6 +65,7 @@ namespace Sunbird
                 typeof(Deco),
                 typeof(GhostMarker),
                 typeof(Button),
+                typeof(House),
             };
 
             if (CleanLoad == true)
@@ -72,7 +74,7 @@ namespace Sunbird
             }
             else
             {
-                Config = Serializer.ReadXML<Config>("Config.xml");
+                Config = Serializer.ReadXML<Config>(Config.ConfigSerializer, "Config.xml");
                 Config.LoadContent(this);
             }
 
@@ -120,17 +122,17 @@ namespace Sunbird
                 DecoFactory.DecoMetaDataLibrary = new XDictionary<int, DecoMetaData>()
                 {
                     {0, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3) } },
+                        PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(House).FullName } },
                 };
                 // There should be at least one deco in the library.
                 DecoFactory.CurrentDecoMetaData = DecoFactory.DecoMetaDataLibrary[0];
             }
             else
             {
-                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml", CubeFactory.Types);
+                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>(CubeFactoryData.CubeFactoryDataSerializer, "CubeFactoryData.xml");
                 cubeFactoryData.SyncOut();
 
-                DecoFactoryData decoFactoryData = Serializer.ReadXML<DecoFactoryData>("DecoFactoryData.xml", DecoFactory.Types);
+                DecoFactoryData decoFactoryData = Serializer.ReadXML<DecoFactoryData>(DecoFactoryData.DecoFactoryDataSerializer, "DecoFactoryData.xml");
                 decoFactoryData.SyncOut();
             }
 
