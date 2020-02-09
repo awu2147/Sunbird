@@ -115,7 +115,11 @@ namespace Sunbird.Core
                 {
                     for (int j = 0; j < decoMD.Dimensions.Y; j++)
                     {
-                        deco.OccupiedCoords[altitude + k].Add(deco.Coords + new Coord(i - 1, -j + 1));
+#if DEBUG
+                        Debug.Assert(decoMD.Dimensions.X == decoMD.Dimensions.Y);
+#endif
+                        int offset = decoMD.Dimensions.Y / 2;
+                        deco.OccupiedCoords[altitude + k].Add(deco.Coords + new Coord(i - offset, -j + offset));
                     }
                 }
             }

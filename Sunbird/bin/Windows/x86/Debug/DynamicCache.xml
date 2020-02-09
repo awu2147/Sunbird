@@ -2,13 +2,13 @@
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Cube">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Temp/LightStoneCubeTop</TexturePath>
-      <Rows>1</Rows>
-      <Columns>3</Columns>
+      <TexturePath>Temp/GrassCubeTop</TexturePath>
+      <Rows>3</Rows>
+      <Columns>4</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>2</CurrentFrame>
-    <FramesInLoop>3</FramesInLoop>
+    <CurrentFrame>0</CurrentFrame>
+    <FramesInLoop>12</FramesInLoop>
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
@@ -19,8 +19,8 @@
   </Animator>
   <Alpha>1</Alpha>
   <Position>
-    <X>77</X>
-    <Y>663</Y>
+    <X>1066</X>
+    <Y>678</Y>
   </Position>
   <PositionOffset>
     <X>0</X>
@@ -37,13 +37,13 @@
   <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
   <AnimatorBase>
     <SpriteSheet>
-      <TexturePath>Temp/DirtCubeBase</TexturePath>
+      <TexturePath>Temp/LightStoneCubeBase</TexturePath>
       <Rows>1</Rows>
-      <Columns>2</Columns>
+      <Columns>1</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>1</CurrentFrame>
-    <FramesInLoop>2</FramesInLoop>
+    <CurrentFrame>0</CurrentFrame>
+    <FramesInLoop>1</FramesInLoop>
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>

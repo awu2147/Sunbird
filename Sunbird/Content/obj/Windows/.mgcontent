@@ -4,6 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/BuildButtonSheet.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/WorldButtonSheet.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/DefaultFont.spritefont</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_full.png</File>
@@ -29,10 +31,12 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LeftArrowMinusBN_Silver.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LightStoneCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LightStoneCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/MessageLogBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/PendantBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/PirateGirlSheet.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/PlayerLight.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/RandBN.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/RibbonBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/RightArrowPlusBN_Brown.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/RightArrowPlusBN_Silver.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/StoneCube.png</File>
@@ -50,6 +54,10 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

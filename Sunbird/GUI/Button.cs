@@ -32,7 +32,8 @@ namespace Sunbird.GUI
     { 
         Default,
         SafeRelease,
-        CheckBox
+        CheckBox,
+        Group,
     }
 
     public class Button : Sprite
@@ -49,6 +50,12 @@ namespace Sunbird.GUI
         public AnimArgs PressedArgs { get; set; } = new AnimArgs(1);
         public Timer Timer { get; set; } = new Timer();
 
+        [XmlIgnore]
+        public List<Button> Siblings { get; set; }
+
+        [XmlIgnore]
+        public Action OnUpdated { get; set; } = () => { };
+
         private Button() { }
 
         public Button(MainGame mainGame, SpriteSheet spriteSheet, string label) : this(mainGame, spriteSheet, label, Vector2.Zero) { }
@@ -63,18 +70,29 @@ namespace Sunbird.GUI
 
         public void OnClicked()
         {
+            ReconfigureAnimator(PressedArgs);
+            if (Siblings != null)
+            {
+                foreach (var button in Siblings)
+                {
+                    button.IsPressed = false;
+                    button.ReconfigureAnimator(button.ReleasedArgs);
+                }
+            }
             EventHandler<ButtonClickedEventArgs> handler = Clicked;
             handler?.Invoke(this, null);
         }
 
         public void OnChecked()
         {
+            ReconfigureAnimator(PressedArgs);
             EventHandler<ButtonClickedEventArgs> handler = Checked;
             handler?.Invoke(this, null);
         }
 
         public void OnUnchecked()
         {
+            ReconfigureAnimator(ReleasedArgs);
             EventHandler<ButtonClickedEventArgs> handler = Unchecked;
             handler?.Invoke(this, null);
         }
@@ -90,8 +108,8 @@ namespace Sunbird.GUI
                     IsPressed = true;
                     Timer.OnCompleted = () => 
                     { 
-                        ReconfigureAnimator(ReleasedArgs);
                         IsPressed = false;
+                        ReconfigureAnimator(ReleasedArgs);
                     };
                 }
                 else if (ButtonType == ButtonType.SafeRelease)
@@ -102,7 +120,6 @@ namespace Sunbird.GUI
                 else if (ButtonType == ButtonType.CheckBox)
                 {
                     IsPressed = !IsPressed;
-                    OnClicked();
                     if (IsPressed)
                     {
                         OnChecked();
@@ -112,26 +129,18 @@ namespace Sunbird.GUI
                         OnUnchecked();
                     }
                 }
-                
+                else if (ButtonType == ButtonType.Group)
+                {
+                    OnClicked();
+                    IsPressed = true;
+                }
             }
 
-            if (IsPressed == true)
-            {        
-                if (ButtonType == ButtonType.Default)
-                {
-                    ReconfigureAnimator(PressedArgs);
-                    Timer.WaitForMilliseconds(gameTime, 100);                  
-                }
-                else 
-                {
-                    ReconfigureAnimator(PressedArgs);
-                }
-
+            if (IsPressed == true && ButtonType == ButtonType.Default)
+            {   
+                Timer.WaitForMilliseconds(gameTime, 100);                                
             }
-            else
-            {
-                ReconfigureAnimator(ReleasedArgs);
-            }
+            OnUpdated();
         }
 
         private void Peripherals_LeftButtonReleased(object sender, EventArgs e)

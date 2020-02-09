@@ -44,7 +44,7 @@ namespace Sunbird.External
             East = Keys.D;
             South = Keys.S;
             West = Keys.A;
-            WindowWidth = 1200;
+            WindowWidth = 800;
             WindowHeight = 800;
         }
 

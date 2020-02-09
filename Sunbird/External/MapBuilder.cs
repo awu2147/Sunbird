@@ -41,6 +41,7 @@ namespace Sunbird.External
         private bool IsLoading { get; set; }
         private bool InFocus { get; set; }
         public Authorization Authorization { get; set; }
+        private Sprite MessageLogBG { get; set; }
 
         private MapBuilder()
         {
@@ -90,10 +91,97 @@ namespace Sunbird.External
         private void CreateOverlay()
         {
             CreateCubePendant();
+            CreateRibbon();
+
+            var mlBGs = SpriteSheet.CreateNew(MainGame, "Temp/MessageLogBackground");
+            MessageLogBG = new Sprite(MainGame, mlBGs, new Vector2(5, MainGame.Height - 5), Alignment.BottomLeft);
 
             var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
             Overlay.Add(new Sprite(MainGame, gridAxisGlyph, new Vector2(MainGame.Width - 20, 20), Alignment.TopRight));
         }
+
+        #region Top Ribbon
+
+        private void CreateRibbon()
+        {
+            // Ribbon background.
+            var ribbonBg = SpriteSheet.CreateNew(MainGame, "Temp/RibbonBackGround");
+            var ribbonPosition = new Vector2(5, 5);
+            var _ribbonBg = new Sprite(MainGame, ribbonBg, ribbonPosition, Alignment.TopLeft);
+            ribbonPosition = _ribbonBg.Position;
+            Overlay.Add(_ribbonBg);
+
+            var worldBNs = SpriteSheet.CreateNew(MainGame, "Buttons/WorldButtonSheet", 4, 3);
+            var worldBN = new Button(MainGame, worldBNs, null, ribbonPosition + new Vector2(9, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group, PressedArgs = new AnimArgs(1, 10, 0.1f, AnimationState.Loop) };
+            worldBN.Clicked += WorldBN_Clicked;
+
+            var buildBNs = SpriteSheet.CreateNew(MainGame, "Buttons/BuildButtonSheet", 4, 3);
+            var buildBN = new Button(MainGame, buildBNs, null, ribbonPosition + new Vector2(75, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group, PressedArgs = new AnimArgs(1, 10, 0.1f, AnimationState.Loop) };
+            buildBN.Clicked += BuildBN_Clicked;
+
+            worldBN.Siblings = new List<Button>() { buildBN };
+            if (Authorization == Authorization.None)
+            {
+                worldBN.IsPressed = true;
+                worldBN.ReconfigureAnimator(worldBN.PressedArgs);
+            }
+            worldBN.OnUpdated = () => 
+            {
+                if (Peripherals.KeyTapped(Keys.Q))
+                {
+                    if (Authorization == Authorization.None)
+                    {
+                        worldBN.IsPressed = true;
+                        worldBN.ReconfigureAnimator(worldBN.PressedArgs);
+                    }
+                    else if (Authorization == Authorization.Builder)
+                    {
+                        worldBN.IsPressed = false;
+                        worldBN.ReconfigureAnimator(worldBN.ReleasedArgs);
+                    }
+                }
+            };
+            buildBN.Siblings = new List<Button>() { worldBN };
+            if (Authorization == Authorization.Builder)
+            {
+                buildBN.IsPressed = true;
+                buildBN.ReconfigureAnimator(worldBN.PressedArgs);
+            }
+            buildBN.OnUpdated = () =>
+            {
+                if (Peripherals.KeyTapped(Keys.Q))
+                {
+                    if (Authorization == Authorization.Builder)
+                    {
+                        buildBN.IsPressed = true;
+                        buildBN.ReconfigureAnimator(buildBN.PressedArgs);
+                    }
+                    else if (Authorization == Authorization.None)
+                    {
+                        buildBN.IsPressed = false;
+                        buildBN.ReconfigureAnimator(buildBN.ReleasedArgs);
+                    }
+                }
+            };
+            Overlay.Add(worldBN);
+            Overlay.Add(buildBN);
+        }
+
+        #endregion
+
+        #region Top Ribbon Event Handlers
+
+        private void BuildBN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            Authorization = Authorization.Builder;
+        }
+
+        private void WorldBN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            Authorization = Authorization.None;
+        }
+
+        #endregion
 
         #region Cube Pendant
 
@@ -101,65 +189,77 @@ namespace Sunbird.External
         {
             // Pendant background.
             var pendantBg = SpriteSheet.CreateNew(MainGame, "Temp/PendantBackGround");
-            var pendantPosition = new Vector2(20, MainGame.Height - 20);
-            Overlay.Add(new Sprite(MainGame, pendantBg, pendantPosition, Alignment.BottomLeft));
+            var pendantPosition = new Vector2(MainGame.Width - 5, MainGame.Height - 5);
+            var _pendantBg = new Sprite(MainGame, pendantBg, pendantPosition, Alignment.BottomRight);
+            pendantPosition = _pendantBg.Position;
+            Overlay.Add(_pendantBg);
 
             // The cube image.
             CubePreview = CubeFactory.CreateCurrentCube(MainGame, Coord.Zero, Coord.Zero, 0);
-            CubePreview.Position = pendantPosition + new Vector2(57, -117);
+            CubePreview.Position = pendantPosition + new Vector2(57, 42);
             Overlay.Add(CubePreview);
 
             // Pendant left.
             var pLBN1s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
-            var pLBN1 = new Button(MainGame, pLBN1s, null, pendantPosition + new Vector2(9, -144));
+            var pLBN1 = new Button(MainGame, pLBN1s, null, pendantPosition + new Vector2(9, 15));
             pLBN1.Clicked += PLBN1_Clicked;
             Overlay.Add(pLBN1);
 
             var pLBN2s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
-            var pLBN2 = new Button(MainGame, pLBN2s, null, pendantPosition + new Vector2(9, -108));
+            var pLBN2 = new Button(MainGame, pLBN2s, null, pendantPosition + new Vector2(9, 51));
             pLBN2.Clicked += PLBN2_Clicked;
             Overlay.Add(pLBN2);
 
             var pLBN3s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
-            var pLBN3 = new Button(MainGame, pLBN3s, null, pendantPosition + new Vector2(9, -78));
+            var pLBN3 = new Button(MainGame, pLBN3s, null, pendantPosition + new Vector2(9, 81));
             pLBN3.Clicked += PLBN3_Clicked;
             Overlay.Add(pLBN3);
 
             var pLBN4s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
-            var pLBN4 = new Button(MainGame, pLBN4s, null, pendantPosition + new Vector2(9, -42));
+            var pLBN4 = new Button(MainGame, pLBN4s, null, pendantPosition + new Vector2(9, 117));
             pLBN4.Clicked += PLBN4_Clicked;
             Overlay.Add(pLBN4);
 
             // Pendant right.
             var pRBN1s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
-            var pRBN1 = new Button(MainGame, pRBN1s, null, pendantPosition + new Vector2(138, -144));
+            var pRBN1 = new Button(MainGame, pRBN1s, null, pendantPosition + new Vector2(138, 15));
             pRBN1.Clicked += PRBN1_Clicked;
             Overlay.Add(pRBN1);
 
             var pRBN2s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
-            var pRBN2 = new Button(MainGame, pRBN2s, null, pendantPosition + new Vector2(138, -108));
+            var pRBN2 = new Button(MainGame, pRBN2s, null, pendantPosition + new Vector2(138, 51));
             pRBN2.Clicked += PRBN2_Clicked;
             Overlay.Add(pRBN2);
 
             var pRBN3s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
-            var pRBN3 = new Button(MainGame, pRBN3s, null, pendantPosition + new Vector2(138, -78));
+            var pRBN3 = new Button(MainGame, pRBN3s, null, pendantPosition + new Vector2(138, 81));
             pRBN3.Clicked += PRBN3_Clicked;
             Overlay.Add(pRBN3);
 
             var pRBN4s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
-            var pRBN4 = new Button(MainGame, pRBN4s, null, pendantPosition + new Vector2(138, -42));
+            var pRBN4 = new Button(MainGame, pRBN4s, null, pendantPosition + new Vector2(138, 117));
             pRBN4.Clicked += PRBN4_Clicked;
             Overlay.Add(pRBN4);
 
             // Pendant random.
             var pRandTs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
-            var pRandT = new Button(MainGame, pRandTs, null, pendantPosition + new Vector2(57, -144)) { ButtonType = ButtonType.CheckBox, IsPressed = CubeFactory.IsRandomTop };
+            var pRandT = new Button(MainGame, pRandTs, null, pendantPosition + new Vector2(57, 15)) { ButtonType = ButtonType.CheckBox };
+            if (CubeFactory.IsRandomTop)
+            {
+                pRandT.IsPressed = true;
+                pRandT.ReconfigureAnimator(pRandT.PressedArgs);
+            }
             pRandT.Checked += PRandTop_Checked;
             pRandT.Unchecked += PRandTop_Unchecked;
             Overlay.Add(pRandT);
 
             var pRandBs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
-            var pRandB = new Button(MainGame, pRandBs, null, pendantPosition + new Vector2(57, -33)) { ButtonType = ButtonType.CheckBox, IsPressed = CubeFactory.IsRandomBottom };
+            var pRandB = new Button(MainGame, pRandBs, null, pendantPosition + new Vector2(57, 126)) { ButtonType = ButtonType.CheckBox };
+            if (CubeFactory.IsRandomBottom)
+            {
+                pRandB.IsPressed = true;
+                pRandB.ReconfigureAnimator(pRandB.PressedArgs);
+            }
             pRandB.Checked += PRandB_Checked;
             pRandB.Unchecked += PRandB_Unchecked;
             Overlay.Add(pRandB);
@@ -772,12 +872,14 @@ namespace Sunbird.External
                 sprite.Draw(gameTime, spriteBatch);
             }
 
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString() }", new Vector2(10, 10), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude) }", new Vector2(10, 30), Color.Black);            
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString() }", new Vector2(10, 50), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", new Vector2(10, 70), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", new Vector2(10, 90), Color.Black);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", new Vector2(10, 110), Color.Black);
+            MessageLogBG.Draw(gameTime, spriteBatch);
+
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString() }", MessageLogBG.Position + new Vector2(15, 15), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude) }", MessageLogBG.Position + new Vector2(15,35), Color.White);            
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString() }", MessageLogBG.Position + new Vector2(15, 55), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", MessageLogBG.Position + new Vector2(15, 75), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", MessageLogBG.Position + new Vector2(15, 95), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", MessageLogBG.Position + new Vector2(15, 115), Color.White);
 
         }
     }
