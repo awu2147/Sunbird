@@ -30,6 +30,14 @@ namespace Sunbird.External
         Builder
     }
 
+    public enum BuildDimensions
+    {
+        Cube,
+        _1x1,
+        _2x2,
+        _3x3,
+    }
+
     public class MapBuilder : State
     {
         public XDictionary<int, SpriteList<Sprite>> LayerMap { get; set; } = new XDictionary<int, SpriteList<Sprite>>();
@@ -41,6 +49,7 @@ namespace Sunbird.External
         private bool IsLoading { get; set; }
         private bool InFocus { get; set; }
         public Authorization Authorization { get; set; }
+        public BuildDimensions BuildDimensions { get; set; }
         private Sprite MessageLogBG { get; set; }
 
         private MapBuilder()
@@ -97,7 +106,7 @@ namespace Sunbird.External
             MessageLogBG = new Sprite(MainGame, mlBGs, new Vector2(5, MainGame.Height - 5), Alignment.BottomLeft);
 
             var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
-            Overlay.Add(new Sprite(MainGame, gridAxisGlyph, new Vector2(MainGame.Width - 20, 20), Alignment.TopRight));
+            Overlay.Add(new Sprite(MainGame, gridAxisGlyph, new Vector2(MainGame.Width - 5, 5), Alignment.TopRight));
         }
 
         #region Top Ribbon
@@ -141,6 +150,7 @@ namespace Sunbird.External
                     }
                 }
             };
+
             buildBN.Siblings = new List<Button>() { worldBN };
             if (Authorization == Authorization.Builder)
             {
@@ -165,6 +175,53 @@ namespace Sunbird.External
             };
             Overlay.Add(worldBN);
             Overlay.Add(buildBN);
+
+            var buildCubeBNs = SpriteSheet.CreateNew(MainGame, "Buttons/BuildCubeBN", 1, 2);
+            var buildCubeBN = new Button(MainGame, buildCubeBNs, null, ribbonPosition + new Vector2(141, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group };
+            buildCubeBN.Clicked += BuildCubeBN_Clicked;
+
+            var build1x1BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build1x1BN", 1, 2);
+            var build1x1BN = new Button(MainGame, build1x1BNs, null, ribbonPosition + new Vector2(183, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group };
+            build1x1BN.Clicked += Build1x1BN_Clicked;
+
+            var build2x2BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build2x2BN", 1, 2);
+            var build2x2BN = new Button(MainGame, build2x2BNs, null, ribbonPosition + new Vector2(225, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group };
+            build2x2BN.Clicked += Build2x2BN_Clicked;
+
+            var build3x3BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build3x3BN", 1, 2);
+            var build3x3BN = new Button(MainGame, build3x3BNs, null, ribbonPosition + new Vector2(267, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group };
+            build1x1BN.Clicked += Build1x1BN_Clicked1;
+
+            buildCubeBN.Siblings = new List<Button>() { build1x1BN, build2x2BN, build3x3BN };
+            build1x1BN.Siblings = new List<Button>() { buildCubeBN, build2x2BN, build3x3BN };
+            build2x2BN.Siblings = new List<Button>() { build1x1BN, buildCubeBN, build3x3BN };
+            build3x3BN.Siblings = new List<Button>() { build1x1BN, build2x2BN, buildCubeBN };
+
+            Overlay.Add(buildCubeBN);
+            Overlay.Add(build1x1BN);
+            Overlay.Add(build2x2BN);
+            Overlay.Add(build3x3BN);
+
+        }
+
+        private void Build1x1BN_Clicked1(object sender, ButtonClickedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void Build2x2BN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void Build1x1BN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void BuildCubeBN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         #endregion
