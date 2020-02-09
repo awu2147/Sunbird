@@ -20,7 +20,7 @@
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
-  <IsRandomTop>true</IsRandomTop>
+  <IsRandomTop>false</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
   <CurrentIndex>1</CurrentIndex>
   <CurrentBaseIndex>3</CurrentBaseIndex>
@@ -69,7 +69,7 @@
           <SheetRows>1</SheetRows>
           <SheetColumns>3</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>2</CurrentFrame>
+          <CurrentFrame>1</CurrentFrame>
           <FrameCount>3</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>
