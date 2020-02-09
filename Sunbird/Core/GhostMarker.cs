@@ -21,9 +21,8 @@ namespace Sunbird.Core
 {
     public class GhostMarker : Sprite
     {
-        public Sprite Image;
-
-        public bool DrawDefaultMarker;
+        public Sprite Image { get; set; }
+        public bool DrawDefaultMarker { get; set; }
 
         private GhostMarker()
         {

@@ -48,6 +48,8 @@ namespace Sunbird.External
         public Player Player { get; set; }
         public GhostMarker GhostMarker { get; set; }
         public Cube CubePreview { get; set; }
+        public Deco DecoPreview { get; set; }
+
         private bool IsLoading { get; set; }
         private bool InFocus { get; set; }
         public Authorization Authorization { get; set; }
@@ -75,6 +77,9 @@ namespace Sunbird.External
         {
             CreateRibbon();
             CreateCubePendant();
+
+            // The deco image. FIXME: should make this static property on DecoFactory?
+            DecoPreview = DecoFactory.CreateCurrentDeco(MainGame, Coord.Zero, Coord.Zero, 0);
 
             var mlBGs = SpriteSheet.CreateNew(MainGame, "Temp/MessageLogBackground");
             MessageLogBG = new Sprite(MainGame, mlBGs, new Vector2(5, MainGame.Height - 5), Alignment.BottomLeft);
@@ -157,11 +162,21 @@ namespace Sunbird.External
         private void Build3x3BN_Clicked(object sender, ButtonClickedEventArgs e) 
         { 
             BuildDimensions = BuildDimensions._3x3;
-            //GhostMarker.MorphImage(, MainGame, GraphicsDevice, Content);
+            GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
         }
-        private void Build2x2BN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._2x2; }
-        private void Build1x1BN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._1x1; }
-        private void BuildCubeBN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._Cube; }
+        private void Build2x2BN_Clicked(object sender, ButtonClickedEventArgs e) 
+        { 
+            BuildDimensions = BuildDimensions._2x2; 
+        }
+        private void Build1x1BN_Clicked(object sender, ButtonClickedEventArgs e) 
+        { 
+            BuildDimensions = BuildDimensions._1x1; 
+        }
+        private void BuildCubeBN_Clicked(object sender, ButtonClickedEventArgs e) 
+        { 
+            BuildDimensions = BuildDimensions._Cube;
+            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+        }
         private void BuildBN_Clicked(object sender, ButtonClickedEventArgs e) { Authorization = Authorization.Builder; }
         private void WorldBN_Clicked(object sender, ButtonClickedEventArgs e) { Authorization = Authorization.None; }
 
@@ -178,7 +193,7 @@ namespace Sunbird.External
             pendantPosition = _pendantBg.Position;
             Overlay.Add(_pendantBg);
 
-            // The cube image.
+            // The cube image. FIXME: should make this static property on CubeFactory?
             CubePreview = CubeFactory.CreateCurrentCube(MainGame, Coord.Zero, Coord.Zero, 0);
             CubePreview.Position = pendantPosition + new Vector2(57, 42);
             Overlay.Add(CubePreview);
@@ -413,7 +428,7 @@ namespace Sunbird.External
             Serializer.WriteXML<MapBuilder>(MapBuilderSerializer, this, "MapBuilderSave.xml");
         }
 
-        // Should these events be state specific?
+        // Should these events be state specific? FIXME: handler must be detached manually when new currentstate assigned.
         private void Peripherals_ScrollWheelDown(object sender, EventArgs e)
         {
             if (MainGame.IsActive == true)
@@ -516,34 +531,29 @@ namespace Sunbird.External
 
                     if (Peripherals.RightButtonPressed() && MainGame.IsActive && InFocus)
                     {
-                        for (int i = 0; i < LayerMap[Altitude].Count(); i++)
+                        if (BuildDimensions == BuildDimensions._Cube)
                         {
-                            var sprite = LayerMap[Altitude][i];
-                            if (sprite is Cube && sprite.Coords == relativeTopFaceCoords)
+                            for (int i = 0; i < LayerMap[Altitude].Count(); i++)
                             {
-                                LayerMap[Altitude].RemoveCheck(sprite, Altitude); i--;
+                                var sprite = LayerMap[Altitude][i];
+                                if (sprite is Cube && sprite.Coords == relativeTopFaceCoords)
+                                {
+                                    LayerMap[Altitude].RemoveCheck(sprite, Altitude); i--;
+                                }
                             }
                         }
-                    }
-
-                    if (Peripherals.KeyTapped(Keys.T) && MainGame.IsActive && InFocus)
-                    {
-                        var multiCube = DecoFactory.CreateCurrentDeco(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                        LayerMap[Altitude].AddCheck(multiCube, Altitude);
-                    }
-
-                    if (Peripherals.KeyTapped(Keys.Y) && MainGame.IsActive && InFocus)
-                    {
-                        for (int i = 0; i < LayerMap[Altitude].Count(); i++)
+                        else if (BuildDimensions == BuildDimensions._3x3)
                         {
-                            var sprite = LayerMap[Altitude][i];
-                            if (sprite is Deco)
+                            for (int i = 0; i < LayerMap[Altitude].Count(); i++)
                             {
-                                var mc = sprite as Deco;
-                                if (mc.OccupiedCoords[Altitude].Contains(relativeTopFaceCoords))
+                                var sprite = LayerMap[Altitude][i];
+                                if (sprite is Deco)
                                 {
-                                    LayerMap[Altitude].RemoveCheck(sprite, Altitude);
-                                    i--;
+                                    var mc = sprite as Deco;
+                                    if (mc.OccupiedCoords[Altitude].Contains(relativeTopFaceCoords))
+                                    {
+                                        LayerMap[Altitude].RemoveCheck(mc, Altitude); i--;
+                                    }
                                 }
                             }
                         }

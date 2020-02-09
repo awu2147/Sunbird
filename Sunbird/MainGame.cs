@@ -118,22 +118,34 @@ namespace Sunbird
                 // There should be at least one cube in the library.
                 CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
                 CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];
+                foreach (var cMD in CubeFactory.CubeMetaDataLibrary)
+                {
+                    cMD.Value.LoadContent(this);
+                }
+                foreach (var cbMD in CubeFactory.CubeBaseMetaDataLibrary)
+                {
+                    cbMD.Value.LoadContent(this);
+                }
 
                 DecoFactory.DecoMetaDataLibrary = new XDictionary<int, DecoMetaData>()
                 {
                     {0, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(House).FullName } },
+                        PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName } },
                 };
                 // There should be at least one deco in the library.
                 DecoFactory.CurrentDecoMetaData = DecoFactory.DecoMetaDataLibrary[0];
+                foreach (var dMD in DecoFactory.DecoMetaDataLibrary)
+                {
+                    dMD.Value.LoadContent(this);
+                }
             }
             else
             {
                 CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>(CubeFactoryData.CubeFactoryDataSerializer, "CubeFactoryData.xml");
-                cubeFactoryData.SyncOut();
+                cubeFactoryData.SyncOut(this);
 
                 DecoFactoryData decoFactoryData = Serializer.ReadXML<DecoFactoryData>(DecoFactoryData.DecoFactoryDataSerializer, "DecoFactoryData.xml");
-                decoFactoryData.SyncOut();
+                decoFactoryData.SyncOut(this);
             }
 
             GameRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);

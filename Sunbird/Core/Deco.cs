@@ -17,6 +17,7 @@ using Sunbird.Controllers;
 using System.Xml.Schema;
 using Sunbird.Serialization;
 using Sunbird.Decorations;
+using System.ComponentModel;
 
 namespace Sunbird.Core
 {
@@ -42,12 +43,13 @@ namespace Sunbird.Core
         {
             base.Draw(gameTime, spriteBatch);
         }
-
     }
 
     [Serializable]
     public class DecoMetaData
     {
+        [XmlIgnore]
+        public Texture2D Texture { get; set; }
         public string Path { get; set; }
         public string TypeName { get; set; }
         public Vector2 PositionOffset { get; set; }
@@ -63,6 +65,11 @@ namespace Sunbird.Core
         public DecoMetaData()
         {
 
+        }
+
+        public void LoadContent(MainGame mainGame)
+        {
+            Texture = mainGame.Content.Load<Texture2D>(Path);
         }
 
         public void NextFrame()
@@ -111,7 +118,7 @@ namespace Sunbird.Core
             var rand = new Random();            
 
             // Create deco animator.
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, decoMD.Path, decoMD.SheetRows, decoMD.SheetColumns);
+            var spriteSheet = SpriteSheet.CreateNew(decoMD.Texture, decoMD.Path, decoMD.SheetRows, decoMD.SheetColumns);
             deco.Animator = new Animator(deco, spriteSheet, decoMD.StartFrame, decoMD.CurrentFrame, decoMD.FrameCount, decoMD.FrameSpeed, decoMD.AnimState);
             deco.GenerateShadowTextures(mainGame, deco.Animator);
 
@@ -207,8 +214,14 @@ namespace Sunbird.Core
             DecoMetaDataLibrary = DecoFactory.DecoMetaDataLibrary;
         }
 
-        public void SyncOut()
+        public void SyncOut(MainGame mainGame)
         {
+            CurrentDecoMetaData.LoadContent(mainGame);
+            foreach (var dMD in DecoMetaDataLibrary)
+            {
+                dMD.Value.LoadContent(mainGame);
+            }
+
             DecoFactory.CurrentDecoMetaData = CurrentDecoMetaData;
 
             DecoFactory.IsRandom = IsRandom;

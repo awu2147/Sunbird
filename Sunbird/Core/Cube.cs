@@ -61,6 +61,8 @@ namespace Sunbird.Core
     [Serializable]
     public class CubeMetaData
     {
+        [XmlIgnore]
+        public Texture2D Texture { get; set; }
         public string Path { get; set; }
         public int SheetRows { get; set; } = 1;
         public int SheetColumns { get; set; } = 1;
@@ -72,6 +74,11 @@ namespace Sunbird.Core
         public CubeMetaData()
         {
 
+        }
+
+        public void LoadContent(MainGame mainGame)
+        {
+            Texture = mainGame.Content.Load<Texture2D>(Path);
         }
 
         public void NextFrame()
@@ -102,6 +109,8 @@ namespace Sunbird.Core
     [Serializable]
     public class CubeBaseMetaData
     {
+        [XmlIgnore]
+        public Texture2D Texture { get; set; }
         public string Path { get; set; }
         public int SheetRows { get; set; } = 1;
         public int SheetColumns { get; set; } = 1;
@@ -114,6 +123,11 @@ namespace Sunbird.Core
         public CubeBaseMetaData()
         {
 
+        }
+
+        public void LoadContent(MainGame mainGame)
+        {
+            Texture = mainGame.Content.Load<Texture2D>(Path);
         }
 
         public void NextFrame()
@@ -161,7 +175,7 @@ namespace Sunbird.Core
             var rand = new Random();
 
             // Create cube top animator.
-            var spriteSheet = SpriteSheet.CreateNew(mainGame, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
+            var spriteSheet = SpriteSheet.CreateNew(cubeMD.Texture, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
             cube.Animator = new Animator(cube, spriteSheet, cubeMD.StartFrame, cubeMD.CurrentFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
             if (IsRandomTop == true && cubeMD.AnimState == AnimationState.None)
             {
@@ -173,7 +187,7 @@ namespace Sunbird.Core
             }
 
             // Create cube base animator.
-            var spriteSheetBase = SpriteSheet.CreateNew(mainGame, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
+            var spriteSheetBase = SpriteSheet.CreateNew(cubeBaseMD.Texture, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
             cube.AnimatorBase = new Animator(cube, spriteSheetBase, cubeBaseMD.StartFrame, cubeBaseMD.CurrentFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);
             if (IsRandomBottom == true && cubeBaseMD.AnimState == AnimationState.None)
             {
@@ -285,8 +299,19 @@ namespace Sunbird.Core
             CubeBaseMetaDataLibrary = CubeFactory.CubeBaseMetaDataLibrary;
         }
 
-        public void SyncOut()
+        public void SyncOut(MainGame mainGame)
         {
+            CurrentCubeMetaData.LoadContent(mainGame);
+            foreach (var cMD in CubeMetaDataLibrary)
+            {
+                cMD.Value.LoadContent(mainGame);
+            }
+            CurrentCubeBaseMetaData.LoadContent(mainGame);
+            foreach (var cbMD in CubeBaseMetaDataLibrary)
+            {
+                cbMD.Value.LoadContent(mainGame);
+            }
+
             CubeFactory.CurrentCubeMetaData = CurrentCubeMetaData;
             CubeFactory.CurrentCubeBaseMetaData = CurrentCubeBaseMetaData;
 
@@ -298,6 +323,7 @@ namespace Sunbird.Core
 
             CubeFactory.CubeMetaDataLibrary = CubeMetaDataLibrary;
             CubeFactory.CubeBaseMetaDataLibrary = CubeBaseMetaDataLibrary;
+
         }  
 
     }
