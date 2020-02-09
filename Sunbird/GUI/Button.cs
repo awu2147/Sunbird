@@ -44,8 +44,28 @@ namespace Sunbird.GUI
 
         private MainGame MainGame { get; set; }
         public string Label { get; set; }
-        public ButtonType ButtonType { get; set; } 
-        public bool IsPressed { get; set; }
+        public ButtonType ButtonType { get; set; }
+
+        private bool _IsPressed;
+        public bool IsPressed 
+        {
+            get
+            {
+                return _IsPressed;
+            }
+            set
+            {
+                _IsPressed = value;
+                if (value == true)
+                {
+                    ReconfigureAnimator(PressedArgs);
+                }
+                else
+                {
+                    ReconfigureAnimator(ReleasedArgs);
+                }
+            }
+        }
         public AnimArgs ReleasedArgs { get; set; } = new AnimArgs(0);
         public AnimArgs PressedArgs { get; set; } = new AnimArgs(1);
         public Timer Timer { get; set; } = new Timer();
@@ -70,13 +90,11 @@ namespace Sunbird.GUI
 
         public void OnClicked()
         {
-            ReconfigureAnimator(PressedArgs);
             if (Siblings != null)
             {
                 foreach (var button in Siblings)
                 {
                     button.IsPressed = false;
-                    button.ReconfigureAnimator(button.ReleasedArgs);
                 }
             }
             EventHandler<ButtonClickedEventArgs> handler = Clicked;
@@ -85,16 +103,31 @@ namespace Sunbird.GUI
 
         public void OnChecked()
         {
-            ReconfigureAnimator(PressedArgs);
             EventHandler<ButtonClickedEventArgs> handler = Checked;
             handler?.Invoke(this, null);
         }
 
         public void OnUnchecked()
         {
-            ReconfigureAnimator(ReleasedArgs);
             EventHandler<ButtonClickedEventArgs> handler = Unchecked;
             handler?.Invoke(this, null);
+        }
+
+        public static void BindGroup(List<Button> group)
+        {
+            foreach (var button in group)
+            {
+                button.ButtonType = ButtonType.Group;
+                button.Siblings = new List<Button>() { };
+                foreach (var sibling in group)
+                {
+                    if (sibling == button)
+                    {
+                        continue;
+                    }
+                    button.Siblings.Add(sibling);
+                }
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -109,7 +142,6 @@ namespace Sunbird.GUI
                     Timer.OnCompleted = () => 
                     { 
                         IsPressed = false;
-                        ReconfigureAnimator(ReleasedArgs);
                     };
                 }
                 else if (ButtonType == ButtonType.SafeRelease)

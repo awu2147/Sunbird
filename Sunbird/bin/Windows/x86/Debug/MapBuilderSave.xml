@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MapBuilder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentLightingColor>
-    <B>211</B>
-    <G>211</G>
-    <R>211</R>
+    <B>0</B>
+    <G>0</G>
+    <R>0</R>
     <A>255</A>
-    <PackedValue>4292072403</PackedValue>
+    <PackedValue>4278190080</PackedValue>
   </CurrentLightingColor>
   <LayerMap>
     <item>
@@ -10115,8 +10115,8 @@
               </Animator>
               <Alpha>0.3</Alpha>
               <Position>
-                <X>288</X>
-                <Y>-468</Y>
+                <X>144</X>
+                <Y>-396</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
@@ -10124,7 +10124,7 @@
               </PositionOffset>
               <Coords>
                 <X>-9</X>
-                <Y>17</Y>
+                <Y>13</Y>
               </Coords>
               <Altitude>0</Altitude>
               <DrawPriority>-1000</DrawPriority>
@@ -10132,13 +10132,13 @@
               <Image xsi:type="Cube">
                 <Animator>
                   <SpriteSheet>
-                    <TexturePath>Temp/GrassCubeTop</TexturePath>
-                    <Rows>3</Rows>
-                    <Columns>4</Columns>
+                    <TexturePath>Temp/LightStoneCubeTop</TexturePath>
+                    <Rows>1</Rows>
+                    <Columns>3</Columns>
                   </SpriteSheet>
                   <StartFrame>0</StartFrame>
                   <CurrentFrame>0</CurrentFrame>
-                  <FramesInLoop>12</FramesInLoop>
+                  <FramesInLoop>3</FramesInLoop>
                   <FrameCounter>0</FrameCounter>
                   <FrameSpeed>0.133</FrameSpeed>
                   <AnimState>None</AnimState>
@@ -10147,10 +10147,10 @@
                     <IsDone>true</IsDone>
                   </Timer>
                 </Animator>
-                <Alpha>1</Alpha>
+                <Alpha>0.3</Alpha>
                 <Position>
-                  <X>288</X>
-                  <Y>-468</Y>
+                  <X>144</X>
+                  <Y>-396</Y>
                 </Position>
                 <PositionOffset>
                   <X>0</X>
@@ -10927,8 +10927,8 @@
                   <Rows>1</Rows>
                   <Columns>16</Columns>
                 </SpriteSheet>
-                <StartFrame>12</StartFrame>
-                <CurrentFrame>12</CurrentFrame>
+                <StartFrame>8</StartFrame>
+                <CurrentFrame>8</CurrentFrame>
                 <FramesInLoop>1</FramesInLoop>
                 <FrameCounter>0</FrameCounter>
                 <FrameSpeed>0.2</FrameSpeed>
@@ -10940,22 +10940,22 @@
               </Animator>
               <Alpha>1</Alpha>
               <Position>
-                <X>-267</X>
-                <Y>133.5</Y>
+                <X>-372</X>
+                <Y>216</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
                 <Y>-18</Y>
               </PositionOffset>
               <Coords>
-                <X>1</X>
-                <Y>-8</Y>
+                <X>2</X>
+                <Y>-12</Y>
               </Coords>
               <Altitude>1</Altitude>
               <DrawPriority>0</DrawPriority>
               <IsHidden>false</IsHidden>
               <LightPath>Temp/PlayerLight</LightPath>
-              <Direction>West</Direction>
+              <Direction>South</Direction>
               <Movement>Standing</Movement>
               <Speed>3</Speed>
             </Sprite>
@@ -11414,645 +11414,6 @@
     <Sprite>
       <Animator>
         <SpriteSheet>
-          <TexturePath>Temp/PendantBackGround</TexturePath>
-          <Rows>1</Rows>
-          <Columns>1</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>609</X>
-        <Y>636</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-    </Sprite>
-    <Sprite xsi:type="Cube">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/GrassCubeTop</TexturePath>
-          <Rows>3</Rows>
-          <Columns>4</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>12</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>666</X>
-        <Y>678</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ShadowPath>Temp/CubeShadow</ShadowPath>
-      <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
-      <AnimatorBase>
-        <SpriteSheet>
-          <TexturePath>Temp/LightStoneCubeBase</TexturePath>
-          <Rows>1</Rows>
-          <Columns>1</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </AnimatorBase>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/LeftArrowMinusBN_Silver</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>618</X>
-        <Y>651</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Default</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>0</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/LeftArrowMinusBN_Brown</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>618</X>
-        <Y>687</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Default</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>100.000206</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/LeftArrowMinusBN_Brown</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>618</X>
-        <Y>717</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Default</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>100.000206</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/LeftArrowMinusBN_Silver</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>618</X>
-        <Y>753</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Default</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>0</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/RightArrowPlusBN_Silver</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>747</X>
-        <Y>651</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Default</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>0</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/RightArrowPlusBN_Brown</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>747</X>
-        <Y>687</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Default</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>0</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/RightArrowPlusBN_Brown</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>747</X>
-        <Y>717</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Default</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>100.000206</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/RightArrowPlusBN_Silver</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>747</X>
-        <Y>753</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Default</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>0</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/RandBN</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>666</X>
-        <Y>651</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>CheckBox</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>0</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Temp/RandBN</TexturePath>
-          <Rows>1</Rows>
-          <Columns>2</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>666</X>
-        <Y>762</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>CheckBox</ButtonType>
-      <IsPressed>false</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>0</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
-    </Sprite>
-    <Sprite>
-      <Animator>
-        <SpriteSheet>
           <TexturePath>Temp/RibbonBackGround</TexturePath>
           <Rows>1</Rows>
           <Columns>1</Columns>
@@ -12084,61 +11445,6 @@
       <Altitude>0</Altitude>
       <DrawPriority>0</DrawPriority>
       <IsHidden>false</IsHidden>
-    </Sprite>
-    <Sprite xsi:type="Button">
-      <Animator>
-        <SpriteSheet>
-          <TexturePath>Buttons/WorldButtonSheet</TexturePath>
-          <Rows>4</Rows>
-          <Columns>3</Columns>
-        </SpriteSheet>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>8</CurrentFrame>
-        <FramesInLoop>10</FramesInLoop>
-        <FrameCounter>7</FrameCounter>
-        <FrameSpeed>0.1</FrameSpeed>
-        <AnimState>Loop</AnimState>
-        <Timer>
-          <TotalElapsedTime>0.0666668</TotalElapsedTime>
-          <IsDone>false</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>1</Alpha>
-      <Position>
-        <X>14</X>
-        <Y>14</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ButtonType>Group</ButtonType>
-      <IsPressed>true</IsPressed>
-      <ReleasedArgs>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-      </ReleasedArgs>
-      <PressedArgs>
-        <StartFrame>1</StartFrame>
-        <CurrentFrame>1</CurrentFrame>
-        <FramesInLoop>10</FramesInLoop>
-        <FrameSpeed>0.1</FrameSpeed>
-        <AnimState>Loop</AnimState>
-      </PressedArgs>
-      <Timer>
-        <TotalElapsedTime>0</TotalElapsedTime>
-        <IsDone>true</IsDone>
-      </Timer>
     </Sprite>
     <Sprite xsi:type="Button">
       <Animator>
@@ -12176,6 +11482,61 @@
       <IsHidden>false</IsHidden>
       <ButtonType>Group</ButtonType>
       <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>10</FramesInLoop>
+        <FrameSpeed>0.1</FrameSpeed>
+        <AnimState>Loop</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Buttons/WorldButtonSheet</TexturePath>
+          <Rows>4</Rows>
+          <Columns>3</Columns>
+        </SpriteSheet>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>5</CurrentFrame>
+        <FramesInLoop>10</FramesInLoop>
+        <FrameCounter>4</FrameCounter>
+        <FrameSpeed>0.1</FrameSpeed>
+        <AnimState>Loop</AnimState>
+        <Timer>
+          <TotalElapsedTime>0.08333349</TotalElapsedTime>
+          <IsDone>false</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>14</X>
+        <Y>14</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Group</ButtonType>
+      <IsPressed>true</IsPressed>
       <ReleasedArgs>
         <StartFrame>0</StartFrame>
         <CurrentFrame>0</CurrentFrame>
@@ -12418,6 +11779,645 @@
     <Sprite>
       <Animator>
         <SpriteSheet>
+          <TexturePath>Temp/PendantBackGround</TexturePath>
+          <Rows>1</Rows>
+          <Columns>1</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>609</X>
+        <Y>636</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+    </Sprite>
+    <Sprite xsi:type="Cube">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/LightStoneCubeTop</TexturePath>
+          <Rows>1</Rows>
+          <Columns>3</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>3</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>666</X>
+        <Y>678</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ShadowPath>Temp/CubeShadow</ShadowPath>
+      <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
+      <AnimatorBase>
+        <SpriteSheet>
+          <TexturePath>Temp/LightStoneCubeBase</TexturePath>
+          <Rows>1</Rows>
+          <Columns>1</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </AnimatorBase>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/LeftArrowMinusBN_Silver</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>618</X>
+        <Y>651</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Default</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/LeftArrowMinusBN_Brown</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>618</X>
+        <Y>687</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Default</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/LeftArrowMinusBN_Brown</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>618</X>
+        <Y>717</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Default</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/LeftArrowMinusBN_Silver</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>618</X>
+        <Y>753</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Default</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/RightArrowPlusBN_Silver</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>747</X>
+        <Y>651</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Default</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/RightArrowPlusBN_Brown</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>747</X>
+        <Y>687</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Default</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/RightArrowPlusBN_Brown</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>747</X>
+        <Y>717</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Default</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/RightArrowPlusBN_Silver</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>747</X>
+        <Y>753</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>Default</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/RandBN</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>666</X>
+        <Y>651</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>CheckBox</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite xsi:type="Button">
+      <Animator>
+        <SpriteSheet>
+          <TexturePath>Temp/RandBN</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
+        </SpriteSheet>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameCounter>0</FrameCounter>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+        <Timer>
+          <TotalElapsedTime>0</TotalElapsedTime>
+          <IsDone>true</IsDone>
+        </Timer>
+      </Animator>
+      <Alpha>1</Alpha>
+      <Position>
+        <X>666</X>
+        <Y>762</Y>
+      </Position>
+      <PositionOffset>
+        <X>0</X>
+        <Y>0</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <ButtonType>CheckBox</ButtonType>
+      <IsPressed>false</IsPressed>
+      <ReleasedArgs>
+        <StartFrame>0</StartFrame>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </ReleasedArgs>
+      <PressedArgs>
+        <StartFrame>1</StartFrame>
+        <CurrentFrame>1</CurrentFrame>
+        <FramesInLoop>1</FramesInLoop>
+        <FrameSpeed>0.133</FrameSpeed>
+        <AnimState>None</AnimState>
+      </PressedArgs>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Sprite>
+    <Sprite>
+      <Animator>
+        <SpriteSheet>
           <TexturePath>Temp/GridAxisGlyph</TexturePath>
           <Rows>1</Rows>
           <Columns>1</Columns>
@@ -12459,8 +12459,8 @@
         <Rows>1</Rows>
         <Columns>16</Columns>
       </SpriteSheet>
-      <StartFrame>12</StartFrame>
-      <CurrentFrame>12</CurrentFrame>
+      <StartFrame>8</StartFrame>
+      <CurrentFrame>8</CurrentFrame>
       <FramesInLoop>1</FramesInLoop>
       <FrameCounter>0</FrameCounter>
       <FrameSpeed>0.2</FrameSpeed>
@@ -12472,22 +12472,22 @@
     </Animator>
     <Alpha>1</Alpha>
     <Position>
-      <X>-267</X>
-      <Y>133.5</Y>
+      <X>-372</X>
+      <Y>216</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
       <Y>-18</Y>
     </PositionOffset>
     <Coords>
-      <X>1</X>
-      <Y>-8</Y>
+      <X>2</X>
+      <Y>-12</Y>
     </Coords>
     <Altitude>1</Altitude>
     <DrawPriority>0</DrawPriority>
     <IsHidden>false</IsHidden>
     <LightPath>Temp/PlayerLight</LightPath>
-    <Direction>West</Direction>
+    <Direction>South</Direction>
     <Movement>Standing</Movement>
     <Speed>3</Speed>
   </Player>
@@ -12511,8 +12511,8 @@
     </Animator>
     <Alpha>0.3</Alpha>
     <Position>
-      <X>288</X>
-      <Y>-468</Y>
+      <X>144</X>
+      <Y>-396</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
@@ -12520,7 +12520,7 @@
     </PositionOffset>
     <Coords>
       <X>-9</X>
-      <Y>17</Y>
+      <Y>13</Y>
     </Coords>
     <Altitude>0</Altitude>
     <DrawPriority>-1000</DrawPriority>
@@ -12528,13 +12528,13 @@
     <Image xsi:type="Cube">
       <Animator>
         <SpriteSheet>
-          <TexturePath>Temp/GrassCubeTop</TexturePath>
-          <Rows>3</Rows>
-          <Columns>4</Columns>
+          <TexturePath>Temp/LightStoneCubeTop</TexturePath>
+          <Rows>1</Rows>
+          <Columns>3</Columns>
         </SpriteSheet>
         <StartFrame>0</StartFrame>
         <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>12</FramesInLoop>
+        <FramesInLoop>3</FramesInLoop>
         <FrameCounter>0</FrameCounter>
         <FrameSpeed>0.133</FrameSpeed>
         <AnimState>None</AnimState>
@@ -12543,10 +12543,10 @@
           <IsDone>true</IsDone>
         </Timer>
       </Animator>
-      <Alpha>1</Alpha>
+      <Alpha>0.3</Alpha>
       <Position>
-        <X>288</X>
-        <Y>-468</Y>
+        <X>144</X>
+        <Y>-396</Y>
       </Position>
       <PositionOffset>
         <X>0</X>
@@ -12584,13 +12584,13 @@
   <CubePreview>
     <Animator>
       <SpriteSheet>
-        <TexturePath>Temp/GrassCubeTop</TexturePath>
-        <Rows>3</Rows>
-        <Columns>4</Columns>
+        <TexturePath>Temp/LightStoneCubeTop</TexturePath>
+        <Rows>1</Rows>
+        <Columns>3</Columns>
       </SpriteSheet>
       <StartFrame>0</StartFrame>
       <CurrentFrame>0</CurrentFrame>
-      <FramesInLoop>12</FramesInLoop>
+      <FramesInLoop>3</FramesInLoop>
       <FrameCounter>0</FrameCounter>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -12636,5 +12636,5 @@
     </AnimatorBase>
   </CubePreview>
   <Authorization>None</Authorization>
-  <BuildDimensions>Cube</BuildDimensions>
+  <BuildDimensions>_Cube</BuildDimensions>
 </MapBuilder>

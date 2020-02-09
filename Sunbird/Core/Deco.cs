@@ -90,6 +90,7 @@ namespace Sunbird.Core
 
     public static class DecoFactory
     {
+        public static Type[] Types = new Type[] { typeof(DecoMetaData) };
         public static DecoMetaData CurrentDecoMetaData { get; set; }
 
         public static bool IsRandom { get; set; }
@@ -184,7 +185,7 @@ namespace Sunbird.Core
 
         public void Serialize()
         {
-            Serializer.WriteXML<DecoFactoryData>(this, "DecoFactoryData.xml", new Type[] { typeof(DecoMetaData) });
+            Serializer.WriteXML<DecoFactoryData>(this, "DecoFactoryData.xml", DecoFactory.Types);
         }
 
         public void SyncIn()

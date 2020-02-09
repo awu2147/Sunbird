@@ -32,7 +32,7 @@ namespace Sunbird.External
 
     public enum BuildDimensions
     {
-        Cube,
+        _Cube,
         _1x1,
         _2x2,
         _3x3,
@@ -69,38 +69,10 @@ namespace Sunbird.External
             }
         }
 
-        private void MainGame_Exiting(object sender, System.EventArgs e)
-        {
-            Serializer.WriteXML<MapBuilder>(this, "MapBuilderSave.xml", new Type[] { typeof(Player), typeof(Cube), typeof(GhostMarker), typeof(Button) });
-        }
-
-        private void CreateContent()
-        {
-            LayerMap.Add(Altitude, new SpriteList<Sprite>());
-
-            var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
-            var playerAnimArgs = new AnimArgs(0, 1, 0.2f, AnimationState.Loop);
-            Player = new Player(MainGame, playerSheet, playerAnimArgs) { DrawPriority = 0 };
-            Player.Light = Content.Load<Texture2D>("Temp/PlayerLight");
-            Player.LightPath = "Temp/PlayerLight";
-            LayerMap[Altitude].Add(Player);
-
-            CreateOverlay();
-
-            // GhostMarker relies on CubePreview so we must create it after the latter (which belongs to the overlay).
-            GhostMarker = new GhostMarker(MainGame, SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker")) { DrawPriority = 1 };
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
-            LayerMap[Altitude].Add(GhostMarker);
-
-            Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
-            Peripherals.ScrollWheelDown += Peripherals_ScrollWheelDown;
-            MainGame.Exiting += MainGame_Exiting;
-        }
-
         private void CreateOverlay()
         {
-            CreateCubePendant();
             CreateRibbon();
+            CreateCubePendant();
 
             var mlBGs = SpriteSheet.CreateNew(MainGame, "Temp/MessageLogBackground");
             MessageLogBG = new Sprite(MainGame, mlBGs, new Vector2(5, MainGame.Height - 5), Alignment.BottomLeft);
@@ -109,7 +81,7 @@ namespace Sunbird.External
             Overlay.Add(new Sprite(MainGame, gridAxisGlyph, new Vector2(MainGame.Width - 5, 5), Alignment.TopRight));
         }
 
-        #region Top Ribbon
+        #region Ribbon
 
         private void CreateRibbon()
         {
@@ -121,122 +93,71 @@ namespace Sunbird.External
             Overlay.Add(_ribbonBg);
 
             var worldBNs = SpriteSheet.CreateNew(MainGame, "Buttons/WorldButtonSheet", 4, 3);
-            var worldBN = new Button(MainGame, worldBNs, null, ribbonPosition + new Vector2(9, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group, PressedArgs = new AnimArgs(1, 10, 0.1f, AnimationState.Loop) };
+            var worldBN = new Button(MainGame, worldBNs, null, ribbonPosition + new Vector2(9, 9), Alignment.TopLeft) { PressedArgs = new AnimArgs(1, 10, 0.1f, AnimationState.Loop) };
             worldBN.Clicked += WorldBN_Clicked;
 
-            var buildBNs = SpriteSheet.CreateNew(MainGame, "Buttons/BuildButtonSheet", 4, 3);
-            var buildBN = new Button(MainGame, buildBNs, null, ribbonPosition + new Vector2(75, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group, PressedArgs = new AnimArgs(1, 10, 0.1f, AnimationState.Loop) };
-            buildBN.Clicked += BuildBN_Clicked;
-
-            worldBN.Siblings = new List<Button>() { buildBN };
-            if (Authorization == Authorization.None)
-            {
-                worldBN.IsPressed = true;
-                worldBN.ReconfigureAnimator(worldBN.PressedArgs);
-            }
-            worldBN.OnUpdated = () => 
+            if (Authorization == Authorization.None) { worldBN.IsPressed = true; }
+            worldBN.OnUpdated = () =>
             {
                 if (Peripherals.KeyTapped(Keys.Q))
                 {
-                    if (Authorization == Authorization.None)
-                    {
-                        worldBN.IsPressed = true;
-                        worldBN.ReconfigureAnimator(worldBN.PressedArgs);
-                    }
-                    else if (Authorization == Authorization.Builder)
-                    {
-                        worldBN.IsPressed = false;
-                        worldBN.ReconfigureAnimator(worldBN.ReleasedArgs);
-                    }
+                    if (Authorization == Authorization.None) { worldBN.IsPressed = true; }
+                    else if (Authorization == Authorization.Builder) { worldBN.IsPressed = false; }
                 }
             };
 
-            buildBN.Siblings = new List<Button>() { worldBN };
-            if (Authorization == Authorization.Builder)
-            {
-                buildBN.IsPressed = true;
-                buildBN.ReconfigureAnimator(worldBN.PressedArgs);
-            }
+            var buildBNs = SpriteSheet.CreateNew(MainGame, "Buttons/BuildButtonSheet", 4, 3);
+            var buildBN = new Button(MainGame, buildBNs, null, ribbonPosition + new Vector2(75, 9), Alignment.TopLeft) { PressedArgs = new AnimArgs(1, 10, 0.1f, AnimationState.Loop) };
+            buildBN.Clicked += BuildBN_Clicked;
+
+            if (Authorization == Authorization.Builder) { buildBN.IsPressed = true; }
             buildBN.OnUpdated = () =>
             {
                 if (Peripherals.KeyTapped(Keys.Q))
                 {
-                    if (Authorization == Authorization.Builder)
-                    {
-                        buildBN.IsPressed = true;
-                        buildBN.ReconfigureAnimator(buildBN.PressedArgs);
-                    }
-                    else if (Authorization == Authorization.None)
-                    {
-                        buildBN.IsPressed = false;
-                        buildBN.ReconfigureAnimator(buildBN.ReleasedArgs);
-                    }
+                    if (Authorization == Authorization.Builder) { buildBN.IsPressed = true; }
+                    else if (Authorization == Authorization.None) { buildBN.IsPressed = false; }
                 }
             };
-            Overlay.Add(worldBN);
-            Overlay.Add(buildBN);
+
+            Button.BindGroup(new List<Button>() { buildBN, worldBN });
+            foreach (var button in new List<Button>() { buildBN, worldBN }) { Overlay.Add(button); }
 
             var buildCubeBNs = SpriteSheet.CreateNew(MainGame, "Buttons/BuildCubeBN", 1, 2);
-            var buildCubeBN = new Button(MainGame, buildCubeBNs, null, ribbonPosition + new Vector2(141, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group };
+            var buildCubeBN = new Button(MainGame, buildCubeBNs, null, ribbonPosition + new Vector2(141, 9), Alignment.TopLeft);
             buildCubeBN.Clicked += BuildCubeBN_Clicked;
+            if (BuildDimensions == BuildDimensions._Cube) { buildCubeBN.IsPressed = true; }
 
             var build1x1BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build1x1BN", 1, 2);
-            var build1x1BN = new Button(MainGame, build1x1BNs, null, ribbonPosition + new Vector2(183, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group };
+            var build1x1BN = new Button(MainGame, build1x1BNs, null, ribbonPosition + new Vector2(183, 9), Alignment.TopLeft);
             build1x1BN.Clicked += Build1x1BN_Clicked;
+            if (BuildDimensions == BuildDimensions._1x1) { build1x1BN.IsPressed = true; }
 
             var build2x2BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build2x2BN", 1, 2);
-            var build2x2BN = new Button(MainGame, build2x2BNs, null, ribbonPosition + new Vector2(225, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group };
+            var build2x2BN = new Button(MainGame, build2x2BNs, null, ribbonPosition + new Vector2(225, 9), Alignment.TopLeft);
             build2x2BN.Clicked += Build2x2BN_Clicked;
+            if (BuildDimensions == BuildDimensions._2x2) { build2x2BN.IsPressed = true; }
 
             var build3x3BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build3x3BN", 1, 2);
-            var build3x3BN = new Button(MainGame, build3x3BNs, null, ribbonPosition + new Vector2(267, 9), Alignment.TopLeft) { ButtonType = ButtonType.Group };
-            build1x1BN.Clicked += Build1x1BN_Clicked1;
+            var build3x3BN = new Button(MainGame, build3x3BNs, null, ribbonPosition + new Vector2(267, 9), Alignment.TopLeft);
+            build3x3BN.Clicked += Build3x3BN_Clicked;
+            if (BuildDimensions == BuildDimensions._3x3) { build3x3BN.IsPressed = true; }
 
-            buildCubeBN.Siblings = new List<Button>() { build1x1BN, build2x2BN, build3x3BN };
-            build1x1BN.Siblings = new List<Button>() { buildCubeBN, build2x2BN, build3x3BN };
-            build2x2BN.Siblings = new List<Button>() { build1x1BN, buildCubeBN, build3x3BN };
-            build3x3BN.Siblings = new List<Button>() { build1x1BN, build2x2BN, buildCubeBN };
+            Button.BindGroup(new List<Button>() { buildCubeBN, build1x1BN, build2x2BN, build3x3BN });
+            foreach (var button in new List<Button>() { buildCubeBN, build1x1BN, build2x2BN, build3x3BN }) { Overlay.Add(button); }
 
-            Overlay.Add(buildCubeBN);
-            Overlay.Add(build1x1BN);
-            Overlay.Add(build2x2BN);
-            Overlay.Add(build3x3BN);
-
-        }
-
-        private void Build1x1BN_Clicked1(object sender, ButtonClickedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void Build2x2BN_Clicked(object sender, ButtonClickedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void Build1x1BN_Clicked(object sender, ButtonClickedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void BuildCubeBN_Clicked(object sender, ButtonClickedEventArgs e)
-        {
-            //throw new NotImplementedException();
         }
 
         #endregion
 
-        #region Top Ribbon Event Handlers
+        #region Ribbon Event Handlers
 
-        private void BuildBN_Clicked(object sender, ButtonClickedEventArgs e)
-        {
-            Authorization = Authorization.Builder;
-        }
-
-        private void WorldBN_Clicked(object sender, ButtonClickedEventArgs e)
-        {
-            Authorization = Authorization.None;
-        }
+        private void Build3x3BN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._3x3; }
+        private void Build2x2BN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._2x2; }
+        private void Build1x1BN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._1x1; }
+        private void BuildCubeBN_Clicked(object sender, ButtonClickedEventArgs e) { BuildDimensions = BuildDimensions._Cube; }
+        private void BuildBN_Clicked(object sender, ButtonClickedEventArgs e) { Authorization = Authorization.Builder; }
+        private void WorldBN_Clicked(object sender, ButtonClickedEventArgs e) { Authorization = Authorization.None; }
 
         #endregion
 
@@ -398,27 +319,35 @@ namespace Sunbird.External
             GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
         }
 
-        private void PRandB_Unchecked(object sender, ButtonClickedEventArgs e)
-        {
-            CubeFactory.IsRandomBottom = false;
-        }
-
-        private void PRandB_Checked(object sender, ButtonClickedEventArgs e)
-        {
-            CubeFactory.IsRandomBottom = true;
-        }
-
-        private void PRandTop_Unchecked(object sender, ButtonClickedEventArgs e)
-        {
-            CubeFactory.IsRandomTop = false;
-        }
-
-        private void PRandTop_Checked(object sender, ButtonClickedEventArgs e)
-        {
-            CubeFactory.IsRandomTop = true;
-        }
+        private void PRandB_Unchecked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomBottom = false; }
+        private void PRandB_Checked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomBottom = true; }
+        private void PRandTop_Unchecked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomTop = false; }
+        private void PRandTop_Checked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomTop = true; }
 
         #endregion
+
+        private void CreateContent()
+        {
+            LayerMap.Add(Altitude, new SpriteList<Sprite>());
+
+            var playerSheet = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
+            var playerAnimArgs = new AnimArgs(0, 1, 0.2f, AnimationState.Loop);
+            Player = new Player(MainGame, playerSheet, playerAnimArgs) { DrawPriority = 0 };
+            Player.Light = Content.Load<Texture2D>("Temp/PlayerLight");
+            Player.LightPath = "Temp/PlayerLight";
+            LayerMap[Altitude].Add(Player);
+
+            CreateOverlay();
+
+            // GhostMarker relies on CubePreview so we must create it after the latter (which belongs to the overlay).
+            GhostMarker = new GhostMarker(MainGame, SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker")) { DrawPriority = 1 };
+            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            LayerMap[Altitude].Add(GhostMarker);
+
+            Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
+            Peripherals.ScrollWheelDown += Peripherals_ScrollWheelDown;
+            MainGame.Exiting += MainGame_Exiting;
+        }
 
         private void LoadContentFromFile()
         {
@@ -434,10 +363,11 @@ namespace Sunbird.External
             }
 
             // Most time is spent here...
-            var XmlData = Serializer.ReadXML<MapBuilder>("MapBuilderSave.xml", new Type[] { typeof(Player), typeof(Cube), typeof(GhostMarker), typeof(Button) });
+            var XmlData = Serializer.ReadXML<MapBuilder>("MapBuilderSave.xml");
 
             Altitude = XmlData.Altitude;
             Authorization = XmlData.Authorization;
+            BuildDimensions = XmlData.BuildDimensions;
 
             LayerMap = XmlData.LayerMap;
             foreach (var layer in LayerMap)
@@ -470,6 +400,11 @@ namespace Sunbird.External
             Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
             Peripherals.ScrollWheelDown += Peripherals_ScrollWheelDown;
             MainGame.Exiting += MainGame_Exiting;
+        }
+
+        private void MainGame_Exiting(object sender, System.EventArgs e)
+        {
+            Serializer.WriteXML<MapBuilder>(this, "MapBuilderSave.xml");
         }
 
         // Should these events be state specific?
@@ -672,13 +607,13 @@ namespace Sunbird.External
                             }
                             else
                             {
-                                if (!(sprite is Cube))
+                                if (!(sprite is IWorldObject))
                                 {
                                     LayerMap[sprite.Altitude].Add(sprite);
                                 }
                                 else
                                 {
-                                    throw new NotImplementedException("Cube trying to move between layers, is this correct? Use AddCheck if so.");
+                                    throw new NotImplementedException("Cube/Deco trying to move between layers, is this correct? Use AddCheck if so.");
                                 }
                             }
                         }
@@ -691,7 +626,6 @@ namespace Sunbird.External
                 {
                     sprite.Update(gameTime);
                 }
-
 #if DEBUG  
                 foreach (var layer in LayerMap)
                 {
@@ -893,7 +827,7 @@ namespace Sunbird.External
                 {
                     if (sprite.Light != null)
                     {
-                        spriteBatch.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White);
+                        spriteBatch.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White); // FIXME
                     }
                 }
             }
@@ -910,13 +844,13 @@ namespace Sunbird.External
             {
                 foreach (var sprite in LayerMap[altitude])
                 {
-                    if (!(sprite is Cube))
+                    if (sprite is Cube)
                     {
-                        spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                        spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
                     }
                     else
                     {
-                        spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                        spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                     }
                 }
             }

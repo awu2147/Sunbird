@@ -16,6 +16,7 @@ using Sunbird.External;
 using Sunbird.Controllers;
 using Sunbird.Serialization;
 using System.Reflection;
+using Sunbird.GUI;
 
 namespace Sunbird
 {
@@ -35,22 +36,17 @@ namespace Sunbird
         public int Width { get { return Graphics.PreferredBackBufferWidth; } }
         public int Height { get { return Graphics.PreferredBackBufferHeight; } }
 
-        public Texture2D LightingRender { get; set; }
-        public RenderTarget2D LightingRenderTarget { get; set; }
+        public Texture2D GameRender;
+        public Texture2D ShadowRender;
+        public Texture2D LightingRender;
+        public Texture2D LightingStencilRender;
 
-        public Texture2D LightingStencilRender { get; set; }
-        public RenderTarget2D LightingStencilRenderTarget { get; set; }
+        public RenderTarget2D GameRenderTarget;
+        public RenderTarget2D ShadowRenderTarget; 
+        public RenderTarget2D LightingRenderTarget;
+        public RenderTarget2D LightingStencilRenderTarget;
 
-        public Texture2D LightingCompRender { get; set; }
-        public RenderTarget2D LightingCompRenderTarget { get; set; }
-
-        public Texture2D ShadowRender { get; set; }
-        public RenderTarget2D ShadowRenderTarget { get; set; }
-
-        public Texture2D GameRender { get; set; }
-        public RenderTarget2D GameRenderTarget { get; set; }
-
-        public BlendState Subtractive { get; set; }
+        public BlendState Subtractive;
 
         public bool CleanLoad { get; set; } = false;
 
@@ -61,6 +57,15 @@ namespace Sunbird
             IsMouseVisible = true;
             IsFixedTimeStep = true;
 
+            Serializer.ExtraTypes = new Type[]
+            {
+                typeof(Player),
+                typeof(Cube),
+                typeof(Deco),
+                typeof(GhostMarker),
+                typeof(Button),
+            };
+
             if (CleanLoad == true)
             {
                 Config = new Config(this);
@@ -69,7 +74,6 @@ namespace Sunbird
             {
                 Config = Serializer.ReadXML<Config>("Config.xml");
                 Config.LoadContent(this);
-                World.ReconstructTopFaceArea();
             }
 
             Graphics.PreferredBackBufferWidth = Config.WindowWidth;
@@ -118,14 +122,15 @@ namespace Sunbird
                     {0, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3) } },
                 };
+                // There should be at least one deco in the library.
                 DecoFactory.CurrentDecoMetaData = DecoFactory.DecoMetaDataLibrary[0];
             }
             else
             {
-                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml", new Type[] { typeof(CubeMetaData), typeof(CubeBaseMetaData) });
+                CubeFactoryData cubeFactoryData = Serializer.ReadXML<CubeFactoryData>("CubeFactoryData.xml", CubeFactory.Types);
                 cubeFactoryData.SyncOut();
 
-                DecoFactoryData decoFactoryData = Serializer.ReadXML<DecoFactoryData>("DecoFactoryData.xml", new Type[] { typeof(DecoMetaData) });
+                DecoFactoryData decoFactoryData = Serializer.ReadXML<DecoFactoryData>("DecoFactoryData.xml", DecoFactory.Types);
                 decoFactoryData.SyncOut();
             }
 
@@ -203,7 +208,6 @@ namespace Sunbird
                     i = 0;
                 }
                 Camera.CurrentMode = (CameraMode)(i);
-                Debug.Print(Camera.CurrentMode.ToString());
             }
             Camera.Update();
 
@@ -218,10 +222,7 @@ namespace Sunbird
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            if (World.ZoomRatio > 1)
-            {
-                SamplerState = SamplerState.PointClamp;
-            }
+            if (World.ZoomRatio > 1) { SamplerState = SamplerState.PointClamp; }
 
             // Game Render
             GraphicsDevice.SetRenderTarget(GameRenderTarget);

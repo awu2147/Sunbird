@@ -37,8 +37,8 @@ namespace Sunbird.Core
 
         public void MorphImage(Sprite image, MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            Serializer.WriteXML<Sprite>(image, "DynamicCache.xml", new Type[] { typeof(Cube) });
-            Image = Serializer.ReadXML<Sprite>("DynamicCache.xml", new Type[] { typeof(Cube) });
+            Serializer.WriteXML<Sprite>(image, "DynamicCache.xml");
+            Image = Serializer.ReadXML<Sprite>("DynamicCache.xml");
             Image.IsHidden = IsHidden;
             Image.Position = Position;
             Image.LoadContent(mainGame, graphicsDevice, content);

@@ -60,6 +60,7 @@ namespace Sunbird.External
             Serializer.WriteXML<Config>(this, "Config.xml");
         }
 
+        // Static World property piggybacks on the Config file.
         public void SyncIn()
         {
             WorldZoom = World.Zoom;
@@ -68,6 +69,7 @@ namespace Sunbird.External
         public void SyncOut()
         {
             World.Zoom = WorldZoom;
+            World.ReconstructTopFaceArea();
         }
     }
 
