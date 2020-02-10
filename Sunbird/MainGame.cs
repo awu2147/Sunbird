@@ -49,7 +49,7 @@ namespace Sunbird
 
         public BlendState Subtractive;
 
-        public bool CleanLoad { get; set; } = false;
+        public bool CleanLoad { get; set; } = true;
 
         public MainGame()
         {
@@ -129,11 +129,17 @@ namespace Sunbird
 
                 DecoFactory.DecoMetaDataLibrary = new XDictionary<int, DecoMetaData>()
                 {
-                    {0, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                    {0, new DecoMetaData(){Path = "Temp/Tree1", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, -48), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
+                    {1, new DecoMetaData(){Path = "Temp/2x2Placeholder", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(-21, 0), Dimensions = new Dimension(2, 2, 1), TypeName = typeof(Deco).FullName } },
+                    {2, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName } },
                 };
                 // There should be at least one deco in the library.
-                DecoFactory.CurrentDecoMetaData = DecoFactory.DecoMetaDataLibrary[0];
+                DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary[0];
+                DecoFactory.CurrentDecoMetaData2x2 = DecoFactory.DecoMetaDataLibrary[1];
+                DecoFactory.CurrentDecoMetaData3x3 = DecoFactory.DecoMetaDataLibrary[2];
                 foreach (var dMD in DecoFactory.DecoMetaDataLibrary)
                 {
                     dMD.Value.LoadContent(this);

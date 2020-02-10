@@ -30,14 +30,6 @@ namespace Sunbird.External
         Builder
     }
 
-    public enum BuildDimensions
-    {
-        _Cube,
-        _1x1,
-        _2x2,
-        _3x3,
-    }
-
     public class MapBuilder : State
     {
         public static readonly XmlSerializer MapBuilderSerializer = Serializer.CreateNew(typeof(MapBuilder));
@@ -79,7 +71,18 @@ namespace Sunbird.External
             CreateCubePendant();
 
             // The deco image. FIXME: should make this static property on DecoFactory?
-            DecoPreview = DecoFactory.CreateCurrentDeco(MainGame, Coord.Zero, Coord.Zero, 0);
+            if (BuildDimensions == BuildDimensions._1x1)
+            {
+                DecoPreview = DecoFactory.CreateCurrentDeco1x1(MainGame, Coord.Zero, Coord.Zero, 0);
+            }
+            else if (BuildDimensions == BuildDimensions._2x2)
+            {
+                DecoPreview = DecoFactory.CreateCurrentDeco2x2(MainGame, Coord.Zero, Coord.Zero, 0);
+            }
+            else if (BuildDimensions == BuildDimensions._3x3)
+            {
+                DecoPreview = DecoFactory.CreateCurrentDeco3x3(MainGame, Coord.Zero, Coord.Zero, 0);
+            }
 
             var mlBGs = SpriteSheet.CreateNew(MainGame, "Temp/MessageLogBackground");
             MessageLogBG = new Sprite(MainGame, mlBGs, new Vector2(5, MainGame.Height - 5), Alignment.BottomLeft);
@@ -162,15 +165,20 @@ namespace Sunbird.External
         private void Build3x3BN_Clicked(object sender, ButtonClickedEventArgs e) 
         { 
             BuildDimensions = BuildDimensions._3x3;
+            DecoPreview = DecoFactory.CreateCurrentDeco3x3(MainGame, Coord.Zero, Coord.Zero, 0);
             GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
         }
         private void Build2x2BN_Clicked(object sender, ButtonClickedEventArgs e) 
-        { 
-            BuildDimensions = BuildDimensions._2x2; 
+        {
+            BuildDimensions = BuildDimensions._2x2;
+            DecoPreview = DecoFactory.CreateCurrentDeco2x2(MainGame, Coord.Zero, Coord.Zero, 0);
+            GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
         }
         private void Build1x1BN_Clicked(object sender, ButtonClickedEventArgs e) 
         { 
-            BuildDimensions = BuildDimensions._1x1; 
+            BuildDimensions = BuildDimensions._1x1;
+            DecoPreview = DecoFactory.CreateCurrentDeco1x1(MainGame, Coord.Zero, Coord.Zero, 0);
+            GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
         }
         private void BuildCubeBN_Clicked(object sender, ButtonClickedEventArgs e) 
         { 
@@ -522,9 +530,19 @@ namespace Sunbird.External
                             var cube = CubeFactory.CreateCurrentCube(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
                             LayerMap[Altitude].AddCheck(cube, Altitude);
                         }
+                        else if (BuildDimensions == BuildDimensions._1x1)
+                        {
+                            var multiCube = DecoFactory.CreateCurrentDeco1x1(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            LayerMap[Altitude].AddCheck(multiCube, Altitude);
+                        }
+                        else if (BuildDimensions == BuildDimensions._2x2)
+                        {
+                            var multiCube = DecoFactory.CreateCurrentDeco2x2(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            LayerMap[Altitude].AddCheck(multiCube, Altitude);
+                        }
                         else if (BuildDimensions == BuildDimensions._3x3)
                         {
-                            var multiCube = DecoFactory.CreateCurrentDeco(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            var multiCube = DecoFactory.CreateCurrentDeco3x3(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
                             LayerMap[Altitude].AddCheck(multiCube, Altitude);
                         }
                     }
@@ -542,7 +560,7 @@ namespace Sunbird.External
                                 }
                             }
                         }
-                        else if (BuildDimensions == BuildDimensions._3x3)
+                        else if (BuildDimensions == BuildDimensions._1x1 || BuildDimensions == BuildDimensions._2x2 || BuildDimensions == BuildDimensions._3x3)
                         {
                             for (int i = 0; i < LayerMap[Altitude].Count(); i++)
                             {
