@@ -34,9 +34,11 @@ namespace Sunbird.Core
     public enum BuildDimensions
     {
         _Cube,  
-        [Dimension(new int[] {1,1})]
+        [Dimension(new int[2] { 1, 1 })]
         _1x1,
+        [Dimension(new int[2] { 2, 2 })]
         _2x2,
+        [Dimension(new int[2] { 3, 3 })]
         _3x3,
     }
 
@@ -49,7 +51,7 @@ namespace Sunbird.Core
         public Deco() { }
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
-        {
+        {          
             base.LoadContent(mainGame, graphicsDevice, content);
         }
 
@@ -69,6 +71,13 @@ namespace Sunbird.Core
     {
         [XmlIgnore]
         public Texture2D Texture { get; set; }
+
+        [XmlIgnore]
+        public Texture2D AntiShadow { get; set; }
+
+        [XmlIgnore]
+        public Texture2D SelfShadow { get; set; }
+
         public string Path { get; set; }
         public string TypeName { get; set; }
         public Vector2 PositionOffset { get; set; }
@@ -89,6 +98,8 @@ namespace Sunbird.Core
         public void LoadContent(MainGame mainGame)
         {
             Texture = mainGame.Content.Load<Texture2D>(Path);
+            AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, Texture);
+            SelfShadow = GraphicsHelper.GetShadow(mainGame, Texture);
         }
 
         public void NextFrame()
@@ -143,7 +154,10 @@ namespace Sunbird.Core
             // Create deco animator.
             var spriteSheet = SpriteSheet.CreateNew(decoMD.Texture, decoMD.Path, decoMD.SheetRows, decoMD.SheetColumns);
             deco.Animator = new Animator(deco, spriteSheet, decoMD.StartFrame, decoMD.CurrentFrame, decoMD.FrameCount, decoMD.FrameSpeed, decoMD.AnimState);
-            deco.GenerateShadowTextures(mainGame, deco.Animator);
+            deco.AntiShadow = decoMD.AntiShadow;
+            deco.SelfShadow = decoMD.SelfShadow;
+            //FIXME: memory leak here on the GetMask() method.
+            //deco.GenerateShadowTextures(mainGame, deco.Animator);
 
             for (int k = 0; k < decoMD.Dimensions.Z; k++)
             {

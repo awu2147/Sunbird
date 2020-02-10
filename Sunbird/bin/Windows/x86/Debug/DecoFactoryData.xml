@@ -21,11 +21,11 @@
     </Dimensions>
   </CurrentDecoMetaData1x1>
   <CurrentDecoMetaData2x2>
-    <Path>Temp/2x2Placeholder</Path>
+    <Path>Temp/MediumRock</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
-      <X>-21</X>
-      <Y>0</Y>
+      <X>-12</X>
+      <Y>-6</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
@@ -37,7 +37,7 @@
     <Dimensions>
       <X>2</X>
       <Y>2</Y>
-      <Z>1</Z>
+      <Z>2</Z>
     </Dimensions>
   </CurrentDecoMetaData2x2>
   <CurrentDecoMetaData3x3>
@@ -98,11 +98,11 @@
       </key>
       <value>
         <DecoMetaData>
-          <Path>Temp/2x2Placeholder</Path>
+          <Path>Temp/MediumRock</Path>
           <TypeName>Sunbird.Core.Deco</TypeName>
           <PositionOffset>
-            <X>-21</X>
-            <Y>0</Y>
+            <X>-12</X>
+            <Y>-6</Y>
           </PositionOffset>
           <SheetRows>1</SheetRows>
           <SheetColumns>1</SheetColumns>
@@ -114,7 +114,7 @@
           <Dimensions>
             <X>2</X>
             <Y>2</Y>
-            <Z>1</Z>
+            <Z>2</Z>
           </Dimensions>
         </DecoMetaData>
       </value>

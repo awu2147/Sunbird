@@ -68,11 +68,11 @@ namespace Sunbird.Core
             source.SetData(sourcePixels);
         }
 
-        public static Texture2D GetMask(MainGame mainGame, Animator animator, Color color)
+        public static Texture2D GetMask(MainGame mainGame, Texture2D texture, Color color)
         {
-            var totalPixels = animator.SpriteSheet.Texture.Width * animator.SpriteSheet.Texture.Height;
+            var totalPixels = texture.Width * texture.Height;
             Color[] maskPixels = new Color[totalPixels];
-            animator.SpriteSheet.Texture.GetData(maskPixels);
+            texture.GetData(maskPixels);
 
             for (int i = 0; i < maskPixels.Length; i++)
             {
@@ -82,19 +82,19 @@ namespace Sunbird.Core
                 }
             }
 
-            var mask = new Texture2D(mainGame.GraphicsDevice, animator.SpriteSheet.Texture.Width, animator.SpriteSheet.Texture.Height);
+            var mask = new Texture2D(mainGame.GraphicsDevice, texture.Width, texture.Height);
             mask.SetData(maskPixels);
             return mask;
         }
 
-        public static Texture2D GetAntiShadow(MainGame mainGame, Animator animator)
+        public static Texture2D GetAntiShadow(MainGame mainGame, Texture2D texture)
         {
-            return GetMask(mainGame, animator, Color.Black);
+            return GetMask(mainGame, texture, Color.Black);
         }
 
-        public static Texture2D GetShadow(MainGame mainGame, Animator animator)
+        public static Texture2D GetShadow(MainGame mainGame, Texture2D texture)
         {
-            return GetMask(mainGame, animator, new Color(109, 117, 141));
+            return GetMask(mainGame, texture, new Color(109, 117, 141));
         }
 
     }

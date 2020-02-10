@@ -198,7 +198,7 @@ namespace Sunbird.Core
                 cube.AnimatorBase.CurrentFrame = cubeBaseMD.CurrentFrame;
             }
 
-            // Should all cubes have the same shadow and antishadow?
+            // This actually prevents memory leak vs CreateMask() since content manager knows to reuse same texture.
             cube.Shadow = mainGame.Content.Load<Texture2D>("Temp/CubeShadow");
             cube.ShadowPath = "Temp/CubeShadow";
             cube.AntiShadow = mainGame.Content.Load<Texture2D>("Temp/CubeAntiShadow");

@@ -49,7 +49,7 @@ namespace Sunbird
 
         public BlendState Subtractive;
 
-        public bool CleanLoad { get; set; } = true;
+        public bool CleanLoad { get; set; } = false;
 
         public MainGame()
         {
@@ -131,8 +131,8 @@ namespace Sunbird
                 {
                     {0, new DecoMetaData(){Path = "Temp/Tree1", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(0, -48), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
-                    {1, new DecoMetaData(){Path = "Temp/2x2Placeholder", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(-21, 0), Dimensions = new Dimension(2, 2, 1), TypeName = typeof(Deco).FullName } },
+                    {1, new DecoMetaData(){Path = "Temp/MediumRock", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(-12, -6), Dimensions = new Dimension(2, 2, 2), TypeName = typeof(Deco).FullName } },
                     {2, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName } },
                 };

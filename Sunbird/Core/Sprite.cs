@@ -77,7 +77,7 @@ namespace Sunbird.Core
             {
                 ReconfigureAnimator(animArgs);
             }
-            GenerateShadowTextures(mainGame, Animator);
+            GenerateShadowTextures(mainGame, spriteSheet.Texture);
             if (alignment == Alignment.TopLeft)
             {
                 Position = position;
@@ -106,7 +106,8 @@ namespace Sunbird.Core
             {
                 Animator.LoadContent(mainGame, graphicsDevice, content);
                 Animator.Owner = this;
-                GenerateShadowTextures(mainGame, Animator);
+                //FIXME: memory leak here if this is called after instantiation.
+                GenerateShadowTextures(mainGame, Animator.SpriteSheet.Texture);
             }
 
             if (ShadowPath != null)
@@ -127,10 +128,10 @@ namespace Sunbird.Core
         /// Generate AntiShadow and SelfShadow textures from an Animator.
         /// </summary>
         /// <param name="mainGame"></param>
-        public void GenerateShadowTextures(MainGame mainGame, Animator animator)
+        public void GenerateShadowTextures(MainGame mainGame, Texture2D texture)
         {
-            AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, animator);
-            SelfShadow = GraphicsHelper.GetShadow(mainGame, animator);
+            AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, texture);
+            SelfShadow = GraphicsHelper.GetShadow(mainGame, texture);
         }
 
         /// <summary>

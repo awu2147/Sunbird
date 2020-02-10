@@ -2,7 +2,7 @@
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Deco">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Temp/Tree1</TexturePath>
+      <TexturePath>Temp/House</TexturePath>
       <Rows>1</Rows>
       <Columns>1</Columns>
     </SpriteSheet>
@@ -23,8 +23,8 @@
     <Y>0</Y>
   </Position>
   <PositionOffset>
-    <X>0</X>
-    <Y>-48</Y>
+    <X>-87</X>
+    <Y>-99</Y>
   </PositionOffset>
   <Coords>
     <X>0</X>
@@ -41,8 +41,40 @@
       <value>
         <ArrayOfCoord>
           <Coord>
+            <X>-1</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>-1</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>-1</X>
+            <Y>-1</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
             <X>0</X>
             <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>-1</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>-1</Y>
           </Coord>
         </ArrayOfCoord>
       </value>
@@ -54,8 +86,85 @@
       <value>
         <ArrayOfCoord>
           <Coord>
+            <X>-1</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>-1</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>-1</X>
+            <Y>-1</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
             <X>0</X>
             <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>-1</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>-1</Y>
+          </Coord>
+        </ArrayOfCoord>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>2</int>
+      </key>
+      <value>
+        <ArrayOfCoord>
+          <Coord>
+            <X>-1</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>-1</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>-1</X>
+            <Y>-1</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>-1</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>1</X>
+            <Y>-1</Y>
           </Coord>
         </ArrayOfCoord>
       </value>

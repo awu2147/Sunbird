@@ -36,6 +36,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LeftArrowMinusBN_Silver.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LightStoneCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LightStoneCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/MediumRock.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/MessageLogBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/PendantBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/PirateGirlSheet.png</File>
@@ -60,6 +61,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

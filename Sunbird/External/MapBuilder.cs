@@ -280,14 +280,14 @@ namespace Sunbird.External
         {
             CubeFactory.CurrentCubeBaseMetaData.NextFrame();
             CubePreview.AnimatorBase.CurrentFrame = CubeFactory.CurrentCubeBaseMetaData.CurrentFrame;
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PLBN4_Clicked(object sender, ButtonClickedEventArgs e)
         {
             CubeFactory.CurrentCubeBaseMetaData.PreviousFrame();
             CubePreview.AnimatorBase.CurrentFrame = CubeFactory.CurrentCubeBaseMetaData.CurrentFrame;
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PRBN3_Clicked(object sender, ButtonClickedEventArgs e)
@@ -298,7 +298,7 @@ namespace Sunbird.External
             CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCBMD.Path, CCBMD.SheetRows, CCBMD.SheetColumns), CubePreview.AnimatorBase);
             CubePreview.ReconfigureAnimator(CCBMD.StartFrame, CCBMD.CurrentFrame, CCBMD.FrameCount, CCBMD.FrameSpeed, CCBMD.AnimState, CubePreview.AnimatorBase);
 
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PLBN3_Clicked(object sender, ButtonClickedEventArgs e)
@@ -309,7 +309,7 @@ namespace Sunbird.External
             CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCBMD.Path, CCBMD.SheetRows, CCBMD.SheetColumns), CubePreview.AnimatorBase);
             CubePreview.ReconfigureAnimator(CCBMD.StartFrame, CCBMD.CurrentFrame, CCBMD.FrameCount, CCBMD.FrameSpeed, CCBMD.AnimState, CubePreview.AnimatorBase);
 
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PRBN2_Clicked(object sender, ButtonClickedEventArgs e)
@@ -320,7 +320,7 @@ namespace Sunbird.External
             CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
             CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
 
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PLBN2_Clicked(object sender, ButtonClickedEventArgs e)
@@ -331,21 +331,21 @@ namespace Sunbird.External
             CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
             CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
 
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PRBN1_Clicked(object sender, ButtonClickedEventArgs e)
         {
             CubeFactory.CurrentCubeMetaData.NextFrame();
             CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeMetaData.CurrentFrame;
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PLBN1_Clicked(object sender, ButtonClickedEventArgs e)
         {
             CubeFactory.CurrentCubeMetaData.PreviousFrame();
             CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeMetaData.CurrentFrame;
-            GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
+            if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PRandB_Unchecked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomBottom = false; }
@@ -570,6 +570,8 @@ namespace Sunbird.External
                                     var mc = sprite as Deco;
                                     if (mc.OccupiedCoords[Altitude].Contains(relativeTopFaceCoords))
                                     {
+                                        //mc.AntiShadow.Dispose();
+                                        //mc.SelfShadow.Dispose();
                                         LayerMap[Altitude].RemoveCheck(mc, Altitude); i--;
                                     }
                                 }
