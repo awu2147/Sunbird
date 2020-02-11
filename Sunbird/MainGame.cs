@@ -106,6 +106,14 @@ namespace Sunbird
                     {3, new CubeMetaData(){Path = "Temp/WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None} },
                     {4, new CubeMetaData(){Path = "Temp/LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f} },
                 };
+                // CurrentCubeMetaData should never be null;
+                CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
+                // Generate Library Textures from Path;
+                foreach (var cMD in CubeFactory.CubeMetaDataLibrary)
+                {
+                    cMD.Value.LoadContent(this);
+                }
+
                 CubeFactory.CubeBaseMetaDataLibrary = new XDictionary<int, CubeBaseMetaData>()
                 {
                     {0, new CubeBaseMetaData(){Path = "Temp/EmptyCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
@@ -115,13 +123,9 @@ namespace Sunbird
                     {4, new CubeBaseMetaData(){Path = "Temp/WaterCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
                     {5, new CubeBaseMetaData(){Path = "Temp/LavaCubeBase", SheetRows = 4, SheetColumns = 3, FrameCount = 11, AnimState = AnimationState.Loop, } },
                 };
-                // There should be at least one cube in the library.
-                CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
+                // CurrentCubeBaseMetaData should never be null;
                 CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];
-                foreach (var cMD in CubeFactory.CubeMetaDataLibrary)
-                {
-                    cMD.Value.LoadContent(this);
-                }
+                // Generate Library Textures from Path;
                 foreach (var cbMD in CubeFactory.CubeBaseMetaDataLibrary)
                 {
                     cbMD.Value.LoadContent(this);
@@ -136,10 +140,11 @@ namespace Sunbird
                     {2, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName } },
                 };
-                // There should be at least one deco in the library.
+                // CurrentDecoMetaDataNxN should never be null;
                 DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary[0];
                 DecoFactory.CurrentDecoMetaData2x2 = DecoFactory.DecoMetaDataLibrary[1];
                 DecoFactory.CurrentDecoMetaData3x3 = DecoFactory.DecoMetaDataLibrary[2];
+                // Generate Library Textures, AntiShadows, and SelfShadows from Path;
                 foreach (var dMD in DecoFactory.DecoMetaDataLibrary)
                 {
                     dMD.Value.LoadContent(this);
@@ -163,7 +168,6 @@ namespace Sunbird
             {
                 ColorSourceBlend = Blend.Zero,
                 ColorDestinationBlend = Blend.InverseSourceColor,
-
                 AlphaSourceBlend = Blend.Zero,
                 AlphaDestinationBlend = Blend.InverseSourceColor
             };

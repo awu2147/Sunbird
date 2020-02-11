@@ -24,15 +24,9 @@ namespace Sunbird.Core
         public Sprite Image { get; set; }
         public bool DrawDefaultMarker { get; set; }
 
-        private GhostMarker()
-        {
+        private GhostMarker() { }
 
-        }
-
-        public GhostMarker(MainGame mainGame, SpriteSheet spriteSheet) : base(mainGame, spriteSheet)
-        {
-            Alpha = 0.3f;
-        }
+        public GhostMarker(MainGame mainGame, SpriteSheet spriteSheet) : base(mainGame, spriteSheet) { Alpha = 0.3f; }
 
         public void MorphImage(Sprite image, MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
@@ -40,7 +34,8 @@ namespace Sunbird.Core
             Image = Serializer.ReadXML<Sprite>(SpriteSerializer, "DynamicCache.xml");
             Image.IsHidden = IsHidden;
             Image.Position = Position;
-            Image.LoadContent(mainGame, graphicsDevice, content);
+            Image.SafeLoadContent(mainGame, graphicsDevice, content);
+            // AntiShadow and SelfShadow texture are null here but this should be fine.
         }
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)

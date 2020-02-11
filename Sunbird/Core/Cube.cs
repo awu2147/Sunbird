@@ -19,6 +19,9 @@ using Sunbird.Serialization;
 
 namespace Sunbird.Core
 {
+    /// <summary>
+    /// A single unit building block.
+    /// </summary>
     [Serializable]
     public class Cube : Sprite, IWorldObject
     {
@@ -26,15 +29,30 @@ namespace Sunbird.Core
 
         public Cube() { }
 
+        /// <summary>
+        /// Core method used to re-instantiate non-serializable properties and delegates. This can create garbage if called during runtime.
+        /// </summary>
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            // Do not call base here.
             Animator.LoadContent(mainGame, graphicsDevice, content);
             Animator.Owner = this;
             AnimatorBase.LoadContent(mainGame, graphicsDevice, content);
             AnimatorBase.Owner = this;
+#if DEBUG
+            Debug.Assert(ShadowPath != null);
+            Debug.Assert(AntiShadowPath != null);
+#endif
             Shadow = content.Load<Texture2D>(ShadowPath);
             AntiShadow = content.Load<Texture2D>(AntiShadowPath);
+            if (LightPath != null) { Light = content.Load<Texture2D>(LightPath); }
+        }
+
+        /// <summary>
+        /// Core method used to re-instantiate non-serializable properties and delegates. This is safe to call during runtime.
+        /// </summary>
+        public override void SafeLoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
+        {
+            LoadContent(mainGame, graphicsDevice, content);
         }
 
         public override void Update(GameTime gameTime)
@@ -62,8 +80,9 @@ namespace Sunbird.Core
     public class CubeMetaData
     {
         [XmlIgnore]
-        public Texture2D Texture { get; set; }
+        public Texture2D Texture;
         public string Path { get; set; }
+
         public int SheetRows { get; set; } = 1;
         public int SheetColumns { get; set; } = 1;
         public int StartFrame { get; set; } = 0;
@@ -76,6 +95,9 @@ namespace Sunbird.Core
 
         }
 
+        /// <summary>
+        /// Core method used to re-instantiate non-serializable properties and delegates. This can create garbage if called during runtime.
+        /// </summary>
         public void LoadContent(MainGame mainGame)
         {
             Texture = mainGame.Content.Load<Texture2D>(Path);
@@ -110,8 +132,9 @@ namespace Sunbird.Core
     public class CubeBaseMetaData
     {
         [XmlIgnore]
-        public Texture2D Texture { get; set; }
+        public Texture2D Texture;
         public string Path { get; set; }
+
         public int SheetRows { get; set; } = 1;
         public int SheetColumns { get; set; } = 1;
         public int StartFrame { get; set; } = 0;
@@ -125,6 +148,9 @@ namespace Sunbird.Core
 
         }
 
+        /// <summary>
+        /// Core method used to re-instantiate non-serializable properties and delegates. This can create garbage if called during runtime.
+        /// </summary>
         public void LoadContent(MainGame mainGame)
         {
             Texture = mainGame.Content.Load<Texture2D>(Path);
@@ -163,8 +189,8 @@ namespace Sunbird.Core
         public static bool IsRandomTop { get; set; }
         public static bool IsRandomBottom { get; set; }
 
-        public static int CurrentIndex { get; set; } = 0;
-        public static int CurrentBaseIndex { get; set; } = 0;
+        public static int CurrentIndex { get; set; } 
+        public static int CurrentBaseIndex { get; set; } 
 
         public static XDictionary<int, CubeMetaData> CubeMetaDataLibrary { get; set; }
         public static XDictionary<int, CubeBaseMetaData> CubeBaseMetaDataLibrary { get; set; }
@@ -198,7 +224,7 @@ namespace Sunbird.Core
                 cube.AnimatorBase.CurrentFrame = cubeBaseMD.CurrentFrame;
             }
 
-            // This actually prevents memory leak vs CreateMask() since content manager knows to reuse same texture.
+            // This actually prevents memory leak vs CreateMask() since content manager knows to reuse same texture. Should all cubes have the same shadow and antishadow?
             cube.Shadow = mainGame.Content.Load<Texture2D>("Temp/CubeShadow");
             cube.ShadowPath = "Temp/CubeShadow";
             cube.AntiShadow = mainGame.Content.Load<Texture2D>("Temp/CubeAntiShadow");
@@ -284,8 +310,12 @@ namespace Sunbird.Core
             Serializer.WriteXML<CubeFactoryData>(CubeFactoryDataSerializer, this, "CubeFactoryData.xml");
         }
 
+        /// <summary>
+        /// Create a copy of CubeFactory's static properties;
+        /// </summary>
         public void SyncIn()
         {
+            // Copy static properties.
             CurrentCubeMetaData = CubeFactory.CurrentCubeMetaData;
             CurrentCubeBaseMetaData = CubeFactory.CurrentCubeBaseMetaData;
 
@@ -299,19 +329,27 @@ namespace Sunbird.Core
             CubeBaseMetaDataLibrary = CubeFactory.CubeBaseMetaDataLibrary;
         }
 
+        /// <summary>
+        /// Reassign values to CubeFactory's static properties;
+        /// </summary>
         public void SyncOut(MainGame mainGame)
         {
+            // Generate CurrentCubeMetaData Texture from Path.
             CurrentCubeMetaData.LoadContent(mainGame);
+            // Generate Library Textures from Path.
             foreach (var cMD in CubeMetaDataLibrary)
             {
                 cMD.Value.LoadContent(mainGame);
             }
+            // Generate CurrentCubeBaseMetaData Texture from Path.
             CurrentCubeBaseMetaData.LoadContent(mainGame);
+            // Generate Library Textures from Path.
             foreach (var cbMD in CubeBaseMetaDataLibrary)
             {
                 cbMD.Value.LoadContent(mainGame);
             }
 
+            // Reassign static properties.
             CubeFactory.CurrentCubeMetaData = CurrentCubeMetaData;
             CubeFactory.CurrentCubeBaseMetaData = CurrentCubeBaseMetaData;
 

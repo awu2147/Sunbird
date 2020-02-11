@@ -45,31 +45,48 @@ namespace Sunbird.Core
         public bool IsHidden { get; set; }
 
         [XmlIgnore]
-        public Texture2D Light { get; set; }
+        public Texture2D Light;
         public string LightPath { get; set; }
 
         [XmlIgnore]
-        public Texture2D Shadow { get; set; }
+        public Texture2D Shadow;
         public string ShadowPath { get; set; }
 
         [XmlIgnore]
-        public Texture2D AntiShadow { get; set; }
+        public Texture2D AntiShadow;
         public string AntiShadowPath { get; set; }
 
         [XmlIgnore]
-        public Texture2D SelfShadow { get; set; }
+        public Texture2D SelfShadow;
 
-
+        /// <summary>
+        /// This constructor is safe to call at runtime.
+        /// </summary>
         public Sprite() { }
 
+        /// <summary>
+        /// This constructor should never be called at runtime as it creates garbage.
+        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet) : this(mainGame, spriteSheet, Vector2.Zero) { }
 
+        /// <summary>
+        /// This constructor should never be called at runtime as it creates garbage.
+        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position) : this(mainGame, spriteSheet, position, Alignment.TopLeft, null) { }
 
+        /// <summary>
+        /// This constructor should never be called at runtime as it creates garbage.
+        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment) : this(mainGame, spriteSheet, position, alignment, null) { }
 
+        /// <summary>
+        /// This constructor should never be called at runtime as it creates garbage.
+        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, AnimArgs animArgs) : this(mainGame, spriteSheet, Vector2.Zero, Alignment.TopLeft, animArgs) { }
 
+        /// <summary>
+        /// This constructor should never be called at runtime as it creates garbage.
+        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment, AnimArgs animArgs)
         {
             Animator = new Animator(this, spriteSheet);
@@ -77,7 +94,7 @@ namespace Sunbird.Core
             {
                 ReconfigureAnimator(animArgs);
             }
-            GenerateShadowTextures(mainGame, spriteSheet.Texture);
+            GraphicsHelper.GenerateShadowTextures(mainGame, spriteSheet.Texture, ref AntiShadow, ref SelfShadow);
             if (alignment == Alignment.TopLeft)
             {
                 Position = position;
@@ -100,38 +117,36 @@ namespace Sunbird.Core
             }
         }
 
+        /// <summary>
+        /// Core method used to re-instantiate non-serializable properties and delegates. This can create garbage if called during runtime.
+        /// </summary>
         public virtual void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
             if (Animator != null)
             {
                 Animator.LoadContent(mainGame, graphicsDevice, content);
                 Animator.Owner = this;
-                //FIXME: memory leak here if this is called after instantiation.
-                GenerateShadowTextures(mainGame, Animator.SpriteSheet.Texture);
+                //Memory leak here if this is called after instantiation, use SafeLoadContent instead.
+                GraphicsHelper.GenerateShadowTextures(mainGame, Animator.SpriteSheet.Texture, ref AntiShadow, ref SelfShadow);
             }
-
-            if (ShadowPath != null)
-            {
-                Shadow = content.Load<Texture2D>(ShadowPath);
-            }
-            if (AntiShadowPath != null)
-            {
-                AntiShadow = content.Load<Texture2D>(AntiShadowPath);
-            }
-            if (LightPath != null)
-            {
-                Light = content.Load<Texture2D>(LightPath);
-            }
+            if (ShadowPath != null) { Shadow = content.Load<Texture2D>(ShadowPath); }
+            if (AntiShadowPath != null) { AntiShadow = content.Load<Texture2D>(AntiShadowPath); }
+            if (LightPath != null) { Light = content.Load<Texture2D>(LightPath); }
         }
 
         /// <summary>
-        /// Generate AntiShadow and SelfShadow textures from an Animator.
+        /// Core method used to re-instantiate non-serializable properties and delegates. This is safe to call during runtime.
         /// </summary>
-        /// <param name="mainGame"></param>
-        public void GenerateShadowTextures(MainGame mainGame, Texture2D texture)
+        public virtual void SafeLoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
-            AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, texture);
-            SelfShadow = GraphicsHelper.GetShadow(mainGame, texture);
+            if (Animator != null)
+            {
+                Animator.LoadContent(mainGame, graphicsDevice, content);
+                Animator.Owner = this;
+            }
+            if (ShadowPath != null) { Shadow = content.Load<Texture2D>(ShadowPath); }
+            if (AntiShadowPath != null) { AntiShadow = content.Load<Texture2D>(AntiShadowPath); }
+            if (LightPath != null) { Light = content.Load<Texture2D>(LightPath); }
         }
 
         /// <summary>
@@ -150,9 +165,6 @@ namespace Sunbird.Core
         /// <param name="animator"></param>
         public void ReplaceSpriteSheet(SpriteSheet newSheet, Animator animator)
         {
-            //animator.SpriteSheet.Dispose();
-            //GC.Collect();
-            //Debug.Print(animator.SpriteSheet.ToString());
             animator.SpriteSheet = newSheet;          
         }
 

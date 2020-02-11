@@ -21,7 +21,7 @@ namespace Sunbird.Core
         public Dictionary<int, Point> PositionMap { get; set; }
 
         [XmlIgnore]
-        public Texture2D Texture { get; set; }
+        public Texture2D Texture;
 
         public string TexturePath { get; set; }
         public int Rows { get; set; }

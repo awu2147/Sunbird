@@ -70,15 +70,14 @@ namespace Sunbird.Core
     public class DecoMetaData
     {
         [XmlIgnore]
-        public Texture2D Texture { get; set; }
-
-        [XmlIgnore]
-        public Texture2D AntiShadow { get; set; }
-
-        [XmlIgnore]
-        public Texture2D SelfShadow { get; set; }
-
+        public Texture2D Texture;
         public string Path { get; set; }
+
+        [XmlIgnore]
+        public Texture2D AntiShadow;
+        [XmlIgnore]
+        public Texture2D SelfShadow;
+
         public string TypeName { get; set; }
         public Vector2 PositionOffset { get; set; }
         public int SheetRows { get; set; } = 1;
@@ -95,11 +94,14 @@ namespace Sunbird.Core
 
         }
 
+        /// <summary>
+        /// Core method used to re-instantiate non-serializable properties and delegates. This can create garbage if called during runtime.
+        /// </summary>
         public void LoadContent(MainGame mainGame)
         {
             Texture = mainGame.Content.Load<Texture2D>(Path);
             AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, Texture);
-            SelfShadow = GraphicsHelper.GetShadow(mainGame, Texture);
+            SelfShadow = GraphicsHelper.GetSelfShadow(mainGame, Texture);
         }
 
         public void NextFrame()
@@ -339,8 +341,12 @@ namespace Sunbird.Core
             Serializer.WriteXML<DecoFactoryData>(DecoFactoryDataSerializer, this, "DecoFactoryData.xml");
         }
 
+        /// <summary>
+        /// Create a copy of DecoFactory's static properties;
+        /// </summary>
         public void SyncIn()
         {
+            // Copy static properties.
             CurrentDecoMetaData1x1 = DecoFactory.CurrentDecoMetaData1x1;
             CurrentDecoMetaData2x2 = DecoFactory.CurrentDecoMetaData2x2;
             CurrentDecoMetaData3x3 = DecoFactory.CurrentDecoMetaData3x3;
@@ -354,11 +360,16 @@ namespace Sunbird.Core
             DecoMetaDataLibrary = DecoFactory.DecoMetaDataLibrary;
         }
 
+        /// <summary>
+        /// Reassign values to DecoFactory's static properties;
+        /// </summary>
         public void SyncOut(MainGame mainGame)
         {
+            // Generate CurrentDecoMetaDataNxN Texture from Path.
             CurrentDecoMetaData1x1.LoadContent(mainGame);
             CurrentDecoMetaData2x2.LoadContent(mainGame);
             CurrentDecoMetaData3x3.LoadContent(mainGame);
+            // Generate Library Textures from Path.
             foreach (var dMD in DecoMetaDataLibrary)
             {
                 dMD.Value.LoadContent(mainGame);

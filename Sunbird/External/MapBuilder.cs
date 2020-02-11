@@ -570,8 +570,6 @@ namespace Sunbird.External
                                     var mc = sprite as Deco;
                                     if (mc.OccupiedCoords[Altitude].Contains(relativeTopFaceCoords))
                                     {
-                                        //mc.AntiShadow.Dispose();
-                                        //mc.SelfShadow.Dispose();
                                         LayerMap[Altitude].RemoveCheck(mc, Altitude); i--;
                                     }
                                 }
@@ -849,8 +847,10 @@ namespace Sunbird.External
 
                                 }
                                 else
-                                {                        
-                                    // Is there ever a valid reason for SelfShadow to be null while the sprite belongs to the LayerMap?
+                                {
+#if DEBUG
+                                    Debug.Assert(sprite.SelfShadow != null, "Is there a valid reason why SelfShadow can be null while the sprite belongs to the LayerMap?");
+#endif
                                     spriteBatch.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                                 }
                             }

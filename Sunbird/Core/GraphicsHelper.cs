@@ -92,9 +92,19 @@ namespace Sunbird.Core
             return GetMask(mainGame, texture, Color.Black);
         }
 
-        public static Texture2D GetShadow(MainGame mainGame, Texture2D texture)
+        public static Texture2D GetSelfShadow(MainGame mainGame, Texture2D texture)
         {
             return GetMask(mainGame, texture, new Color(109, 117, 141));
+        }
+
+        /// <summary>
+        /// Generate AntiShadow and SelfShadow textures from a base Texture.
+        /// </summary>
+        /// <param name="mainGame"></param>
+        public static void GenerateShadowTextures(MainGame mainGame, Texture2D texture, ref Texture2D antiShadow, ref Texture2D selfShadow)
+        {
+            antiShadow = GetAntiShadow(mainGame, texture);
+            selfShadow = GetSelfShadow(mainGame, texture);
         }
 
     }

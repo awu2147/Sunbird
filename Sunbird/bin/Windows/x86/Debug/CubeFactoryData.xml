@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Temp/WaterCubeTop</Path>
+    <Path>Temp/DirtCubeTop</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>11</SheetColumns>
+    <SheetColumns>8</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>11</FrameCount>
+    <FrameCount>8</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>
   <CurrentCubeBaseMetaData>
-    <Path>Temp/DirtCubeBase</Path>
+    <Path>Temp/LightStoneCubeBase</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>2</SheetColumns>
+    <SheetColumns>1</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>2</FrameCount>
+    <FrameCount>1</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
-  <IsRandomTop>false</IsRandomTop>
+  <IsRandomTop>true</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
-  <CurrentIndex>3</CurrentIndex>
-  <CurrentBaseIndex>2</CurrentBaseIndex>
+  <CurrentIndex>1</CurrentIndex>
+  <CurrentBaseIndex>3</CurrentBaseIndex>
   <CubeMetaDataLibrary>
     <item>
       <key>
