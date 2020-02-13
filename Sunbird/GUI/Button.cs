@@ -38,7 +38,7 @@ namespace Sunbird.GUI
 
     public class Button : Sprite
     {
-        public event EventHandler<ButtonClickedEventArgs> Clicked;
+        new public event EventHandler<ButtonClickedEventArgs> Clicked;
         public event EventHandler<ButtonClickedEventArgs> Checked;
         public event EventHandler<ButtonClickedEventArgs> Unchecked;
 
@@ -88,7 +88,7 @@ namespace Sunbird.GUI
             Label = label;
         }
 
-        public void OnClicked()
+        public override void OnClicked()
         {
             if (Siblings != null)
             {

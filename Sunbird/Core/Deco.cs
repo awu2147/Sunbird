@@ -145,21 +145,25 @@ namespace Sunbird.Core
 
         public static Deco CreateDeco(MainGame mainGame, DecoMetaData decoMD, Coord coords, Coord relativeCoords, int altitude)
         {
+            var rand = new Random();
             Type type = Type.GetType(decoMD.TypeName);
             var deco = Activator.CreateInstance(type) as Deco;
             deco.Position = World.TopFace_CoordToLocalOrigin(coords);
             deco.PositionOffset = decoMD.PositionOffset;
             deco.Coords = relativeCoords;
             deco.Altitude = altitude;
-            var rand = new Random();            
+            deco.AntiShadow = decoMD.AntiShadow;
+            deco.SelfShadow = decoMD.SelfShadow;
+            // Odd NxN takes priority over even NxN when coords along same horizontal line.
+            deco.Dimensions = decoMD.Dimensions;
+            if (deco.Dimensions.X % 2 == 0)
+            {
+                deco.DrawPriority = -1;
+            }         
 
             // Create deco animator.
             var spriteSheet = SpriteSheet.CreateNew(decoMD.Texture, decoMD.Path, decoMD.SheetRows, decoMD.SheetColumns);
             deco.Animator = new Animator(deco, spriteSheet, decoMD.StartFrame, decoMD.CurrentFrame, decoMD.FrameCount, decoMD.FrameSpeed, decoMD.AnimState);
-            deco.AntiShadow = decoMD.AntiShadow;
-            deco.SelfShadow = decoMD.SelfShadow;
-            //FIXME: memory leak here on the GetMask() method.
-            //deco.GenerateShadowTextures(mainGame, deco.Animator);
 
             for (int k = 0; k < decoMD.Dimensions.Z; k++)
             {

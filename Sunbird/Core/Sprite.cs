@@ -34,13 +34,13 @@ namespace Sunbird.Core
     {
         public static readonly XmlSerializer SpriteSerializer = Serializer.CreateNew(typeof(Sprite));
 
+        private MainGame MainGame { get; set; }
         public Animator Animator { get; set; }
         public float Alpha { get; set; } = 1f;
         public Vector2 Position { get; set; }
         public Vector2 PositionOffset { get; set; }
         public Coord Coords { get; set; }
         public int Altitude { get; set; }
-        public int DrawAltitude { get { return Altitude + DrawPriority; } }
         public int DrawPriority { get; set; }
         public bool IsHidden { get; set; }
 
@@ -58,6 +58,8 @@ namespace Sunbird.Core
 
         [XmlIgnore]
         public Texture2D SelfShadow;
+
+        public event EventHandler Clicked;
 
         /// <summary>
         /// This constructor is safe to call at runtime.
@@ -89,6 +91,7 @@ namespace Sunbird.Core
         /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment, AnimArgs animArgs)
         {
+            MainGame = mainGame;
             Animator = new Animator(this, spriteSheet);
             if (animArgs != null)
             {
@@ -122,6 +125,7 @@ namespace Sunbird.Core
         /// </summary>
         public virtual void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
+            MainGame = mainGame;
             if (Animator != null)
             {
                 Animator.LoadContent(mainGame, graphicsDevice, content);
@@ -139,6 +143,7 @@ namespace Sunbird.Core
         /// </summary>
         public virtual void SafeLoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
+            MainGame = mainGame;
             if (Animator != null)
             {
                 Animator.LoadContent(mainGame, graphicsDevice, content);
@@ -147,6 +152,13 @@ namespace Sunbird.Core
             if (ShadowPath != null) { Shadow = content.Load<Texture2D>(ShadowPath); }
             if (AntiShadowPath != null) { AntiShadow = content.Load<Texture2D>(AntiShadowPath); }
             if (LightPath != null) { Light = content.Load<Texture2D>(LightPath); }
+        }
+
+        public virtual void OnClicked()
+        {
+            EventHandler handler = Clicked;
+            handler?.Invoke(this, null);
+            //Debug.Print(GetType().ToString());
         }
 
         /// <summary>

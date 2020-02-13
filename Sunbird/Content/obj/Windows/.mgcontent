@@ -9,11 +9,13 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/Build3x3BN.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/BuildButtonSheet.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/BuildCubeBN.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/OpenCatalogBN.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/WorldButtonSheet.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/DefaultFont.spritefont</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/2x2Placeholder.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_full.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/CatalogBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/Concept1.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/CubeAntiShadow.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/CubeAntiShadow2.png</File>
@@ -61,6 +63,8 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

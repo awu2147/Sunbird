@@ -290,5 +290,18 @@ namespace Sunbird.Core
         {
             return value * Zoom;
         }
+
+        public static IOrderedEnumerable<Sprite> Sort(XDictionary<int, SpriteList<Sprite>> layerMap)
+        {
+            var SL = new List<Sprite>() { };
+            foreach (var layer in layerMap)
+            {
+                foreach (var sprite in layer.Value)
+                {
+                    SL.Add(sprite);
+                }
+            }
+            return SL.OrderBy(x => (x.Coords.X - x.Coords.Y)).ThenBy(x => x.Altitude).ThenBy(x => x.DrawPriority);
+        }
     }
 }

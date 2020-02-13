@@ -111,6 +111,12 @@ namespace Sunbird.Controllers
             return new Rectangle((int)Position.X, (int)Position.Y, SpriteSheet.FrameWidth, SpriteSheet.FrameHeight);
         }
 
+        // FIXME
+        public Rectangle ScaledWorldArea()
+        {
+            return new Rectangle((int)Position.X * World.Zoom / World.Scale, (int)Position.Y * World.Zoom / World.Scale, SpriteSheet.FrameWidth * World.Zoom / World.Scale, SpriteSheet.FrameHeight * World.Zoom / World.Scale);
+        }
+
         public void Update(GameTime gameTime)
         {
             if (AnimState == AnimationState.Loop)
