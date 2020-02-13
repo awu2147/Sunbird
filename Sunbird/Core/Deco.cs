@@ -243,7 +243,7 @@ namespace Sunbird.Core
                 }
                 if (DecoMetaDataLibrary[currentIndex].Dimensions.X == xyDim[0] && DecoMetaDataLibrary[CurrentIndex1x1].Dimensions.Y == xyDim[1])
                 {
-                    // AFter finding the next valid index, set the corresponding CurrentDecoMetaData.
+                    // After finding the next valid index, set the corresponding CurrentDecoMetaData.
                     if (dim == BuildDimensions._1x1)
                     {
                         CurrentIndex1x1 = currentIndex;

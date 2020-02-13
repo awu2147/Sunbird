@@ -260,6 +260,18 @@
 /processorParam:TextureFormat=Color
 /build:Temp/EmptyCubeBase.png
 
+#begin Temp/Flower1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/Flower1.png
+
 #begin Temp/GrassCube.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -643,6 +655,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Temp/Tree1.png
+
+#begin Temp/Tree2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Temp/Tree2.png
 
 #begin Temp/WaterCube.png
 /importer:TextureImporter

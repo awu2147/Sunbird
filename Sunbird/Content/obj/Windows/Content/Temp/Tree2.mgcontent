@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LightStoneCubeBase.png</SourceFile>
-  <SourceTime>2020-02-13T22:39:57.9063882+00:00</SourceTime>
-  <DestFile>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/LightStoneCubeBase.xnb</DestFile>
-  <DestTime>2020-02-13T22:40:06.4403404+00:00</DestTime>
+  <SourceFile>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/Tree2.png</SourceFile>
+  <SourceTime>2020-02-13T21:57:05.3463909+00:00</SourceTime>
+  <DestFile>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Content/Temp/Tree2.xnb</DestFile>
+  <DestTime>2020-02-13T21:59:13.0330693+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T16:35:54+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

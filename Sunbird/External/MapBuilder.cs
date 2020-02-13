@@ -533,6 +533,16 @@ namespace Sunbird.External
                     CurrentLightingColor = CurrentLightingColor == Color.Black ? Color.LightGray : Color.Black;
                 }
 
+                if (Peripherals.KeyTapped(Keys.R))
+                {
+                    if (BuildDimensions == BuildDimensions._1x1)
+                    {
+                        DecoFactory.FindNext1x1();
+                        DecoPreview = DecoFactory.CreateCurrentDeco1x1(MainGame, Coord.Zero, Coord.Zero, 0);
+                        GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
+                    }
+                }
+
                 if (Authorization == Authorization.Builder)
                 {
                     if (Peripherals.LeftButtonPressed() && MainGame.IsActive && InFocus)

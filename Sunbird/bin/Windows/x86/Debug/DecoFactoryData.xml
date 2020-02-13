@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentDecoMetaData1x1>
-    <Path>Temp/Tree1</Path>
+    <Path>Temp/Tree2</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>0</X>
-      <Y>-48</Y>
+      <Y>-36</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
@@ -61,7 +61,7 @@
     </Dimensions>
   </CurrentDecoMetaData3x3>
   <IsRandom>false</IsRandom>
-  <CurrentIndex1x1>0</CurrentIndex1x1>
+  <CurrentIndex1x1>3</CurrentIndex1x1>
   <CurrentIndex2x2>0</CurrentIndex2x2>
   <CurrentIndex3x3>0</CurrentIndex3x3>
   <DecoMetaDataLibrary>
@@ -142,6 +142,60 @@
             <X>3</X>
             <Y>3</Y>
             <Z>3</Z>
+          </Dimensions>
+        </DecoMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>3</int>
+      </key>
+      <value>
+        <DecoMetaData>
+          <Path>Temp/Tree2</Path>
+          <TypeName>Sunbird.Core.Deco</TypeName>
+          <PositionOffset>
+            <X>0</X>
+            <Y>-36</Y>
+          </PositionOffset>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>1</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>1</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+          <Dimensions>
+            <X>1</X>
+            <Y>1</Y>
+            <Z>2</Z>
+          </Dimensions>
+        </DecoMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>4</int>
+      </key>
+      <value>
+        <DecoMetaData>
+          <Path>Temp/Flower1</Path>
+          <TypeName>Sunbird.Core.Deco</TypeName>
+          <PositionOffset>
+            <X>0</X>
+            <Y>36</Y>
+          </PositionOffset>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>1</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>1</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+          <Dimensions>
+            <X>1</X>
+            <Y>1</Y>
+            <Z>2</Z>
           </Dimensions>
         </DecoMetaData>
       </value>

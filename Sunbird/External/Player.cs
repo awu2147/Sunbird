@@ -49,7 +49,7 @@ namespace Sunbird.External
         public Player(MainGame mainGame, SpriteSheet spriteSheet, AnimArgs switchAnimArgs) : base(mainGame, spriteSheet, switchAnimArgs)
         {
             MainGame = mainGame;
-            PositionOffset = new Vector2(0, -18);
+            PositionOffset = new Vector2(0, -21);
         }
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)

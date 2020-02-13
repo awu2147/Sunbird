@@ -111,10 +111,14 @@ namespace Sunbird.Controllers
             return new Rectangle((int)Position.X, (int)Position.Y, SpriteSheet.FrameWidth, SpriteSheet.FrameHeight);
         }
 
-        // FIXME
+        private Point ScaledPoint(float x, float y)
+        {
+            return new Point((int)(x * World.ZoomRatio), (int)(y * World.ZoomRatio));
+        }
+
         public Rectangle ScaledWorldArea()
         {
-            return new Rectangle((int)Position.X * World.Zoom / World.Scale, (int)Position.Y * World.Zoom / World.Scale, SpriteSheet.FrameWidth * World.Zoom / World.Scale, SpriteSheet.FrameHeight * World.Zoom / World.Scale);
+            return new Rectangle(ScaledPoint(Position.X, Position.Y), ScaledPoint(SpriteSheet.FrameWidth, SpriteSheet.FrameHeight));
         }
 
         public void Update(GameTime gameTime)

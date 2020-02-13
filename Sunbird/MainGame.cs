@@ -96,7 +96,7 @@ namespace Sunbird
             SamplerState = SamplerState.PointClamp;
             DefaultFont = Content.Load<SpriteFont>("DefaultFont");
 
-            if (CleanLoad == true)
+            if (CleanLoad == false)
             {
                 CubeFactory.CubeMetaDataLibrary = new XDictionary<int, CubeMetaData>()
                 {
@@ -139,6 +139,10 @@ namespace Sunbird
                         PositionOffset = new Vector2(-12, -6), Dimensions = new Dimension(2, 2, 2), TypeName = typeof(Deco).FullName } },
                     {2, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName } },
+                    {3, new DecoMetaData(){Path = "Temp/Tree2", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
+                    {4, new DecoMetaData(){Path = "Temp/Flower1", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, 36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
                 };
                 // CurrentDecoMetaDataNxN should never be null;
                 DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary[0];
