@@ -9,6 +9,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/Build3x3BN.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/BuildButtonSheet.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/BuildCubeBN.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/ExitBN.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/OpenCatalogBN.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Buttons/WorldButtonSheet.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/DefaultFont.spritefont</File>
@@ -65,6 +66,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

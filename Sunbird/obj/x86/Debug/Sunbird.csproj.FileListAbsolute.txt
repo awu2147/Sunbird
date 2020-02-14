@@ -79,3 +79,4 @@ C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Buttons\O
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\CatalogBackground.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\Tree2.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\Flower1.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Buttons\ExitBN.xnb

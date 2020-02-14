@@ -27,11 +27,33 @@ namespace Sunbird.GUI
 
     public class CubeCatalog : Sprite
     {
-        public List<CubeCatalogItem> Items;
+        private MainGame MainGame { get; set; }
+        public List<CubeCatalogItem> Items = new List<CubeCatalogItem>();
 
-        public CubeCatalog(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position) : base(mainGame, spriteSheet, position)
+        public Button ExitButton;
+
+        public IGui Sender;
+        public Button SenderBN;
+
+        private CubeCatalog()
         {
 
+        }
+
+        public CubeCatalog(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, IGui sender, Button senderBN) : base(mainGame, spriteSheet, position)
+        {
+            MainGame = mainGame;
+            Sender = sender;
+            SenderBN = senderBN;
+            var exitButtonS = SpriteSheet.CreateNew(mainGame, "Buttons/ExitBN", 1, 2);
+            ExitButton = new Button(mainGame, exitButtonS, null, Position + new Vector2(399, 6)) { ButtonType = ButtonType.SafeRelease };
+            ExitButton.Clicked += ExitButton_Clicked;
+        }
+
+        private void ExitButton_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            Sender.DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(this, DeferAction.Remove));
+            SenderBN.IsPressed = false;
         }
 
         public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
@@ -42,24 +64,53 @@ namespace Sunbird.GUI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            foreach (var item in Items)
+            {
+                if (item.CubeMetaData != null && item.CubeBaseMetaData == null)
+                {
+                    item.Update(gameTime);
+                }
+                else if (item.CubeBaseMetaData != null && item.CubeMetaData == null)
+                {
+                    item.Update(gameTime);
+                }
+            }
+            foreach (var item in Items)
+            {
+                if (item.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()) && Peripherals.LeftButtonTapped())
+                {
+                    item.OnClicked();
+                    Debug.Print("t");
+                }
+            }
+            ExitButton.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
-            foreach (var item in Items)
+            var itemTopOffset = new Vector2(12, 39);
+            var itemBaseOffset = new Vector2(12, 234);
+            int countCMD = 0;
+            int countCBMD = 0;
+
+            for (int i = 0; i < Items.Count(); i++)
             {
+                var item = Items[i];
                 if (item.CubeMetaData != null && item.CubeBaseMetaData == null)
                 {
-                    item.Position = new Vector2(0, 4);
-                    // position.next()
+                    item.Position = Position + itemTopOffset + new Vector2(78 * (countCMD % 5), 81 * (countCMD / 5));
                     item.Draw(gameTime, spriteBatch);
+                    countCMD++;
                 }
                 else if (item.CubeBaseMetaData != null && item.CubeMetaData == null)
                 {
-
+                    item.Position = Position + itemBaseOffset + new Vector2(78 * (countCBMD % 5), 81 * (countCBMD / 5));
+                    item.Draw(gameTime, spriteBatch);
+                    countCBMD++;
                 }
             }
+            ExitButton.Draw(gameTime, spriteBatch);
         }
     }
 
@@ -68,7 +119,7 @@ namespace Sunbird.GUI
         public CubeMetaData CubeMetaData { get; set;}
         public CubeBaseMetaData CubeBaseMetaData { get; set; }
 
-        public CubeCatalogItem(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Vector2 position)
+        public CubeCatalogItem(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD)
         {
             CubeMetaData = cubeMD;
             CubeBaseMetaData = cubeBaseMD;

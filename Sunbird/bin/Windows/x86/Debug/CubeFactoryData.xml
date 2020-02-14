@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Temp/WaterCubeTop</Path>
-    <SheetRows>1</SheetRows>
-    <SheetColumns>11</SheetColumns>
+    <Path>Temp/GrassCubeTop</Path>
+    <SheetRows>3</SheetRows>
+    <SheetColumns>4</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>11</FrameCount>
+    <FrameCount>12</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>

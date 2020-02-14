@@ -30,12 +30,17 @@ namespace Sunbird.External
         Builder
     }
 
-    public class MapBuilder : State
+    public class MapBuilder : State, IGui
     {
         public static readonly XmlSerializer MapBuilderSerializer = Serializer.CreateNew(typeof(MapBuilder));
 
         public XDictionary<int, SpriteList<Sprite>> LayerMap { get; set; } = new XDictionary<int, SpriteList<Sprite>>();
+
+        [XmlIgnore]
         public List<Sprite> Overlay { get; set; } = new List<Sprite>();
+
+        [XmlIgnore]
+        public List<KeyValuePair<Sprite, DeferAction>> DeferredOverlay { get; set; } = new List<KeyValuePair<Sprite, DeferAction>>();
         public int Altitude { get; set; } = 0;
         public Player Player { get; set; }
         public GhostMarker GhostMarker { get; set; }
@@ -47,6 +52,7 @@ namespace Sunbird.External
         public Authorization Authorization { get; set; }
         public BuildDimensions BuildDimensions { get; set; }
         private Sprite MessageLogBG { get; set; }
+        private CubeCatalog CubeCatalog { get; set; }
 
         private MapBuilder()
         {
@@ -70,7 +76,7 @@ namespace Sunbird.External
             CreateRibbon();
             CreateCubePendant();
 
-            // The deco image. FIXME: should make this static property on DecoFactory?
+            // The deco image. FIXME: should make this static property on DecoFactory? < probably not
             if (BuildDimensions == BuildDimensions._1x1)
             {
                 DecoPreview = DecoFactory.CreateCurrentDeco1x1(MainGame, Coord.Zero, Coord.Zero, 0);
@@ -159,15 +165,64 @@ namespace Sunbird.External
             var openCatalogBNs = SpriteSheet.CreateNew(MainGame, "Buttons/OpenCatalogBN", 1, 2);
 
             var openCatalogCubeBN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(141, 54), Alignment.TopLeft);
+            openCatalogCubeBN.Clicked += OpenCatalogCubeBN_Clicked;
             var openCatalog1x1BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(183, 54), Alignment.TopLeft);
+            openCatalog1x1BN.Clicked += OpenCatalog1x1BN_Clicked;
             var openCatalog2x2BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(225, 54), Alignment.TopLeft);
             var openCatalog3x3BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(267, 54), Alignment.TopLeft);
 
             Button.BindGroup(new List<Button>() { openCatalogCubeBN, openCatalog1x1BN, openCatalog2x2BN, openCatalog3x3BN });
             foreach (var button in new List<Button>() { openCatalogCubeBN, openCatalog1x1BN, openCatalog2x2BN, openCatalog3x3BN }) { Overlay.Add(button); }
 
+        }
 
+        private void OpenCatalog1x1BN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            if (Overlay.Contains(CubeCatalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(CubeCatalog, DeferAction.Remove));
+            }
+        }
 
+        private void OpenCatalogCubeBN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            if (CubeCatalog == null)
+            {
+                // Create for the first time if null. From then on, load from cache.
+                var cubeCatalogS = SpriteSheet.CreateNew(MainGame, "Temp/CatalogBackground", 1, 1);
+                CubeCatalog = new CubeCatalog(MainGame, cubeCatalogS, new Vector2(100, 150), this, (Button)sender);
+                foreach (var cmd in CubeFactory.CubeMetaDataLibrary)
+                {
+                    var CCI = new CubeCatalogItem(MainGame, cmd.Value, null);
+                    CCI.Clicked += CCI_Clicked;
+                    CubeCatalog.Items.Add(CCI);
+                }
+                foreach (var cbmd in CubeFactory.CubeBaseMetaDataLibrary)
+                {
+                    var CCI = new CubeCatalogItem(MainGame, null, cbmd.Value);
+                    CCI.Clicked += CCI_Clicked;
+                    CubeCatalog.Items.Add(CCI);
+                }
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(CubeCatalog, DeferAction.Add));
+            }
+            else if (!Overlay.Contains(CubeCatalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(CubeCatalog, DeferAction.Add));
+            }
+        }
+
+        private void CCI_Clicked(object sender, EventArgs e)
+        {
+            var item = sender as CubeCatalogItem;
+            if (item.CubeMetaData != null && item.CubeBaseMetaData == null)
+            {
+                var CCMD = item.CubeMetaData;
+                CubeFactory.CurrentCubeMetaData = CCMD;
+                CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
+                CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
+
+                if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
+            }
         }
 
         #endregion
@@ -698,6 +753,22 @@ namespace Sunbird.External
                 if (clickedSprite != null)
                 {
                     clickedSprite.OnClicked();
+                }
+
+                // Move from DeferredOverlay to Overlay.
+                for (int i = 0; i < DeferredOverlay.Count(); i++)
+                {
+                    var keyPair = DeferredOverlay[i];
+                    if (keyPair.Value == DeferAction.Add)
+                    {
+                        Overlay.Add(keyPair.Key);
+                    }
+                    else if (keyPair.Value == DeferAction.Remove)
+                    {
+                        Overlay.Remove(keyPair.Key);
+                    }
+                    DeferredOverlay.RemoveAt(i);
+                    i--;
                 }
 
                 // Overlay update.

@@ -96,7 +96,7 @@ namespace Sunbird
             SamplerState = SamplerState.PointClamp;
             DefaultFont = Content.Load<SpriteFont>("DefaultFont");
 
-            if (CleanLoad == false)
+            if (CleanLoad == true)
             {
                 CubeFactory.CubeMetaDataLibrary = new XDictionary<int, CubeMetaData>()
                 {
