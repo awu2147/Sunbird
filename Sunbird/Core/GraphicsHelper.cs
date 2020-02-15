@@ -19,19 +19,6 @@ using System.Reflection;
 
 namespace Sunbird.Core
 {
-    public enum Direction
-    {
-        None,
-        North,
-        NorthEast,
-        East,
-        SouthEast,
-        South,
-        SouthWest,
-        West,
-        NorthWest
-    }
-
     public static class GraphicsHelper
     {
         public static RenderTarget2D NewRenderTarget2D(GraphicsDevice graphicsDevice)
@@ -90,6 +77,14 @@ namespace Sunbird.Core
             return mask;
         }
 
+        /// <summary>
+        /// <para>Takes an original color array and returns a new array which only includes data points contained inside the destination rectangle.</para>
+        /// <para>The returned array will be ordered from top-left to bottom-right, like the original. The given the rectangle must lie within the original area.</para>
+        /// </summary>
+        /// <param name="colorData"> The original color data. </param>
+        /// <param name="width"> The original width. </param>
+        /// <param name="rectangle"> The rectangular section of data to extract. </param>
+        /// <returns></returns>
         private static Color[] GetImageData(Color[] colorData, int width, Rectangle rectangle)
         {
             Color[] color = new Color[rectangle.Width * rectangle.Height];
@@ -103,158 +98,108 @@ namespace Sunbird.Core
             return color;
         }
 
-        public static List<Point> SolidPixels(Animator animator, int zoom)
+        public static HashSet<Point> SolidPixels(Animator animator)
         {
+            // Get the animator spritesheet pixel data.
             var texture = animator.SpriteSheet.Texture;
             var textureTP = texture.Width * texture.Height;
             Color[] textureColorArray = new Color[textureTP];
             texture.GetData(textureColorArray);
-
+            // Reduce to only the visible frame's pixel data.
             Color[] viewAreaColorArray = GetImageData(textureColorArray, texture.Width, animator.SheetViewArea());
+
+            // Resulting set of pixels on which Contains() will be called on.
+            var solidPixels = new HashSet<Point>();
+
+            // Analyse all original pixels.
+            for (int i = 0; i < viewAreaColorArray.Length; i++)
+            {
+                if (viewAreaColorArray[i].A != 0)
+                {
+                    // Add valid pixels.
+                    solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth));
+                }
+            }
+            return solidPixels;
+        }
+
+        #region Deprecated SolidPixels method
+
+        /// <summary>
+        /// Given an animator and zoom factor, returns a list of Alpha != 0 points for the current frame, normalized as if animator.Position was at (0, 0).
+        /// </summary>
+        [Obsolete("Use ScaledMousePosition instead when interacting with world objects")]
+        private static List<Point> SolidPixels(Animator animator, int zoom)
+        {
+            // Get the animator spritesheet pixel data.
+            var texture = animator.SpriteSheet.Texture;
+            var textureTP = texture.Width * texture.Height;
+            Color[] textureColorArray = new Color[textureTP];
+            texture.GetData(textureColorArray);
+            // Reduce to only the visible frame's pixel data.
+            Color[] viewAreaColorArray = GetImageData(textureColorArray, texture.Width, animator.SheetViewArea());
+
+            // Resulting set of pixels on which Contains() will be called on.
             var solidPixels = new List<Point>();
-            var colCount = 0;
-            var rowCount = 0;
-            if (zoom == 1)
-            {
-                for (int i = 0; i < viewAreaColorArray.Length; i++)
-                {
-                    if (viewAreaColorArray[i].A != 0 && i % 3 == 0 && (i / animator.SpriteSheet.FrameWidth) % 3 == 0)
-                    {
-                        solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth) / new Point(3, 3));
-                    }
-                }
+            // Take +/- difference between scale and zoom. This decides the translation scale factor.
+            int szDifference = zoom - World.Scale;
+            // ValidRemainders used to decide which pixels to ignore during culling.
+            List<int> validRemainders = new List<int>();
+            for (int i = 0; i < Math.Min(zoom, World.Scale); i++) { validRemainders.Add(i); }
 
-
-                //var solidPixels1x1 = new List<Point>();
-                //for (int i = 0; i < solidPixels.Count(); i++)
-                //{
-                //    if (i % 3 == 0 && ((i / animator.SpriteSheet.FrameWidth) % 3) == 0)
-                //    {
-                //        solidPixels1x1.Add(solidPixels[i] / new Point(3, 3));
-                //    }
-                //}
-                //return solidPixels1x1;
-            }
-            else if (zoom == 2)
+            // Analyse all original pixels.
+            for (int i = 0; i < viewAreaColorArray.Length; i++)
             {
-                for (int i = 0; i < viewAreaColorArray.Length; i++)
+                // Depending on which Scale x Scale quadrant original pixel lies in, apply a coordinates translation to any added pixels.
+                var translation = new Point((i % animator.SpriteSheet.FrameWidth) / World.Scale, (i / animator.SpriteSheet.FrameWidth) / World.Scale) * new Point(szDifference, szDifference);
+                if (zoom <= World.Scale)
                 {
-                    if (viewAreaColorArray[i].A != 0 && i % 3 != 2 && (i / animator.SpriteSheet.FrameWidth) % 3 != 2)
-                    {                    
-                        solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth) - new Point((i % animator.SpriteSheet.FrameWidth) / 3, (i / animator.SpriteSheet.FrameWidth) / 3));
+                    // Ignore pixels not in validRemainders and translate.
+                    if (viewAreaColorArray[i].A != 0 && validRemainders.Contains(i % World.Scale) && validRemainders.Contains((i / animator.SpriteSheet.FrameWidth) % World.Scale))
+                    {
+                        solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth) + translation);
                     }
                 }
-            }
-            else if (zoom == 4)
-            {
-                for (int i = 0; i < viewAreaColorArray.Length; i++)
+                else if (zoom > World.Scale)
                 {
                     if (viewAreaColorArray[i].A != 0)
                     {
-                        solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth) + new Point((i % animator.SpriteSheet.FrameWidth) / 3, (i / animator.SpriteSheet.FrameWidth) / 3));
-                        if (i % 3 == 2 && (i / animator.SpriteSheet.FrameWidth) % 3 == 2)
+                        // Add all existing and valid pixels.
+                        solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth) + translation);
+                        // If corner pixel of Scale x Scale quadrant, create a square formation of new pixels extending diagonally outwards.  Number of pixels created = szDifference*szDifference.
+                        if (i % World.Scale == (World.Scale - 1) && (i / animator.SpriteSheet.FrameWidth) % World.Scale == (World.Scale - 1))
                         {
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + 1, i / animator.SpriteSheet.FrameWidth + 1) + new Point((i % animator.SpriteSheet.FrameWidth) / 3, (i / animator.SpriteSheet.FrameWidth) / 3));
+                            for (int x = 1; x <= szDifference; x++)
+                            {
+                                for (int y = 1; y < szDifference; y++)
+                                {
+                                    solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + x, i / animator.SpriteSheet.FrameWidth + y) + translation);
+                                }
+                            }
                         }
-                        else if (i % 3 == 2)
+                        // Else if bottom edge pixel of Scale x Scale quadrant, create column of new pixels below. Number of pixels created = szDifference.
+                        else if (i % World.Scale == (World.Scale - 1))
                         {
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + 1, i / animator.SpriteSheet.FrameWidth) + new Point((i % animator.SpriteSheet.FrameWidth) / 3, (i / animator.SpriteSheet.FrameWidth) / 3));
+                            for (int x = 0; x < szDifference; x++)
+                            {
+                                solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + x, i / animator.SpriteSheet.FrameWidth) + translation);
+                            }
                         }
-                        else if ((i / animator.SpriteSheet.FrameWidth) % 3 == 2)
+                        // Else if right edge pixel of Scale x Scale quadrant, create row of new pixels to the right.  Number of pixels created = szDifference.
+                        else if ((i / animator.SpriteSheet.FrameWidth) % World.Scale == (World.Scale - 1))
                         {
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth + 1) + new Point((i % animator.SpriteSheet.FrameWidth) / 3, (i / animator.SpriteSheet.FrameWidth) / 3));
+                            for (int y = 0; y < szDifference; y++)
+                            {
+                                solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth + y) + translation);
+                            }
                         }
-                    }
-                }
-            }
-            else if (zoom == 5)
-            {
-                for (int i = 0; i < viewAreaColorArray.Length; i++)
-                {
-                    if (viewAreaColorArray[i].A != 0)
-                    {
-                        var pOffset = new Point((i % animator.SpriteSheet.FrameWidth) / 3, (i / animator.SpriteSheet.FrameWidth) / 3) * new Point(2, 2);
-                        solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth) + pOffset);
-                        if (i % 3 == 2 && (i / animator.SpriteSheet.FrameWidth) % 3 == 2)
-                        {
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + 1, i / animator.SpriteSheet.FrameWidth + 1) + pOffset);
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + 2, i / animator.SpriteSheet.FrameWidth + 1) + pOffset);
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + 1, i / animator.SpriteSheet.FrameWidth + 2) + pOffset);
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + 2, i / animator.SpriteSheet.FrameWidth + 2) + pOffset);
-                        }
-                        else if (i % 3 == 2)
-                        {
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + 1, i / animator.SpriteSheet.FrameWidth) + pOffset);
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth + 2, i / animator.SpriteSheet.FrameWidth) + pOffset);
-                        }
-                        else if ((i / animator.SpriteSheet.FrameWidth) % 3 == 2)
-                        {
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth + 1) + pOffset);
-                            solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth + 2) + pOffset);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < viewAreaColorArray.Length; i++)
-                {
-                    if (viewAreaColorArray[i].A != 0)
-                    {
-                        solidPixels.Add(new Point(i % animator.SpriteSheet.FrameWidth, i / animator.SpriteSheet.FrameWidth));
                     }
                 }
             }
             return solidPixels;
         }
 
-        public static Texture2D SolidPixels2(MainGame mainGame, Animator animator, int zoom)
-        {
-            var texture = animator.SpriteSheet.Texture;
-            var textureTP = texture.Width * texture.Height;
-            Color[] textureColorArray = new Color[textureTP];
-            texture.GetData(textureColorArray);
-
-            Color[] viewAreaColorArray = GetImageData(textureColorArray, texture.Width, animator.SheetViewArea());
-            Color[] zoomColorArray = new Color[(int)(animator.SpriteSheet.FrameWidth * World.ZoomRatio) * (int)(animator.SpriteSheet.FrameWidth * World.ZoomRatio)];
-            var colCount = 0;
-            var rowCount = 0;
-            for (int i = 0; i < viewAreaColorArray.Length; i++)
-            {
-                if (zoom == 1)
-                {
-                    if ((colCount == 1) || (colCount == 2) || (rowCount == 1) || (rowCount == 2))
-                    {
-
-                    }
-                    else
-                    {
-                        if (viewAreaColorArray[i].A != 0)
-                        {
-                            viewAreaColorArray[i] = Color.Black;
-                        }
-                        zoomColorArray[i] = (viewAreaColorArray[i]);
-                        colCount = 0;
-                        rowCount = (i / animator.SpriteSheet.FrameWidth) % 3;
-                    }
-                    colCount++;
-                }
-                //else if (zoom == 2 && (count == 1))
-                //{
-
-                //}
-                //else
-                //{
-                //    if (viewAreaColorArray[i].A != 0)
-                //    {
-                //        solidPixels.Add(new Point((int)((i % animator.SpriteSheet.FrameWidth) * World.ZoomRatio), (int)(i / (animator.SpriteSheet.FrameWidth * World.ZoomRatio))));
-                //    }
-                //}
-            }
-            var mask = new Texture2D(mainGame.GraphicsDevice, (int)(animator.SpriteSheet.FrameWidth * World.ZoomRatio), (int)(animator.SpriteSheet.FrameWidth * World.ZoomRatio));
-            mask.SetData(viewAreaColorArray);
-            return mask;
-        }
+        #endregion   
 
         public static Texture2D GetAntiShadow(MainGame mainGame, Texture2D texture)
         {

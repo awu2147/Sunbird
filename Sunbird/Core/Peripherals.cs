@@ -170,11 +170,14 @@ namespace Sunbird.Core
             }
         }
 
+        /// <summary>
+        /// For mouse interactions with world objects, apply ZoomRatio scaling to object position, width, and height to correctly determine overlaps.
+        /// </summary>
         public static Point GetMouseWorldPosition(Camera camera)
         {
             if (camera.CurrentMode == CameraMode.Follow)
             {
-                return (new Point(-(int)camera.FollowTransform.M41, -(int)camera.FollowTransform.M42)) + GetMouseWindowPosition();
+                return new Point(-(int)camera.FollowTransform.M41, -(int)camera.FollowTransform.M42) + GetMouseWindowPosition();
             }
             else if (camera.CurrentMode == CameraMode.Push)
             {
@@ -183,6 +186,26 @@ namespace Sunbird.Core
             else if (camera.CurrentMode == CameraMode.Drag)
             {
                 return new Point(-(int)camera.DragTransform.M41, -(int)camera.DragTransform.M42) + GetMouseWindowPosition();
+            }
+            else
+            {
+                return Point.Zero;
+            }
+        }
+
+        public static Point GetScaledMouseWorldPosition(Camera camera)
+        {
+            if (camera.CurrentMode == CameraMode.Follow)
+            {
+                return World.AntiScaledPoint(new Point(-(int)camera.FollowTransform.M41, -(int)camera.FollowTransform.M42) + GetMouseWindowPosition());
+            }
+            else if (camera.CurrentMode == CameraMode.Push)
+            {
+                return World.AntiScaledPoint(new Point(-(int)camera.PushTransform.M41, -(int)camera.PushTransform.M42) + GetMouseWindowPosition());
+            }
+            else if (camera.CurrentMode == CameraMode.Drag)
+            {
+                return World.AntiScaledPoint(new Point(-(int)camera.DragTransform.M41, -(int)camera.DragTransform.M42) + GetMouseWindowPosition());
             }
             else
             {

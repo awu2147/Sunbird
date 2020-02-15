@@ -745,14 +745,13 @@ namespace Sunbird.External
                 {
                     sprite.Update(gameTime);
                     // Lead with basic rectangle contains check.
-                    if (Peripherals.LeftButtonTapped() && sprite.Animator.ScaledWorldArea().Contains(Peripherals.GetMouseWorldPosition(MainGame.Camera)) && MainGame.IsActive && InFocus && !(sprite is GhostMarker))
+                    if (Peripherals.LeftButtonTapped() && sprite.Animator.WorldArea().Contains(Peripherals.GetScaledMouseWorldPosition(MainGame.Camera)) && MainGame.IsActive && InFocus && !(sprite is GhostMarker))
                     {
-                        // Generate solid pixel hashset and do a more thorough contains check. 'Offset' sprite position to back to zero via mouse position, such that it matches solid pixel array.
-                        if (GraphicsHelper.SolidPixels(sprite.Animator, World.Zoom).Contains(Peripherals.GetMouseWorldPosition(MainGame.Camera) - (sprite.Animator.Position.ToPoint() * new Point(World.Zoom, World.Zoom) / new Point(World.Scale, World.Scale))))
+                        // Generate solid pixel hashset and do a more thorough contains check. 'Offset' sprite animator.Position back to zero via mouse position, such that it maps onto solid pixel collection coords.
+                        if (GraphicsHelper.SolidPixels(sprite.Animator).Contains(Peripherals.GetScaledMouseWorldPosition(MainGame.Camera) - sprite.Animator.Position.ToPoint()))
                         {
                             clickedSprite = sprite;
                         }
-                        //clickedSprite = sprite;
                     }
                 }
                 if (clickedSprite != null)
@@ -965,7 +964,7 @@ namespace Sunbird.External
 
             MessageLogBG.Draw(gameTime, spriteBatch);
 
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetMouseWorldPosition(MainGame.Camera).ToString() }", MessageLogBG.Position + new Vector2(15, 15), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetScaledMouseWorldPosition(MainGame.Camera).ToString() }", MessageLogBG.Position + new Vector2(15, 15), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude) }", MessageLogBG.Position + new Vector2(15,35), Color.White);            
             spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString() }", MessageLogBG.Position + new Vector2(15, 55), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", MessageLogBG.Position + new Vector2(15, 75), Color.White);

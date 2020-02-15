@@ -263,34 +263,61 @@ namespace Sunbird.Core
         /// <returns></returns>
         public static Vector2 TopFace_CoordToLocalOrigin(Coord coord)
         {
-            return ScaledVector(12, 6) * coord.X + ScaledVector(12, -6) * coord.Y;
+            return ScaledVector(TopFaceGridWidth / 2, TopFaceGridHeight / 2) * coord.X + ScaledVector(TopFaceGridWidth / 2, -TopFaceGridHeight / 2) * coord.Y;
         }
 
-        public static Point ScaledPoint(int x, int y)
+        private static Point ScaledPoint(int x, int y)
         {
             return new Point(x, y) * new Point(Scale, Scale);
         }
 
-        public static Point ScaledPointZoom(int x, int y)
+        public static Point ScaledPoint(float x, float y)
+        {
+            return new Point((int)(x * ZoomRatio), (int)(y * ZoomRatio));
+        }
+
+        public static Point AntiScaledPoint(float x, float y)
+        {
+            return new Point((int)(x / ZoomRatio), (int)(y / ZoomRatio));
+        }
+
+        public static Point AntiScaledPoint(Point point)
+        {
+            float x = point.X;
+            float y = point.Y;
+            return new Point((int)(x / ZoomRatio), (int)(y / ZoomRatio));
+        }
+
+        public static Point ScaledPoint(Point point)
+        {
+            float x = point.X;
+            float y = point.Y;
+            return new Point((int)(x * ZoomRatio), (int)(y * ZoomRatio));
+        }
+
+        private static Point ScaledPointZoom(int x, int y)
         {
             return new Point(x, y) * new Point(Zoom, Zoom);
         }
 
-        public static Vector2 ScaledVector(int x, int y)
+        private static Vector2 ScaledVector(int x, int y)
         {
             return new Vector2(x, y) * Scale;
         }
 
-        public static int Scaled(int value)
+        private static int Scaled(int value)
         {
             return value * Scale;
         }
 
-        public static int ScaledZoom(int value)
+        private static int ScaledZoom(int value)
         {
             return value * Zoom;
         }
 
+        /// <summary>
+        /// The master sorting algorithm for any collection sprites.
+        /// </summary>
         public static IOrderedEnumerable<Sprite> Sort(XDictionary<int, SpriteList<Sprite>> layerMap)
         {
             var SL = new List<Sprite>() { };

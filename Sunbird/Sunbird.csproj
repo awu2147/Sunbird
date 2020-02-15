@@ -47,6 +47,7 @@
     <Compile Include="Core\Dimension.cs" />
     <Compile Include="Core\Deco.cs" />
     <Compile Include="Core\Cube.cs" />
+    <Compile Include="Core\EnumStore.cs" />
     <Compile Include="Core\GhostMarker.cs" />
     <Compile Include="Core\GraphicsHelper.cs" />
     <Compile Include="Core\IConfig.cs" />

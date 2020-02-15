@@ -54,6 +54,10 @@ namespace Sunbird.Controllers
 
         public SpriteSheet SpriteSheet { get; set; }
         public Vector2 Position { get { return Owner.Position + Owner.PositionOffset; } }
+
+        [XmlIgnore, Obsolete("Use ScaledMousePosition instead when interacting with world objects")]
+        public Point ScaledPosition { get { return World.ScaledPoint(Position.ToPoint()); } }
+
         public int StartFrame { get; set; }
         public int CurrentFrame { get; set; }
         public int FramesInLoop { get; set; } = 1;
@@ -111,14 +115,16 @@ namespace Sunbird.Controllers
             return new Rectangle((int)Position.X, (int)Position.Y, SpriteSheet.FrameWidth, SpriteSheet.FrameHeight);
         }
 
+        [Obsolete]
         private Point ScaledPoint(float x, float y)
         {
             return new Point((int)(x * World.ZoomRatio), (int)(y * World.ZoomRatio));
         }
 
+        [Obsolete("Use ScaledMousePosition instead when interacting with world objects")]
         public Rectangle ScaledWorldArea()
         {
-            return new Rectangle(ScaledPoint(Position.X, Position.Y), ScaledPoint(SpriteSheet.FrameWidth, SpriteSheet.FrameHeight));
+            return new Rectangle(World.ScaledPoint(Position.X, Position.Y), World.ScaledPoint(SpriteSheet.FrameWidth, SpriteSheet.FrameHeight));
         }
 
         public void Update(GameTime gameTime)
