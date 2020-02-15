@@ -169,11 +169,29 @@ namespace Sunbird.External
             var openCatalog1x1BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(183, 54), Alignment.TopLeft);
             openCatalog1x1BN.Clicked += OpenCatalog1x1BN_Clicked;
             var openCatalog2x2BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(225, 54), Alignment.TopLeft);
+            openCatalog2x2BN.Clicked += OpenCatalog2x2BN_Clicked;
             var openCatalog3x3BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(267, 54), Alignment.TopLeft);
+            openCatalog3x3BN.Clicked += OpenCatalog3x3BN_Clicked;
 
             Button.BindGroup(new List<Button>() { openCatalogCubeBN, openCatalog1x1BN, openCatalog2x2BN, openCatalog3x3BN });
             foreach (var button in new List<Button>() { openCatalogCubeBN, openCatalog1x1BN, openCatalog2x2BN, openCatalog3x3BN }) { Overlay.Add(button); }
 
+        }
+
+        private void OpenCatalog3x3BN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            if (Overlay.Contains(CubeCatalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(CubeCatalog, DeferAction.Remove));
+            }
+        }
+
+        private void OpenCatalog2x2BN_Clicked(object sender, ButtonClickedEventArgs e)
+        {
+            if (Overlay.Contains(CubeCatalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(CubeCatalog, DeferAction.Remove));
+            }
         }
 
         private void OpenCatalog1x1BN_Clicked(object sender, ButtonClickedEventArgs e)
@@ -220,6 +238,15 @@ namespace Sunbird.External
                 CubeFactory.CurrentCubeMetaData = CCMD;
                 CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
                 CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
+
+                if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
+            }
+            else if (item.CubeBaseMetaData != null && item.CubeMetaData == null)
+            {
+                var CCBMD = item.CubeBaseMetaData;
+                CubeFactory.CurrentCubeBaseMetaData = CCBMD;
+                CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCBMD.Path, CCBMD.SheetRows, CCBMD.SheetColumns), CubePreview.AnimatorBase);
+                CubePreview.ReconfigureAnimator(CCBMD.StartFrame, CCBMD.CurrentFrame, CCBMD.FrameCount, CCBMD.FrameSpeed, CCBMD.AnimState, CubePreview.AnimatorBase);
 
                 if (BuildDimensions == BuildDimensions._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
             }
@@ -594,6 +621,16 @@ namespace Sunbird.External
                     {
                         DecoFactory.FindNext1x1();
                         DecoPreview = DecoFactory.CreateCurrentDeco1x1(MainGame, Coord.Zero, Coord.Zero, 0);
+                        GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
+                    }
+                }
+
+                if (Peripherals.KeyTapped(Keys.T))
+                {
+                    if (BuildDimensions == BuildDimensions._3x3)
+                    {
+                        DecoFactory.CurrentDecoMetaData3x3.NextFrame();
+                        DecoPreview.Animator.CurrentFrame = DecoFactory.CurrentDecoMetaData3x3.CurrentFrame;
                         GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
                     }
                 }

@@ -100,11 +100,11 @@ namespace Sunbird
             {
                 CubeFactory.CubeMetaDataLibrary = new XDictionary<int, CubeMetaData>()
                 {
-                    {0, new CubeMetaData(){Path = "Temp/GrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None} },
-                    {1, new CubeMetaData(){Path = "Temp/DirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None} },
-                    {2, new CubeMetaData(){Path = "Temp/LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
-                    {3, new CubeMetaData(){Path = "Temp/WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None} },
-                    {4, new CubeMetaData(){Path = "Temp/LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f} },
+                    {0, new CubeMetaData(){Path = "Cubes/GrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None} },
+                    {1, new CubeMetaData(){Path = "Cubes/DirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None} },
+                    {2, new CubeMetaData(){Path = "Cubes/LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
+                    {3, new CubeMetaData(){Path = "Cubes/WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None} },
+                    {4, new CubeMetaData(){Path = "Cubes/LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f} },
                 };
                 // CurrentCubeMetaData should never be null;
                 CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
@@ -116,12 +116,11 @@ namespace Sunbird
 
                 CubeFactory.CubeBaseMetaDataLibrary = new XDictionary<int, CubeBaseMetaData>()
                 {
-                    {0, new CubeBaseMetaData(){Path = "Temp/EmptyCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
-                    {1, new CubeBaseMetaData(){Path = "Temp/GrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
-                    {2, new CubeBaseMetaData(){Path = "Temp/DirtCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
-                    {3, new CubeBaseMetaData(){Path = "Temp/LightStoneCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
-                    {4, new CubeBaseMetaData(){Path = "Temp/WaterCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
-                    {5, new CubeBaseMetaData(){Path = "Temp/LavaCubeBase", SheetRows = 4, SheetColumns = 3, FrameCount = 11, AnimState = AnimationState.Loop, } },
+                    {0, new CubeBaseMetaData(){Path = "Cubes/GrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
+                    {1, new CubeBaseMetaData(){Path = "Cubes/DirtCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
+                    {2, new CubeBaseMetaData(){Path = "Cubes/LightStoneCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
+                    {3, new CubeBaseMetaData(){Path = "Cubes/WaterCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
+                    {4, new CubeBaseMetaData(){Path = "Cubes/LavaCubeBase", SheetRows = 4, SheetColumns = 3, FrameCount = 11, AnimState = AnimationState.Loop, } },
                 };
                 // CurrentCubeBaseMetaData should never be null;
                 CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];
@@ -137,7 +136,7 @@ namespace Sunbird
                         PositionOffset = new Vector2(0, -48), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
                     {1, new DecoMetaData(){Path = "Temp/MediumRock", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(-12, -6), Dimensions = new Dimension(2, 2, 2), TypeName = typeof(Deco).FullName } },
-                    {2, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                    {2, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName } },
                     {3, new DecoMetaData(){Path = "Temp/Tree2", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },

@@ -74,15 +74,15 @@ namespace Sunbird.GUI
                 {
                     item.Update(gameTime);
                 }
-                //if (item.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()) && Peripherals.LeftButtonTapped())
-                //{
-                //    item.OnClicked();
-                //}
-                //if (GraphicsHelper.SolidPixels(item.Animator).Contains(Peripherals.GetMouseWindowPosition() - item.Animator.Position.ToPoint()) && Peripherals.LeftButtonTapped())
-                //{
-                //    Debug.Print(item.Animator.SpriteSheet.TexturePath);
-                //    //item.OnClicked();
-                //}
+                // Lead with basic rectangle contains check.
+                if (Peripherals.LeftButtonTapped() && item.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()) && MainGame.IsActive)
+                {
+                    if (GraphicsHelper.SolidPixels(item.Animator).Contains(Peripherals.GetMouseWindowPosition() - item.Animator.Position.ToPoint()) && Peripherals.LeftButtonTapped())
+                    {
+                        Debug.Print(item.Animator.SpriteSheet.TexturePath);
+                        item.OnClicked();
+                    }
+                }
             }
             ExitButton.Update(gameTime);
         }

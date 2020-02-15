@@ -80,3 +80,13 @@ C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\Cata
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\Tree2.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\Flower1.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Buttons\ExitBN.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\DirtCubeBase.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\DirtCubeTop.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\GrassCubeBase.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\GrassCubeTop.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\LavaCubeBase.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\LavaCubeTop.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\LightStoneCubeBase.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\LightStoneCubeTop.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\WaterCubeBase.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Cubes\WaterCubeTop.xnb
