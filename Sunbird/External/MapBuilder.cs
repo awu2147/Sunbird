@@ -740,18 +740,24 @@ namespace Sunbird.External
                     }
                 }
 
-                // Update sorted sprites and report OnClicked event.
                 Sprite clickedSprite = null;
                 foreach (var sprite in World.Sort(LayerMap))
                 {
                     sprite.Update(gameTime);
-                    if (sprite.Animator.ScaledWorldArea().Contains(Peripherals.GetMouseWorldPosition(MainGame.Camera)) && Peripherals.LeftButtonTapped() && MainGame.IsActive && InFocus && !(sprite is GhostMarker))
+                    // Lead with basic rectangle contains check.
+                    if (Peripherals.LeftButtonTapped() && sprite.Animator.ScaledWorldArea().Contains(Peripherals.GetMouseWorldPosition(MainGame.Camera)) && MainGame.IsActive && InFocus && !(sprite is GhostMarker))
                     {
-                        clickedSprite = sprite;
+                        // Generate solid pixel hashset and do a more thorough contains check. 'Offset' sprite position to back to zero via mouse position, such that it matches solid pixel array.
+                        if (GraphicsHelper.SolidPixels(sprite.Animator, World.Zoom).Contains(Peripherals.GetMouseWorldPosition(MainGame.Camera) - (sprite.Animator.Position.ToPoint() * new Point(World.Zoom, World.Zoom) / new Point(World.Scale, World.Scale))))
+                        {
+                            clickedSprite = sprite;
+                        }
+                        //clickedSprite = sprite;
                     }
                 }
                 if (clickedSprite != null)
                 {
+                    Debug.Print(clickedSprite.Animator.SpriteSheet.TexturePath);
                     clickedSprite.OnClicked();
                 }
 
@@ -835,6 +841,13 @@ namespace Sunbird.External
                         sprite.Draw(gameTime, spriteBatch);
                     }
                 }
+                //foreach (var sprite in World.Sort(LayerMap))
+                //{
+                //    if (sprite is Deco)
+                //    {
+                //        spriteBatch.Draw(GraphicsHelper.SolidPixels2(MainGame, sprite.Animator, World.Zoom), sprite.Animator.Position, Color.White);
+                //    }
+                //}
             }
         }
 

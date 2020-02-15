@@ -10039,10 +10039,10 @@
             </Sprite>
           </Sprite>
           <Sprite>
-            <Sprite xsi:type="GhostMarker">
+            <Sprite xsi:type="Deco">
               <Animator>
                 <SpriteSheet>
-                  <TexturePath>Temp/TopFaceSelectionMarker</TexturePath>
+                  <TexturePath>Temp/House</TexturePath>
                   <Rows>1</Rows>
                   <Columns>1</Columns>
                 </SpriteSheet>
@@ -10057,77 +10057,164 @@
                   <IsDone>true</IsDone>
                 </Timer>
               </Animator>
-              <Alpha>0.3</Alpha>
+              <Alpha>1</Alpha>
               <Position>
-                <X>540</X>
-                <Y>-450</Y>
+                <X>504</X>
+                <Y>-252</Y>
               </Position>
               <PositionOffset>
-                <X>0</X>
-                <Y>0</Y>
+                <X>-87</X>
+                <Y>-99</Y>
               </PositionOffset>
               <Coords>
-                <X>-5</X>
-                <Y>20</Y>
+                <X>0</X>
+                <Y>14</Y>
               </Coords>
               <Altitude>0</Altitude>
-              <DrawPriority>-1000</DrawPriority>
+              <DrawPriority>0</DrawPriority>
               <IsHidden>false</IsHidden>
-              <Image xsi:type="Cube">
-                <Animator>
-                  <SpriteSheet>
-                    <TexturePath>Temp/GrassCubeTop</TexturePath>
-                    <Rows>3</Rows>
-                    <Columns>4</Columns>
-                  </SpriteSheet>
-                  <StartFrame>0</StartFrame>
-                  <CurrentFrame>0</CurrentFrame>
-                  <FramesInLoop>12</FramesInLoop>
-                  <FrameCounter>0</FrameCounter>
-                  <FrameSpeed>0.133</FrameSpeed>
-                  <AnimState>None</AnimState>
-                  <Timer>
-                    <TotalElapsedTime>0</TotalElapsedTime>
-                    <IsDone>true</IsDone>
-                  </Timer>
-                </Animator>
-                <Alpha>0.3</Alpha>
-                <Position>
-                  <X>540</X>
-                  <Y>-450</Y>
-                </Position>
-                <PositionOffset>
-                  <X>0</X>
-                  <Y>0</Y>
-                </PositionOffset>
-                <Coords>
-                  <X>0</X>
-                  <Y>0</Y>
-                </Coords>
-                <Altitude>0</Altitude>
-                <DrawPriority>0</DrawPriority>
-                <IsHidden>false</IsHidden>
-                <ShadowPath>Temp/CubeShadow</ShadowPath>
-                <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
-                <AnimatorBase>
-                  <SpriteSheet>
-                    <TexturePath>Temp/WaterCubeBase</TexturePath>
-                    <Rows>1</Rows>
-                    <Columns>1</Columns>
-                  </SpriteSheet>
-                  <StartFrame>0</StartFrame>
-                  <CurrentFrame>0</CurrentFrame>
-                  <FramesInLoop>1</FramesInLoop>
-                  <FrameCounter>0</FrameCounter>
-                  <FrameSpeed>0.133</FrameSpeed>
-                  <AnimState>None</AnimState>
-                  <Timer>
-                    <TotalElapsedTime>0</TotalElapsedTime>
-                    <IsDone>true</IsDone>
-                  </Timer>
-                </AnimatorBase>
-              </Image>
-              <DrawDefaultMarker>true</DrawDefaultMarker>
+              <OccupiedCoords>
+                <item>
+                  <key>
+                    <int>0</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>13</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>13</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>13</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+                <item>
+                  <key>
+                    <int>1</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>13</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>13</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>13</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+                <item>
+                  <key>
+                    <int>2</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>-1</X>
+                        <Y>13</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>0</X>
+                        <Y>13</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>15</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>14</Y>
+                      </Coord>
+                      <Coord>
+                        <X>1</X>
+                        <Y>13</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+              </OccupiedCoords>
+              <Dimensions>
+                <X>3</X>
+                <Y>3</Y>
+                <Z>3</Z>
+              </Dimensions>
             </Sprite>
           </Sprite>
           <OccupiedCoords>
@@ -10848,6 +10935,42 @@
                 <X>-6</X>
                 <Y>-5</Y>
               </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>15</Y>
+              </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>14</Y>
+              </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>13</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>15</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>14</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>13</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>15</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>14</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>13</Y>
+              </Coord>
             </ArrayOfCoord>
           </OccupiedCoords>
         </SpriteListOfSprite>
@@ -10880,16 +11003,16 @@
               </Animator>
               <Alpha>1</Alpha>
               <Position>
-                <X>189</X>
-                <Y>-67.5</Y>
+                <X>324</X>
+                <Y>-76.5</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
                 <Y>-21</Y>
               </PositionOffset>
               <Coords>
-                <X>2</X>
-                <Y>4</Y>
+                <X>3</X>
+                <Y>6</Y>
               </Coords>
               <Altitude>1</Altitude>
               <DrawPriority>0</DrawPriority>
@@ -11827,6 +11950,221 @@
               </Dimensions>
             </Sprite>
           </Sprite>
+          <Sprite>
+            <Sprite xsi:type="GhostMarker">
+              <Animator>
+                <SpriteSheet>
+                  <TexturePath>Temp/TopFaceSelectionMarker</TexturePath>
+                  <Rows>1</Rows>
+                  <Columns>1</Columns>
+                </SpriteSheet>
+                <StartFrame>0</StartFrame>
+                <CurrentFrame>0</CurrentFrame>
+                <FramesInLoop>1</FramesInLoop>
+                <FrameCounter>0</FrameCounter>
+                <FrameSpeed>0.133</FrameSpeed>
+                <AnimState>None</AnimState>
+                <Timer>
+                  <TotalElapsedTime>0</TotalElapsedTime>
+                  <IsDone>true</IsDone>
+                </Timer>
+              </Animator>
+              <Alpha>0.3</Alpha>
+              <Position>
+                <X>648</X>
+                <Y>-648</Y>
+              </Position>
+              <PositionOffset>
+                <X>0</X>
+                <Y>0</Y>
+              </PositionOffset>
+              <Coords>
+                <X>-8</X>
+                <Y>26</Y>
+              </Coords>
+              <Altitude>1</Altitude>
+              <DrawPriority>-1000</DrawPriority>
+              <IsHidden>false</IsHidden>
+              <Image xsi:type="Deco">
+                <Animator>
+                  <SpriteSheet>
+                    <TexturePath>Temp/House</TexturePath>
+                    <Rows>1</Rows>
+                    <Columns>1</Columns>
+                  </SpriteSheet>
+                  <StartFrame>0</StartFrame>
+                  <CurrentFrame>0</CurrentFrame>
+                  <FramesInLoop>1</FramesInLoop>
+                  <FrameCounter>0</FrameCounter>
+                  <FrameSpeed>0.133</FrameSpeed>
+                  <AnimState>None</AnimState>
+                  <Timer>
+                    <TotalElapsedTime>0</TotalElapsedTime>
+                    <IsDone>true</IsDone>
+                  </Timer>
+                </Animator>
+                <Alpha>0.3</Alpha>
+                <Position>
+                  <X>648</X>
+                  <Y>-648</Y>
+                </Position>
+                <PositionOffset>
+                  <X>-87</X>
+                  <Y>-99</Y>
+                </PositionOffset>
+                <Coords>
+                  <X>0</X>
+                  <Y>0</Y>
+                </Coords>
+                <Altitude>0</Altitude>
+                <DrawPriority>0</DrawPriority>
+                <IsHidden>false</IsHidden>
+                <OccupiedCoords>
+                  <item>
+                    <key>
+                      <int>0</int>
+                    </key>
+                    <value>
+                      <ArrayOfCoord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>-1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>-1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>-1</Y>
+                        </Coord>
+                      </ArrayOfCoord>
+                    </value>
+                  </item>
+                  <item>
+                    <key>
+                      <int>1</int>
+                    </key>
+                    <value>
+                      <ArrayOfCoord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>-1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>-1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>-1</Y>
+                        </Coord>
+                      </ArrayOfCoord>
+                    </value>
+                  </item>
+                  <item>
+                    <key>
+                      <int>2</int>
+                    </key>
+                    <value>
+                      <ArrayOfCoord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>-1</X>
+                          <Y>-1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>-1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>1</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>0</Y>
+                        </Coord>
+                        <Coord>
+                          <X>1</X>
+                          <Y>-1</Y>
+                        </Coord>
+                      </ArrayOfCoord>
+                    </value>
+                  </item>
+                </OccupiedCoords>
+                <Dimensions>
+                  <X>3</X>
+                  <Y>3</Y>
+                  <Z>3</Z>
+                </Dimensions>
+              </Image>
+              <DrawDefaultMarker>true</DrawDefaultMarker>
+            </Sprite>
+          </Sprite>
           <OccupiedCoords>
             <ArrayOfCoord>
               <Coord>
@@ -11959,7 +12297,7 @@
       </value>
     </item>
   </LayerMap>
-  <Altitude>0</Altitude>
+  <Altitude>1</Altitude>
   <Player>
     <Animator>
       <SpriteSheet>
@@ -11980,16 +12318,16 @@
     </Animator>
     <Alpha>1</Alpha>
     <Position>
-      <X>189</X>
-      <Y>-67.5</Y>
+      <X>324</X>
+      <Y>-76.5</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
       <Y>-21</Y>
     </PositionOffset>
     <Coords>
-      <X>2</X>
-      <Y>4</Y>
+      <X>3</X>
+      <Y>6</Y>
     </Coords>
     <Altitude>1</Altitude>
     <DrawPriority>0</DrawPriority>
@@ -12019,59 +12357,24 @@
     </Animator>
     <Alpha>0.3</Alpha>
     <Position>
-      <X>540</X>
-      <Y>-450</Y>
+      <X>648</X>
+      <Y>-648</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
       <Y>0</Y>
     </PositionOffset>
     <Coords>
-      <X>-5</X>
-      <Y>20</Y>
+      <X>-8</X>
+      <Y>26</Y>
     </Coords>
-    <Altitude>0</Altitude>
+    <Altitude>1</Altitude>
     <DrawPriority>-1000</DrawPriority>
     <IsHidden>false</IsHidden>
-    <Image xsi:type="Cube">
+    <Image xsi:type="Deco">
       <Animator>
         <SpriteSheet>
-          <TexturePath>Temp/GrassCubeTop</TexturePath>
-          <Rows>3</Rows>
-          <Columns>4</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>12</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </Animator>
-      <Alpha>0.3</Alpha>
-      <Position>
-        <X>540</X>
-        <Y>-450</Y>
-      </Position>
-      <PositionOffset>
-        <X>0</X>
-        <Y>0</Y>
-      </PositionOffset>
-      <Coords>
-        <X>0</X>
-        <Y>0</Y>
-      </Coords>
-      <Altitude>0</Altitude>
-      <DrawPriority>0</DrawPriority>
-      <IsHidden>false</IsHidden>
-      <ShadowPath>Temp/CubeShadow</ShadowPath>
-      <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
-      <AnimatorBase>
-        <SpriteSheet>
-          <TexturePath>Temp/WaterCubeBase</TexturePath>
+          <TexturePath>Temp/House</TexturePath>
           <Rows>1</Rows>
           <Columns>1</Columns>
         </SpriteSheet>
@@ -12085,7 +12388,165 @@
           <TotalElapsedTime>0</TotalElapsedTime>
           <IsDone>true</IsDone>
         </Timer>
-      </AnimatorBase>
+      </Animator>
+      <Alpha>0.3</Alpha>
+      <Position>
+        <X>648</X>
+        <Y>-648</Y>
+      </Position>
+      <PositionOffset>
+        <X>-87</X>
+        <Y>-99</Y>
+      </PositionOffset>
+      <Coords>
+        <X>0</X>
+        <Y>0</Y>
+      </Coords>
+      <Altitude>0</Altitude>
+      <DrawPriority>0</DrawPriority>
+      <IsHidden>false</IsHidden>
+      <OccupiedCoords>
+        <item>
+          <key>
+            <int>0</int>
+          </key>
+          <value>
+            <ArrayOfCoord>
+              <Coord>
+                <X>-1</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>-1</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>-1</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>-1</Y>
+              </Coord>
+            </ArrayOfCoord>
+          </value>
+        </item>
+        <item>
+          <key>
+            <int>1</int>
+          </key>
+          <value>
+            <ArrayOfCoord>
+              <Coord>
+                <X>-1</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>-1</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>-1</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>-1</Y>
+              </Coord>
+            </ArrayOfCoord>
+          </value>
+        </item>
+        <item>
+          <key>
+            <int>2</int>
+          </key>
+          <value>
+            <ArrayOfCoord>
+              <Coord>
+                <X>-1</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>-1</X>
+                <Y>-1</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>0</X>
+                <Y>-1</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>1</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>0</Y>
+              </Coord>
+              <Coord>
+                <X>1</X>
+                <Y>-1</Y>
+              </Coord>
+            </ArrayOfCoord>
+          </value>
+        </item>
+      </OccupiedCoords>
+      <Dimensions>
+        <X>3</X>
+        <Y>3</Y>
+        <Z>3</Z>
+      </Dimensions>
     </Image>
     <DrawDefaultMarker>true</DrawDefaultMarker>
   </GhostMarker>
@@ -12143,6 +12604,183 @@
       </Timer>
     </AnimatorBase>
   </CubePreview>
+  <DecoPreview>
+    <Animator>
+      <SpriteSheet>
+        <TexturePath>Temp/House</TexturePath>
+        <Rows>1</Rows>
+        <Columns>1</Columns>
+      </SpriteSheet>
+      <StartFrame>0</StartFrame>
+      <CurrentFrame>0</CurrentFrame>
+      <FramesInLoop>1</FramesInLoop>
+      <FrameCounter>0</FrameCounter>
+      <FrameSpeed>0.133</FrameSpeed>
+      <AnimState>None</AnimState>
+      <Timer>
+        <TotalElapsedTime>0</TotalElapsedTime>
+        <IsDone>true</IsDone>
+      </Timer>
+    </Animator>
+    <Alpha>1</Alpha>
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+    </Position>
+    <PositionOffset>
+      <X>-87</X>
+      <Y>-99</Y>
+    </PositionOffset>
+    <Coords>
+      <X>0</X>
+      <Y>0</Y>
+    </Coords>
+    <Altitude>0</Altitude>
+    <DrawPriority>0</DrawPriority>
+    <IsHidden>false</IsHidden>
+    <OccupiedCoords>
+      <item>
+        <key>
+          <int>0</int>
+        </key>
+        <value>
+          <ArrayOfCoord>
+            <Coord>
+              <X>-1</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>-1</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>-1</X>
+              <Y>-1</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>-1</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>-1</Y>
+            </Coord>
+          </ArrayOfCoord>
+        </value>
+      </item>
+      <item>
+        <key>
+          <int>1</int>
+        </key>
+        <value>
+          <ArrayOfCoord>
+            <Coord>
+              <X>-1</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>-1</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>-1</X>
+              <Y>-1</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>-1</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>-1</Y>
+            </Coord>
+          </ArrayOfCoord>
+        </value>
+      </item>
+      <item>
+        <key>
+          <int>2</int>
+        </key>
+        <value>
+          <ArrayOfCoord>
+            <Coord>
+              <X>-1</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>-1</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>-1</X>
+              <Y>-1</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>0</X>
+              <Y>-1</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>1</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>0</Y>
+            </Coord>
+            <Coord>
+              <X>1</X>
+              <Y>-1</Y>
+            </Coord>
+          </ArrayOfCoord>
+        </value>
+      </item>
+    </OccupiedCoords>
+    <Dimensions>
+      <X>3</X>
+      <Y>3</Y>
+      <Z>3</Z>
+    </Dimensions>
+  </DecoPreview>
   <Authorization>None</Authorization>
-  <BuildDimensions>_Cube</BuildDimensions>
+  <BuildDimensions>_3x3</BuildDimensions>
 </MapBuilder>
