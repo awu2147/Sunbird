@@ -32,6 +32,7 @@ namespace Sunbird.Core
             DepthFormat.None);
         }
 
+        [Obsolete("Use the LightingStencil shader effect instead.")]
         public static void ApplyStencil(Texture2D source, Texture2D stencil, Color color)
         {
             var totalPixels = source.Width * source.Height;

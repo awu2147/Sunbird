@@ -23,6 +23,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WaterCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WaterCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/DefaultFont.spritefont</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/LightingStencil.fx</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/2x2Placeholder.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_full.png</File>
@@ -74,7 +75,6 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png</File>
-    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Test.fx</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

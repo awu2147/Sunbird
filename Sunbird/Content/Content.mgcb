@@ -236,6 +236,12 @@
 /processorParam:TextureFormat=Compressed
 /build:DefaultFont.spritefont
 
+#begin Effects/LightingStencil.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/LightingStencil.fx
+
 #begin Temp/2x2Placeholder.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -847,10 +853,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Temp/WaterCubeTopClosed.png
-
-#begin Test.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Test.fx
 
