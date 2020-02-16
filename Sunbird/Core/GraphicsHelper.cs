@@ -32,52 +32,6 @@ namespace Sunbird.Core
             DepthFormat.None);
         }
 
-        [Obsolete("Use the LightingStencil shader effect instead.")]
-        public static void ApplyStencil(Texture2D source, Texture2D stencil, Color color)
-        {
-            var totalPixels = source.Width * source.Height;
-            Color[] stencilPixels = new Color[totalPixels];
-            stencil.GetData(stencilPixels);
-            Color[] sourcePixels = new Color[totalPixels];
-            source.GetData(sourcePixels);
-
-#if DEBUG
-            Debug.Assert(stencilPixels.Length == sourcePixels.Length);
-#endif
-
-            for (int i = 0; i < stencilPixels.Length; i++)
-            {
-                if (stencilPixels[i] != Color.Black)
-                {
-                    sourcePixels[i] = color;
-                }
-            }
-
-            source.SetData(sourcePixels);
-        }
-
-        /// <summary>
-        /// Returns a mask texture from a base texture. This creates garbage.
-        /// </summary>
-        public static Texture2D GetMask(MainGame mainGame, Texture2D texture, Color color)
-        {
-            var totalPixels = texture.Width * texture.Height;
-            Color[] maskPixels = new Color[totalPixels];
-            texture.GetData(maskPixels);
-
-            for (int i = 0; i < maskPixels.Length; i++)
-            {
-                if (maskPixels[i].A != 0)
-                {
-                    maskPixels[i] = color;
-                }
-            }
-
-            var mask = new Texture2D(mainGame.GraphicsDevice, texture.Width, texture.Height);
-            mask.SetData(maskPixels);
-            return mask;
-        }
-
         /// <summary>
         /// <para>Takes an original color array and returns a new array which only includes data points contained inside the destination rectangle.</para>
         /// <para>The returned array will be ordered from top-left to bottom-right, like the original. The given the rectangle must lie within the original area.</para>
@@ -124,7 +78,74 @@ namespace Sunbird.Core
             return solidPixels;
         }
 
-        #region Deprecated SolidPixels method
+
+        /// <summary>
+        /// Returns a mask texture from a base texture. This creates garbage.
+        /// </summary>
+        public static Texture2D GetMask(MainGame mainGame, Texture2D texture, Color color)
+        {
+            var totalPixels = texture.Width * texture.Height;
+            Color[] maskPixels = new Color[totalPixels];
+            texture.GetData(maskPixels);
+
+            for (int i = 0; i < maskPixels.Length; i++)
+            {
+                if (maskPixels[i].A != 0)
+                {
+                    maskPixels[i] = color;
+                }
+            }
+
+            var mask = new Texture2D(mainGame.GraphicsDevice, texture.Width, texture.Height);
+            mask.SetData(maskPixels);
+            return mask;
+        }
+
+        public static Texture2D GetAntiShadow(MainGame mainGame, Texture2D texture)
+        {
+            return GetMask(mainGame, texture, Color.Black);
+        }
+
+        public static Texture2D GetSelfShadow(MainGame mainGame, Texture2D texture)
+        {
+            return GetMask(mainGame, texture, new Color(109, 117, 141));
+        }
+
+        /// <summary>
+        /// Generate AntiShadow and SelfShadow textures from a base Texture.
+        /// </summary>
+        /// <param name="mainGame"></param>
+        public static void GenerateShadowTextures(MainGame mainGame, Texture2D texture, ref Texture2D antiShadow, ref Texture2D selfShadow)
+        {
+            antiShadow = GetAntiShadow(mainGame, texture);
+            selfShadow = GetSelfShadow(mainGame, texture);
+        }
+
+        #region Obsolete
+
+        [Obsolete("Use the LightingStencil shader effect instead.")]
+        public static void ApplyStencil(Texture2D source, Texture2D stencil, Color color)
+        {
+            var totalPixels = source.Width * source.Height;
+            Color[] stencilPixels = new Color[totalPixels];
+            stencil.GetData(stencilPixels);
+            Color[] sourcePixels = new Color[totalPixels];
+            source.GetData(sourcePixels);
+
+#if DEBUG
+            Debug.Assert(stencilPixels.Length == sourcePixels.Length);
+#endif
+
+            for (int i = 0; i < stencilPixels.Length; i++)
+            {
+                if (stencilPixels[i] != Color.Black)
+                {
+                    sourcePixels[i] = color;
+                }
+            }
+
+            source.SetData(sourcePixels);
+        }
 
         /// <summary>
         /// Given an animator and zoom factor, returns a list of Alpha != 0 points for the current frame, normalized as if animator.Position was at (0, 0).
@@ -200,27 +221,7 @@ namespace Sunbird.Core
             return solidPixels;
         }
 
-        #endregion   
-
-        public static Texture2D GetAntiShadow(MainGame mainGame, Texture2D texture)
-        {
-            return GetMask(mainGame, texture, Color.Black);
-        }
-
-        public static Texture2D GetSelfShadow(MainGame mainGame, Texture2D texture)
-        {
-            return GetMask(mainGame, texture, new Color(109, 117, 141));
-        }
-
-        /// <summary>
-        /// Generate AntiShadow and SelfShadow textures from a base Texture.
-        /// </summary>
-        /// <param name="mainGame"></param>
-        public static void GenerateShadowTextures(MainGame mainGame, Texture2D texture, ref Texture2D antiShadow, ref Texture2D selfShadow)
-        {
-            antiShadow = GetAntiShadow(mainGame, texture);
-            selfShadow = GetSelfShadow(mainGame, texture);
-        }
+        #endregion
 
     }
 }

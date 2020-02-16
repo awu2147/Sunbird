@@ -34,6 +34,8 @@ namespace Sunbird.GUI
         public IGui Sender;
         public Button SenderBN;
 
+        public ScrollBarContainer ScrollBar;
+
         private CubeCatalog()
         {
 
@@ -43,6 +45,8 @@ namespace Sunbird.GUI
         {
             Sender = sender;
             SenderBN = senderBN;
+            ScrollBar = new ScrollBarContainer(mainGame, "Temp/Scroll1", Orientation.Vertical, 126);
+            ScrollBar.Position = Position + new Vector2(402, 54);
             var exitButtonS = SpriteSheet.CreateNew(mainGame, "Buttons/ExitBN", 1, 2);
             ExitButton = new Button(mainGame, exitButtonS, null, Position + new Vector2(399, 6)) { ButtonType = ButtonType.SafeRelease };
             ExitButton.Clicked += ExitButton_Clicked;
@@ -82,6 +86,7 @@ namespace Sunbird.GUI
                     }
                 }
             }
+            ScrollBar.Update(gameTime);
             ExitButton.Update(gameTime);
         }
 
@@ -109,6 +114,7 @@ namespace Sunbird.GUI
                     countCBMD++;
                 }
             }
+            ScrollBar.Draw(gameTime, spriteBatch);
             ExitButton.Draw(gameTime, spriteBatch);
         }
     }

@@ -190,6 +190,16 @@ namespace Sunbird.External
                     ReconfigureAnimator(4, 1, 0.2f, AnimationState.None);
                 }
             }
+            if (Peripherals.KeyTapped(Keys.P))
+            {
+                var ns = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet2", 1, 16);
+                ReplaceSpriteSheet(ns);             
+            }
+            if (Peripherals.KeyTapped(Keys.O))
+            {
+                var ns = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
+                ReplaceSpriteSheet(ns);
+            }
         }
 
         private void ApplyMotionBlur(List<Movement> movements)

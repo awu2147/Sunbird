@@ -42,61 +42,128 @@ namespace Sunbird.GUI
     {
         public ScrollBar ScrollBar { get; set; }
 
+        private Orientation orientation;
+
         public int CurrentLength
         {
             get { return ScrollBar.CurrentLength; }
             set { ScrollBar.CurrentLength = value; }
         }
 
-
-        public ScrollBarContainer(MainGame mainGame, Texture2D scrollBar, Orientation orientation, int maxLength)
+        public int MaxLength
         {
-            MainGame = mainGame;
-            ScrollBar = new ScrollBar(this, scrollBar, orientation, maxLength);
+            get { return ScrollBar.MaxLength; }
+            set { ScrollBar.MaxLength = value; }
         }
 
-        private void ScrollBar_Clicked(object sender, EventArgs e)
+        public int TotalSegments { get; set; } = 5;
+        public int CurrentSegment { get; set; } = 2;
+
+        private int StartingSegment;
+        private Point Anchor;
+        private Point DragPositionChange;
+        private bool Dragged;
+
+        public ScrollBarContainer(MainGame mainGame, string path, Orientation orientation, int maxLength)
         {
-            throw new NotImplementedException();
+            MainGame = mainGame;
+            this.orientation = orientation;
+            var scrollBar = mainGame.Content.Load<Texture2D>(path);
+            ScrollBar = new ScrollBar(this, scrollBar, orientation, maxLength);
         }
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-            if (Peripherals.LeftButtonTapped() && ScrollBar.WorldArea().Contains(Peripherals.GetMouseWindowPosition()) && MainGame.IsActive)
+            var segmentLength = MaxLength / TotalSegments;
+            CurrentLength = segmentLength;
+            var offset = (CurrentSegment - 1) / (float)TotalSegments * MaxLength;
+            if (orientation == Orientation.Vertical)
             {
-                OnClicked();
+                ScrollBar.PositionOffset = new Vector2(0, offset);
             }
+            else if (orientation == Orientation.Horizontal)
+            {
+                ScrollBar.PositionOffset = new Vector2(offset, 0);
+            }
+            if (Peripherals.LeftButtonPressed() && MainGame.IsActive == true)
+            {
+                if (Peripherals.LeftButtonTapped() && ScrollBar.WorldArea().Contains(Peripherals.GetMouseWindowPosition()))
+                {
+                    Peripherals.LeftButtonReleased += Peripherals_LeftButtonReleased;
+                    Anchor = Peripherals.GetMouseWindowPosition();
+                    StartingSegment = CurrentSegment;
+                    Dragged = true;
+                }
+                // After initial click, this bool allows continued dragging even if the cursor leaves the scroll bar area.
+                if (Dragged)
+                {
+                    var currentPosition = Peripherals.GetMouseWindowPosition();
+                    DragPositionChange = (currentPosition - Anchor);
+                    if (orientation == Orientation.Vertical)
+                    {
+                        var change = Math.Abs(DragPositionChange.Y);
+                        var threshold = change + segmentLength / 2;
+                        if (threshold >= segmentLength && DragPositionChange.Y < 0)
+                        {
+                            CurrentSegment = StartingSegment - threshold / segmentLength;
+                        }
+                        else if (threshold >= segmentLength && DragPositionChange.Y > 0)
+                        {
+                            CurrentSegment = StartingSegment + threshold / segmentLength;
+                        }
+                        else
+                        {
+                            CurrentSegment = StartingSegment;
+                        }
+                        
+                        if (CurrentSegment < 1)
+                        {
+                            CurrentSegment = 1;
+                        }
+                        else if (CurrentSegment > TotalSegments)
+                        {
+                            CurrentSegment = TotalSegments;
+                        }
+
+                    }
+                    else if (orientation == Orientation.Horizontal)
+                    {
+                        throw new NotImplementedException("Add me");
+                    }
+                }
+            }
+            ScrollBar.Update(gameTime);
         }
 
-        public override void OnClicked()
+        private void Peripherals_LeftButtonReleased(object sender, EventArgs e)
         {
-            base.OnClicked();
+            DragPositionChange = Point.Zero;
+            Dragged = false;
+            Peripherals.LeftButtonReleased -= Peripherals_LeftButtonReleased;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            base.Draw(gameTime, spriteBatch);
+            ScrollBar.Draw(gameTime, spriteBatch);
         }
 
     }
 
-
-
     public class ScrollBar : Sprite
     {
-        private ScrollBarContainer sender;
+        private ScrollBarContainer container;
         private Orientation orientation;
         private Texture2D scrollBar;
         private Rectangle viewRectangle;
-        new private Vector2 Position { get { return sender.Position + PositionOffset; } }
+        new public Vector2 Position { get { return container.Position + PositionOffset; } }
         public int MaxLength { get; set; }
         public int CurrentLength { get; set; }
 
-        public ScrollBar(ScrollBarContainer sender, Texture2D scrollBar, Orientation orientation, int maxLength)
+        public ScrollBar(ScrollBarContainer container, Texture2D scrollBar, Orientation orientation, int maxLength)
         {
-            this.sender = sender;
+            this.container = container;
             this.orientation = orientation;
+            this.scrollBar = scrollBar;
             MaxLength = maxLength;
             CurrentLength = maxLength;
             if (orientation == Orientation.Vertical)
@@ -111,7 +178,8 @@ namespace Sunbird.GUI
 
         public Rectangle WorldArea()
         {
-            return new Rectangle(Position.ToPoint(), new Point(viewRectangle.Width, viewRectangle.Height));
+            //Debug.Print($"{container.Position}, {PositionOffset}");
+            return new Rectangle((container.Position + PositionOffset).ToPoint(), new Point(viewRectangle.Width, viewRectangle.Height));
         }
 
         public override void Update(GameTime gameTime)

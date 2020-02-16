@@ -11,12 +11,12 @@
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>
   <CurrentCubeBaseMetaData>
-    <Path>Cubes/WaterCubeBase</Path>
+    <Path>Cubes/LightStoneCubeBase</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>2</SheetColumns>
+    <SheetColumns>1</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>2</FrameCount>
+    <FrameCount>1</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>

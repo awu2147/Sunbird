@@ -28,11 +28,6 @@ struct VertexShaderOutput
 	float2 TextureCoordinates : TEXCOORD0;
 };
 
-struct PixelShaderOutput
-{
-	float4 Color : COLOR0;
-};
-
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float4 white = float4(0.1f, 1.0f, 1.0f, 1.0f);
