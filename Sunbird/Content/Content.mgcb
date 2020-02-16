@@ -848,3 +848,9 @@
 /processorParam:TextureFormat=Color
 /build:Temp/WaterCubeTopClosed.png
 
+#begin Test.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Test.fx
+

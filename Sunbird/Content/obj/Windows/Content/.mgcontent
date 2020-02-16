@@ -74,8 +74,10 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Test.fx</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

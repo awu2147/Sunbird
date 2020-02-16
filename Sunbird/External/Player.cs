@@ -30,7 +30,6 @@ namespace Sunbird.External
 
     public class Player : Sprite
     {       
-        private MainGame MainGame { get; set; }
         private Config Config { get { return MainGame.Config; } }
         public Direction Direction { get; set; } = Direction.South;
         public Movement Movement { get; set; } = Movement.Standing;
@@ -48,7 +47,6 @@ namespace Sunbird.External
 
         public Player(MainGame mainGame, SpriteSheet spriteSheet, AnimArgs switchAnimArgs) : base(mainGame, spriteSheet, switchAnimArgs)
         {
-            MainGame = mainGame;
             PositionOffset = new Vector2(0, -21);
         }
 

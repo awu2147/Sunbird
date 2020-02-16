@@ -43,7 +43,7 @@ namespace Sunbird.External
             }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteBatch spriteBatchShadow, SpriteBatch spriteBatchLighting, SpriteBatch spriteBatchLightingStencil)
         {
             GraphicsDevice.Clear(BackgroundColor);
             if (Background != null)

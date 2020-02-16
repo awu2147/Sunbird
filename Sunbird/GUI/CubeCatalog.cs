@@ -27,7 +27,6 @@ namespace Sunbird.GUI
 
     public class CubeCatalog : Sprite
     {
-        private MainGame MainGame { get; set; }
         public List<CubeCatalogItem> Items = new List<CubeCatalogItem>();
 
         public Button ExitButton;
@@ -42,7 +41,6 @@ namespace Sunbird.GUI
 
         public CubeCatalog(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, IGui sender, Button senderBN) : base(mainGame, spriteSheet, position)
         {
-            MainGame = mainGame;
             Sender = sender;
             SenderBN = senderBN;
             var exitButtonS = SpriteSheet.CreateNew(mainGame, "Buttons/ExitBN", 1, 2);

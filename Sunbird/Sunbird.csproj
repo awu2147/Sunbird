@@ -69,6 +69,7 @@
     <Compile Include="GUI\CubeCatalog.cs" />
     <Compile Include="GUI\IGui.cs" />
     <Compile Include="GUI\LoadingBar.cs" />
+    <Compile Include="GUI\ScrollView.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

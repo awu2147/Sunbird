@@ -28,6 +28,9 @@ namespace Sunbird
     {
         private GraphicsDeviceManager Graphics { get; set; }
         private SpriteBatch SpriteBatch { get; set; }
+        private SpriteBatch SpriteBatchShadow { get; set; }
+        private SpriteBatch SpriteBatchLighting { get; set; }
+        private SpriteBatch SpriteBatchLightingStencil { get; set; }
 
         public State CurrentState { get; set; }
         public Config Config { get; set; }
@@ -48,6 +51,8 @@ namespace Sunbird
         public RenderTarget2D LightingStencilRenderTarget;
 
         public BlendState Subtractive;
+
+        Effect effect;
 
         public bool CleanLoad { get; set; } = false;
 
@@ -171,8 +176,8 @@ namespace Sunbird
             {
                 ColorSourceBlend = Blend.Zero,
                 ColorDestinationBlend = Blend.InverseSourceColor,
-                AlphaSourceBlend = Blend.Zero,
-                AlphaDestinationBlend = Blend.InverseSourceColor
+                //AlphaSourceBlend = Blend.Zero,
+                //AlphaDestinationBlend = Blend.InverseSourceColor
             };
 
             Exiting += MainGame_Exiting;
@@ -199,6 +204,11 @@ namespace Sunbird
         {
             // CORE: Create a new SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatchShadow = new SpriteBatch(GraphicsDevice);
+            SpriteBatchLighting = new SpriteBatch(GraphicsDevice);
+            SpriteBatchLightingStencil = new SpriteBatch(GraphicsDevice);
+
+            effect = Content.Load<Effect>("Test");
 
             CurrentState = new MapBuilder(this, GraphicsDevice, Content);
 
@@ -251,14 +261,17 @@ namespace Sunbird
         {
             if (World.ZoomRatio > 1) { SamplerState = SamplerState.PointClamp; }
 
+            // Primary batch
+            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchShadow.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchLighting.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchLightingStencil.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+
             // Game Render
             GraphicsDevice.SetRenderTarget(GameRenderTarget);
             GraphicsDevice.Clear(Color.LightGray);
 
-            // Primary batch
-            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-
-            CurrentState.Draw(gameTime, SpriteBatch);
+            CurrentState.Draw(gameTime, SpriteBatch, SpriteBatchShadow, SpriteBatchLighting, SpriteBatchLightingStencil);
 
             SpriteBatch.End();
 
@@ -269,40 +282,69 @@ namespace Sunbird
             GraphicsDevice.SetRenderTarget(ShadowRenderTarget);
             GraphicsDevice.Clear(Color.Black);
 
-            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-
-            CurrentState.DrawShadow(gameTime, SpriteBatch);
-
-            SpriteBatch.End();
+            SpriteBatchShadow.End();
 
             GraphicsDevice.SetRenderTarget(null);
             ShadowRender = ShadowRenderTarget;
 
             // Lighting Render
-            GraphicsDevice.SetRenderTarget(LightingRenderTarget); 
+            GraphicsDevice.SetRenderTarget(LightingRenderTarget);
+            GraphicsDevice.Clear(CurrentState.CurrentLightingColor);
 
-            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-
-            CurrentState.DrawLighting(gameTime, SpriteBatch);
-
-            SpriteBatch.End();
+            SpriteBatchLighting.End();
 
             GraphicsDevice.SetRenderTarget(null);
             LightingRender = LightingRenderTarget;
 
             // Lighting Stencil Render
             GraphicsDevice.SetRenderTarget(LightingStencilRenderTarget);
+            GraphicsDevice.Clear(CurrentState.CurrentLightingColor);
 
-            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-
-            CurrentState.DrawLightingStencil(gameTime, SpriteBatch);
-
-            SpriteBatch.End();
+            SpriteBatchLightingStencil.End();
 
             GraphicsDevice.SetRenderTarget(null);
             LightingStencilRender = LightingStencilRenderTarget;
 
-            GraphicsHelper.ApplyStencil(LightingRender, LightingStencilRender, CurrentState.CurrentLightingColor);
+            //GraphicsHelper.ApplyStencil(LightingRender, LightingStencilRender, CurrentState.CurrentLightingColor);
+
+            //// Shadow Render
+            //GraphicsDevice.SetRenderTarget(ShadowRenderTarget);
+            //GraphicsDevice.Clear(Color.Black);
+
+            //SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+
+            //CurrentState.DrawShadow(gameTime, SpriteBatch);
+
+            //SpriteBatch.End();
+
+            //GraphicsDevice.SetRenderTarget(null);
+            //ShadowRender = ShadowRenderTarget;
+
+            //// Lighting Render
+            //GraphicsDevice.SetRenderTarget(LightingRenderTarget); 
+
+            //SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+
+            //CurrentState.DrawLighting(gameTime, SpriteBatch);
+
+            //SpriteBatch.End();
+
+            //GraphicsDevice.SetRenderTarget(null);
+            //LightingRender = LightingRenderTarget;
+
+            //// Lighting Stencil Render
+            //GraphicsDevice.SetRenderTarget(LightingStencilRenderTarget);
+
+            //SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+
+            //CurrentState.DrawLightingStencil(gameTime, SpriteBatch);
+
+            //SpriteBatch.End();
+
+            //GraphicsDevice.SetRenderTarget(null);
+            //LightingStencilRender = LightingStencilRenderTarget;
+
+            //GraphicsHelper.ApplyStencil(LightingRender, LightingStencilRender, CurrentState.CurrentLightingColor);
 
             // Game Render Texture
             SpriteBatch.Begin();
@@ -310,12 +352,16 @@ namespace Sunbird
             SpriteBatch.End();
 
             // Shadow Render Texture (Subtractive)
-            SpriteBatch.Begin(blendState: Subtractive);
-            SpriteBatch.Draw(ShadowRender, Vector2.Zero, Color.White);
-            SpriteBatch.End();
+            //SpriteBatch.Begin(blendState: Subtractive);
+            //SpriteBatch.Draw(ShadowRender, Vector2.Zero, Color.White);
+            //SpriteBatch.End();
+
+            effect.Parameters["LightingRender"].SetValue(LightingRender);
+            effect.Parameters["LightingStencilRender"].SetValue(LightingStencilRender);
+            effect.Parameters["CurrentLighting"].SetValue(CurrentState.CurrentLightingColor.ToVector4());
 
             // Lighting Render Texture (Subtractive)
-            SpriteBatch.Begin(blendState: Subtractive);
+            SpriteBatch.Begin(blendState: Subtractive, effect: effect);
             SpriteBatch.Draw(LightingRender, Vector2.Zero, Color.White);
             SpriteBatch.End();
 

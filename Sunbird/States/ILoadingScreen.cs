@@ -21,7 +21,7 @@ namespace Sunbird.GUI
         LoadingBar LoadingBar { get; set; }
 
         void Update(GameTime gameTime);
-        void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteBatch spriteBatchShadow, SpriteBatch spriteBatchLighting, SpriteBatch spriteBatchLightingStencil);
 
     }
 

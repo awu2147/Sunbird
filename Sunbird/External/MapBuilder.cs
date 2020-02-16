@@ -47,6 +47,8 @@ namespace Sunbird.External
         public Cube CubePreview { get; set; }
         public Deco DecoPreview { get; set; }
 
+        private Dictionary<Coord, List<Sprite>> ShadowDict { get; set; } = new Dictionary<Coord, List<Sprite>>();
+
         private bool IsLoading { get; set; }
         private bool InFocus { get; set; }
         public Authorization Authorization { get; set; }
@@ -515,7 +517,7 @@ namespace Sunbird.External
                 currentState.LoadingBar.Progress += 2;
             }
 
-            CreateOverlay();  
+            CreateOverlay();
 
             IsLoading = false;
             MainGame.CurrentState = this;
@@ -584,6 +586,7 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+                ShadowDict = new Dictionary<Coord, List<Sprite>>();
                 // Defined with respect to current mouse position.
                 var relativeTopFaceCoords = World.TopFace_PointToRelativeCoord(MainGame.Camera, Altitude);
                 var topFaceCoords = World.TopFace_PointToCoord(MainGame.Camera);
@@ -591,7 +594,7 @@ namespace Sunbird.External
                 // Check if cursor on Overlay sprite.
                 foreach (var sprite in Overlay)
                 {
-                    if (sprite.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()))
+                    if (sprite.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition())) 
                     {
                         InFocus = false;
                         break;
@@ -790,6 +793,15 @@ namespace Sunbird.External
                             clickedSprite = sprite;
                         }
                     }
+                    // Create dict: Key = coords, Value = column (list) of sprites with same coord different altitude.
+                    if (ShadowDict.ContainsKey(sprite.Coords) == false)
+                    {
+                        ShadowDict.Add(sprite.Coords, new List<Sprite>() { });
+                    }
+                    else
+                    {
+                        ShadowDict[sprite.Coords].Add(sprite);
+                    }
                 }
                 if (clickedSprite != null)
                 {
@@ -844,24 +856,14 @@ namespace Sunbird.External
             }
         }
 
-        [Obsolete]
-        private void Marker_KeyReleased(object sender, KeyReleasedEventArgs e)
-        {
-            if (e.Key == Keys.F)
-            {
-                LayerMap[Altitude].Remove(GhostMarker);
-                GhostMarker.IsHidden = true;
-                Peripherals.KeyReleased -= Marker_KeyReleased;
-            }
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteBatch spriteBatchShadow, SpriteBatch spriteBatchLighting, SpriteBatch spriteBatchLightingStencil)
         {
             if (!IsLoading)
             {
                 // Draw sorted sprites;
                 foreach (var sprite in World.Sort(LayerMap))
                 {
+                    // Game
                     if (Altitude != sprite.Altitude && sprite is IWorldObject && Authorization == Authorization.Builder)
                     {
                         sprite.Alpha = 0.1f;
@@ -876,14 +878,51 @@ namespace Sunbird.External
                     {
                         sprite.Draw(gameTime, spriteBatch);
                     }
+
+                    // Shadows
+                    if (sprite.AntiShadow != null && !(sprite is GhostMarker))
+                    {
+                        if (sprite is Cube)
+                        {
+                            // Special case because number of frames can vary but AntiShadow remains the same.
+                            spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                            spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                        }
+                        else
+                        {
+                            // Sprites here have AntiShadow generated automatically for entire sheet so use SheetViewArea() to retrieve view rectangle.
+                            spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                            spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                        }
+                    }
+                    if (ShadowDict.ContainsKey(sprite.Coords))
+                    {
+                        foreach (var higherSprite in ShadowDict[sprite.Coords])
+                        {
+                            if (higherSprite.Altitude > sprite.Altitude && higherSprite.Shadow != null && !(sprite is GhostMarker))
+                            {
+                                if (sprite is Cube)
+                                {
+                                    // Special case, same reasoning as above.
+                                    spriteBatchShadow.Draw(higherSprite.Shadow, sprite.Animator.Position, Color.White);
+                                }
+                                else
+                                {
+#if DEBUG
+                                    Debug.Assert(sprite.SelfShadow != null, "Is there a valid reason why SelfShadow can be null while the sprite belongs to the LayerMap?");
+#endif
+                                    spriteBatchShadow.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                                }
+                            }
+                        }
+                    }
+
+                    // Lighting
+                    if (sprite.Light != null)
+                    {
+                        spriteBatchLighting.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White); // FIXME
+                    }
                 }
-                //foreach (var sprite in World.Sort(LayerMap))
-                //{
-                //    if (sprite is Deco)
-                //    {
-                //        spriteBatch.Draw(GraphicsHelper.SolidPixels2(MainGame, sprite.Animator, World.Zoom), sprite.Animator.Position, Color.White);
-                //    }
-                //}
             }
         }
 
@@ -891,27 +930,6 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
-                // Create ascending column view of sprites keyed by coord.
-                var ShadowDict = new Dictionary<Coord, List<Sprite>>();
-
-                var AltitudeList = LayerMap.Keys.ToList();
-                AltitudeList.Sort();
-
-                foreach (var altitude in AltitudeList)
-                {
-                    foreach (var sprite in LayerMap[altitude])
-                    {
-                        if (ShadowDict.ContainsKey(sprite.Coords) == false)
-                        {
-                            ShadowDict.Add(sprite.Coords, new List<Sprite>() { });
-                        }
-                        else
-                        {
-                            ShadowDict[sprite.Coords].Add(sprite);
-                        }
-                    }
-                }
-
                 // Draw AntiShadows and Shadows of sorted sprites;
                 foreach (var sprite in World.Sort(LayerMap))
                 {
@@ -967,6 +985,7 @@ namespace Sunbird.External
                     }
                 }
             }
+
         }
 
         public override void DrawLightingStencil(GameTime gameTime, SpriteBatch spriteBatch)
@@ -976,18 +995,15 @@ namespace Sunbird.External
             var AltitudeList = LayerMap.Keys.ToList();
             AltitudeList.Sort();
 
-            foreach (var altitude in AltitudeList)
+            foreach (var sprite in World.Sort(LayerMap))
             {
-                foreach (var sprite in LayerMap[altitude])
+                if (sprite is Cube)
                 {
-                    if (sprite is Cube)
-                    {
-                        spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
-                    }
-                    else
-                    {
-                        spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
-                    }
+                    spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                 }
             }
         }
@@ -1007,7 +1023,6 @@ namespace Sunbird.External
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", MessageLogBG.Position + new Vector2(15, 75), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", MessageLogBG.Position + new Vector2(15, 95), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Authorization: { Authorization }", MessageLogBG.Position + new Vector2(15, 115), Color.White);
-
         }
     }
 }

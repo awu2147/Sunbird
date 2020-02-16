@@ -27,9 +27,9 @@ namespace Sunbird.Core
             graphicsDevice,
             graphicsDevice.PresentationParameters.BackBufferWidth,
             graphicsDevice.PresentationParameters.BackBufferHeight,
-            true,
+            false,
             graphicsDevice.PresentationParameters.BackBufferFormat,
-            DepthFormat.Depth24);
+            DepthFormat.None);
         }
 
         public static void ApplyStencil(Texture2D source, Texture2D stencil, Color color)

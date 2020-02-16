@@ -42,7 +42,6 @@ namespace Sunbird.GUI
         public event EventHandler<ButtonClickedEventArgs> Checked;
         public event EventHandler<ButtonClickedEventArgs> Unchecked;
 
-        private MainGame MainGame { get; set; }
         public string Label { get; set; }
         public ButtonType ButtonType { get; set; }
 
@@ -84,7 +83,6 @@ namespace Sunbird.GUI
 
         public Button(MainGame mainGame, SpriteSheet spriteSheet, string label, Vector2 position, Alignment alignment) : base (mainGame, spriteSheet, position, alignment)
         {
-            MainGame = mainGame;
             Label = label;
         }
 

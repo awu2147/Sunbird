@@ -69,3 +69,4 @@ Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Siz
 "C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeBase.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/WaterCubeBase.xnb","TextureProcessor","Texture2DContent",3099,43285,0.0239709
 "C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTop.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/WaterCubeTop.xnb","TextureProcessor","Texture2DContent",1556,237685,0.0448834
 "C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCubeTopClosed.png","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Temp/WaterCubeTopClosed.xnb","TextureProcessor","Texture2DContent",1529,205285,0.2084757
+"C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Test.fx","C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Test.xnb","EffectProcessor","CompiledEffectContent",658,726,0.4812546

@@ -34,7 +34,8 @@ namespace Sunbird.Core
     {
         public static readonly XmlSerializer SpriteSerializer = Serializer.CreateNew(typeof(Sprite));
 
-        private MainGame MainGame { get; set; }
+        [XmlIgnore]
+        public MainGame MainGame { get; set; }
         public Animator Animator { get; set; }
         public float Alpha { get; set; } = 1f;
         public Vector2 Position { get; set; }
@@ -61,34 +62,11 @@ namespace Sunbird.Core
 
         public event EventHandler Clicked;
 
-        /// <summary>
-        /// This constructor is safe to call at runtime.
-        /// </summary>
         public Sprite() { }
-
-        /// <summary>
-        /// This constructor should never be called at runtime as it creates garbage.
-        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet) : this(mainGame, spriteSheet, Vector2.Zero) { }
-
-        /// <summary>
-        /// This constructor should never be called at runtime as it creates garbage.
-        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position) : this(mainGame, spriteSheet, position, Alignment.TopLeft, null) { }
-
-        /// <summary>
-        /// This constructor should never be called at runtime as it creates garbage.
-        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment) : this(mainGame, spriteSheet, position, alignment, null) { }
-
-        /// <summary>
-        /// This constructor should never be called at runtime as it creates garbage.
-        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, AnimArgs animArgs) : this(mainGame, spriteSheet, Vector2.Zero, Alignment.TopLeft, animArgs) { }
-
-        /// <summary>
-        /// This constructor should never be called at runtime as it creates garbage.
-        /// </summary>
         public Sprite(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, Alignment alignment, AnimArgs animArgs)
         {
             MainGame = mainGame;
