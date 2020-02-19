@@ -110,6 +110,8 @@ namespace Sunbird
                     {2, new CubeMetaData(){Path = "Cubes/LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
                     {3, new CubeMetaData(){Path = "Cubes/WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None} },
                     {4, new CubeMetaData(){Path = "Cubes/LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f} },
+                    {5, new CubeMetaData(){Path = "Cubes/GraveyardGrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None} },
+                    {6, new CubeMetaData(){Path = "Cubes/GraveyardDirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None} },
                 };
                 // CurrentCubeMetaData should never be null;
                 CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
@@ -126,6 +128,8 @@ namespace Sunbird
                     {2, new CubeBaseMetaData(){Path = "Cubes/LightStoneCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
                     {3, new CubeBaseMetaData(){Path = "Cubes/WaterCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
                     {4, new CubeBaseMetaData(){Path = "Cubes/LavaCubeBase", SheetRows = 4, SheetColumns = 3, FrameCount = 11, AnimState = AnimationState.Loop, } },
+                    {5, new CubeBaseMetaData(){Path = "Cubes/GraveyardGrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None, } },
+                    {6, new CubeBaseMetaData(){Path = "Cubes/GraveyardDirtCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
                 };
                 // CurrentCubeBaseMetaData should never be null;
                 CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];
@@ -147,6 +151,10 @@ namespace Sunbird
                         PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
                     {4, new DecoMetaData(){Path = "Temp/Flower1", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(0, 36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
+                    {5, new DecoMetaData(){Path = "Decos/PurpleMushroomGroup", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(15, 36), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
+                    {6, new DecoMetaData(){Path = "Decos/DeadTree", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, -39), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
                 };
                 // CurrentDecoMetaDataNxN should never be null;
                 DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary[0];

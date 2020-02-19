@@ -649,18 +649,18 @@ namespace Sunbird.External
                         }
                         else if (BuildDimensions == BuildDimensions._1x1)
                         {
-                            var multiCube = DecoFactory.CreateCurrentDeco1x1(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                            LayerMap[Altitude].AddCheck(multiCube, Altitude);
+                            var deco = DecoFactory.CreateCurrentDeco1x1(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            LayerMap[Altitude].AddCheck(deco, Altitude);
                         }
                         else if (BuildDimensions == BuildDimensions._2x2)
                         {
-                            var multiCube = DecoFactory.CreateCurrentDeco2x2(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                            LayerMap[Altitude].AddCheck(multiCube, Altitude);
+                            var deco = DecoFactory.CreateCurrentDeco2x2(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            LayerMap[Altitude].AddCheck(deco, Altitude);
                         }
                         else if (BuildDimensions == BuildDimensions._3x3)
                         {
-                            var multiCube = DecoFactory.CreateCurrentDeco3x3(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
-                            LayerMap[Altitude].AddCheck(multiCube, Altitude);
+                            var deco = DecoFactory.CreateCurrentDeco3x3(MainGame, topFaceCoords, relativeTopFaceCoords, Altitude);
+                            LayerMap[Altitude].AddCheck(deco, Altitude);
                         }
                     }
 
@@ -831,26 +831,26 @@ namespace Sunbird.External
                     sprite.Update(gameTime);
                 }
 #if DEBUG  
-                foreach (var layer in LayerMap)
-                {
-                    var l = new HashSet<Coord>();
-                    foreach (var sprite in layer.Value)
-                    {
-                        if (sprite is Cube)
-                        {
-                            l.Add(sprite.Coords);
-                        }
-                        else if (sprite is Deco)
-                        {
-                            var d = sprite as Deco;
-                            foreach (var coord in d.OccupiedCoords[layer.Key])
-                            {
-                                l.Add(coord);
-                            }
-                        }
-                    }
-                    Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != (occupied) coords of cubes and decos in sprite list, is this correct?");
-                }
+                //foreach (var layer in LayerMap)
+                //{
+                //    var l = new HashSet<Coord>();
+                //    foreach (var sprite in layer.Value)
+                //    {
+                //        if (sprite is Cube)
+                //        {
+                //            l.Add(sprite.Coords);
+                //        }
+                //        else if (sprite is Deco)
+                //        {
+                //            var d = sprite as Deco;
+                //            foreach (var coord in d.OccupiedCoords[layer.Key])
+                //            {
+                //                l.Add(coord);
+                //            }
+                //        }
+                //    }
+                //    Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != (occupied) coords of cubes and decos in sprite list, is this correct?");
+                //}
                 Debug.Assert(GhostMarker.Altitude == Altitude);
 #endif
             }
@@ -860,67 +860,71 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+                var rect = new Rectangle((int)Player.Position.X - 800, (int)Player.Position.Y - 800, 1600, 1600);
                 // Draw sorted sprites;
                 foreach (var sprite in World.Sort(LayerMap))
                 {
-                    // Game
-                    if (Altitude != sprite.Altitude && sprite is IWorldObject && Authorization == Authorization.Builder)
+                    if (rect.Contains(sprite.Position))
                     {
-                        sprite.Alpha = 0.1f;
-                        sprite.Draw(gameTime, spriteBatch);
-                    }
-                    else if ((Altitude == sprite.Altitude || Authorization == Authorization.None) && sprite is IWorldObject)
-                    {
-                        sprite.Alpha = 1f;
-                        sprite.Draw(gameTime, spriteBatch);
-                    }
-                    else
-                    {
-                        sprite.Draw(gameTime, spriteBatch);
-                    }
-
-                    // Shadows
-                    if (sprite.AntiShadow != null && !(sprite is GhostMarker))
-                    {
-                        if (sprite is Cube)
+                        // Game
+                        if (Altitude != sprite.Altitude && sprite is IWorldObject && Authorization == Authorization.Builder)
                         {
-                            // Special case because number of frames can vary but AntiShadow remains the same.
-                            spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
-                            spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                            sprite.Alpha = 0.1f;
+                            sprite.Draw(gameTime, spriteBatch);
+                        }
+                        else if ((Altitude == sprite.Altitude || Authorization == Authorization.None) && sprite is IWorldObject)
+                        {
+                            sprite.Alpha = 1f;
+                            sprite.Draw(gameTime, spriteBatch);
                         }
                         else
                         {
-                            // Sprites here have AntiShadow generated automatically for entire sheet so use SheetViewArea() to retrieve view rectangle.
-                            spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
-                            spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                            sprite.Draw(gameTime, spriteBatch);
                         }
-                    }
-                    if (ShadowDict.ContainsKey(sprite.Coords))
-                    {
-                        foreach (var higherSprite in ShadowDict[sprite.Coords])
+
+                        // Shadows
+                        if (sprite.AntiShadow != null && !(sprite is GhostMarker))
                         {
-                            if (higherSprite.Altitude > sprite.Altitude && higherSprite.Shadow != null && !(sprite is GhostMarker))
+                            if (sprite is Cube)
                             {
-                                if (sprite is Cube)
+                                // Special case because number of frames can vary but AntiShadow remains the same.
+                                spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                                spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                            }
+                            else
+                            {
+                                // Sprites here have AntiShadow generated automatically for entire sheet so use SheetViewArea() to retrieve view rectangle.
+                                spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                                spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                            }
+                        }
+                        if (ShadowDict.ContainsKey(sprite.Coords))
+                        {
+                            foreach (var higherSprite in ShadowDict[sprite.Coords])
+                            {
+                                if (higherSprite.Altitude > sprite.Altitude && higherSprite.Shadow != null && !(sprite is GhostMarker))
                                 {
-                                    // Special case, same reasoning as above.
-                                    spriteBatchShadow.Draw(higherSprite.Shadow, sprite.Animator.Position, Color.White);
-                                }
-                                else
-                                {
+                                    if (sprite is Cube)
+                                    {
+                                        // Special case, same reasoning as above.
+                                        spriteBatchShadow.Draw(higherSprite.Shadow, sprite.Animator.Position, Color.White);
+                                    }
+                                    else
+                                    {
 #if DEBUG
-                                    Debug.Assert(sprite.SelfShadow != null, "Is there a valid reason why SelfShadow can be null while the sprite belongs to the LayerMap?");
+                                        Debug.Assert(sprite.SelfShadow != null, "Is there a valid reason why SelfShadow can be null while the sprite belongs to the LayerMap?");
 #endif
-                                    spriteBatchShadow.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                                        spriteBatchShadow.Draw(sprite.SelfShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    // Lighting
-                    if (sprite.Light != null)
-                    {
-                        spriteBatchLighting.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White); // FIXME
+                        // Lighting
+                        if (sprite.Light != null)
+                        {
+                            spriteBatchLighting.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White); // FIXME
+                        }
                     }
                 }
             }
