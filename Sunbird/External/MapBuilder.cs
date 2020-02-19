@@ -606,19 +606,19 @@ namespace Sunbird.External
                 }
 
                 // User input actions.
-                if (Peripherals.KeyTapped(Keys.Q))
+                if (Peripherals.KeyTapped(Keys.Q) && MainGame.IsActive)
                 {
                     var i = (int)Authorization + 1;
                     if (i >= Enum.GetNames(typeof(Authorization)).Length) { i = 0; }
                     Authorization = (Authorization)(i);
                 }
 
-                if (Peripherals.KeyTapped(Keys.E))
+                if (Peripherals.KeyTapped(Keys.E) && MainGame.IsActive)
                 {
                     CurrentLightingColor = CurrentLightingColor == Color.Black ? Color.LightGray : Color.Black;
                 }
 
-                if (Peripherals.KeyTapped(Keys.R))
+                if (Peripherals.KeyTapped(Keys.R) && MainGame.IsActive)
                 {
                     if (BuildDimensions == BuildDimensions._1x1)
                     {
@@ -628,12 +628,18 @@ namespace Sunbird.External
                     }
                 }
 
-                if (Peripherals.KeyTapped(Keys.T))
+                if (Peripherals.KeyTapped(Keys.T) && MainGame.IsActive)
                 {
                     if (BuildDimensions == BuildDimensions._3x3)
                     {
                         DecoFactory.CurrentDecoMetaData3x3.NextFrame();
                         DecoPreview.Animator.CurrentFrame = DecoFactory.CurrentDecoMetaData3x3.CurrentFrame;
+                        GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
+                    }
+                    else if (BuildDimensions == BuildDimensions._1x1)
+                    {
+                        DecoFactory.CurrentDecoMetaData1x1.NextFrame();
+                        DecoPreview.Animator.CurrentFrame = DecoFactory.CurrentDecoMetaData1x1.CurrentFrame;
                         GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
                     }
                 }
@@ -831,26 +837,26 @@ namespace Sunbird.External
                     sprite.Update(gameTime);
                 }
 #if DEBUG  
-                //foreach (var layer in LayerMap)
-                //{
-                //    var l = new HashSet<Coord>();
-                //    foreach (var sprite in layer.Value)
-                //    {
-                //        if (sprite is Cube)
-                //        {
-                //            l.Add(sprite.Coords);
-                //        }
-                //        else if (sprite is Deco)
-                //        {
-                //            var d = sprite as Deco;
-                //            foreach (var coord in d.OccupiedCoords[layer.Key])
-                //            {
-                //                l.Add(coord);
-                //            }
-                //        }
-                //    }
-                //    Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != (occupied) coords of cubes and decos in sprite list, is this correct?");
-                //}
+                foreach (var layer in LayerMap)
+                {
+                    var l = new HashSet<Coord>();
+                    foreach (var sprite in layer.Value)
+                    {
+                        if (sprite is Cube)
+                        {
+                            l.Add(sprite.Coords);
+                        }
+                        else if (sprite is Deco)
+                        {
+                            var d = sprite as Deco;
+                            foreach (var coord in d.OccupiedCoords[layer.Key])
+                            {
+                                l.Add(coord);
+                            }
+                        }
+                    }
+                    Debug.Assert(l.SetEquals(layer.Value.OccupiedCoords), "Occupied coords set != (occupied) coords of cubes and decos in sprite list, is this correct?");
+                }
                 Debug.Assert(GhostMarker.Altitude == Altitude);
 #endif
             }

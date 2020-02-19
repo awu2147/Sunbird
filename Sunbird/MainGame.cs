@@ -155,6 +155,12 @@ namespace Sunbird
                         PositionOffset = new Vector2(15, 36), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
                     {6, new DecoMetaData(){Path = "Decos/DeadTree", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(0, -39), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
+                    {7, new DecoMetaData(){Path = "Decos/SmallGrave1", SheetRows = 1, SheetColumns = 4, FrameCount = 4, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
+                    {8, new DecoMetaData(){Path = "Decos/SmallGrave2", SheetRows = 1, SheetColumns = 4, FrameCount = 4, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
+                    {9, new DecoMetaData(){Path = "Decos/SmallGrave3", SheetRows = 1, SheetColumns = 4, FrameCount = 4, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
                 };
                 // CurrentDecoMetaDataNxN should never be null;
                 DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary[0];
@@ -245,7 +251,7 @@ namespace Sunbird
 
             CurrentState.Update(gameTime);
 
-            if (Peripherals.KeyTapped(Keys.C))
+            if (Peripherals.KeyTapped(Keys.C) && IsActive)
             {
                 var i = (int)Camera.CurrentMode + 1;
                 if (i >= Enum.GetNames(typeof(CameraMode)).Length - 1)

@@ -20,9 +20,9 @@
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
-  <IsRandomTop>true</IsRandomTop>
+  <IsRandomTop>false</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
-  <CurrentIndex>6</CurrentIndex>
+  <CurrentIndex>0</CurrentIndex>
   <CurrentBaseIndex>0</CurrentBaseIndex>
   <CubeMetaDataLibrary>
     <item>
