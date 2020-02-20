@@ -138,8 +138,8 @@ namespace Sunbird.Core
         public static bool IsRandom { get; set; }
 
         public static int CurrentIndex1x1 { get; set; } = 0;
-        public static int CurrentIndex2x2 { get; set; } = 0;
-        public static int CurrentIndex3x3 { get; set; } = 0;
+        public static int CurrentIndex2x2 { get; set; } = 1;
+        public static int CurrentIndex3x3 { get; set; } = 2;
 
         public static XDictionary<int, DecoMetaData> DecoMetaDataLibrary { get; set; }
 
@@ -241,7 +241,7 @@ namespace Sunbird.Core
                 {
                     currentIndex = 0;
                 }
-                if (DecoMetaDataLibrary[currentIndex].Dimensions.X == xyDim[0] && DecoMetaDataLibrary[CurrentIndex1x1].Dimensions.Y == xyDim[1])
+                if (DecoMetaDataLibrary[currentIndex].Dimensions.X == xyDim[0] && DecoMetaDataLibrary[currentIndex].Dimensions.Y == xyDim[1])
                 {
                     // After finding the next valid index, set the corresponding CurrentDecoMetaData.
                     if (dim == BuildDimensions._1x1)

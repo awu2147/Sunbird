@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Cubes/GraveyardDirtCubeTop</Path>
-    <SheetRows>1</SheetRows>
-    <SheetColumns>8</SheetColumns>
+    <Path>Cubes/GraveyardGrassCubeTop</Path>
+    <SheetRows>3</SheetRows>
+    <SheetColumns>4</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>8</FrameCount>
+    <FrameCount>12</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>
@@ -20,9 +20,9 @@
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
-  <IsRandomTop>true</IsRandomTop>
+  <IsRandomTop>false</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
-  <CurrentIndex>5</CurrentIndex>
+  <CurrentIndex>0</CurrentIndex>
   <CurrentBaseIndex>0</CurrentBaseIndex>
   <CubeMetaDataLibrary>
     <item>
@@ -35,7 +35,7 @@
           <SheetRows>3</SheetRows>
           <SheetColumns>4</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>8</CurrentFrame>
+          <CurrentFrame>0</CurrentFrame>
           <FrameCount>12</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>

@@ -161,6 +161,14 @@ namespace Sunbird
                         PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
                     {9, new DecoMetaData(){Path = "Decos/SmallGrave3", SheetRows = 1, SheetColumns = 4, FrameCount = 4, AnimState = AnimationState.None,
                         PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
+                    {10, new DecoMetaData(){Path = "Decos/LightStoneBrickWall", SheetRows = 1, SheetColumns = 6, FrameCount = 6, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
+                    {11, new DecoMetaData(){Path = "Decos/DarkStoneBrickWall", SheetRows = 1, SheetColumns = 6, FrameCount = 6, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
+                    {12, new DecoMetaData(){Path = "Decos/SmallObelisk", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
+                    {13, new DecoMetaData(){Path = "Decos/BloodBowl", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                        PositionOffset = new Vector2(-36, -36), Dimensions = new Dimension(2, 2, 1), TypeName = typeof(Deco).FullName } },
                 };
                 // CurrentDecoMetaDataNxN should never be null;
                 DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary[0];

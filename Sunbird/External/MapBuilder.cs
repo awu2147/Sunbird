@@ -488,7 +488,7 @@ namespace Sunbird.External
             }
 
             // Most time is spent here...
-            var XmlData = Serializer.ReadXML<MapBuilder>(MapBuilderSerializer, "MapBuilderSave.xml");
+            var XmlData = Serializer.ReadXML<MapBuilder>(MapBuilderSerializer, "MapBuilderSaveGraveyard.xml");
 
             Altitude = XmlData.Altitude;
             Authorization = XmlData.Authorization;
@@ -529,7 +529,7 @@ namespace Sunbird.External
 
         private void MainGame_Exiting(object sender, System.EventArgs e)
         {
-            Serializer.WriteXML<MapBuilder>(MapBuilderSerializer, this, "MapBuilderSave.xml");
+            Serializer.WriteXML<MapBuilder>(MapBuilderSerializer, this, "MapBuilderSaveGraveyard.xml");
         }
 
         // Should these events be state specific? FIXME: handler must be detached manually when new currentstate assigned.
@@ -626,6 +626,12 @@ namespace Sunbird.External
                         DecoPreview = DecoFactory.CreateCurrentDeco1x1(MainGame, Coord.Zero, Coord.Zero, 0);
                         GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
                     }
+                    if (BuildDimensions == BuildDimensions._2x2)
+                    {
+                        DecoFactory.FindNext2x2();
+                        DecoPreview = DecoFactory.CreateCurrentDeco2x2(MainGame, Coord.Zero, Coord.Zero, 0);
+                        GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content);
+                    }
                 }
 
                 if (Peripherals.KeyTapped(Keys.T) && MainGame.IsActive)
@@ -672,6 +678,7 @@ namespace Sunbird.External
 
                     if (Peripherals.RightButtonPressed() && MainGame.IsActive && InFocus)
                     {
+                        //var rect = new Rectangle(Peripherals.GetScaledMouseWorldPosition(MainGame.Camera), new Point(200,200));
                         if (BuildDimensions == BuildDimensions._Cube)
                         {
                             for (int i = 0; i < LayerMap[Altitude].Count(); i++)
@@ -681,6 +688,10 @@ namespace Sunbird.External
                                 {
                                     LayerMap[Altitude].RemoveCheck(sprite, Altitude); i--;
                                 }
+                                //if (sprite is Cube && rect.Contains(sprite.Position.ToPoint()))
+                                //{
+                                //    LayerMap[Altitude].RemoveCheck(sprite, Altitude); i--;
+                                //}
                             }
                         }
                         else if (BuildDimensions == BuildDimensions._1x1 || BuildDimensions == BuildDimensions._2x2 || BuildDimensions == BuildDimensions._3x3)
@@ -866,7 +877,8 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
-                var rect = new Rectangle((int)Player.Position.X - 800, (int)Player.Position.Y - 800, 1600, 1600);
+                var rect = new Rectangle((int)Player.Position.X - 10000, (int)Player.Position.Y - 10000, 20000, 20000);
+                
                 // Draw sorted sprites;
                 foreach (var sprite in World.Sort(LayerMap))
                 {

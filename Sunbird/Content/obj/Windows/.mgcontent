@@ -26,11 +26,15 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/LightStoneCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WaterCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WaterCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/BloodBowl.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/DarkStoneBrickWall.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/DeadTree.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/LightStoneBrickWall.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/PurpleMushroomGroup.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/SmallGrave1.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/SmallGrave2.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/SmallGrave3.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/SmallObelisk.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/DefaultFont.spritefont</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/LightingStencil.fx</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/bar1_empty.png</File>
@@ -72,6 +76,10 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCube.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

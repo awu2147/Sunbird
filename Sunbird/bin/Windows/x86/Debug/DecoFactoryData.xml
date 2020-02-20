@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentDecoMetaData1x1>
-    <Path>Decos/DeadTree</Path>
+    <Path>Decos/SmallObelisk</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>0</X>
-      <Y>-39</Y>
+      <Y>-36</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
@@ -21,11 +21,11 @@
     </Dimensions>
   </CurrentDecoMetaData1x1>
   <CurrentDecoMetaData2x2>
-    <Path>Temp/MediumRock</Path>
+    <Path>Decos/BloodBowl</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
-      <X>-12</X>
-      <Y>-6</Y>
+      <X>-36</X>
+      <Y>-36</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
@@ -37,7 +37,7 @@
     <Dimensions>
       <X>2</X>
       <Y>2</Y>
-      <Z>2</Z>
+      <Z>1</Z>
     </Dimensions>
   </CurrentDecoMetaData2x2>
   <CurrentDecoMetaData3x3>
@@ -61,9 +61,9 @@
     </Dimensions>
   </CurrentDecoMetaData3x3>
   <IsRandom>false</IsRandom>
-  <CurrentIndex1x1>6</CurrentIndex1x1>
-  <CurrentIndex2x2>0</CurrentIndex2x2>
-  <CurrentIndex3x3>0</CurrentIndex3x3>
+  <CurrentIndex1x1>12</CurrentIndex1x1>
+  <CurrentIndex2x2>13</CurrentIndex2x2>
+  <CurrentIndex3x3>2</CurrentIndex3x3>
   <DecoMetaDataLibrary>
     <item>
       <key>
@@ -330,6 +330,114 @@
           <Dimensions>
             <X>1</X>
             <Y>1</Y>
+            <Z>1</Z>
+          </Dimensions>
+        </DecoMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>10</int>
+      </key>
+      <value>
+        <DecoMetaData>
+          <Path>Decos/LightStoneBrickWall</Path>
+          <TypeName>Sunbird.Core.Deco</TypeName>
+          <PositionOffset>
+            <X>0</X>
+            <Y>0</Y>
+          </PositionOffset>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>6</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>6</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+          <Dimensions>
+            <X>1</X>
+            <Y>1</Y>
+            <Z>1</Z>
+          </Dimensions>
+        </DecoMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>11</int>
+      </key>
+      <value>
+        <DecoMetaData>
+          <Path>Decos/DarkStoneBrickWall</Path>
+          <TypeName>Sunbird.Core.Deco</TypeName>
+          <PositionOffset>
+            <X>0</X>
+            <Y>0</Y>
+          </PositionOffset>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>6</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>6</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+          <Dimensions>
+            <X>1</X>
+            <Y>1</Y>
+            <Z>1</Z>
+          </Dimensions>
+        </DecoMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>12</int>
+      </key>
+      <value>
+        <DecoMetaData>
+          <Path>Decos/SmallObelisk</Path>
+          <TypeName>Sunbird.Core.Deco</TypeName>
+          <PositionOffset>
+            <X>0</X>
+            <Y>-36</Y>
+          </PositionOffset>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>1</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>1</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+          <Dimensions>
+            <X>1</X>
+            <Y>1</Y>
+            <Z>2</Z>
+          </Dimensions>
+        </DecoMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>13</int>
+      </key>
+      <value>
+        <DecoMetaData>
+          <Path>Decos/BloodBowl</Path>
+          <TypeName>Sunbird.Core.Deco</TypeName>
+          <PositionOffset>
+            <X>-36</X>
+            <Y>-36</Y>
+          </PositionOffset>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>1</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>1</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+          <Dimensions>
+            <X>2</X>
+            <Y>2</Y>
             <Z>1</Z>
           </Dimensions>
         </DecoMetaData>

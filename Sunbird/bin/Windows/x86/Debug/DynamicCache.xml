@@ -2,7 +2,7 @@
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Deco">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Decos/DeadTree</TexturePath>
+      <TexturePath>Decos/SmallObelisk</TexturePath>
       <Rows>1</Rows>
       <Columns>1</Columns>
     </SpriteSheet>
@@ -24,7 +24,7 @@
   </Position>
   <PositionOffset>
     <X>0</X>
-    <Y>-39</Y>
+    <Y>-36</Y>
   </PositionOffset>
   <Coords>
     <X>0</X>
