@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentDecoMetaData1x1>
-    <Path>Decos/SmallObelisk</Path>
+    <Path>Temp/Tree2</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>0</X>
@@ -21,11 +21,11 @@
     </Dimensions>
   </CurrentDecoMetaData1x1>
   <CurrentDecoMetaData2x2>
-    <Path>Decos/BloodBowl</Path>
+    <Path>Temp/MediumRock</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
-      <X>-36</X>
-      <Y>-36</Y>
+      <X>-12</X>
+      <Y>-6</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
@@ -37,7 +37,7 @@
     <Dimensions>
       <X>2</X>
       <Y>2</Y>
-      <Z>1</Z>
+      <Z>2</Z>
     </Dimensions>
   </CurrentDecoMetaData2x2>
   <CurrentDecoMetaData3x3>
@@ -50,7 +50,7 @@
     <SheetRows>1</SheetRows>
     <SheetColumns>2</SheetColumns>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>0</CurrentFrame>
+    <CurrentFrame>1</CurrentFrame>
     <FrameCount>2</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
@@ -61,8 +61,8 @@
     </Dimensions>
   </CurrentDecoMetaData3x3>
   <IsRandom>false</IsRandom>
-  <CurrentIndex1x1>12</CurrentIndex1x1>
-  <CurrentIndex2x2>13</CurrentIndex2x2>
+  <CurrentIndex1x1>3</CurrentIndex1x1>
+  <CurrentIndex2x2>1</CurrentIndex2x2>
   <CurrentIndex3x3>2</CurrentIndex3x3>
   <DecoMetaDataLibrary>
     <item>
@@ -134,7 +134,7 @@
           <SheetRows>1</SheetRows>
           <SheetColumns>2</SheetColumns>
           <StartFrame>0</StartFrame>
-          <CurrentFrame>0</CurrentFrame>
+          <CurrentFrame>1</CurrentFrame>
           <FrameCount>2</FrameCount>
           <FrameSpeed>0.133</FrameSpeed>
           <AnimState>None</AnimState>

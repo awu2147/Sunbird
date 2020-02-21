@@ -24,8 +24,13 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/LavaCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/LightStoneCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/LightStoneCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/LightWoodBoardCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/SandCubeBase.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/SandCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/StoneTileCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WaterCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WaterCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WoodBoardCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/BloodBowl.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/DarkStoneBrickWall.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/DeadTree.png</File>
@@ -76,6 +81,11 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/WaterCube.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

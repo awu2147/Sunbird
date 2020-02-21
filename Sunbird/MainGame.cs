@@ -112,6 +112,10 @@ namespace Sunbird
                     {4, new CubeMetaData(){Path = "Cubes/LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f} },
                     {5, new CubeMetaData(){Path = "Cubes/GraveyardGrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None} },
                     {6, new CubeMetaData(){Path = "Cubes/GraveyardDirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None} },
+                    {7, new CubeMetaData(){Path = "Cubes/SandCubeTop", SheetRows = 2, SheetColumns = 4, FrameCount = 8, AnimState = AnimationState.None} },
+                    {8, new CubeMetaData(){Path = "Cubes/LightWoodBoardCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
+                    {9, new CubeMetaData(){Path = "Cubes/WoodBoardCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
+                    {10, new CubeMetaData(){Path = "Cubes/StoneTileCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
                 };
                 // CurrentCubeMetaData should never be null;
                 CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
@@ -130,6 +134,7 @@ namespace Sunbird
                     {4, new CubeBaseMetaData(){Path = "Cubes/LavaCubeBase", SheetRows = 4, SheetColumns = 3, FrameCount = 11, AnimState = AnimationState.Loop, } },
                     {5, new CubeBaseMetaData(){Path = "Cubes/GraveyardGrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None, } },
                     {6, new CubeBaseMetaData(){Path = "Cubes/GraveyardDirtCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
+                    {7, new CubeBaseMetaData(){Path = "Cubes/SandCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
                 };
                 // CurrentCubeBaseMetaData should never be null;
                 CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];

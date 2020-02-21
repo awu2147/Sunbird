@@ -488,7 +488,7 @@ namespace Sunbird.External
             }
 
             // Most time is spent here...
-            var XmlData = Serializer.ReadXML<MapBuilder>(MapBuilderSerializer, "MapBuilderSaveGraveyard.xml");
+            var XmlData = Serializer.ReadXML<MapBuilder>(MapBuilderSerializer, "MapBuilderSave.xml");
 
             Altitude = XmlData.Altitude;
             Authorization = XmlData.Authorization;
@@ -529,7 +529,7 @@ namespace Sunbird.External
 
         private void MainGame_Exiting(object sender, System.EventArgs e)
         {
-            Serializer.WriteXML<MapBuilder>(MapBuilderSerializer, this, "MapBuilderSaveGraveyard.xml");
+            Serializer.WriteXML<MapBuilder>(MapBuilderSerializer, this, "MapBuilderSave.xml");
         }
 
         // Should these events be state specific? FIXME: handler must be detached manually when new currentstate assigned.

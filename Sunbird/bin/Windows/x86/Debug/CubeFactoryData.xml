@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Cubes/GraveyardGrassCubeTop</Path>
-    <SheetRows>3</SheetRows>
-    <SheetColumns>4</SheetColumns>
+    <Path>Cubes/WaterCubeTop</Path>
+    <SheetRows>1</SheetRows>
+    <SheetColumns>11</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>12</FrameCount>
+    <FrameCount>11</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>
   <CurrentCubeBaseMetaData>
-    <Path>Cubes/LightStoneCubeBase</Path>
+    <Path>Cubes/WaterCubeBase</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>1</SheetColumns>
+    <SheetColumns>2</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>1</FrameCount>
+    <FrameCount>2</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
   <IsRandomTop>false</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
-  <CurrentIndex>0</CurrentIndex>
+  <CurrentIndex>10</CurrentIndex>
   <CurrentBaseIndex>0</CurrentBaseIndex>
   <CubeMetaDataLibrary>
     <item>
@@ -144,6 +144,74 @@
         </CubeMetaData>
       </value>
     </item>
+    <item>
+      <key>
+        <int>7</int>
+      </key>
+      <value>
+        <CubeMetaData>
+          <Path>Cubes/SandCubeTop</Path>
+          <SheetRows>2</SheetRows>
+          <SheetColumns>4</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>7</CurrentFrame>
+          <FrameCount>8</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>8</int>
+      </key>
+      <value>
+        <CubeMetaData>
+          <Path>Cubes/LightWoodBoardCubeTop</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>2</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>2</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>9</int>
+      </key>
+      <value>
+        <CubeMetaData>
+          <Path>Cubes/WoodBoardCubeTop</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>2</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>1</CurrentFrame>
+          <FrameCount>2</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>10</int>
+      </key>
+      <value>
+        <CubeMetaData>
+          <Path>Cubes/StoneTileCubeTop</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>2</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>2</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeMetaData>
+      </value>
+    </item>
   </CubeMetaDataLibrary>
   <CubeBaseMetaDataLibrary>
     <item>
@@ -255,6 +323,23 @@
       <value>
         <CubeBaseMetaData>
           <Path>Cubes/GraveyardDirtCubeBase</Path>
+          <SheetRows>1</SheetRows>
+          <SheetColumns>1</SheetColumns>
+          <StartFrame>0</StartFrame>
+          <CurrentFrame>0</CurrentFrame>
+          <FrameCount>1</FrameCount>
+          <FrameSpeed>0.133</FrameSpeed>
+          <AnimState>None</AnimState>
+        </CubeBaseMetaData>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>7</int>
+      </key>
+      <value>
+        <CubeBaseMetaData>
+          <Path>Cubes/SandCubeBase</Path>
           <SheetRows>1</SheetRows>
           <SheetColumns>1</SheetColumns>
           <StartFrame>0</StartFrame>

@@ -2,7 +2,7 @@
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Deco">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Decos/SmallObelisk</TexturePath>
+      <TexturePath>Temp/MediumRock</TexturePath>
       <Rows>1</Rows>
       <Columns>1</Columns>
     </SpriteSheet>
@@ -23,15 +23,15 @@
     <Y>0</Y>
   </Position>
   <PositionOffset>
-    <X>0</X>
-    <Y>-36</Y>
+    <X>-12</X>
+    <Y>-6</Y>
   </PositionOffset>
   <Coords>
     <X>0</X>
     <Y>0</Y>
   </Coords>
   <Altitude>0</Altitude>
-  <DrawPriority>0</DrawPriority>
+  <DrawPriority>-1</DrawPriority>
   <IsHidden>false</IsHidden>
   <OccupiedCoords>
     <item>
@@ -40,6 +40,18 @@
       </key>
       <value>
         <ArrayOfCoord>
+          <Coord>
+            <X>-1</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>-1</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>1</Y>
+          </Coord>
           <Coord>
             <X>0</X>
             <Y>0</Y>
@@ -54,6 +66,18 @@
       <value>
         <ArrayOfCoord>
           <Coord>
+            <X>-1</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
+            <X>-1</X>
+            <Y>0</Y>
+          </Coord>
+          <Coord>
+            <X>0</X>
+            <Y>1</Y>
+          </Coord>
+          <Coord>
             <X>0</X>
             <Y>0</Y>
           </Coord>
@@ -62,8 +86,8 @@
     </item>
   </OccupiedCoords>
   <Dimensions>
-    <X>1</X>
-    <Y>1</Y>
+    <X>2</X>
+    <Y>2</Y>
     <Z>2</Z>
   </Dimensions>
 </Sprite>
