@@ -57,7 +57,7 @@ namespace Sunbird.GUI
         }
 
         public int TotalSegments { get; set; } = 5;
-        public int CurrentSegment { get; set; } = 2;
+        public int CurrentSegment { get; set; } = 1;
 
         private int StartingSegment;
         private Point Anchor;

@@ -68,16 +68,10 @@ namespace Sunbird.GUI
             base.Update(gameTime);
             foreach (var item in Items)
             {
-                if (item.CubeMetaData != null && item.CubeBaseMetaData == null)
-                {
-                    item.Update(gameTime);
-                }
-                else if (item.CubeBaseMetaData != null && item.CubeMetaData == null)
-                {
-                    item.Update(gameTime);
-                }
+                // If a cube top or bottom is animated, this call advances the frames.
+                item.Update(gameTime);
                 // Lead with basic rectangle contains check.
-                if (Peripherals.LeftButtonTapped() && item.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()) && MainGame.IsActive)
+                if (Peripherals.LeftButtonTapped() && item.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()) && MainGame.IsActive && !item.IsHidden)
                 {
                     if (GraphicsHelper.SolidPixels(item.Animator).Contains(Peripherals.GetMouseWindowPosition() - item.Animator.Position.ToPoint()) && Peripherals.LeftButtonTapped())
                     {
@@ -93,17 +87,27 @@ namespace Sunbird.GUI
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
+            // Offset
             var itemTopOffset = new Vector2(12, 39);
             var itemBaseOffset = new Vector2(12, 234);
             int countCMD = 0;
             int countCBMD = 0;
+            int currentSegment = ScrollBar.CurrentSegment - 1;
 
             for (int i = 0; i < Items.Count(); i++)
             {
                 var item = Items[i];
                 if (item.CubeMetaData != null && item.CubeBaseMetaData == null)
                 {
-                    item.Position = Position + itemTopOffset + new Vector2(78 * (countCMD % 5), 81 * (countCMD / 5));
+                    item.Position = Position + itemTopOffset + new Vector2(78 * (countCMD % 5), 81 * (countCMD / 5) - currentSegment*81);
+                    if (countCMD < currentSegment * 5 || countCMD >= (currentSegment + 2) * 5)
+                    {
+                        item.IsHidden = true;
+                    }
+                    else
+                    {
+                        item.IsHidden = false;
+                    }
                     item.Draw(gameTime, spriteBatch);
                     countCMD++;
                 }
@@ -113,6 +117,14 @@ namespace Sunbird.GUI
                     item.Draw(gameTime, spriteBatch);
                     countCBMD++;
                 }
+            }
+            if (countCMD <= 10)
+            {
+                ScrollBar.TotalSegments = 1;
+            }
+            else
+            {
+                ScrollBar.TotalSegments = (countCMD - 1) / 5;
             }
             ScrollBar.Draw(gameTime, spriteBatch);
             ExitButton.Draw(gameTime, spriteBatch);

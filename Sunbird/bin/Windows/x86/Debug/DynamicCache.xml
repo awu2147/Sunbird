@@ -2,13 +2,13 @@
 <Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Deco">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Temp/MediumRock</TexturePath>
+      <TexturePath>Decos/PalmTree</TexturePath>
       <Rows>1</Rows>
-      <Columns>1</Columns>
+      <Columns>2</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FramesInLoop>1</FramesInLoop>
+    <FramesInLoop>2</FramesInLoop>
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
@@ -23,15 +23,15 @@
     <Y>0</Y>
   </Position>
   <PositionOffset>
-    <X>-12</X>
-    <Y>-6</Y>
+    <X>-3</X>
+    <Y>-57</Y>
   </PositionOffset>
   <Coords>
     <X>0</X>
     <Y>0</Y>
   </Coords>
   <Altitude>0</Altitude>
-  <DrawPriority>-1</DrawPriority>
+  <DrawPriority>0</DrawPriority>
   <IsHidden>false</IsHidden>
   <OccupiedCoords>
     <item>
@@ -40,18 +40,6 @@
       </key>
       <value>
         <ArrayOfCoord>
-          <Coord>
-            <X>-1</X>
-            <Y>1</Y>
-          </Coord>
-          <Coord>
-            <X>-1</X>
-            <Y>0</Y>
-          </Coord>
-          <Coord>
-            <X>0</X>
-            <Y>1</Y>
-          </Coord>
           <Coord>
             <X>0</X>
             <Y>0</Y>
@@ -66,18 +54,6 @@
       <value>
         <ArrayOfCoord>
           <Coord>
-            <X>-1</X>
-            <Y>1</Y>
-          </Coord>
-          <Coord>
-            <X>-1</X>
-            <Y>0</Y>
-          </Coord>
-          <Coord>
-            <X>0</X>
-            <Y>1</Y>
-          </Coord>
-          <Coord>
             <X>0</X>
             <Y>0</Y>
           </Coord>
@@ -86,8 +62,8 @@
     </item>
   </OccupiedCoords>
   <Dimensions>
-    <X>2</X>
-    <Y>2</Y>
+    <X>1</X>
+    <Y>1</Y>
     <Z>2</Z>
   </Dimensions>
 </Sprite>
