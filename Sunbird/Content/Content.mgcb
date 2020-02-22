@@ -674,6 +674,18 @@
 /processorParam:TextureFormat=Color
 /build:GUI/CubeCatalogBackground.png
 
+#begin GUI/Deco1x1CatalogBackground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GUI/Deco1x1CatalogBackground.png
+
 #begin GUI/MessageLogBackground.png
 /importer:TextureImporter
 /processor:TextureProcessor

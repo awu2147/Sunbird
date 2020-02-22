@@ -1,46 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentDecoMetaData1x1>
-    <Path>Decos/1x1/3/TreeBas</Path>
-    <TypeName>Sunbird.Core.Deco</TypeName>
-    <PositionOffset>
-      <X>0</X>
-      <Y>-72</Y>
-    </PositionOffset>
-    <SheetRows>2</SheetRows>
-    <SheetColumns>3</SheetColumns>
-    <StartFrame>0</StartFrame>
-    <CurrentFrame>0</CurrentFrame>
-    <FrameCount>6</FrameCount>
-    <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
-    <Dimensions>
-      <X>1</X>
-      <Y>1</Y>
-      <Z>3</Z>
-    </Dimensions>
-  </CurrentDecoMetaData1x1>
-  <CurrentDecoMetaData2x2>
-    <Path>Decos/1x1/3/TreeCon</Path>
-    <TypeName>Sunbird.Core.Deco</TypeName>
-    <PositionOffset>
-      <X>0</X>
-      <Y>-72</Y>
-    </PositionOffset>
-    <SheetRows>1</SheetRows>
-    <SheetColumns>2</SheetColumns>
-    <StartFrame>0</StartFrame>
-    <CurrentFrame>0</CurrentFrame>
-    <FrameCount>2</FrameCount>
-    <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
-    <Dimensions>
-      <X>1</X>
-      <Y>1</Y>
-      <Z>3</Z>
-    </Dimensions>
-  </CurrentDecoMetaData2x2>
-  <CurrentDecoMetaData3x3>
     <Path>Decos/1x1/3/TreeConD</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
@@ -57,6 +17,46 @@
     <Dimensions>
       <X>1</X>
       <Y>1</Y>
+      <Z>3</Z>
+    </Dimensions>
+  </CurrentDecoMetaData1x1>
+  <CurrentDecoMetaData2x2>
+    <Path>Decos/BloodBowl</Path>
+    <TypeName>Sunbird.Core.Deco</TypeName>
+    <PositionOffset>
+      <X>-36</X>
+      <Y>-36</Y>
+    </PositionOffset>
+    <SheetRows>1</SheetRows>
+    <SheetColumns>1</SheetColumns>
+    <StartFrame>0</StartFrame>
+    <CurrentFrame>0</CurrentFrame>
+    <FrameCount>1</FrameCount>
+    <FrameSpeed>0.133</FrameSpeed>
+    <AnimState>None</AnimState>
+    <Dimensions>
+      <X>2</X>
+      <Y>2</Y>
+      <Z>1</Z>
+    </Dimensions>
+  </CurrentDecoMetaData2x2>
+  <CurrentDecoMetaData3x3>
+    <Path>Temp/House</Path>
+    <TypeName>Sunbird.Core.Deco</TypeName>
+    <PositionOffset>
+      <X>-87</X>
+      <Y>-99</Y>
+    </PositionOffset>
+    <SheetRows>1</SheetRows>
+    <SheetColumns>2</SheetColumns>
+    <StartFrame>0</StartFrame>
+    <CurrentFrame>0</CurrentFrame>
+    <FrameCount>2</FrameCount>
+    <FrameSpeed>0.133</FrameSpeed>
+    <AnimState>None</AnimState>
+    <Dimensions>
+      <X>3</X>
+      <Y>3</Y>
       <Z>3</Z>
     </Dimensions>
   </CurrentDecoMetaData3x3>

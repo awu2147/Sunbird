@@ -101,7 +101,7 @@ namespace Sunbird
             SamplerState = SamplerState.PointClamp;
             DefaultFont = Content.Load<SpriteFont>("DefaultFont");
 
-            if (CleanLoad == true)
+            if (CleanLoad == false)
             {
                 CubeFactory.CubeMetaDataLibrary = new XDictionary<int, CubeMetaData>()
                 {
@@ -110,7 +110,7 @@ namespace Sunbird
                     {2, new CubeMetaData(){Path = "Cubes/LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
                     {3, new CubeMetaData(){Path = "Cubes/WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None} },
                     {4, new CubeMetaData(){Path = "Cubes/LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f} },
-                    {5, new CubeMetaData(){Path = "Cubes/GraveyardGrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None} },
+                    {5, new CubeMetaData(){Path = "Cubes/GraveyardGrassCubeTop", SheetRows = 2, SheetColumns = 4, FrameCount = 8, AnimState = AnimationState.None} },
                     {6, new CubeMetaData(){Path = "Cubes/GraveyardDirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None} },
                     {7, new CubeMetaData(){Path = "Cubes/SandCubeTop", SheetRows = 2, SheetColumns = 4, FrameCount = 8, AnimState = AnimationState.None} },
                     {8, new CubeMetaData(){Path = "Cubes/LightWoodBoardCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
@@ -189,8 +189,8 @@ namespace Sunbird
                 };
                 // CurrentDecoMetaDataNxN should never be null;
                 DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary[0];
-                DecoFactory.CurrentDecoMetaData2x2 = DecoFactory.DecoMetaDataLibrary[1];
-                DecoFactory.CurrentDecoMetaData3x3 = DecoFactory.DecoMetaDataLibrary[2];
+                DecoFactory.CurrentDecoMetaData2x2 = DecoFactory.DecoMetaDataLibrary[15];
+                DecoFactory.CurrentDecoMetaData3x3 = DecoFactory.DecoMetaDataLibrary[17];
                 // Generate Library Textures, AntiShadows, and SelfShadows from Path;
                 foreach (var dMD in DecoFactory.DecoMetaDataLibrary)
                 {

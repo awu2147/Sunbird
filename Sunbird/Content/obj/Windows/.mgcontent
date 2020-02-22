@@ -60,6 +60,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/bar1_empty.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/bar1_full.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/CubeCatalogBackground.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/Deco1x1CatalogBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/MessageLogBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/PendantBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/RibbonBackground.png</File>
@@ -77,6 +78,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/TopFaceSelectionMarker.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

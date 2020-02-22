@@ -34,7 +34,8 @@ namespace Sunbird.GUI
         public IGui Sender;
         public Button SenderBN;
 
-        public ScrollBarContainer ScrollBar;
+        public ScrollBarContainer ScrollBarTop;
+        public ScrollBarContainer ScrollBarBase;
 
         private CubeCatalog()
         {
@@ -45,10 +46,12 @@ namespace Sunbird.GUI
         {
             Sender = sender;
             SenderBN = senderBN;
-            ScrollBar = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 126);
-            ScrollBar.Position = Position + new Vector2(402, 54);
+            ScrollBarTop = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 126);
+            ScrollBarTop.Position = Position + new Vector2(420, 54);
+            ScrollBarBase = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 126);
+            ScrollBarBase.Position = Position + new Vector2(420, 249);
             var exitButtonS = SpriteSheet.CreateNew(mainGame, "Buttons/ExitBN", 1, 2);
-            ExitButton = new Button(mainGame, exitButtonS, null, Position + new Vector2(399, 6)) { ButtonType = ButtonType.SafeRelease };
+            ExitButton = new Button(mainGame, exitButtonS, null, Position + new Vector2(417, 6)) { ButtonType = ButtonType.SafeRelease };
             ExitButton.Clicked += ExitButton_Clicked;
         }
 
@@ -80,7 +83,8 @@ namespace Sunbird.GUI
                     }
                 }
             }
-            ScrollBar.Update(gameTime);
+            ScrollBarTop.Update(gameTime);
+            ScrollBarBase.Update(gameTime);
             ExitButton.Update(gameTime);
         }
 
@@ -88,19 +92,21 @@ namespace Sunbird.GUI
         {
             base.Draw(gameTime, spriteBatch);
             // Offset
-            var itemTopOffset = new Vector2(12, 39);
-            var itemBaseOffset = new Vector2(12, 234);
+            var itemTopOffset = new Vector2(21, 39);
+            var itemBaseOffset = new Vector2(21, 234);
             int countCMD = 0;
             int countCBMD = 0;
-            int currentSegment = ScrollBar.CurrentSegment - 1;
+            int currentSegmentTop = ScrollBarTop.CurrentSegment - 1;
+            int currentSegmentBase = ScrollBarBase.CurrentSegment - 1;
 
+            // TODO: Abstract this.
             for (int i = 0; i < Items.Count(); i++)
             {
                 var item = Items[i];
                 if (item.CubeMetaData != null && item.CubeBaseMetaData == null)
                 {
-                    item.Position = Position + itemTopOffset + new Vector2(78 * (countCMD % 5), 81 * (countCMD / 5) - currentSegment*81);
-                    if (countCMD < currentSegment * 5 || countCMD >= (currentSegment + 2) * 5)
+                    item.Position = Position + itemTopOffset + new Vector2(78 * (countCMD % 5), 81 * (countCMD / 5) - currentSegmentTop*81);
+                    if (countCMD < currentSegmentTop * 5 || countCMD >= (currentSegmentTop + 2) * 5)
                     {
                         item.IsHidden = true;
                     }
@@ -113,20 +119,40 @@ namespace Sunbird.GUI
                 }
                 else if (item.CubeBaseMetaData != null && item.CubeMetaData == null)
                 {
-                    item.Position = Position + itemBaseOffset + new Vector2(78 * (countCBMD % 5), 81 * (countCBMD / 5));
+                    item.Position = Position + itemBaseOffset + new Vector2(78 * (countCBMD % 5), 81 * (countCBMD / 5) - currentSegmentBase * 81);
+                    if (countCBMD < currentSegmentBase * 5 || countCBMD >= (currentSegmentBase + 2) * 5)
+                    {
+                        item.IsHidden = true;
+                    }
+                    else
+                    {
+                        item.IsHidden = false;
+                    }
                     item.Draw(gameTime, spriteBatch);
                     countCBMD++;
                 }
             }
+
             if (countCMD <= 10)
             {
-                ScrollBar.TotalSegments = 1;
+                ScrollBarTop.TotalSegments = 1;
             }
             else
             {
-                ScrollBar.TotalSegments = (countCMD - 1) / 5;
+                ScrollBarTop.TotalSegments = (countCMD - 1) / 5;
             }
-            ScrollBar.Draw(gameTime, spriteBatch);
+
+            if (countCBMD <= 10)
+            {
+                ScrollBarBase.TotalSegments = 1;
+            }
+            else
+            {
+                ScrollBarBase.TotalSegments = (countCBMD - 1) / 5;
+            }
+
+            ScrollBarTop.Draw(gameTime, spriteBatch);
+            ScrollBarBase.Draw(gameTime, spriteBatch);
             ExitButton.Draw(gameTime, spriteBatch);
         }
     }

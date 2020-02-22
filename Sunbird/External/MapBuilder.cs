@@ -55,6 +55,7 @@ namespace Sunbird.External
         public BuildDimensions BuildDimensions { get; set; }
         private Sprite MessageLogBG { get; set; }
         private CubeCatalog CubeCatalog { get; set; }
+        private Deco1x1Catalog Deco1x1Catalog { get; set; }
 
         private MapBuilder()
         {
@@ -93,10 +94,10 @@ namespace Sunbird.External
             }
 
             var mlBGs = SpriteSheet.CreateNew(MainGame, "GUI/MessageLogBackground");
-            MessageLogBG = new Sprite(MainGame, mlBGs, new Vector2(5, MainGame.Height - 5), Alignment.BottomLeft);
+            MessageLogBG = new Sprite(MainGame, mlBGs, new Vector2(3, MainGame.Height - 3), Alignment.BottomLeft);
 
             var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
-            Overlay.Add(new Sprite(MainGame, gridAxisGlyph, new Vector2(MainGame.Width - 5, 5), Alignment.TopRight));
+            Overlay.Add(new Sprite(MainGame, gridAxisGlyph, new Vector2(MainGame.Width - 3, 3), Alignment.TopRight));
         }
 
         #region Ribbon
@@ -105,7 +106,7 @@ namespace Sunbird.External
         {
             // Ribbon background.
             var ribbonBg = SpriteSheet.CreateNew(MainGame, "GUI/RibbonBackGround");
-            var ribbonPosition = new Vector2(5, 5);
+            var ribbonPosition = new Vector2(3, 3);
             var _ribbonBg = new Sprite(MainGame, ribbonBg, ribbonPosition, Alignment.TopLeft);
             ribbonPosition = _ribbonBg.Position;
             Overlay.Add(_ribbonBg);
@@ -142,22 +143,22 @@ namespace Sunbird.External
             foreach (var button in new List<Button>() { buildBN, worldBN }) { Overlay.Add(button); }
 
             var buildCubeBNs = SpriteSheet.CreateNew(MainGame, "Buttons/BuildCubeBN", 1, 2);
-            var buildCubeBN = new Button(MainGame, buildCubeBNs, null, ribbonPosition + new Vector2(141, 9), Alignment.TopLeft);
+            var buildCubeBN = new Button(MainGame, buildCubeBNs, null, ribbonPosition + new Vector2(144, 12), Alignment.TopLeft);
             buildCubeBN.Clicked += BuildCubeBN_Clicked;
             if (BuildDimensions == BuildDimensions._Cube) { buildCubeBN.IsPressed = true; }
 
             var build1x1BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build1x1BN", 1, 2);
-            var build1x1BN = new Button(MainGame, build1x1BNs, null, ribbonPosition + new Vector2(183, 9), Alignment.TopLeft);
+            var build1x1BN = new Button(MainGame, build1x1BNs, null, ribbonPosition + new Vector2(186, 12), Alignment.TopLeft);
             build1x1BN.Clicked += Build1x1BN_Clicked;
             if (BuildDimensions == BuildDimensions._1x1) { build1x1BN.IsPressed = true; }
 
             var build2x2BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build2x2BN", 1, 2);
-            var build2x2BN = new Button(MainGame, build2x2BNs, null, ribbonPosition + new Vector2(225, 9), Alignment.TopLeft);
+            var build2x2BN = new Button(MainGame, build2x2BNs, null, ribbonPosition + new Vector2(228, 12), Alignment.TopLeft);
             build2x2BN.Clicked += Build2x2BN_Clicked;
             if (BuildDimensions == BuildDimensions._2x2) { build2x2BN.IsPressed = true; }
 
             var build3x3BNs = SpriteSheet.CreateNew(MainGame, "Buttons/Build3x3BN", 1, 2);
-            var build3x3BN = new Button(MainGame, build3x3BNs, null, ribbonPosition + new Vector2(267, 9), Alignment.TopLeft);
+            var build3x3BN = new Button(MainGame, build3x3BNs, null, ribbonPosition + new Vector2(270, 12), Alignment.TopLeft);
             build3x3BN.Clicked += Build3x3BN_Clicked;
             if (BuildDimensions == BuildDimensions._3x3) { build3x3BN.IsPressed = true; }
 
@@ -166,13 +167,13 @@ namespace Sunbird.External
 
             var openCatalogBNs = SpriteSheet.CreateNew(MainGame, "Buttons/OpenCatalogBN", 1, 2);
 
-            var openCatalogCubeBN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(141, 54), Alignment.TopLeft);
+            var openCatalogCubeBN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(144, 54), Alignment.TopLeft);
             openCatalogCubeBN.Clicked += OpenCatalogCubeBN_Clicked;
-            var openCatalog1x1BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(183, 54), Alignment.TopLeft);
+            var openCatalog1x1BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(186, 54), Alignment.TopLeft);
             openCatalog1x1BN.Clicked += OpenCatalog1x1BN_Clicked;
-            var openCatalog2x2BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(225, 54), Alignment.TopLeft);
+            var openCatalog2x2BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(228, 54), Alignment.TopLeft);
             openCatalog2x2BN.Clicked += OpenCatalog2x2BN_Clicked;
-            var openCatalog3x3BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(267, 54), Alignment.TopLeft);
+            var openCatalog3x3BN = new Button(MainGame, openCatalogBNs, null, ribbonPosition + new Vector2(270, 54), Alignment.TopLeft);
             openCatalog3x3BN.Clicked += OpenCatalog3x3BN_Clicked;
 
             Button.BindGroup(new List<Button>() { openCatalogCubeBN, openCatalog1x1BN, openCatalog2x2BN, openCatalog3x3BN });
@@ -202,15 +203,42 @@ namespace Sunbird.External
             {
                 DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(CubeCatalog, DeferAction.Remove));
             }
+            if (Deco1x1Catalog == null)
+            {
+                // Create for the first time if null. From then on, load from cache.
+                var Deco1x1CatalogS = SpriteSheet.CreateNew(MainGame, "GUI/Deco1x1CatalogBackground", 1, 1);
+                Deco1x1Catalog = new Deco1x1Catalog(MainGame, Deco1x1CatalogS, new Vector2(3, 87), this, (Button)sender);
+                foreach (var dmd in DecoFactory.DecoMetaDataLibrary)
+                {
+                    if (dmd.Value.Dimensions.X == 1)
+                    {
+#if DEBUG
+                        Debug.Assert(dmd.Value.Dimensions.X == dmd.Value.Dimensions.Y);
+#endif
+                        var DCI = new DecoCatalogItem(MainGame, dmd.Value);
+                        DCI.Clicked += D1x1CI_Clicked;
+                        Deco1x1Catalog.Items.Add(DCI);
+                    }
+                }
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco1x1Catalog, DeferAction.Add));
+            }
+            else if (!Overlay.Contains(Deco1x1Catalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco1x1Catalog, DeferAction.Add));
+            }
         }
 
         private void OpenCatalogCubeBN_Clicked(object sender, ButtonClickedEventArgs e)
         {
+            if (Overlay.Contains(Deco1x1Catalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco1x1Catalog, DeferAction.Remove));
+            }
             if (CubeCatalog == null)
             {
                 // Create for the first time if null. From then on, load from cache.
                 var cubeCatalogS = SpriteSheet.CreateNew(MainGame, "GUI/CubeCatalogBackground", 1, 1);
-                CubeCatalog = new CubeCatalog(MainGame, cubeCatalogS, new Vector2(100, 150), this, (Button)sender);
+                CubeCatalog = new CubeCatalog(MainGame, cubeCatalogS, new Vector2(3, 87), this, (Button)sender);
                 foreach (var cmd in CubeFactory.CubeMetaDataLibrary)
                 {
                     var CCI = new CubeCatalogItem(MainGame, cmd.Value, null);
@@ -254,6 +282,15 @@ namespace Sunbird.External
             }
         }
 
+        private void D1x1CI_Clicked(object sender, EventArgs e)
+        {
+            var item = sender as DecoCatalogItem;
+            var CDMD = item.DecoMetaData;
+            DecoFactory.CurrentDecoMetaData1x1 = CDMD;
+            DecoPreview = DecoFactory.CreateCurrentDeco1x1(MainGame, Coord.Zero, Coord.Zero, 0);
+            if (BuildDimensions == BuildDimensions._1x1) { GhostMarker.MorphImage(DecoPreview, MainGame, GraphicsDevice, Content); }
+        }
+
         #endregion
 
         #region Ribbon Event Handlers
@@ -292,7 +329,7 @@ namespace Sunbird.External
         {
             // Pendant background.
             var pendantBg = SpriteSheet.CreateNew(MainGame, "GUI/PendantBackGround");
-            var pendantPosition = new Vector2(MainGame.Width - 5, MainGame.Height - 5);
+            var pendantPosition = new Vector2(MainGame.Width - 3, MainGame.Height - 3);
             var _pendantBg = new Sprite(MainGame, pendantBg, pendantPosition, Alignment.BottomRight);
             pendantPosition = _pendantBg.Position;
             Overlay.Add(_pendantBg);
