@@ -45,7 +45,7 @@ namespace Sunbird.GUI
         {
             Sender = sender;
             SenderBN = senderBN;
-            ScrollBar = new ScrollBarContainer(mainGame, "Temp/Scroll1", Orientation.Vertical, 126);
+            ScrollBar = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 126);
             ScrollBar.Position = Position + new Vector2(402, 54);
             var exitButtonS = SpriteSheet.CreateNew(mainGame, "Buttons/ExitBN", 1, 2);
             ExitButton = new Button(mainGame, exitButtonS, null, Position + new Vector2(399, 6)) { ButtonType = ButtonType.SafeRelease };

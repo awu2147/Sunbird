@@ -30,8 +30,8 @@ namespace Sunbird.External
             var centerIcon = new Sprite(MainGame, SpriteSheet.CreateNew(MainGame, "Temp/sunbird", 1, 1), centerIconPosition, Alignment.Center);
             spriteList.Add(centerIcon);
 
-            var barEmpty = Content.Load<Texture2D>("Temp/bar1_empty");
-            var barFull = Content.Load<Texture2D>("Temp/bar1_full");
+            var barEmpty = Content.Load<Texture2D>("GUI/bar1_empty");
+            var barFull = Content.Load<Texture2D>("GUI/bar1_full");
             var barPosition = new Vector2(MainGame.Width / 2, MainGame.Height / 2 + 70);
             LoadingBar = new LoadingBar(barEmpty, barFull, barPosition, Alignment.Center);
         }   

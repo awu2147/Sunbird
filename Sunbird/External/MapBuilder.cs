@@ -92,7 +92,7 @@ namespace Sunbird.External
                 DecoPreview = DecoFactory.CreateCurrentDeco3x3(MainGame, Coord.Zero, Coord.Zero, 0);
             }
 
-            var mlBGs = SpriteSheet.CreateNew(MainGame, "Temp/MessageLogBackground");
+            var mlBGs = SpriteSheet.CreateNew(MainGame, "GUI/MessageLogBackground");
             MessageLogBG = new Sprite(MainGame, mlBGs, new Vector2(5, MainGame.Height - 5), Alignment.BottomLeft);
 
             var gridAxisGlyph = SpriteSheet.CreateNew(MainGame, "Temp/GridAxisGlyph");
@@ -104,7 +104,7 @@ namespace Sunbird.External
         private void CreateRibbon()
         {
             // Ribbon background.
-            var ribbonBg = SpriteSheet.CreateNew(MainGame, "Temp/RibbonBackGround");
+            var ribbonBg = SpriteSheet.CreateNew(MainGame, "GUI/RibbonBackGround");
             var ribbonPosition = new Vector2(5, 5);
             var _ribbonBg = new Sprite(MainGame, ribbonBg, ribbonPosition, Alignment.TopLeft);
             ribbonPosition = _ribbonBg.Position;
@@ -209,7 +209,7 @@ namespace Sunbird.External
             if (CubeCatalog == null)
             {
                 // Create for the first time if null. From then on, load from cache.
-                var cubeCatalogS = SpriteSheet.CreateNew(MainGame, "Temp/CatalogBackground", 1, 1);
+                var cubeCatalogS = SpriteSheet.CreateNew(MainGame, "GUI/CubeCatalogBackground", 1, 1);
                 CubeCatalog = new CubeCatalog(MainGame, cubeCatalogS, new Vector2(100, 150), this, (Button)sender);
                 foreach (var cmd in CubeFactory.CubeMetaDataLibrary)
                 {
@@ -291,7 +291,7 @@ namespace Sunbird.External
         private void CreateCubePendant()
         {
             // Pendant background.
-            var pendantBg = SpriteSheet.CreateNew(MainGame, "Temp/PendantBackGround");
+            var pendantBg = SpriteSheet.CreateNew(MainGame, "GUI/PendantBackGround");
             var pendantPosition = new Vector2(MainGame.Width - 5, MainGame.Height - 5);
             var _pendantBg = new Sprite(MainGame, pendantBg, pendantPosition, Alignment.BottomRight);
             pendantPosition = _pendantBg.Position;
@@ -303,49 +303,49 @@ namespace Sunbird.External
             Overlay.Add(CubePreview);
 
             // Pendant left.
-            var pLBN1s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
+            var pLBN1s = SpriteSheet.CreateNew(MainGame, "Buttons/LeftArrowMinusBN_Silver", 1, 2);
             var pLBN1 = new Button(MainGame, pLBN1s, null, pendantPosition + new Vector2(9, 15));
             pLBN1.Clicked += PLBN1_Clicked;
             Overlay.Add(pLBN1);
 
-            var pLBN2s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
+            var pLBN2s = SpriteSheet.CreateNew(MainGame, "Buttons/LeftArrowMinusBN_Brown", 1, 2);
             var pLBN2 = new Button(MainGame, pLBN2s, null, pendantPosition + new Vector2(9, 51));
             pLBN2.Clicked += PLBN2_Clicked;
             Overlay.Add(pLBN2);
 
-            var pLBN3s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Brown", 1, 2);
+            var pLBN3s = SpriteSheet.CreateNew(MainGame, "Buttons/LeftArrowMinusBN_Brown", 1, 2);
             var pLBN3 = new Button(MainGame, pLBN3s, null, pendantPosition + new Vector2(9, 81));
             pLBN3.Clicked += PLBN3_Clicked;
             Overlay.Add(pLBN3);
 
-            var pLBN4s = SpriteSheet.CreateNew(MainGame, "Temp/LeftArrowMinusBN_Silver", 1, 2);
+            var pLBN4s = SpriteSheet.CreateNew(MainGame, "Buttons/LeftArrowMinusBN_Silver", 1, 2);
             var pLBN4 = new Button(MainGame, pLBN4s, null, pendantPosition + new Vector2(9, 117));
             pLBN4.Clicked += PLBN4_Clicked;
             Overlay.Add(pLBN4);
 
             // Pendant right.
-            var pRBN1s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
+            var pRBN1s = SpriteSheet.CreateNew(MainGame, "Buttons/RightArrowPlusBN_Silver", 1, 2);
             var pRBN1 = new Button(MainGame, pRBN1s, null, pendantPosition + new Vector2(138, 15));
             pRBN1.Clicked += PRBN1_Clicked;
             Overlay.Add(pRBN1);
 
-            var pRBN2s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
+            var pRBN2s = SpriteSheet.CreateNew(MainGame, "Buttons/RightArrowPlusBN_Brown", 1, 2);
             var pRBN2 = new Button(MainGame, pRBN2s, null, pendantPosition + new Vector2(138, 51));
             pRBN2.Clicked += PRBN2_Clicked;
             Overlay.Add(pRBN2);
 
-            var pRBN3s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Brown", 1, 2);
+            var pRBN3s = SpriteSheet.CreateNew(MainGame, "Buttons/RightArrowPlusBN_Brown", 1, 2);
             var pRBN3 = new Button(MainGame, pRBN3s, null, pendantPosition + new Vector2(138, 81));
             pRBN3.Clicked += PRBN3_Clicked;
             Overlay.Add(pRBN3);
 
-            var pRBN4s = SpriteSheet.CreateNew(MainGame, "Temp/RightArrowPlusBN_Silver", 1, 2);
+            var pRBN4s = SpriteSheet.CreateNew(MainGame, "Buttons/RightArrowPlusBN_Silver", 1, 2);
             var pRBN4 = new Button(MainGame, pRBN4s, null, pendantPosition + new Vector2(138, 117));
             pRBN4.Clicked += PRBN4_Clicked;
             Overlay.Add(pRBN4);
 
             // Pendant random.
-            var pRandTs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
+            var pRandTs = SpriteSheet.CreateNew(MainGame, "Buttons/RandBN", 1, 2);
             var pRandT = new Button(MainGame, pRandTs, null, pendantPosition + new Vector2(57, 15)) { ButtonType = ButtonType.CheckBox };
             if (CubeFactory.IsRandomTop)
             {
@@ -356,7 +356,7 @@ namespace Sunbird.External
             pRandT.Unchecked += PRandTop_Unchecked;
             Overlay.Add(pRandT);
 
-            var pRandBs = SpriteSheet.CreateNew(MainGame, "Temp/RandBN", 1, 2);
+            var pRandBs = SpriteSheet.CreateNew(MainGame, "Buttons/RandBN", 1, 2);
             var pRandB = new Button(MainGame, pRandBs, null, pendantPosition + new Vector2(57, 126)) { ButtonType = ButtonType.CheckBox };
             if (CubeFactory.IsRandomBottom)
             {
