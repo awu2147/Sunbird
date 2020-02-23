@@ -23,6 +23,7 @@ namespace Sunbird.GUI
 {
     public interface IGui
     {
+        List<Sprite> Overlay { get; set; }
         List<KeyValuePair<Sprite, DeferAction>> DeferredOverlay { get; set; }
     }
 

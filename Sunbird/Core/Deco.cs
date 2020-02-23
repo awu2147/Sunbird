@@ -31,7 +31,7 @@ namespace Sunbird.Core
         }
     }
 
-    public enum BuildDimensions
+    public enum BuildMode
     {
         _Cube,  
         [Dimension(new int[2] { 1, 1 })]
@@ -206,9 +206,9 @@ namespace Sunbird.Core
             return CreateDeco(mainGame, CurrentDecoMetaData3x3, coords, relativeCoords, altitude);
         }
 
-        public static int[] GetXYDimension(BuildDimensions buildDimension)
+        public static int[] GetXYDimension(BuildMode buildDimension)
         {
-            var enumType = typeof(BuildDimensions);
+            var enumType = typeof(BuildMode);
             var memberInfos = enumType.GetMember(buildDimension.ToString());
             var enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == enumType);
             var valueAttributes = enumValueMemberInfo.GetCustomAttributes(typeof(DimensionAttribute), false);
@@ -217,18 +217,18 @@ namespace Sunbird.Core
         
         public static void FindNext1x1()
         {
-           FindNext(CurrentIndex1x1, BuildDimensions._1x1);
+           FindNext(CurrentIndex1x1, BuildMode._1x1);
         }
         public static void FindNext2x2()
         {
-            FindNext(CurrentIndex2x2, BuildDimensions._2x2);
+            FindNext(CurrentIndex2x2, BuildMode._2x2);
         }
         public static void FindNext3x3()
         {
-            FindNext(CurrentIndex3x3, BuildDimensions._3x3);
+            FindNext(CurrentIndex3x3, BuildMode._3x3);
         }
 
-        private static void FindNext(int currentIndex, BuildDimensions dim)
+        private static void FindNext(int currentIndex, BuildMode dim)
         {
             var xyDim = GetXYDimension(dim);
 
@@ -244,17 +244,17 @@ namespace Sunbird.Core
                 if (DecoMetaDataLibrary[currentIndex].Dimensions.X == xyDim[0] && DecoMetaDataLibrary[currentIndex].Dimensions.Y == xyDim[1])
                 {
                     // After finding the next valid index, set the corresponding CurrentDecoMetaData.
-                    if (dim == BuildDimensions._1x1)
+                    if (dim == BuildMode._1x1)
                     {
                         CurrentIndex1x1 = currentIndex;
                         CurrentDecoMetaData1x1 = DecoMetaDataLibrary[CurrentIndex1x1];
                     }
-                    else if (dim == BuildDimensions._2x2)
+                    else if (dim == BuildMode._2x2)
                     {
                         CurrentIndex2x2 = currentIndex;
                         CurrentDecoMetaData2x2 = DecoMetaDataLibrary[CurrentIndex2x2];
                     }
-                    else if (dim == BuildDimensions._3x3)
+                    else if (dim == BuildMode._3x3)
                     {
                         CurrentIndex3x3 = currentIndex;
                         CurrentDecoMetaData3x3 = DecoMetaDataLibrary[CurrentIndex3x3];
@@ -269,26 +269,26 @@ namespace Sunbird.Core
             }
         }
 
-        private static void FindPrevious(BuildDimensions dim)
+        private static void FindPrevious(BuildMode dim)
         {
-            if (dim == BuildDimensions._1x1)
+            if (dim == BuildMode._1x1)
             {
                 FindPrevious(CurrentIndex1x1, dim);
                 CurrentDecoMetaData1x1 = DecoMetaDataLibrary[CurrentIndex1x1];
             }
-            else if (dim == BuildDimensions._2x2)
+            else if (dim == BuildMode._2x2)
             {
                 FindPrevious(CurrentIndex2x2, dim);
                 CurrentDecoMetaData2x2 = DecoMetaDataLibrary[CurrentIndex2x2];
             }
-            else if (dim == BuildDimensions._3x3)
+            else if (dim == BuildMode._3x3)
             {
                 FindPrevious(CurrentIndex3x3, dim);
                 CurrentDecoMetaData3x3 = DecoMetaDataLibrary[CurrentIndex3x3];
             }
         }
 
-        public static void FindPrevious(int currentIndex, BuildDimensions dim)
+        public static void FindPrevious(int currentIndex, BuildMode dim)
         {
             var xyDim = GetXYDimension(dim);
 

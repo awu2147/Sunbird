@@ -28,8 +28,8 @@ namespace Sunbird.GUI
 
     public class ScrollView : Sprite
     {
-        ScrollBar VerticalScrollBar;
-        ScrollBar HorizontalScrollBar;
+        //ScrollBar VerticalScrollBar;
+        //ScrollBar HorizontalScrollBar;
 
         public ScrollView()
         {

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Cubes/SandCubeTop</Path>
-    <SheetRows>2</SheetRows>
+    <Path>Cubes/GrassCubeTop</Path>
+    <SheetRows>3</SheetRows>
     <SheetColumns>4</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>8</FrameCount>
+    <FrameCount>12</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeMetaData>
@@ -20,7 +20,7 @@
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
-  <IsRandomTop>false</IsRandomTop>
+  <IsRandomTop>true</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
   <CurrentIndex>0</CurrentIndex>
   <CurrentBaseIndex>0</CurrentBaseIndex>

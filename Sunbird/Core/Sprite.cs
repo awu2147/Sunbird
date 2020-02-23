@@ -108,9 +108,28 @@ namespace Sunbird.Core
             {
                 Animator.LoadContent(mainGame, graphicsDevice, content);
                 Animator.Owner = this;
-                //Memory leak here if this is called after instantiation, use SafeLoadContent instead.
-                GraphicsHelper.GenerateShadowTextures(mainGame, Animator.SpriteSheet.Texture, ref AntiShadow, ref SelfShadow);
+                if (this is Deco)
+                {
+                    // FIXME: What should library key be?
+                    foreach (var item in DecoFactory.DecoMetaDataLibrary)
+                    {
+                        if (item.Value.Path == Animator.SpriteSheet.TexturePath)
+                        {
+                            SelfShadow = item.Value.SelfShadow;
+                            AntiShadow = item.Value.AntiShadow;
+                            break;
+                        }
+                    }
+                }
+                // Currently, Cube (anti)shadow textures do not need to be dynamically generated. This may change if pixel perfect click detection required.
+                else
+                {
+                    // FIXME: This is very slow, assign textures through library where possible.
+                    // Also results in memory leak if called after instantiation, use SafeLoadContent instead.
+                    GraphicsHelper.GenerateShadowTextures(mainGame, Animator.SpriteSheet.Texture, ref AntiShadow, ref SelfShadow);
+                }
             }
+            // These are typically null if dynamic generation of texture occurs at some point in time i.e. here or library creation.
             if (ShadowPath != null) { Shadow = content.Load<Texture2D>(ShadowPath); }
             if (AntiShadowPath != null) { AntiShadow = content.Load<Texture2D>(AntiShadowPath); }
             if (LightPath != null) { Light = content.Load<Texture2D>(LightPath); }

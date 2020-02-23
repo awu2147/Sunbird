@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentDecoMetaData1x1>
-    <Path>Decos/1x1/3/TreeConD</Path>
+    <Path>Decos/1x1/1/MushroomsP</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>0</X>
-      <Y>-72</Y>
+      <Y>0</Y>
     </PositionOffset>
-    <SheetRows>2</SheetRows>
+    <SheetRows>1</SheetRows>
     <SheetColumns>2</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>4</FrameCount>
+    <FrameCount>2</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
     <Dimensions>
       <X>1</X>
       <Y>1</Y>
-      <Z>3</Z>
+      <Z>1</Z>
     </Dimensions>
   </CurrentDecoMetaData1x1>
   <CurrentDecoMetaData2x2>

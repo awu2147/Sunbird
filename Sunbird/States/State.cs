@@ -20,6 +20,8 @@ namespace Sunbird.States
         protected MainGame MainGame { get; set; }
         public Color CurrentLightingColor { get; set; } = Color.Black;
 
+        public event EventHandler StateChanged;
+
         /// <summary>
         /// Only used for serialization.
         /// </summary>
@@ -35,11 +37,14 @@ namespace Sunbird.States
             MainGame = mainGame;
         }
 
+        public void OnStateChanged()
+        {
+            EventHandler handler = StateChanged;
+            handler?.Invoke(this, null);
+        }
+
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteBatch spriteBatchShadow, SpriteBatch spriteBatchLighting, SpriteBatch spriteBatchLightingStencil);
-        public abstract void DrawShadow(GameTime gameTime, SpriteBatch spriteBatch);
-        public abstract void DrawLighting(GameTime gameTime, SpriteBatch spriteBatch);
-        public abstract void DrawLightingStencil(GameTime gameTime, SpriteBatch spriteBatch);
         public abstract void DrawOverlay(GameTime gameTime, SpriteBatch spriteBatch);
 
     }

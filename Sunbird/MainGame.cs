@@ -27,32 +27,54 @@ namespace Sunbird
     public class MainGame : Game
     {
         private GraphicsDeviceManager Graphics { get; set; }
-        private SpriteBatch SpriteBatch { get; set; }
-        private SpriteBatch SpriteBatchShadow { get; set; }
-        private SpriteBatch SpriteBatchLighting { get; set; }
-        private SpriteBatch SpriteBatchLightingStencil { get; set; }
 
-        public State CurrentState { get; set; }
+        private RenderTarget2D GameRenderTarget;
+        private RenderTarget2D ShadowRenderTarget;
+        private RenderTarget2D LightingRenderTarget;
+        private RenderTarget2D LightingStencilRenderTarget;
+
+        private SpriteBatch SpriteBatch;
+        private SpriteBatch SpriteBatchShadow;
+        private SpriteBatch SpriteBatchLighting;
+        private SpriteBatch SpriteBatchLightingStencil;
+
+        private Texture2D GameRender;
+        private Texture2D ShadowRender;
+        private Texture2D LightingRender;
+        private Texture2D LightingStencilRender;
+
+        private BlendState Subtractive = new BlendState
+        {
+            ColorSourceBlend = Blend.Zero,
+            ColorDestinationBlend = Blend.InverseSourceColor,
+        };
+
+        private Effect LightingStencil;
+
+        private State _CurrentState;
+        public State CurrentState
+        {
+            get { return _CurrentState; }
+            set
+            {
+                bool changed = false;
+                if (_CurrentState != value)
+                {
+                    changed = true;
+                }
+                _CurrentState = value;
+                if (changed)
+                {
+                    _CurrentState.OnStateChanged();
+                }
+            }
+        }
         public Config Config { get; set; }
         public Camera Camera { get; set; }
-        public SamplerState SamplerState { get; set; }
+        public SamplerState SamplerState { get; set; } = SamplerState.PointClamp;
         public static SpriteFont DefaultFont { get; set; }
         public int Width { get { return Graphics.PreferredBackBufferWidth; } }
         public int Height { get { return Graphics.PreferredBackBufferHeight; } }
-
-        public Texture2D GameRender;
-        public Texture2D ShadowRender;
-        public Texture2D LightingRender;
-        public Texture2D LightingStencilRender;
-
-        public RenderTarget2D GameRenderTarget;
-        public RenderTarget2D ShadowRenderTarget; 
-        public RenderTarget2D LightingRenderTarget;
-        public RenderTarget2D LightingStencilRenderTarget;
-
-        public BlendState Subtractive;
-
-        private Effect LightingStencil;
 
         public bool CleanLoad { get; set; } = false;
 
@@ -98,10 +120,8 @@ namespace Sunbird
             Templates.InitializeTemplates();
 
             Camera = new Camera(this);
-            SamplerState = SamplerState.PointClamp;
-            DefaultFont = Content.Load<SpriteFont>("DefaultFont");
 
-            if (CleanLoad == false)
+            if (CleanLoad == true)
             {
                 CubeFactory.CubeMetaDataLibrary = new XDictionary<int, CubeMetaData>()
                 {
@@ -211,17 +231,15 @@ namespace Sunbird
             LightingRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
             LightingStencilRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
 
-            Subtractive = new BlendState
-            {
-                ColorSourceBlend = Blend.Zero,
-                ColorDestinationBlend = Blend.InverseSourceColor,
-                //AlphaSourceBlend = Blend.Zero,
-                //AlphaDestinationBlend = Blend.InverseSourceColor
-            };
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatchShadow = new SpriteBatch(GraphicsDevice);
+            SpriteBatchLighting = new SpriteBatch(GraphicsDevice);
+            SpriteBatchLightingStencil = new SpriteBatch(GraphicsDevice);    
 
             Exiting += MainGame_Exiting;
 
             base.Initialize();
+
         }
 
         private void MainGame_Exiting(object sender, EventArgs e)
@@ -241,16 +259,10 @@ namespace Sunbird
         /// </summary>
         protected override void LoadContent()
         {
-            // CORE: Create a new SpriteBatch, which can be used to draw textures.
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
-            SpriteBatchShadow = new SpriteBatch(GraphicsDevice);
-            SpriteBatchLighting = new SpriteBatch(GraphicsDevice);
-            SpriteBatchLightingStencil = new SpriteBatch(GraphicsDevice);
-
+            DefaultFont = Content.Load<SpriteFont>("DefaultFont");
             LightingStencil = Content.Load<Effect>("Effects/LightingStencil");
 
             CurrentState = new MapBuilder(this, GraphicsDevice, Content);
-
         }
 
         /// <summary>
