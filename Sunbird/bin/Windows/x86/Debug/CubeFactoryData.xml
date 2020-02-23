@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentCubeMetaData>
-    <Path>Cubes/GrassCubeTop</Path>
-    <SheetRows>3</SheetRows>
-    <SheetColumns>4</SheetColumns>
+    <Path>Cubes/LavaCubeTop</Path>
+    <SheetRows>1</SheetRows>
+    <SheetColumns>2</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>12</FrameCount>
-    <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
+    <FrameCount>2</FrameCount>
+    <FrameSpeed>1.333</FrameSpeed>
+    <AnimState>Loop</AnimState>
   </CurrentCubeMetaData>
   <CurrentCubeBaseMetaData>
-    <Path>Cubes/LightStoneCubeBase</Path>
-    <SheetRows>1</SheetRows>
-    <SheetColumns>1</SheetColumns>
+    <Path>Cubes/LavaCubeBase</Path>
+    <SheetRows>4</SheetRows>
+    <SheetColumns>3</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>1</FrameCount>
+    <FrameCount>11</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
+    <AnimState>Loop</AnimState>
   </CurrentCubeBaseMetaData>
-  <IsRandomTop>true</IsRandomTop>
+  <IsRandomTop>false</IsRandomTop>
   <IsRandomBottom>false</IsRandomBottom>
   <CurrentIndex>0</CurrentIndex>
   <CurrentBaseIndex>0</CurrentBaseIndex>

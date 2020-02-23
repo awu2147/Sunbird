@@ -63,7 +63,7 @@ namespace Sunbird.External
         public Authorization Authorization { get; set; }
         public BuildMode BuildMode { get; set; } = BuildMode._Cube;
 
-        private string clickedSpriteName = string.Empty;
+        public static string clickedSpriteName = string.Empty;
 
         private BuilderRibbon BuilderRibbon;
 
@@ -443,34 +443,6 @@ namespace Sunbird.External
             }
         }
 
-        /// <summary>
-        /// Checks if world is in focus. ref bool is set to false if cursor lies on any Overlay sprite.
-        /// </summary>
-        /// <param name="gui">An object that implements IGui has an Overlay (sprite) list. This list can nest other IGui objects so we do an iterative check.</param>
-        public void CheckFocus(ref bool inFocus, IGui gui)
-        {
-            foreach (var sprite in gui.Overlay)
-            {
-                if (sprite.Animator.WorldArea().Contains(Peripherals.GetMouseWindowPosition()))
-                {
-                    inFocus = false;
-                    break;
-                }
-                else if (sprite is IGui)
-                {
-                    CheckFocus(ref inFocus, (IGui)sprite);
-                    if (inFocus == false)
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    inFocus = true;
-                }
-            }
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (!IsLoading)
@@ -481,7 +453,7 @@ namespace Sunbird.External
                 var topFaceCoords = World.TopFace_PointToCoord(MainGame.Camera);
 
                 // Check if cursor on Overlay sprite.
-                CheckFocus(ref InFocus, this);
+                GuiHelper.CheckFocus(ref InFocus, this);
 
                 // User input actions.
                 if (Peripherals.KeyTapped(Keys.Q) && MainGame.IsActive)
@@ -710,7 +682,7 @@ namespace Sunbird.External
                         ShadowDict[sprite.Coords].Add(sprite);
                     }
                 }
-                if (clickedSprite != null)
+                if (clickedSprite != null && Authorization == Authorization.None)
                 {
                     clickedSpriteName = clickedSprite.Animator.SpriteSheet.TexturePath;
                     clickedSprite.OnClicked();
@@ -767,6 +739,7 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+                // FIXME: make this circular and/or coord based?
                 var rect = new Rectangle((int)Player.Position.X - 10000, (int)Player.Position.Y - 10000, 20000, 20000);
                 
                 // Draw sorted sprites;

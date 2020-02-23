@@ -178,7 +178,6 @@ namespace Sunbird.GUI
 
         public Rectangle WorldArea()
         {
-            //Debug.Print($"{container.Position}, {PositionOffset}");
             return new Rectangle((container.Position + PositionOffset).ToPoint(), new Point(viewRectangle.Width, viewRectangle.Height));
         }
 

@@ -67,8 +67,9 @@
     <Compile Include="External\Player.cs" />
     <Compile Include="External\Templates.cs" />
     <Compile Include="GUI\Button.cs" />
-    <Compile Include="GUI\CubeCatalog.cs" />
-    <Compile Include="GUI\Deco1x1Catalog.cs" />
+    <Compile Include="External\CubeCatalog.cs" />
+    <Compile Include="External\Deco1x1Catalog.cs" />
+    <Compile Include="GUI\GuiHelper.cs" />
     <Compile Include="GUI\IGui.cs" />
     <Compile Include="GUI\LoadingBar.cs" />
     <Compile Include="GUI\ScrollView.cs" />

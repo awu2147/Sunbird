@@ -18,7 +18,7 @@ using Sunbird.Controllers;
 using Sunbird.Serialization;
 using Sunbird.GUI;
 
-namespace Sunbird.GUI
+namespace Sunbird.External
 {
     public interface ICatalogObject
     {
@@ -78,7 +78,7 @@ namespace Sunbird.GUI
                 {
                     if (GraphicsHelper.SolidPixels(item.Animator).Contains(Peripherals.GetMouseWindowPosition() - item.Animator.Position.ToPoint()) && Peripherals.LeftButtonTapped())
                     {
-                        Debug.Print(item.Animator.SpriteSheet.TexturePath);
+                        MapBuilder.clickedSpriteName = item.Animator.SpriteSheet.TexturePath;
                         item.OnClicked();
                     }
                 }
