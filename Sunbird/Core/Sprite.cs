@@ -110,16 +110,12 @@ namespace Sunbird.Core
                 Animator.Owner = this;
                 if (this is Deco)
                 {
-                    // FIXME: What should library key be?
-                    foreach (var item in DecoFactory.DecoMetaDataLibrary)
+                    var path = Animator.SpriteSheet.TexturePath;
+                    if (DecoFactory.DecoMetaDataLibrary.ContainsKey(path))
                     {
-                        if (item.Value.Path == Animator.SpriteSheet.TexturePath)
-                        {
-                            SelfShadow = item.Value.SelfShadow;
-                            AntiShadow = item.Value.AntiShadow;
-                            break;
-                        }
-                    }
+                        SelfShadow = DecoFactory.DecoMetaDataLibrary[path].SelfShadow;
+                        AntiShadow = DecoFactory.DecoMetaDataLibrary[path].AntiShadow;
+                    }                
                 }
                 // Currently, Cube (anti)shadow textures do not need to be dynamically generated. This may change if pixel perfect click detection required.
                 else

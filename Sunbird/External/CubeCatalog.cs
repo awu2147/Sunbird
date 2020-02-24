@@ -78,7 +78,7 @@ namespace Sunbird.External
                 {
                     if (GraphicsHelper.SolidPixels(item.Animator).Contains(Peripherals.GetMouseWindowPosition() - item.Animator.Position.ToPoint()) && Peripherals.LeftButtonTapped())
                     {
-                        MapBuilder.clickedSpriteName = item.Animator.SpriteSheet.TexturePath;
+                        MapBuilder.ClickedSpriteName = item.Animator.SpriteSheet.TexturePath;
                         item.OnClicked();
                     }
                 }
@@ -103,7 +103,7 @@ namespace Sunbird.External
             for (int i = 0; i < Items.Count(); i++)
             {
                 var item = Items[i];
-                if (item.CubeMetaData != null && item.CubeBaseMetaData == null)
+                if (item.CubeTopMetaData != null && item.CubeBaseMetaData == null)
                 {
                     item.Position = Position + itemTopOffset + new Vector2(78 * (countCMD % 5), 81 * (countCMD / 5) - currentSegmentTop*81);
                     if (countCMD < currentSegmentTop * 5 || countCMD >= (currentSegmentTop + 2) * 5)
@@ -117,7 +117,7 @@ namespace Sunbird.External
                     item.Draw(gameTime, spriteBatch);
                     countCMD++;
                 }
-                else if (item.CubeBaseMetaData != null && item.CubeMetaData == null)
+                else if (item.CubeBaseMetaData != null && item.CubeTopMetaData == null)
                 {
                     item.Position = Position + itemBaseOffset + new Vector2(78 * (countCBMD % 5), 81 * (countCBMD / 5) - currentSegmentBase * 81);
                     if (countCBMD < currentSegmentBase * 5 || countCBMD >= (currentSegmentBase + 2) * 5)
@@ -159,23 +159,23 @@ namespace Sunbird.External
 
     public class CubeCatalogItem : Sprite
     {
-        public CubeMetaData CubeMetaData { get; set;}
-        public CubeBaseMetaData CubeBaseMetaData { get; set; }
+        public CubeMetaData CubeTopMetaData { get; set;}
+        public CubeMetaData CubeBaseMetaData { get; set; }
 
-        public CubeCatalogItem(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD)
+        public CubeCatalogItem(MainGame mainGame, CubeMetaData cubeTopMD, CubeMetaData cubeBaseMD)
         {
-            CubeMetaData = cubeMD;
+            CubeTopMetaData = cubeTopMD;
             CubeBaseMetaData = cubeBaseMD;
 #if DEBUG
-            if (cubeMD != null) { Debug.Assert(cubeMD.Texture != null); }
+            if (cubeTopMD != null) { Debug.Assert(cubeTopMD.Texture != null); }
             if (cubeBaseMD != null) { Debug.Assert(cubeBaseMD.Texture != null); }
 #endif
-            if (cubeMD != null && cubeBaseMD == null)
+            if (cubeTopMD != null && cubeBaseMD == null)
             {
-                var spriteSheet = SpriteSheet.CreateNew(cubeMD.Texture, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
-                Animator = new Animator(this, spriteSheet, cubeMD.StartFrame, cubeMD.CurrentFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
+                var spriteSheet = SpriteSheet.CreateNew(cubeTopMD.Texture, cubeTopMD.Path, cubeTopMD.SheetRows, cubeTopMD.SheetColumns);
+                Animator = new Animator(this, spriteSheet, cubeTopMD.StartFrame, cubeTopMD.CurrentFrame, cubeTopMD.FrameCount, cubeTopMD.FrameSpeed, cubeTopMD.AnimState);
             }
-            else if (cubeBaseMD != null && cubeMD == null)
+            else if (cubeBaseMD != null && cubeTopMD == null)
             {
                 var spriteSheet = SpriteSheet.CreateNew(cubeBaseMD.Texture, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
                 Animator = new Animator(this, spriteSheet, cubeBaseMD.StartFrame, cubeBaseMD.CurrentFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);

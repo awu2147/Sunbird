@@ -76,7 +76,7 @@ namespace Sunbird.External
                 {
                     if (GraphicsHelper.SolidPixels(item.Animator).Contains(Peripherals.GetMouseWindowPosition() - item.Animator.Position.ToPoint()) && Peripherals.LeftButtonTapped())
                     {
-                        MapBuilder.clickedSpriteName = item.Animator.SpriteSheet.TexturePath;
+                        MapBuilder.ClickedSpriteName = item.Animator.SpriteSheet.TexturePath;
                         item.OnClicked();
                     }
                 }

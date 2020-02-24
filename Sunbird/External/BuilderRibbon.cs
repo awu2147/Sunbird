@@ -224,17 +224,14 @@ namespace Sunbird.External
                 // Create for the first time if null. From then on, load from cache.
                 var Deco1x1CatalogS = SpriteSheet.CreateNew(MainGame, "GUI/Deco1x1CatalogBackground", 1, 1);
                 Deco1x1Catalog = new Deco1x1Catalog(MainGame, Deco1x1CatalogS, new Vector2(3, 87), this, (Button)sender);
-                foreach (var dmd in DecoFactory.DecoMetaDataLibrary)
+                foreach (var dmd in DecoFactory.DecoMetaDataLibrary1x1)
                 {
-                    if (dmd.Value.Dimensions.X == 1)
-                    {
 #if DEBUG
-                        Debug.Assert(dmd.Value.Dimensions.X == dmd.Value.Dimensions.Y);
+                    Debug.Assert(dmd.Dimensions.X == dmd.Dimensions.Y);
 #endif
-                        var DCI = new DecoCatalogItem(MainGame, dmd.Value);
-                        DCI.Clicked += D1x1CI_Clicked;
-                        Deco1x1Catalog.Items.Add(DCI);
-                    }
+                    var DCI = new DecoCatalogItem(MainGame, dmd);
+                    DCI.Clicked += D1x1CI_Clicked;
+                    Deco1x1Catalog.Items.Add(DCI);               
                 }
                 DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco1x1Catalog, DeferAction.Add));
             }
@@ -265,15 +262,15 @@ namespace Sunbird.External
                 // Create for the first time if null. From then on, load from cache.
                 var cubeCatalogS = SpriteSheet.CreateNew(MainGame, "GUI/CubeCatalogBackground", 1, 1);
                 CubeCatalog = new CubeCatalog(MainGame, cubeCatalogS, new Vector2(3, 87), this, (Button)sender);
-                foreach (var cmd in CubeFactory.CubeMetaDataLibrary)
+                foreach (var cmd in CubeFactory.CubeTopMetaDataLibrary)
                 {
-                    var CCI = new CubeCatalogItem(MainGame, cmd.Value, null);
+                    var CCI = new CubeCatalogItem(MainGame, cmd, null);
                     CCI.Clicked += CCI_Clicked;
                     CubeCatalog.Items.Add(CCI);
                 }
                 foreach (var cbmd in CubeFactory.CubeBaseMetaDataLibrary)
                 {
-                    var CCI = new CubeCatalogItem(MainGame, null, cbmd.Value);
+                    var CCI = new CubeCatalogItem(MainGame, null, cbmd);
                     CCI.Clicked += CCI_Clicked;
                     CubeCatalog.Items.Add(CCI);
                 }
@@ -289,16 +286,16 @@ namespace Sunbird.External
         private void CCI_Clicked(object sender, EventArgs e)
         {
             var item = sender as CubeCatalogItem;
-            if (item.CubeMetaData != null && item.CubeBaseMetaData == null)
+            if (item.CubeTopMetaData != null && item.CubeBaseMetaData == null)
             {
-                var CCMD = item.CubeMetaData;
-                CubeFactory.CurrentCubeMetaData = CCMD;
+                var CCMD = item.CubeTopMetaData;
+                CubeFactory.CurrentCubeTopMetaData = CCMD;
                 MapBuilder.CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
                 MapBuilder.CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
 
                 if (MapBuilder.BuildMode == BuildMode._Cube) { MapBuilder.GhostMarker.MorphImage(MapBuilder.CubePreview, MainGame, GraphicsDevice, Content); }
             }
-            else if (item.CubeBaseMetaData != null && item.CubeMetaData == null)
+            else if (item.CubeBaseMetaData != null && item.CubeTopMetaData == null)
             {
                 var CCBMD = item.CubeBaseMetaData;
                 CubeFactory.CurrentCubeBaseMetaData = CCBMD;

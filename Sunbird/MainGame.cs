@@ -123,99 +123,136 @@ namespace Sunbird
 
             if (CleanLoad == true)
             {
-                CubeFactory.CubeMetaDataLibrary = new XDictionary<int, CubeMetaData>()
+                string dirCubes = "Cubes/";
+                CubeFactory.CubeTopMetaDataLibrary = new List<CubeMetaData>()
                 {
-                    {0, new CubeMetaData(){Path = "Cubes/GrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None} },
-                    {1, new CubeMetaData(){Path = "Cubes/DirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None} },
-                    {2, new CubeMetaData(){Path = "Cubes/LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None} },
-                    {3, new CubeMetaData(){Path = "Cubes/WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None} },
-                    {4, new CubeMetaData(){Path = "Cubes/LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f} },
-                    {5, new CubeMetaData(){Path = "Cubes/GraveyardGrassCubeTop", SheetRows = 2, SheetColumns = 4, FrameCount = 8, AnimState = AnimationState.None} },
-                    {6, new CubeMetaData(){Path = "Cubes/GraveyardDirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None} },
-                    {7, new CubeMetaData(){Path = "Cubes/SandCubeTop", SheetRows = 2, SheetColumns = 4, FrameCount = 8, AnimState = AnimationState.None} },
-                    {8, new CubeMetaData(){Path = "Cubes/LightWoodBoardCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
-                    {9, new CubeMetaData(){Path = "Cubes/WoodBoardCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
-                    {10, new CubeMetaData(){Path = "Cubes/StoneTileCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
+                    new CubeMetaData(){Path = $"{dirCubes}GrassCubeTop", SheetRows = 3, SheetColumns = 4, FrameCount = 12, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}DirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f},
+                    new CubeMetaData(){Path = $"{dirCubes}GraveyardGrassCubeTop", SheetRows = 2, SheetColumns = 4, FrameCount = 8, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}GraveyardDirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}SandCubeTop", SheetRows = 2, SheetColumns = 4, FrameCount = 8, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}LightWoodBoardCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}WoodBoardCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}StoneTileCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None},
                 };
+                CubeFactory.CubeBaseMetaDataLibrary = new List<CubeMetaData>
+                {
+                    new CubeMetaData(){Path = $"{dirCubes}GrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}DirtCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}LightStoneCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}WaterCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}LavaCubeBase", SheetRows = 4, SheetColumns = 3, FrameCount = 11, AnimState = AnimationState.Loop, },
+                    new CubeMetaData(){Path = $"{dirCubes}GraveyardGrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None, },
+                    new CubeMetaData(){Path = $"{dirCubes}GraveyardDirtCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None},
+                    new CubeMetaData(){Path = $"{dirCubes}SandCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None},
+                };
+
+                // Generate Library Textures from Path.
+                // Populate master CubeMetaDataLibrary.
+                CubeFactory.CubeMetaDataLibrary = new XDictionary<string, CubeMetaData>();
+                foreach (var ctmd in CubeFactory.CubeTopMetaDataLibrary)
+                {
+                    ctmd.LoadContent(this);
+                    if (!CubeFactory.CubeMetaDataLibrary.ContainsKey(ctmd.Path))
+                    {
+                        CubeFactory.CubeMetaDataLibrary.Add(ctmd.Path, ctmd);
+                    }
+                }
+                foreach (var cbmd in CubeFactory.CubeBaseMetaDataLibrary)
+                {
+                    cbmd.LoadContent(this);
+                    if (!CubeFactory.CubeMetaDataLibrary.ContainsKey(cbmd.Path))
+                    {
+                        CubeFactory.CubeMetaDataLibrary.Add(cbmd.Path, cbmd);
+                    }
+                }
+
                 // CurrentCubeMetaData should never be null;
-                CubeFactory.CurrentCubeMetaData = CubeFactory.CubeMetaDataLibrary[0];
-                // Generate Library Textures from Path;
-                foreach (var cMD in CubeFactory.CubeMetaDataLibrary)
-                {
-                    cMD.Value.LoadContent(this);
-                }
-
-                CubeFactory.CubeBaseMetaDataLibrary = new XDictionary<int, CubeBaseMetaData>()
-                {
-                    {0, new CubeBaseMetaData(){Path = "Cubes/GrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
-                    {1, new CubeBaseMetaData(){Path = "Cubes/DirtCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
-                    {2, new CubeBaseMetaData(){Path = "Cubes/LightStoneCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
-                    {3, new CubeBaseMetaData(){Path = "Cubes/WaterCubeBase", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None} },
-                    {4, new CubeBaseMetaData(){Path = "Cubes/LavaCubeBase", SheetRows = 4, SheetColumns = 3, FrameCount = 11, AnimState = AnimationState.Loop, } },
-                    {5, new CubeBaseMetaData(){Path = "Cubes/GraveyardGrassCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None, } },
-                    {6, new CubeBaseMetaData(){Path = "Cubes/GraveyardDirtCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
-                    {7, new CubeBaseMetaData(){Path = "Cubes/SandCubeBase", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None} },
-                };
-                // CurrentCubeBaseMetaData should never be null;
+                CubeFactory.CurrentCubeTopMetaData = CubeFactory.CubeTopMetaDataLibrary[0];
                 CubeFactory.CurrentCubeBaseMetaData = CubeFactory.CubeBaseMetaDataLibrary[0];
-                // Generate Library Textures from Path;
-                foreach (var cbMD in CubeFactory.CubeBaseMetaDataLibrary)
+
+                string dir1x1 = "Decos/1x1/";
+                DecoFactory.DecoMetaDataLibrary1x1 = new List<DecoMetaData>()
                 {
-                    cbMD.Value.LoadContent(this);
-                }
-
-                DecoFactory.DecoMetaDataLibrary = new XDictionary<int, DecoMetaData>()
-                {
-                    {0, new DecoMetaData(){Path = "Decos/1x1/3/TreeBas", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName } },
-                    {1, new DecoMetaData(){Path = "Decos/1x1/3/TreeCon", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName } },
-                    {2, new DecoMetaData(){Path = "Decos/1x1/3/TreeConD", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName } },
-                    {3, new DecoMetaData(){Path = "Decos/1x1/3/TreePal", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName } },
-
-                    {4, new DecoMetaData(){Path = "Decos/1x1/1/FlowersPWY", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
-                    {5, new DecoMetaData(){Path = "Decos/1x1/1/MushroomsP", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
-                    {6, new DecoMetaData(){Path = "Decos/1x1/1/Logpile", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
-                    {7, new DecoMetaData(){Path = "Decos/1x1/1/GravestoneS", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
-                    {8, new DecoMetaData(){Path = "Decos/1x1/1/WallLS", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
-                    {9, new DecoMetaData(){Path = "Decos/1x1/1/WallDS", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
-                    {10, new DecoMetaData(){Path = "Decos/1x1/1/WallRB", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName } },
-
-                    {11, new DecoMetaData(){Path = "Decos/1x1/2/GravestoneM", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
-                    {12, new DecoMetaData(){Path = "Decos/1x1/2/GravestoneMS", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
-                    {13, new DecoMetaData(){Path = "Decos/1x1/2/WoodenBarrel", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName } },
-
-                    {14, new DecoMetaData(){Path = "Decos/1x1/3/ObeliskS", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName } },
-
-                    {15, new DecoMetaData(){Path = "Decos/BloodBowl", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(-36, -36), Dimensions = new Dimension(2, 2, 1), TypeName = typeof(Deco).FullName } },
-                    {16, new DecoMetaData(){Path = "Decos/MediumRock", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(-12, -6), Dimensions = new Dimension(2, 2, 2), TypeName = typeof(Deco).FullName } },
-                    {17, new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
-                        PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName } },
+                    new DecoMetaData() {Path = $"{dir1x1}3/TreeBas", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData() {Path = $"{dir1x1}3/TreeCon", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData() {Path = $"{dir1x1}3/TreeConD", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}3/TreePal", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}1/FlowersPWY", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}1/MushroomsP", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}1/Logpile", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}1/GravestoneS", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}1/WallLS", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}1/WallDS", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}1/WallRB", SheetRows = 2, SheetColumns = 3, FrameCount = 6, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}2/GravestoneM", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}2/GravestoneMS", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}2/WoodenBarrel", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = $"{dir1x1}3/ObeliskS", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName },
                 };
-                // CurrentDecoMetaDataNxN should never be null;
-                DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary[0];
-                DecoFactory.CurrentDecoMetaData2x2 = DecoFactory.DecoMetaDataLibrary[15];
-                DecoFactory.CurrentDecoMetaData3x3 = DecoFactory.DecoMetaDataLibrary[17];
-                // Generate Library Textures, AntiShadows, and SelfShadows from Path;
-                foreach (var dMD in DecoFactory.DecoMetaDataLibrary)
+                DecoFactory.DecoMetaDataLibrary2x2 = new List<DecoMetaData>()
                 {
-                    dMD.Value.LoadContent(this);
+                    new DecoMetaData(){Path = "Decos/BloodBowl", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(-36, -36), Dimensions = new Dimension(2, 2, 1), TypeName = typeof(Deco).FullName },
+                    new DecoMetaData(){Path = "Decos/MediumRock", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(-12, -6), Dimensions = new Dimension(2, 2, 2), TypeName = typeof(Deco).FullName },
+                };
+                DecoFactory.DecoMetaDataLibrary3x3 = new List<DecoMetaData>()
+                {
+                    new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                    PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName },
+                };
+
+                // Generate Library Textures, AntiShadows, and SelfShadows from Path.
+                // Populate master DecoMetaDataLibrary.
+                DecoFactory.DecoMetaDataLibrary = new XDictionary<string, DecoMetaData>();
+                foreach (var dmd in DecoFactory.DecoMetaDataLibrary1x1)
+                {
+                    dmd.LoadContent(this);
+                    if (!DecoFactory.DecoMetaDataLibrary.ContainsKey(dmd.Path))
+                    {
+                        DecoFactory.DecoMetaDataLibrary.Add(dmd.Path, dmd);
+                    }
                 }
+                foreach (var dmd in DecoFactory.DecoMetaDataLibrary2x2)
+                {
+                    dmd.LoadContent(this);
+                    if (!DecoFactory.DecoMetaDataLibrary.ContainsKey(dmd.Path))
+                    {
+                        DecoFactory.DecoMetaDataLibrary.Add(dmd.Path, dmd);
+                    }
+                }
+                foreach (var dmd in DecoFactory.DecoMetaDataLibrary3x3)
+                {
+                    dmd.LoadContent(this);
+                    if (!DecoFactory.DecoMetaDataLibrary.ContainsKey(dmd.Path))
+                    {
+                        DecoFactory.DecoMetaDataLibrary.Add(dmd.Path, dmd);
+                    }
+                }
+
+                // Assign current decos. CurrentDecoMetaDataNxN should never be null;
+                DecoFactory.CurrentDecoMetaData1x1 = DecoFactory.DecoMetaDataLibrary1x1[0];
+                DecoFactory.CurrentDecoMetaData2x2 = DecoFactory.DecoMetaDataLibrary2x2[0];
+                DecoFactory.CurrentDecoMetaData3x3 = DecoFactory.DecoMetaDataLibrary3x3[0];
             }
             else
             {

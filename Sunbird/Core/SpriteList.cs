@@ -50,6 +50,7 @@ namespace Sunbird.Core
                 if (deco.OccupiedCoords[altitude].Any((x) => OccupiedCoords.Contains(x)) == false)
                 {
                     Add(sprite);
+                    // FIXME: only adds current altitude level.
                     foreach (var coord in deco.OccupiedCoords[altitude])
                     {
                         OccupiedCoords.Add(coord);

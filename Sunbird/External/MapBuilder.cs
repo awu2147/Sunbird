@@ -63,7 +63,7 @@ namespace Sunbird.External
         public Authorization Authorization { get; set; }
         public BuildMode BuildMode { get; set; } = BuildMode._Cube;
 
-        public static string clickedSpriteName = string.Empty;
+        public static string ClickedSpriteName = string.Empty;
 
         private BuilderRibbon BuilderRibbon;
 
@@ -295,7 +295,7 @@ namespace Sunbird.External
 
             var pRandBs = SpriteSheet.CreateNew(MainGame, "Buttons/RandBN", 1, 2);
             var pRandB = new Button(MainGame, pRandBs, null, pendantPosition + new Vector2(57, 126)) { ButtonType = ButtonType.CheckBox };
-            if (CubeFactory.IsRandomBottom)
+            if (CubeFactory.IsRandomBase)
             {
                 pRandB.IsPressed = true;
                 pRandB.ReconfigureAnimator(pRandB.PressedArgs);
@@ -347,8 +347,8 @@ namespace Sunbird.External
 
         private void PRBN2_Clicked(object sender, ButtonClickedEventArgs e)
         {
-            CubeFactory.FindNext();
-            var CCMD = CubeFactory.CurrentCubeMetaData;
+            CubeFactory.FindNextTop();
+            var CCMD = CubeFactory.CurrentCubeTopMetaData;
 
             CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
             CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
@@ -358,8 +358,8 @@ namespace Sunbird.External
 
         private void PLBN2_Clicked(object sender, ButtonClickedEventArgs e)
         {
-            CubeFactory.FindPrevious();
-            var CCMD = CubeFactory.CurrentCubeMetaData;
+            CubeFactory.FindPreviousTop();
+            var CCMD = CubeFactory.CurrentCubeTopMetaData;
 
             CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
             CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
@@ -369,20 +369,20 @@ namespace Sunbird.External
 
         private void PRBN1_Clicked(object sender, ButtonClickedEventArgs e)
         {
-            CubeFactory.CurrentCubeMetaData.NextFrame();
-            CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeMetaData.CurrentFrame;
+            CubeFactory.CurrentCubeTopMetaData.NextFrame();
+            CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeTopMetaData.CurrentFrame;
             if (BuildMode == BuildMode._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void PLBN1_Clicked(object sender, ButtonClickedEventArgs e)
         {
-            CubeFactory.CurrentCubeMetaData.PreviousFrame();
-            CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeMetaData.CurrentFrame;
+            CubeFactory.CurrentCubeTopMetaData.PreviousFrame();
+            CubePreview.Animator.CurrentFrame = CubeFactory.CurrentCubeTopMetaData.CurrentFrame;
             if (BuildMode == BuildMode._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
 
-        private void PRandB_Unchecked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomBottom = false; }
-        private void PRandB_Checked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomBottom = true; }
+        private void PRandB_Unchecked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomBase = false; }
+        private void PRandB_Checked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomBase = true; }
         private void PRandTop_Unchecked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomTop = false; }
         private void PRandTop_Checked(object sender, ButtonClickedEventArgs e) { CubeFactory.IsRandomTop = true; }
 
@@ -684,7 +684,7 @@ namespace Sunbird.External
                 }
                 if (clickedSprite != null && Authorization == Authorization.None)
                 {
-                    clickedSpriteName = clickedSprite.Animator.SpriteSheet.TexturePath;
+                    ClickedSpriteName = clickedSprite.Animator.SpriteSheet.TexturePath;
                     clickedSprite.OnClicked();
                 }
 
@@ -825,7 +825,7 @@ namespace Sunbird.External
             spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString() }", MessageLogBG.Position + new Vector2(12, 52), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", MessageLogBG.Position + new Vector2(12, 72), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", MessageLogBG.Position + new Vector2(12, 92), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Clicked sprite name: \n{ clickedSpriteName }", MessageLogBG.Position + new Vector2(12, 112), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"Clicked sprite name: \n{ ClickedSpriteName }", MessageLogBG.Position + new Vector2(12, 112), Color.White);
         }
     }
 }

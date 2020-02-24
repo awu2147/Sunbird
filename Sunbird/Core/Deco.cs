@@ -131,6 +131,7 @@ namespace Sunbird.Core
 
     public static class DecoFactory
     {
+
         public static DecoMetaData CurrentDecoMetaData1x1 { get; set; }
         public static DecoMetaData CurrentDecoMetaData2x2 { get; set; }
         public static DecoMetaData CurrentDecoMetaData3x3 { get; set; }
@@ -140,8 +141,12 @@ namespace Sunbird.Core
         public static int CurrentIndex1x1 { get; set; } = 0;
         public static int CurrentIndex2x2 { get; set; } = 1;
         public static int CurrentIndex3x3 { get; set; } = 2;
+        
+        public static List<DecoMetaData> DecoMetaDataLibrary1x1 { get; set; }
+        public static List<DecoMetaData> DecoMetaDataLibrary2x2 { get; set; }
+        public static List<DecoMetaData> DecoMetaDataLibrary3x3 { get; set; }
 
-        public static XDictionary<int, DecoMetaData> DecoMetaDataLibrary { get; set; }
+        public static XDictionary<string, DecoMetaData> DecoMetaDataLibrary { get; set; }
 
         public static Deco CreateDeco(MainGame mainGame, DecoMetaData decoMD, Coord coords, Coord relativeCoords, int altitude)
         {
@@ -215,103 +220,93 @@ namespace Sunbird.Core
             return ((DimensionAttribute)valueAttributes[0]).XYDimension;
         }
         
+        public static void FindNext(BuildMode buildMode)
+        {
+            if (buildMode == BuildMode._1x1)
+            {
+                FindNext1x1();
+            }
+            else if (buildMode == BuildMode._2x2)
+            {
+                FindNext2x2();
+            }
+            else if (buildMode == BuildMode._3x3)
+            {
+                FindNext3x3();
+            }
+        }
+
         public static void FindNext1x1()
         {
-           FindNext(CurrentIndex1x1, BuildMode._1x1);
+            CurrentIndex1x1++;
+            if (CurrentIndex1x1 >= DecoMetaDataLibrary1x1.Count())
+            {
+                CurrentIndex1x1 = 0;
+            }
+            CurrentDecoMetaData1x1 = DecoMetaDataLibrary1x1[CurrentIndex1x1];
         }
         public static void FindNext2x2()
         {
-            FindNext(CurrentIndex2x2, BuildMode._2x2);
+            CurrentIndex2x2++;
+            if (CurrentIndex2x2 >= DecoMetaDataLibrary2x2.Count())
+            {
+                CurrentIndex2x2 = 0;
+            }
+            CurrentDecoMetaData2x2 = DecoMetaDataLibrary2x2[CurrentIndex2x2];
         }
         public static void FindNext3x3()
         {
-            FindNext(CurrentIndex3x3, BuildMode._3x3);
+            CurrentIndex3x3++;
+            if (CurrentIndex3x3 >= DecoMetaDataLibrary3x3.Count())
+            {
+                CurrentIndex3x3 = 0;
+            }
+            CurrentDecoMetaData3x3 = DecoMetaDataLibrary3x3[CurrentIndex3x3];
         }
 
-        private static void FindNext(int currentIndex, BuildMode dim)
+        private static void FindPrevious(BuildMode buildMode)
         {
-            var xyDim = GetXYDimension(dim);
-
-            int startingIndex = currentIndex;
-
-            while (true)
+            if (buildMode == BuildMode._1x1)
             {
-                currentIndex++;
-                if (currentIndex >= DecoMetaDataLibrary.Count())
-                {
-                    currentIndex = 0;
-                }
-                if (DecoMetaDataLibrary[currentIndex].Dimensions.X == xyDim[0] && DecoMetaDataLibrary[currentIndex].Dimensions.Y == xyDim[1])
-                {
-                    // After finding the next valid index, set the corresponding CurrentDecoMetaData.
-                    if (dim == BuildMode._1x1)
-                    {
-                        CurrentIndex1x1 = currentIndex;
-                        CurrentDecoMetaData1x1 = DecoMetaDataLibrary[CurrentIndex1x1];
-                    }
-                    else if (dim == BuildMode._2x2)
-                    {
-                        CurrentIndex2x2 = currentIndex;
-                        CurrentDecoMetaData2x2 = DecoMetaDataLibrary[CurrentIndex2x2];
-                    }
-                    else if (dim == BuildMode._3x3)
-                    {
-                        CurrentIndex3x3 = currentIndex;
-                        CurrentDecoMetaData3x3 = DecoMetaDataLibrary[CurrentIndex3x3];
-                    }
-                    break;
-                }
-                // Break if gone through entire library and no matches (including the item we started with). Thus this shouldn't happen.
-                if (currentIndex == startingIndex)
-                {
-                    throw new Exception("DecoFactory initialized incorrectly.");
-                }
+                FindPrevious1x1();
+            }
+            else if (buildMode == BuildMode._2x2)
+            {
+                FindPrevious2x2();
+            }
+            else if (buildMode == BuildMode._3x3)
+            {
+                FindPrevious3x3();
             }
         }
 
-        private static void FindPrevious(BuildMode dim)
+        public static void FindPrevious1x1()
         {
-            if (dim == BuildMode._1x1)
+            CurrentIndex1x1--;
+            if (CurrentIndex1x1 < 0)
             {
-                FindPrevious(CurrentIndex1x1, dim);
-                CurrentDecoMetaData1x1 = DecoMetaDataLibrary[CurrentIndex1x1];
+                CurrentIndex1x1 = DecoMetaDataLibrary1x1.Count() - 1;
             }
-            else if (dim == BuildMode._2x2)
-            {
-                FindPrevious(CurrentIndex2x2, dim);
-                CurrentDecoMetaData2x2 = DecoMetaDataLibrary[CurrentIndex2x2];
-            }
-            else if (dim == BuildMode._3x3)
-            {
-                FindPrevious(CurrentIndex3x3, dim);
-                CurrentDecoMetaData3x3 = DecoMetaDataLibrary[CurrentIndex3x3];
-            }
+            CurrentDecoMetaData1x1 = DecoMetaDataLibrary1x1[CurrentIndex1x1];
         }
-
-        public static void FindPrevious(int currentIndex, BuildMode dim)
+        public static void FindPrevious2x2()
         {
-            var xyDim = GetXYDimension(dim);
-
-            int startingIndex = currentIndex;
-
-            while (true)
+            CurrentIndex2x2--;
+            if (CurrentIndex2x2 < 0)
             {
-                currentIndex--;
-                if (currentIndex < 0)
-                {
-                    currentIndex = DecoMetaDataLibrary.Count() - 1;
-                }
-                if (DecoMetaDataLibrary[currentIndex].Dimensions.X == xyDim[0] && DecoMetaDataLibrary[CurrentIndex1x1].Dimensions.Y == xyDim[1])
-                {
-                    break;
-                }
-                // Break if gone through entire library and no matches (including the item we started with). Thus this shouldn't happen.
-                if (currentIndex == startingIndex)
-                {
-                    throw new Exception("DecoFactory initialized incorrectly.");
-                }
+                CurrentIndex2x2 = DecoMetaDataLibrary2x2.Count() - 1;
             }
+            CurrentDecoMetaData2x2 = DecoMetaDataLibrary2x2[CurrentIndex2x2];
         }
+        public static void FindPrevious3x3()
+        {
+            CurrentIndex3x3--;
+            if (CurrentIndex3x3 < 0)
+            {
+                CurrentIndex3x3 = DecoMetaDataLibrary3x3.Count() - 1;
+            }
+            CurrentDecoMetaData3x3 = DecoMetaDataLibrary3x3[CurrentIndex3x3];
+        }    
 
     }
 
@@ -323,17 +318,19 @@ namespace Sunbird.Core
     {
         public static readonly XmlSerializer DecoFactoryDataSerializer = Serializer.CreateNew(typeof(DecoFactoryData), new Type[] { typeof(DecoMetaData) });
 
+        public bool IsRandom { get; set; }
+
         public DecoMetaData CurrentDecoMetaData1x1 { get; set; }
         public DecoMetaData CurrentDecoMetaData2x2 { get; set; }
         public DecoMetaData CurrentDecoMetaData3x3 { get; set; }
-
-        public bool IsRandom { get; set; }
 
         public int CurrentIndex1x1 { get; set; }
         public int CurrentIndex2x2 { get; set; }
         public int CurrentIndex3x3 { get; set; }
 
-        public XDictionary<int, DecoMetaData> DecoMetaDataLibrary { get; set;}
+        public List<DecoMetaData> DecoMetaDataLibrary1x1 { get; set; }
+        public List<DecoMetaData> DecoMetaDataLibrary2x2 { get; set; }
+        public List<DecoMetaData> DecoMetaDataLibrary3x3 { get; set; }
 
         public DecoFactoryData()
         {
@@ -351,17 +348,19 @@ namespace Sunbird.Core
         public void SyncIn()
         {
             // Copy static properties.
+            IsRandom = DecoFactory.IsRandom;
+
             CurrentDecoMetaData1x1 = DecoFactory.CurrentDecoMetaData1x1;
             CurrentDecoMetaData2x2 = DecoFactory.CurrentDecoMetaData2x2;
             CurrentDecoMetaData3x3 = DecoFactory.CurrentDecoMetaData3x3;
-
-            IsRandom = DecoFactory.IsRandom;
 
             CurrentIndex1x1 = DecoFactory.CurrentIndex1x1;
             CurrentIndex2x2 = DecoFactory.CurrentIndex2x2;
             CurrentIndex3x3 = DecoFactory.CurrentIndex3x3;
 
-            DecoMetaDataLibrary = DecoFactory.DecoMetaDataLibrary;
+            DecoMetaDataLibrary1x1 = DecoFactory.DecoMetaDataLibrary1x1;
+            DecoMetaDataLibrary2x2 = DecoFactory.DecoMetaDataLibrary2x2;
+            DecoMetaDataLibrary3x3 = DecoFactory.DecoMetaDataLibrary3x3;
         }
 
         /// <summary>
@@ -369,27 +368,52 @@ namespace Sunbird.Core
         /// </summary>
         public void SyncOut(MainGame mainGame)
         {
-            // Generate CurrentDecoMetaDataNxN Texture from Path.
-            CurrentDecoMetaData1x1.LoadContent(mainGame);
-            CurrentDecoMetaData2x2.LoadContent(mainGame);
-            CurrentDecoMetaData3x3.LoadContent(mainGame);
-            // Generate Library Textures from Path.
-            foreach (var dMD in DecoMetaDataLibrary)
-            {
-                dMD.Value.LoadContent(mainGame);
-            }
+            DecoFactory.IsRandom = IsRandom;
 
             DecoFactory.CurrentDecoMetaData1x1 = CurrentDecoMetaData1x1;
             DecoFactory.CurrentDecoMetaData2x2 = CurrentDecoMetaData2x2;
             DecoFactory.CurrentDecoMetaData3x3 = CurrentDecoMetaData3x3;
 
-            DecoFactory.IsRandom = IsRandom;
-
             DecoFactory.CurrentIndex1x1 = CurrentIndex1x1;
             DecoFactory.CurrentIndex2x2 = CurrentIndex2x2;
             DecoFactory.CurrentIndex3x3 = CurrentIndex3x3;
 
-            DecoFactory.DecoMetaDataLibrary = DecoMetaDataLibrary;
+            DecoFactory.DecoMetaDataLibrary1x1 = DecoMetaDataLibrary1x1;
+            DecoFactory.DecoMetaDataLibrary2x2 = DecoMetaDataLibrary2x2;
+            DecoFactory.DecoMetaDataLibrary3x3 = DecoMetaDataLibrary3x3;
+
+            // Generate Library Textures, AntiShadows, and SelfShadows from Path.
+            // Populate master DecoMetaDataLibrary.
+            DecoFactory.DecoMetaDataLibrary = new XDictionary<string, DecoMetaData>();
+            foreach (var dmd in DecoFactory.DecoMetaDataLibrary1x1)
+            {
+                dmd.LoadContent(mainGame);
+                if (!DecoFactory.DecoMetaDataLibrary.ContainsKey(dmd.Path))
+                {
+                    DecoFactory.DecoMetaDataLibrary.Add(dmd.Path, dmd);
+                }
+            }
+            foreach (var dmd in DecoFactory.DecoMetaDataLibrary2x2)
+            {
+                dmd.LoadContent(mainGame);
+                if (!DecoFactory.DecoMetaDataLibrary.ContainsKey(dmd.Path))
+                {
+                    DecoFactory.DecoMetaDataLibrary.Add(dmd.Path, dmd);
+                }
+            }
+            foreach (var dmd in DecoFactory.DecoMetaDataLibrary3x3)
+            {
+                dmd.LoadContent(mainGame);
+                if (!DecoFactory.DecoMetaDataLibrary.ContainsKey(dmd.Path))
+                {
+                    DecoFactory.DecoMetaDataLibrary.Add(dmd.Path, dmd);
+                }
+            }
+
+            // Generate CurrentDecoMetaDataNxN Texture from Path.
+            DecoFactory.CurrentDecoMetaData1x1.LoadContent(mainGame);
+            DecoFactory.CurrentDecoMetaData2x2.LoadContent(mainGame);
+            DecoFactory.CurrentDecoMetaData3x3.LoadContent(mainGame);
         }  
 
     }

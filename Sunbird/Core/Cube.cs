@@ -126,96 +126,45 @@ namespace Sunbird.Core
                 }
             }
         }
-    }
-
-    [Serializable]
-    public class CubeBaseMetaData
-    {
-        [XmlIgnore]
-        public Texture2D Texture;
-        public string Path { get; set; }
-
-        public int SheetRows { get; set; } = 1;
-        public int SheetColumns { get; set; } = 1;
-        public int StartFrame { get; set; } = 0;
-        public int CurrentFrame { get; set; } = 0;
-        public int FrameCount { get; set; } = 1;
-        public float FrameSpeed { get; set; } = 0.133f;
-        public AnimationState AnimState { get; set; } = AnimationState.None;
-
-        public CubeBaseMetaData()
-        {
-
-        }
-
-        /// <summary>
-        /// Core method used to re-instantiate non-serializable properties and delegates. This can create garbage if called during runtime.
-        /// </summary>
-        public void LoadContent(MainGame mainGame)
-        {
-            Texture = mainGame.Content.Load<Texture2D>(Path);
-        }
-
-        public void NextFrame()
-        {
-            if (AnimState == AnimationState.None)
-            {
-                CurrentFrame++;
-                if (CurrentFrame >= FrameCount)
-                {
-                    CurrentFrame = 0;
-                }
-            }
-        }
-
-        public void PreviousFrame()
-        {
-            if (AnimState == AnimationState.None)
-            {
-                CurrentFrame--;
-                if (CurrentFrame < 0)
-                {
-                    CurrentFrame = FrameCount - 1;
-                }
-            }
-        }
-    }
+    }  
 
     public static class CubeFactory
     {
-        public static CubeMetaData CurrentCubeMetaData { get; set; }
-        public static CubeBaseMetaData CurrentCubeBaseMetaData { get; set; }
-
         public static bool IsRandomTop { get; set; }
-        public static bool IsRandomBottom { get; set; }
+        public static bool IsRandomBase { get; set; }
 
-        public static int CurrentIndex { get; set; } 
+        public static CubeMetaData CurrentCubeTopMetaData { get; set; }
+        public static CubeMetaData CurrentCubeBaseMetaData { get; set; }
+
+        public static int CurrentTopIndex { get; set; } 
         public static int CurrentBaseIndex { get; set; } 
 
-        public static XDictionary<int, CubeMetaData> CubeMetaDataLibrary { get; set; }
-        public static XDictionary<int, CubeBaseMetaData> CubeBaseMetaDataLibrary { get; set; }
+        public static List<CubeMetaData> CubeTopMetaDataLibrary { get; set; }
+        public static List<CubeMetaData> CubeBaseMetaDataLibrary { get; set; }
 
-        public static Cube CreateCube(MainGame mainGame, CubeMetaData cubeMD, CubeBaseMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
+        public static XDictionary<string, CubeMetaData> CubeMetaDataLibrary { get; set; }
+
+        public static Cube CreateCube(MainGame mainGame, CubeMetaData cubeTopMD, CubeMetaData cubeBaseMD, Coord coords, Coord relativeCoords, int altitude)
         {              
             var cube = new Cube() { Position = World.TopFace_CoordToLocalOrigin(coords), Coords = relativeCoords, Altitude = altitude };
             var rand = new Random();
 
             // Create cube top animator.
-            var spriteSheet = SpriteSheet.CreateNew(cubeMD.Texture, cubeMD.Path, cubeMD.SheetRows, cubeMD.SheetColumns);
-            cube.Animator = new Animator(cube, spriteSheet, cubeMD.StartFrame, cubeMD.CurrentFrame, cubeMD.FrameCount, cubeMD.FrameSpeed, cubeMD.AnimState);
-            if (IsRandomTop == true && cubeMD.AnimState == AnimationState.None)
+            var spriteSheet = SpriteSheet.CreateNew(cubeTopMD.Texture, cubeTopMD.Path, cubeTopMD.SheetRows, cubeTopMD.SheetColumns);
+            cube.Animator = new Animator(cube, spriteSheet, cubeTopMD.StartFrame, cubeTopMD.CurrentFrame, cubeTopMD.FrameCount, cubeTopMD.FrameSpeed, cubeTopMD.AnimState);
+            if (IsRandomTop == true && cubeTopMD.AnimState == AnimationState.None)
             {
                 cube.Animator.CurrentFrame = rand.Next(0, cube.Animator.FramesInLoop);
             }
             else
             {
-                cube.Animator.CurrentFrame = cubeMD.CurrentFrame;
+                cube.Animator.CurrentFrame = cubeTopMD.CurrentFrame;
             }
 
             // Create cube base animator.
             var spriteSheetBase = SpriteSheet.CreateNew(cubeBaseMD.Texture, cubeBaseMD.Path, cubeBaseMD.SheetRows, cubeBaseMD.SheetColumns);
             cube.AnimatorBase = new Animator(cube, spriteSheetBase, cubeBaseMD.StartFrame, cubeBaseMD.CurrentFrame, cubeBaseMD.FrameCount, cubeBaseMD.FrameSpeed, cubeBaseMD.AnimState);
-            if (IsRandomBottom == true && cubeBaseMD.AnimState == AnimationState.None)
+            if (IsRandomBase == true && cubeBaseMD.AnimState == AnimationState.None)
             {
                 cube.AnimatorBase.CurrentFrame = rand.Next(0, cube.AnimatorBase.FramesInLoop);
             }
@@ -235,27 +184,27 @@ namespace Sunbird.Core
 
         public static Cube CreateCurrentCube(MainGame mainGame, Coord coords, Coord relativeCoords, int altitude)
         {
-            return CreateCube(mainGame, CurrentCubeMetaData, CurrentCubeBaseMetaData, coords, relativeCoords, altitude);
+            return CreateCube(mainGame, CurrentCubeTopMetaData, CurrentCubeBaseMetaData, coords, relativeCoords, altitude);
         }
 
-        public static void FindNext()
+        public static void FindNextTop()
         {
-            CurrentIndex++;
-            if (CurrentIndex >= CubeMetaDataLibrary.Count())
+            CurrentTopIndex++;
+            if (CurrentTopIndex >= CubeTopMetaDataLibrary.Count())
             {
-                CurrentIndex = 0;
+                CurrentTopIndex = 0;
             }
-            CurrentCubeMetaData = CubeMetaDataLibrary[CurrentIndex];
+            CurrentCubeTopMetaData = CubeTopMetaDataLibrary[CurrentTopIndex];
         }
 
-        public static void FindPrevious()
+        public static void FindPreviousTop()
         {
-            CurrentIndex--;
-            if (CurrentIndex < 0)
+            CurrentTopIndex--;
+            if (CurrentTopIndex < 0)
             {
-                CurrentIndex = CubeMetaDataLibrary.Count() - 1;
+                CurrentTopIndex = CubeTopMetaDataLibrary.Count() - 1;
             }
-            CurrentCubeMetaData = CubeMetaDataLibrary[CurrentIndex];
+            CurrentCubeTopMetaData = CubeTopMetaDataLibrary[CurrentTopIndex];
         }
 
         public static void FindNextBase()
@@ -286,19 +235,19 @@ namespace Sunbird.Core
     [Serializable]
     public class CubeFactoryData
     {
-        public static readonly XmlSerializer CubeFactoryDataSerializer = Serializer.CreateNew(typeof(CubeFactoryData), new Type[] { typeof(CubeMetaData), typeof(CubeBaseMetaData) });
-
-        public CubeMetaData CurrentCubeMetaData { get; set; }
-        public CubeBaseMetaData CurrentCubeBaseMetaData { get; set; }
+        public static readonly XmlSerializer CubeFactoryDataSerializer = Serializer.CreateNew(typeof(CubeFactoryData), new Type[] { typeof(CubeMetaData) });
 
         public bool IsRandomTop { get; set; }
-        public bool IsRandomBottom { get; set; }
+        public bool IsRandomBase { get; set; }
 
-        public int CurrentIndex { get; set; }
+        public CubeMetaData CurrentCubeTopMetaData { get; set; }
+        public CubeMetaData CurrentCubeBaseMetaData { get; set; }
+
+        public int CurrentTopIndex { get; set; }
         public int CurrentBaseIndex { get; set; }
 
-        public XDictionary<int, CubeMetaData> CubeMetaDataLibrary { get; set;}
-        public XDictionary<int, CubeBaseMetaData> CubeBaseMetaDataLibrary { get; set; }
+        public List<CubeMetaData> CubeTopMetaDataLibrary { get; set; }
+        public List<CubeMetaData> CubeBaseMetaDataLibrary { get; set; }
 
         public CubeFactoryData()
         {
@@ -316,16 +265,16 @@ namespace Sunbird.Core
         public void SyncIn()
         {
             // Copy static properties.
-            CurrentCubeMetaData = CubeFactory.CurrentCubeMetaData;
+            IsRandomTop = CubeFactory.IsRandomTop;
+            IsRandomBase = CubeFactory.IsRandomBase;
+
+            CurrentCubeTopMetaData = CubeFactory.CurrentCubeTopMetaData;
             CurrentCubeBaseMetaData = CubeFactory.CurrentCubeBaseMetaData;
 
-            IsRandomTop = CubeFactory.IsRandomTop;
-            IsRandomBottom = CubeFactory.IsRandomBottom;
-
-            CurrentIndex = CubeFactory.CurrentIndex;
+            CurrentTopIndex = CubeFactory.CurrentTopIndex;
             CurrentBaseIndex = CubeFactory.CurrentBaseIndex;
 
-            CubeMetaDataLibrary = CubeFactory.CubeMetaDataLibrary;
+            CubeTopMetaDataLibrary = CubeFactory.CubeTopMetaDataLibrary;
             CubeBaseMetaDataLibrary = CubeFactory.CubeBaseMetaDataLibrary;
         }
 
@@ -334,33 +283,41 @@ namespace Sunbird.Core
         /// </summary>
         public void SyncOut(MainGame mainGame)
         {
-            // Generate CurrentCubeMetaData Texture from Path.
-            CurrentCubeMetaData.LoadContent(mainGame);
-            // Generate Library Textures from Path.
-            foreach (var cMD in CubeMetaDataLibrary)
-            {
-                cMD.Value.LoadContent(mainGame);
-            }
-            // Generate CurrentCubeBaseMetaData Texture from Path.
-            CurrentCubeBaseMetaData.LoadContent(mainGame);
-            // Generate Library Textures from Path.
-            foreach (var cbMD in CubeBaseMetaDataLibrary)
-            {
-                cbMD.Value.LoadContent(mainGame);
-            }
-
             // Reassign static properties.
-            CubeFactory.CurrentCubeMetaData = CurrentCubeMetaData;
+            CubeFactory.IsRandomTop = IsRandomTop;
+            CubeFactory.IsRandomBase = IsRandomBase;
+
+            CubeFactory.CurrentCubeTopMetaData = CurrentCubeTopMetaData;
             CubeFactory.CurrentCubeBaseMetaData = CurrentCubeBaseMetaData;
 
-            CubeFactory.IsRandomTop = IsRandomTop;
-            CubeFactory.IsRandomBottom = IsRandomBottom;
-
-            CubeFactory.CurrentIndex = CurrentIndex;
+            CubeFactory.CurrentTopIndex = CurrentTopIndex;
             CubeFactory.CurrentBaseIndex = CurrentBaseIndex;
 
-            CubeFactory.CubeMetaDataLibrary = CubeMetaDataLibrary;
+            CubeFactory.CubeTopMetaDataLibrary = CubeTopMetaDataLibrary;
             CubeFactory.CubeBaseMetaDataLibrary = CubeBaseMetaDataLibrary;
+
+            // Generate Library Textures from Path.
+            // Populate master CubeMetaDataLibrary.
+            CubeFactory.CubeMetaDataLibrary = new XDictionary<string, CubeMetaData>();
+            foreach (var ctmd in CubeFactory.CubeTopMetaDataLibrary)
+            {
+                ctmd.LoadContent(mainGame);
+                if (!CubeFactory.CubeMetaDataLibrary.ContainsKey(ctmd.Path))
+                {
+                    CubeFactory.CubeMetaDataLibrary.Add(ctmd.Path, ctmd);
+                }
+            }
+            foreach (var cbmd in CubeFactory.CubeBaseMetaDataLibrary)
+            {
+                cbmd.LoadContent(mainGame);
+                if (!CubeFactory.CubeMetaDataLibrary.ContainsKey(cbmd.Path))
+                {
+                    CubeFactory.CubeMetaDataLibrary.Add(cbmd.Path, cbmd);
+                }
+            }
+
+            CubeFactory.CurrentCubeTopMetaData.LoadContent(mainGame);
+            CubeFactory.CurrentCubeBaseMetaData.LoadContent(mainGame);
 
         }  
 
