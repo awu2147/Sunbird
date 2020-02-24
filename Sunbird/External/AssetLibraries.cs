@@ -110,6 +110,21 @@ namespace Sunbird.External
                 PositionOffset = new Vector2(0, -36), Dimensions = new Dimension(1, 1, 2), TypeName = typeof(Deco).FullName },
                 new DecoMetaData(){Path = $"{dir1x1}3/ObeliskS", SheetRows = 2, SheetColumns = 2, FrameCount = 4, AnimState = AnimationState.None,
                 PositionOffset = new Vector2(0, -72), Dimensions = new Dimension(1, 1, 3), TypeName = typeof(Deco).FullName },
+
+                new DecoMetaData(){Path = $"{dir1x1}1/ConchP", SheetRows = 1, SheetColumns = 4, FrameCount = 4, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = $"{dir1x1}1/ConchS", SheetRows = 1, SheetColumns = 4, FrameCount = 4, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = $"{dir1x1}1/ConchR", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = $"{dir1x1}1/Mussel", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = $"{dir1x1}1/Starfish", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = $"{dir1x1}1/ShellW", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = $"{dir1x1}1/RainbowScale", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(0, 0), Dimensions = new Dimension(1, 1, 1), TypeName = typeof(Deco).FullName },
             };
             DecoFactory.DecoMetaDataLibrary2x2 = new List<DecoMetaData>()
             {

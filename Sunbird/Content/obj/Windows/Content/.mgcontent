@@ -38,10 +38,17 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WaterCubeBase.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WaterCubeTop.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Cubes/WoodBoardCubeTop.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/ConchP.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/ConchR.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/ConchS.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/FlowersPWY.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/GravestoneS.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/Logpile.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/MushroomsP.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/Mussel.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/RainbowScale.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/ShellW.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/Starfish.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/WallDS.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/WallLS.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/1/WallRB.png</File>
@@ -78,6 +85,13 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/TopFaceSelectionMarker.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
