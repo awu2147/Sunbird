@@ -46,7 +46,7 @@ namespace Sunbird.Core
 
         public override void Update(GameTime gameTime)
         {
-            //base.Update(gameTime); // This is not really needed since animator position now updated through getter, and animstate is none.
+            //base.Update(gameTime); // This is not really needed since animator position updated through getter, and TopFaceMarker is not animated.
             Image.Update(gameTime);
             Image.IsHidden = IsHidden;
             Image.Position = Position;

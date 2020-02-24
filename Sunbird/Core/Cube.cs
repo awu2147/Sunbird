@@ -264,7 +264,6 @@ namespace Sunbird.Core
         /// </summary>
         public void SyncIn()
         {
-            // Copy static properties.
             IsRandomTop = CubeFactory.IsRandomTop;
             IsRandomBase = CubeFactory.IsRandomBase;
 
@@ -283,7 +282,6 @@ namespace Sunbird.Core
         /// </summary>
         public void SyncOut(MainGame mainGame)
         {
-            // Reassign static properties.
             CubeFactory.IsRandomTop = IsRandomTop;
             CubeFactory.IsRandomBase = IsRandomBase;
 
@@ -296,8 +294,7 @@ namespace Sunbird.Core
             CubeFactory.CubeTopMetaDataLibrary = CubeTopMetaDataLibrary;
             CubeFactory.CubeBaseMetaDataLibrary = CubeBaseMetaDataLibrary;
 
-            // Generate Library Textures from Path.
-            // Populate master CubeMetaDataLibrary.
+            // Generate library Textures from Path and populate CubeMetaDataLibrary (Dictionary).
             CubeFactory.CubeMetaDataLibrary = new XDictionary<string, CubeMetaData>();
             foreach (var ctmd in CubeFactory.CubeTopMetaDataLibrary)
             {

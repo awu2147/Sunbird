@@ -120,8 +120,8 @@ namespace Sunbird.Core
                 // Currently, Cube (anti)shadow textures do not need to be dynamically generated. This may change if pixel perfect click detection required.
                 else
                 {
-                    // FIXME: This is very slow, assign textures through library where possible.
-                    // Also results in memory leak if called after instantiation, use SafeLoadContent instead.
+                    // This is very slow, assign textures through libraries where possible.
+                    // Also results in memory leak if called after instantiation (use SafeLoadContent instead).
                     GraphicsHelper.GenerateShadowTextures(mainGame, Animator.SpriteSheet.Texture, ref AntiShadow, ref SelfShadow);
                 }
             }
@@ -151,7 +151,6 @@ namespace Sunbird.Core
         {
             EventHandler handler = Clicked;
             handler?.Invoke(this, null);
-            //Debug.Print(GetType().ToString());
         }
 
         /// <summary>

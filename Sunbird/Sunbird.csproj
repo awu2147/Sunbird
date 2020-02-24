@@ -60,6 +60,7 @@
     <Compile Include="Core\World.cs" />
     <Compile Include="Core\XDictionary.cs" />
     <Compile Include="Decorations\House.cs" />
+    <Compile Include="External\AssetLibraries.cs" />
     <Compile Include="External\BuilderRibbon.cs" />
     <Compile Include="External\Config.cs" />
     <Compile Include="External\MapBuilder.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="GUI\GuiHelper.cs" />
     <Compile Include="GUI\IGui.cs" />
     <Compile Include="GUI\LoadingBar.cs" />
-    <Compile Include="GUI\ScrollView.cs" />
+    <Compile Include="GUI\ScrollBar.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

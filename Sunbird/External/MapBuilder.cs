@@ -22,12 +22,6 @@ using Sunbird.GUI;
 
 namespace Sunbird.External
 {
-    public enum Authorization
-    {
-        None,
-        Builder
-    }
-
     public class MapBuilder : State, IGui
     {
         public static readonly XmlSerializer MapBuilderSerializer = Serializer.CreateNew(typeof(MapBuilder));
@@ -348,10 +342,10 @@ namespace Sunbird.External
         private void PRBN2_Clicked(object sender, ButtonClickedEventArgs e)
         {
             CubeFactory.FindNextTop();
-            var CCMD = CubeFactory.CurrentCubeTopMetaData;
+            var CCTMD = CubeFactory.CurrentCubeTopMetaData;
 
-            CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
-            CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
+            CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCTMD.Path, CCTMD.SheetRows, CCTMD.SheetColumns));
+            CubePreview.ReconfigureAnimator(CCTMD.StartFrame, CCTMD.CurrentFrame, CCTMD.FrameCount, CCTMD.FrameSpeed, CCTMD.AnimState);
 
             if (BuildMode == BuildMode._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
@@ -359,10 +353,10 @@ namespace Sunbird.External
         private void PLBN2_Clicked(object sender, ButtonClickedEventArgs e)
         {
             CubeFactory.FindPreviousTop();
-            var CCMD = CubeFactory.CurrentCubeTopMetaData;
+            var CCTMD = CubeFactory.CurrentCubeTopMetaData;
 
-            CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCMD.Path, CCMD.SheetRows, CCMD.SheetColumns));
-            CubePreview.ReconfigureAnimator(CCMD.StartFrame, CCMD.CurrentFrame, CCMD.FrameCount, CCMD.FrameSpeed, CCMD.AnimState);
+            CubePreview.ReplaceSpriteSheet(SpriteSheet.CreateNew(MainGame, CCTMD.Path, CCTMD.SheetRows, CCTMD.SheetColumns));
+            CubePreview.ReconfigureAnimator(CCTMD.StartFrame, CCTMD.CurrentFrame, CCTMD.FrameCount, CCTMD.FrameSpeed, CCTMD.AnimState);
 
             if (BuildMode == BuildMode._Cube) { GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content); }
         }
@@ -827,5 +821,11 @@ namespace Sunbird.External
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", MessageLogBG.Position + new Vector2(12, 92), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Clicked sprite name: \n{ ClickedSpriteName }", MessageLogBG.Position + new Vector2(12, 112), Color.White);
         }
+    }
+
+    public enum Authorization
+    {
+        None,
+        Builder
     }
 }

@@ -20,29 +20,15 @@ using Sunbird.GUI;
 
 namespace Sunbird.GUI
 {
-    public enum Orientation
-    {
-        Vertical,
-        Horizontal
-    }
-
-    public class ScrollView : Sprite
-    {
-        //ScrollBar VerticalScrollBar;
-        //ScrollBar HorizontalScrollBar;
-
-        public ScrollView()
-        {
-
-        }
-
-    }
-
     public class ScrollBarContainer : Sprite
-    {
-        public ScrollBar ScrollBar { get; set; }
+    {     
+        private Point Anchor;
+        private Point DragPositionChange;
+        private bool Dragged;
+        private Orientation Orientation;
+        private int StartingSegment;
 
-        private Orientation orientation;
+        public ScrollBar ScrollBar { get; set; }
 
         public int CurrentLength
         {
@@ -59,29 +45,24 @@ namespace Sunbird.GUI
         public int TotalSegments { get; set; } = 5;
         public int CurrentSegment { get; set; } = 1;
 
-        private int StartingSegment;
-        private Point Anchor;
-        private Point DragPositionChange;
-        private bool Dragged;
-
         public ScrollBarContainer(MainGame mainGame, string path, Orientation orientation, int maxLength)
         {
             MainGame = mainGame;
-            this.orientation = orientation;
-            var scrollBar = mainGame.Content.Load<Texture2D>(path);
-            ScrollBar = new ScrollBar(this, scrollBar, orientation, maxLength);
+            Orientation = orientation;
+            var scrollBarTexture = mainGame.Content.Load<Texture2D>(path);
+            ScrollBar = new ScrollBar(this, scrollBarTexture, orientation, maxLength);
         }
 
         public override void Update(GameTime gameTime)
         {
             var segmentLength = MaxLength / TotalSegments;
             CurrentLength = segmentLength;
-            var offset = (CurrentSegment - 1) / (float)TotalSegments * MaxLength;
-            if (orientation == Orientation.Vertical)
+            var offset = ((CurrentSegment - 1) / (float)TotalSegments) * MaxLength;
+            if (Orientation == Orientation.Vertical)
             {
                 ScrollBar.PositionOffset = new Vector2(0, offset);
             }
-            else if (orientation == Orientation.Horizontal)
+            else if (Orientation == Orientation.Horizontal)
             {
                 ScrollBar.PositionOffset = new Vector2(offset, 0);
             }
@@ -99,7 +80,7 @@ namespace Sunbird.GUI
                 {
                     var currentPosition = Peripherals.GetMouseWindowPosition();
                     DragPositionChange = (currentPosition - Anchor);
-                    if (orientation == Orientation.Vertical)
+                    if (Orientation == Orientation.Vertical)
                     {
                         var change = Math.Abs(DragPositionChange.Y);
                         var threshold = change + segmentLength / 2;
@@ -126,9 +107,9 @@ namespace Sunbird.GUI
                         }
 
                     }
-                    else if (orientation == Orientation.Horizontal)
+                    else if (Orientation == Orientation.Horizontal)
                     {
-                        throw new NotImplementedException("Add me");
+                        throw new NotImplementedException();
                     }
                 }
             }
@@ -151,51 +132,51 @@ namespace Sunbird.GUI
 
     public class ScrollBar : Sprite
     {
-        private ScrollBarContainer container;
-        private Orientation orientation;
-        private Texture2D scrollBar;
-        private Rectangle viewRectangle;
-        new public Vector2 Position { get { return container.Position + PositionOffset; } }
+        private ScrollBarContainer Container;
+        private Orientation Orientation;
+        private Texture2D ScrollBarTexture;
+        private Rectangle ViewRectangle;
+        new public Vector2 Position { get { return Container.Position + PositionOffset; } }
         public int MaxLength { get; set; }
         public int CurrentLength { get; set; }
 
-        public ScrollBar(ScrollBarContainer container, Texture2D scrollBar, Orientation orientation, int maxLength)
+        public ScrollBar(ScrollBarContainer container, Texture2D scrollBarTexture, Orientation orientation, int maxLength)
         {
-            this.container = container;
-            this.orientation = orientation;
-            this.scrollBar = scrollBar;
+            Container = container;
+            Orientation = orientation;
+            ScrollBarTexture = scrollBarTexture;
             MaxLength = maxLength;
             CurrentLength = maxLength;
             if (orientation == Orientation.Vertical)
             {
-                viewRectangle = new Rectangle(0, 0, scrollBar.Width, MaxLength);
+                ViewRectangle = new Rectangle(0, 0, scrollBarTexture.Width, MaxLength);
             }
             else if (orientation == Orientation.Horizontal)
             {
-                viewRectangle = new Rectangle(0, 0, MaxLength, scrollBar.Height);
+                ViewRectangle = new Rectangle(0, 0, MaxLength, scrollBarTexture.Height);
             }
         }
 
         public Rectangle WorldArea()
         {
-            return new Rectangle((container.Position + PositionOffset).ToPoint(), new Point(viewRectangle.Width, viewRectangle.Height));
+            return new Rectangle((Container.Position + PositionOffset).ToPoint(), new Point(ViewRectangle.Width, ViewRectangle.Height));
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (orientation == Orientation.Vertical)
+            if (Orientation == Orientation.Vertical)
             {
-                viewRectangle.Height = CurrentLength;
+                ViewRectangle.Height = CurrentLength;
             }
-            else if (orientation == Orientation.Horizontal)
+            else if (Orientation == Orientation.Horizontal)
             {
-                viewRectangle.Width = CurrentLength;
+                ViewRectangle.Width = CurrentLength;
             }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(scrollBar, Position, viewRectangle, Color.White);
+            spriteBatch.Draw(ScrollBarTexture, Position, ViewRectangle, Color.White);
         }
     }
 }

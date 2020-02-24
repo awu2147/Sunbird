@@ -21,27 +21,6 @@ using System.ComponentModel;
 
 namespace Sunbird.Core
 {
-    public class DimensionAttribute : Attribute
-    {
-        public int[] XYDimension { get; set; }
-
-        public DimensionAttribute(int[] dim)
-        {
-            XYDimension = dim;
-        }
-    }
-
-    public enum BuildMode
-    {
-        _Cube,  
-        [Dimension(new int[2] { 1, 1 })]
-        _1x1,
-        [Dimension(new int[2] { 2, 2 })]
-        _2x2,
-        [Dimension(new int[2] { 3, 3 })]
-        _3x3,
-    }
-
     [Serializable]
     public class Deco : Sprite, IWorldObject
     {
@@ -50,20 +29,6 @@ namespace Sunbird.Core
 
         public Deco() { }
 
-        public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
-        {          
-            base.LoadContent(mainGame, graphicsDevice, content);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            base.Draw(gameTime, spriteBatch);
-        }
     }
 
     [Serializable]
@@ -210,15 +175,6 @@ namespace Sunbird.Core
         {
             return CreateDeco(mainGame, CurrentDecoMetaData3x3, coords, relativeCoords, altitude);
         }
-
-        public static int[] GetXYDimension(BuildMode buildDimension)
-        {
-            var enumType = typeof(BuildMode);
-            var memberInfos = enumType.GetMember(buildDimension.ToString());
-            var enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == enumType);
-            var valueAttributes = enumValueMemberInfo.GetCustomAttributes(typeof(DimensionAttribute), false);
-            return ((DimensionAttribute)valueAttributes[0]).XYDimension;
-        }
         
         public static void FindNext(BuildMode buildMode)
         {
@@ -347,7 +303,6 @@ namespace Sunbird.Core
         /// </summary>
         public void SyncIn()
         {
-            // Copy static properties.
             IsRandom = DecoFactory.IsRandom;
 
             CurrentDecoMetaData1x1 = DecoFactory.CurrentDecoMetaData1x1;
@@ -382,8 +337,7 @@ namespace Sunbird.Core
             DecoFactory.DecoMetaDataLibrary2x2 = DecoMetaDataLibrary2x2;
             DecoFactory.DecoMetaDataLibrary3x3 = DecoMetaDataLibrary3x3;
 
-            // Generate Library Textures, AntiShadows, and SelfShadows from Path.
-            // Populate master DecoMetaDataLibrary.
+            // Generate library Textures, AntiShadows, and SelfShadows from Path and populate master DecoMetaDataLibrary (Dictionary).
             DecoFactory.DecoMetaDataLibrary = new XDictionary<string, DecoMetaData>();
             foreach (var dmd in DecoFactory.DecoMetaDataLibrary1x1)
             {
@@ -410,7 +364,6 @@ namespace Sunbird.Core
                 }
             }
 
-            // Generate CurrentDecoMetaDataNxN Texture from Path.
             DecoFactory.CurrentDecoMetaData1x1.LoadContent(mainGame);
             DecoFactory.CurrentDecoMetaData2x2.LoadContent(mainGame);
             DecoFactory.CurrentDecoMetaData3x3.LoadContent(mainGame);

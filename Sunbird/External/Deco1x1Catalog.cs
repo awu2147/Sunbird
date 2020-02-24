@@ -101,7 +101,7 @@ namespace Sunbird.External
             int currentSegmentZ2 = ScrollBarZ2.CurrentSegment - 1;
             int currentSegmentZ3 = ScrollBarZ3.CurrentSegment - 1;
 
-            // TODO: Abstract this.
+            // FIXME: Abstract this.
             for (int i = 0; i < Items.Count(); i++)
             {
                 var item = Items[i];
@@ -197,24 +197,5 @@ namespace Sunbird.External
             Animator = new Animator(this, spriteSheet, decoMD.StartFrame, decoMD.CurrentFrame, decoMD.FrameCount, decoMD.FrameSpeed, decoMD.AnimState);
         }
 
-        public override void OnClicked()
-        {
-            base.OnClicked();
-        }
-
-        public override void LoadContent(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
-        {
-            base.LoadContent(mainGame, graphicsDevice, content);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            base.Draw(gameTime, spriteBatch);
-        }
     }
 }

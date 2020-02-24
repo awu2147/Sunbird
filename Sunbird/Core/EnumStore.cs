@@ -20,4 +20,18 @@ namespace Sunbird.Core
         West,
         NorthWest
     }
+
+    public enum BuildMode
+    {
+        _Cube,
+        _1x1,
+        _2x2,
+        _3x3,
+    }
+
+    public enum Orientation
+    {
+        Vertical,
+        Horizontal
+    }
 }

@@ -11,7 +11,7 @@
     <SheetRows>2</SheetRows>
     <SheetColumns>3</SheetColumns>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>0</CurrentFrame>
+    <CurrentFrame>5</CurrentFrame>
     <FrameCount>6</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
@@ -22,11 +22,11 @@
     </Dimensions>
   </CurrentDecoMetaData1x1>
   <CurrentDecoMetaData2x2>
-    <Path>Decos/BloodBowl</Path>
+    <Path>Decos/MediumRock</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
-      <X>-36</X>
-      <Y>-36</Y>
+      <X>-12</X>
+      <Y>-6</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
@@ -38,7 +38,7 @@
     <Dimensions>
       <X>2</X>
       <Y>2</Y>
-      <Z>1</Z>
+      <Z>2</Z>
     </Dimensions>
   </CurrentDecoMetaData2x2>
   <CurrentDecoMetaData3x3>
@@ -51,7 +51,7 @@
     <SheetRows>1</SheetRows>
     <SheetColumns>2</SheetColumns>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>0</CurrentFrame>
+    <CurrentFrame>1</CurrentFrame>
     <FrameCount>2</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
@@ -63,7 +63,7 @@
   </CurrentDecoMetaData3x3>
   <CurrentIndex1x1>0</CurrentIndex1x1>
   <CurrentIndex2x2>1</CurrentIndex2x2>
-  <CurrentIndex3x3>2</CurrentIndex3x3>
+  <CurrentIndex3x3>0</CurrentIndex3x3>
   <DecoMetaDataLibrary1x1>
     <DecoMetaData>
       <Path>Decos/1x1/3/TreeBas</Path>
@@ -75,7 +75,7 @@
       <SheetRows>2</SheetRows>
       <SheetColumns>3</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>5</CurrentFrame>
       <FrameCount>6</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -95,7 +95,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -135,7 +135,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -275,7 +275,7 @@
       <SheetRows>2</SheetRows>
       <SheetColumns>3</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>5</CurrentFrame>
       <FrameCount>6</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -419,7 +419,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
