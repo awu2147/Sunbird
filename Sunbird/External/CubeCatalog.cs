@@ -91,65 +91,27 @@ namespace Sunbird.External
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
-            // Offset
-            var itemTopOffset = new Vector2(21, 39);
-            var itemBaseOffset = new Vector2(21, 234);
-            int countCMD = 0;
-            int countCBMD = 0;
-            int currentSegmentTop = ScrollBarTop.CurrentSegment - 1;
-            int currentSegmentBase = ScrollBarBase.CurrentSegment - 1;
 
-            // FIXME: Abstract this.
+            var topPartition = new PartitionArgs(new Vector2(21, 39), ScrollBarTop, new Point(5, 2), new Point(78, 81));
+            var basePartition = new PartitionArgs(new Vector2(21, 234), ScrollBarBase, new Point(5, 2), new Point(78, 81));
+
             for (int i = 0; i < Items.Count(); i++)
             {
                 var item = Items[i];
                 if (item.CubeTopMetaData != null && item.CubeBaseMetaData == null)
                 {
-                    item.Position = Position + itemTopOffset + new Vector2(78 * (countCMD % 5), 81 * (countCMD / 5) - currentSegmentTop*81);
-                    if (countCMD < currentSegmentTop * 5 || countCMD >= (currentSegmentTop + 2) * 5)
-                    {
-                        item.IsHidden = true;
-                    }
-                    else
-                    {
-                        item.IsHidden = false;
-                    }
+                    topPartition.NextItemPosition(item, Position);
                     item.Draw(gameTime, spriteBatch);
-                    countCMD++;
                 }
                 else if (item.CubeBaseMetaData != null && item.CubeTopMetaData == null)
                 {
-                    item.Position = Position + itemBaseOffset + new Vector2(78 * (countCBMD % 5), 81 * (countCBMD / 5) - currentSegmentBase * 81);
-                    if (countCBMD < currentSegmentBase * 5 || countCBMD >= (currentSegmentBase + 2) * 5)
-                    {
-                        item.IsHidden = true;
-                    }
-                    else
-                    {
-                        item.IsHidden = false;
-                    }
+                    basePartition.NextItemPosition(item, Position);
                     item.Draw(gameTime, spriteBatch);
-                    countCBMD++;
                 }
             }
 
-            if (countCMD <= 10)
-            {
-                ScrollBarTop.TotalSegments = 1;
-            }
-            else
-            {
-                ScrollBarTop.TotalSegments = (countCMD - 1) / 5;
-            }
-
-            if (countCBMD <= 10)
-            {
-                ScrollBarBase.TotalSegments = 1;
-            }
-            else
-            {
-                ScrollBarBase.TotalSegments = (countCBMD - 1) / 5;
-            }
+            topPartition.RescaleScrollBar();
+            basePartition.RescaleScrollBar();
 
             ScrollBarTop.Draw(gameTime, spriteBatch);
             ScrollBarBase.Draw(gameTime, spriteBatch);

@@ -2,11 +2,11 @@
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <IsRandom>false</IsRandom>
   <CurrentDecoMetaData1x1>
-    <Path>Decos/1x1/1/RainbowScale</Path>
+    <Path>Decos/1x1/3/TreeCon</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>0</X>
-      <Y>0</Y>
+      <Y>-72</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
     <SheetColumns>2</SheetColumns>
@@ -18,15 +18,15 @@
     <Dimensions>
       <X>1</X>
       <Y>1</Y>
-      <Z>1</Z>
+      <Z>3</Z>
     </Dimensions>
   </CurrentDecoMetaData1x1>
   <CurrentDecoMetaData2x2>
-    <Path>Decos/BloodBowl</Path>
+    <Path>Decos/2x2/2/BloodBowl</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>-36</X>
-      <Y>-36</Y>
+      <Y>-72</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
     <SheetColumns>1</SheetColumns>
@@ -38,7 +38,7 @@
     <Dimensions>
       <X>2</X>
       <Y>2</Y>
-      <Z>1</Z>
+      <Z>2</Z>
     </Dimensions>
   </CurrentDecoMetaData2x2>
   <CurrentDecoMetaData3x3>
@@ -61,7 +61,7 @@
       <Z>3</Z>
     </Dimensions>
   </CurrentDecoMetaData3x3>
-  <CurrentIndex1x1>0</CurrentIndex1x1>
+  <CurrentIndex1x1>5</CurrentIndex1x1>
   <CurrentIndex2x2>1</CurrentIndex2x2>
   <CurrentIndex3x3>2</CurrentIndex3x3>
   <DecoMetaDataLibrary1x1>
@@ -95,7 +95,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -115,7 +115,7 @@
       <SheetRows>2</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>3</CurrentFrame>
       <FrameCount>4</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -135,7 +135,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -395,7 +395,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>4</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>3</CurrentFrame>
+      <CurrentFrame>0</CurrentFrame>
       <FrameCount>4</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -415,7 +415,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>1</CurrentFrame>
+      <CurrentFrame>0</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -435,7 +435,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>1</CurrentFrame>
+      <CurrentFrame>0</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -455,7 +455,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>1</CurrentFrame>
+      <CurrentFrame>0</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -475,7 +475,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>1</CurrentFrame>
+      <CurrentFrame>0</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -508,11 +508,11 @@
   </DecoMetaDataLibrary1x1>
   <DecoMetaDataLibrary2x2>
     <DecoMetaData>
-      <Path>Decos/BloodBowl</Path>
+      <Path>Decos/2x2/2/BloodBowl</Path>
       <TypeName>Sunbird.Core.Deco</TypeName>
       <PositionOffset>
         <X>-36</X>
-        <Y>-36</Y>
+        <Y>-72</Y>
       </PositionOffset>
       <SheetRows>1</SheetRows>
       <SheetColumns>1</SheetColumns>
@@ -524,15 +524,15 @@
       <Dimensions>
         <X>2</X>
         <Y>2</Y>
-        <Z>1</Z>
+        <Z>2</Z>
       </Dimensions>
     </DecoMetaData>
     <DecoMetaData>
-      <Path>Decos/MediumRock</Path>
+      <Path>Decos/2x2/2/RockM</Path>
       <TypeName>Sunbird.Core.Deco</TypeName>
       <PositionOffset>
-        <X>-12</X>
-        <Y>-6</Y>
+        <X>-36</X>
+        <Y>-72</Y>
       </PositionOffset>
       <SheetRows>1</SheetRows>
       <SheetColumns>1</SheetColumns>

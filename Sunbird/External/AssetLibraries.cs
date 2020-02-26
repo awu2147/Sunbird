@@ -128,10 +128,10 @@ namespace Sunbird.External
             };
             DecoFactory.DecoMetaDataLibrary2x2 = new List<DecoMetaData>()
             {
-                new DecoMetaData(){Path = "Decos/BloodBowl", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
-                PositionOffset = new Vector2(-36, -36), Dimensions = new Dimension(2, 2, 1), TypeName = typeof(Deco).FullName },
-                new DecoMetaData(){Path = "Decos/MediumRock", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
-                PositionOffset = new Vector2(-12, -6), Dimensions = new Dimension(2, 2, 2), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = "Decos/2x2/2/BloodBowl", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(-36, -72), Dimensions = new Dimension(2, 2, 2), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = "Decos/2x2/2/RockM", SheetRows = 1, SheetColumns = 1, FrameCount = 1, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(-36, -72), Dimensions = new Dimension(2, 2, 2), TypeName = typeof(Deco).FullName },
             };
             DecoFactory.DecoMetaDataLibrary3x3 = new List<DecoMetaData>()
             {

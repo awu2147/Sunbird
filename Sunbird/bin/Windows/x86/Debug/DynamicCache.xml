@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Deco">
+<Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Cube">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Decos/1x1/1/RainbowScale</TexturePath>
+      <TexturePath>Cubes/WaterCubeTop</TexturePath>
       <Rows>1</Rows>
-      <Columns>2</Columns>
+      <Columns>11</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>1</CurrentFrame>
-    <FramesInLoop>2</FramesInLoop>
-    <FrameCounter>0</FrameCounter>
+    <CurrentFrame>9</CurrentFrame>
+    <FramesInLoop>11</FramesInLoop>
+    <FrameCounter>2</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
     <Timer>
@@ -19,8 +19,8 @@
   </Animator>
   <Alpha>1</Alpha>
   <Position>
-    <X>0</X>
-    <Y>0</Y>
+    <X>718</X>
+    <Y>730</Y>
   </Position>
   <PositionOffset>
     <X>0</X>
@@ -33,24 +33,23 @@
   <Altitude>0</Altitude>
   <DrawPriority>0</DrawPriority>
   <IsHidden>false</IsHidden>
-  <OccupiedCoords>
-    <item>
-      <key>
-        <int>0</int>
-      </key>
-      <value>
-        <ArrayOfCoord>
-          <Coord>
-            <X>0</X>
-            <Y>0</Y>
-          </Coord>
-        </ArrayOfCoord>
-      </value>
-    </item>
-  </OccupiedCoords>
-  <Dimensions>
-    <X>1</X>
-    <Y>1</Y>
-    <Z>1</Z>
-  </Dimensions>
+  <ShadowPath>Temp/CubeShadow</ShadowPath>
+  <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
+  <AnimatorBase>
+    <SpriteSheet>
+      <TexturePath>Cubes/WaterCubeBase</TexturePath>
+      <Rows>1</Rows>
+      <Columns>2</Columns>
+    </SpriteSheet>
+    <StartFrame>0</StartFrame>
+    <CurrentFrame>0</CurrentFrame>
+    <FramesInLoop>2</FramesInLoop>
+    <FrameCounter>0</FrameCounter>
+    <FrameSpeed>0.133</FrameSpeed>
+    <AnimState>None</AnimState>
+    <Timer>
+      <TotalElapsedTime>0</TotalElapsedTime>
+      <IsDone>true</IsDone>
+    </Timer>
+  </AnimatorBase>
 </Sprite>

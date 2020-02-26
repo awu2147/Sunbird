@@ -48,4 +48,59 @@ namespace Sunbird.GUI
             }
         }
     }
+    public class PartitionArgs
+    {
+        private ScrollBarContainer ScrollBar { get; set; }
+        private Vector2 LocalOffset { get; set; }
+        private int ScrollBarSegment { get { return ScrollBar.CurrentSegment - 1; } }
+
+        private Point ColRow { get; set; }
+        private int TotalColumns { get { return ColRow.X; } }
+        private int TotalRows { get { return ColRow.Y; } }
+
+        private Point ColRowGap { get; set; }
+        private int ColumnGap { get { return ColRowGap.X; } }
+        private int RowGap { get { return ColRowGap.Y; } }
+
+
+        private int counter;
+
+
+        public PartitionArgs(Vector2 localOffset, ScrollBarContainer scrollBar, Point colRow, Point colRowGap)
+        {
+            LocalOffset = localOffset;
+            ScrollBar = scrollBar;
+            ColRow = colRow;
+            ColRowGap = colRowGap;
+        }
+
+        public void NextItemPosition(Sprite item, Vector2 catalogPosition)
+        {
+            item.Position = catalogPosition + LocalOffset + new Vector2(ColumnGap * (counter % TotalColumns), RowGap * (counter / TotalColumns) - ScrollBarSegment * RowGap);
+            if (counter < ScrollBarSegment * TotalColumns || counter >= (ScrollBarSegment + TotalRows) * TotalColumns)
+            {
+                item.IsHidden = true;
+            }
+            else
+            {
+                item.IsHidden = false;
+            }
+            counter++;
+        }
+
+        /// <summary>
+        /// This should be called after populating the partition with NextItemPosition calls.
+        /// </summary>
+        public void RescaleScrollBar()
+        {
+            if (counter <= TotalColumns * TotalRows)
+            {
+                ScrollBar.TotalSegments = 1;
+            }
+            else
+            {
+                ScrollBar.TotalSegments = (counter - 1) / TotalColumns;
+            }
+        }
+    }
 }

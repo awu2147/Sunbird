@@ -63,6 +63,7 @@
     <Compile Include="External\AssetLibraries.cs" />
     <Compile Include="External\BuilderRibbon.cs" />
     <Compile Include="External\Config.cs" />
+    <Compile Include="External\Deco2x2Catalog.cs" />
     <Compile Include="External\MapBuilder.cs" />
     <Compile Include="External\SunbirdLS.cs" />
     <Compile Include="External\Player.cs" />

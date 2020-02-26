@@ -20,7 +20,7 @@ using Sunbird.GUI;
 
 namespace Sunbird.External
 {
-    public class Deco1x1Catalog : Sprite
+    public class Deco2x2Catalog : Sprite
     {
         public List<DecoCatalogItem> Items = new List<DecoCatalogItem>();
 
@@ -33,21 +33,21 @@ namespace Sunbird.External
         public ScrollBarContainer ScrollBarZ2;
         public ScrollBarContainer ScrollBarZ3;
 
-        private Deco1x1Catalog()
+        private Deco2x2Catalog()
         {
 
         }
 
-        public Deco1x1Catalog(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, IGui sender, Button senderBN) : base(mainGame, spriteSheet, position)
+        public Deco2x2Catalog(MainGame mainGame, SpriteSheet spriteSheet, Vector2 position, IGui sender, Button senderBN) : base(mainGame, spriteSheet, position)
         {
             Sender = sender;
             SenderBN = senderBN;
-            ScrollBarZ1 = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 126);
+            ScrollBarZ1 = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 81);
             ScrollBarZ1.Position = Position + new Vector2(498, 54);
-            ScrollBarZ2 = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 81);
-            ScrollBarZ2.Position = Position + new Vector2(498, 249);
-            ScrollBarZ3 = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 117);
-            ScrollBarZ3.Position = Position + new Vector2(498, 399);
+            ScrollBarZ2 = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 117);
+            ScrollBarZ2.Position = Position + new Vector2(498, 204);
+            ScrollBarZ3 = new ScrollBarContainer(mainGame, "GUI/ScrollBarG", Orientation.Vertical, 150);
+            ScrollBarZ3.Position = Position + new Vector2(498, 390);
             var exitButtonS = SpriteSheet.CreateNew(mainGame, "Buttons/ExitBN", 1, 2);
             ExitButton = new Button(mainGame, exitButtonS, null, Position + new Vector2(495, 6)) { ButtonType = ButtonType.SafeRelease };
             ExitButton.Clicked += ExitButton_Clicked;
@@ -85,15 +85,15 @@ namespace Sunbird.External
             ScrollBarZ2.Update(gameTime);
             ScrollBarZ3.Update(gameTime);
             ExitButton.Update(gameTime);
-        }    
+        }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
 
-            var z1Partition = new PartitionArgs(new Vector2(21, 39), ScrollBarZ1, new Point(6, 2), new Point(78, 81));
-            var z2Partition = new PartitionArgs(new Vector2(21, 234), ScrollBarZ2, new Point(6, 1), new Point(78, 81));
-            var z3Partition = new PartitionArgs(new Vector2(21, 384), ScrollBarZ3, new Point(6, 1), new Point(78, 81));
+            var z1Partition = new PartitionArgs(new Vector2(21, 39), ScrollBarZ1, new Point(3, 1), new Point(159, 81));
+            var z2Partition = new PartitionArgs(new Vector2(21, 189), ScrollBarZ2, new Point(3, 1), new Point(159, 81));
+            var z3Partition = new PartitionArgs(new Vector2(21, 375), ScrollBarZ3, new Point(3, 1), new Point(159, 81));
 
             for (int i = 0; i < Items.Count(); i++)
             {
@@ -125,21 +125,4 @@ namespace Sunbird.External
             ExitButton.Draw(gameTime, spriteBatch);
         }
     }
-
-    public class DecoCatalogItem : Sprite
-    {
-        public DecoMetaData DecoMetaData { get; set; }
-
-        public DecoCatalogItem(MainGame mainGame, DecoMetaData decoMD)
-        {
-            DecoMetaData = decoMD;
-#if DEBUG
-            if (decoMD != null) { Debug.Assert(decoMD.Texture != null); }
-#endif
-            var spriteSheet = SpriteSheet.CreateNew(decoMD.Texture, decoMD.Path, decoMD.SheetRows, decoMD.SheetColumns);
-            Animator = new Animator(this, spriteSheet, decoMD.StartFrame, decoMD.CurrentFrame, decoMD.FrameCount, decoMD.FrameSpeed, decoMD.AnimState);
-        }
-
-    }
-
 }

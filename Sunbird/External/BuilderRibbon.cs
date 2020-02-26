@@ -40,6 +40,7 @@ namespace Sunbird.External
         private Button OpenCatalog3x3BN;
         private CubeCatalog CubeCatalog;
         private Deco1x1Catalog Deco1x1Catalog;
+        private Deco2x2Catalog Deco2x2Catalog;
 
         public List<Sprite> Overlay { get; set; } = new List<Sprite>();
         public List<KeyValuePair<Sprite, DeferAction>> DeferredOverlay { get; set; } = new List<KeyValuePair<Sprite, DeferAction>>();
@@ -211,6 +212,40 @@ namespace Sunbird.External
             {
                 DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(CubeCatalog, DeferAction.Remove));
             }
+            else if (Overlay.Contains(Deco1x1Catalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco1x1Catalog, DeferAction.Remove));
+            }
+            if (Deco2x2Catalog == null)
+            {
+                // Create for the first time if null. From then on, load from cache.
+                var Deco2x2CatalogS = SpriteSheet.CreateNew(MainGame, "GUI/Deco2x2CatalogBackground", 1, 1);
+                Deco2x2Catalog = new Deco2x2Catalog(MainGame, Deco2x2CatalogS, new Vector2(3, 87), this, (Button)sender);
+                foreach (var dmd in DecoFactory.DecoMetaDataLibrary2x2)
+                {
+#if DEBUG
+                    Debug.Assert(dmd.Dimensions.X == dmd.Dimensions.Y);
+#endif
+                    var DCI = new DecoCatalogItem(MainGame, dmd);
+                    DCI.Clicked += D2x2CI_Clicked;
+                    Deco2x2Catalog.Items.Add(DCI);
+                }
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco2x2Catalog, DeferAction.Add));
+            }
+            else if (!Overlay.Contains(Deco2x2Catalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco2x2Catalog, DeferAction.Add));
+            }
+            Build2x2BN.OnClicked();
+        }
+
+        private void D2x2CI_Clicked(object sender, EventArgs e)
+        {
+            var item = sender as DecoCatalogItem;
+            var CDMD = item.DecoMetaData;
+            DecoFactory.CurrentDecoMetaData2x2 = CDMD;
+            MapBuilder.DecoPreview = DecoFactory.CreateCurrentDeco2x2(MainGame, Coord.Zero, Coord.Zero, 0);
+            if (MapBuilder.BuildMode == BuildMode._2x2) { MapBuilder.GhostMarker.MorphImage(MapBuilder.DecoPreview, MainGame, GraphicsDevice, Content); }
         }
 
         private void OpenCatalog1x1BN_Clicked(object sender, ButtonClickedEventArgs e)
@@ -218,6 +253,10 @@ namespace Sunbird.External
             if (Overlay.Contains(CubeCatalog))
             {
                 DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(CubeCatalog, DeferAction.Remove));
+            }
+            else if (Overlay.Contains(Deco2x2Catalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco2x2Catalog, DeferAction.Remove));
             }
             if (Deco1x1Catalog == null)
             {
@@ -256,6 +295,10 @@ namespace Sunbird.External
             if (Overlay.Contains(Deco1x1Catalog))
             {
                 DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco1x1Catalog, DeferAction.Remove));
+            }
+            else if (Overlay.Contains(Deco2x2Catalog))
+            {
+                DeferredOverlay.Add(new KeyValuePair<Sprite, DeferAction>(Deco2x2Catalog, DeferAction.Remove));
             }
             if (CubeCatalog == null)
             {
