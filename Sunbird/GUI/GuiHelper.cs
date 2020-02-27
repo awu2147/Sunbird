@@ -99,7 +99,7 @@ namespace Sunbird.GUI
             }
             else
             {
-                ScrollBar.TotalSegments = (counter - 1) / TotalColumns;
+                ScrollBar.TotalSegments = ((counter - (TotalColumns * TotalRows)) / TotalColumns) + 2;
             }
         }
     }

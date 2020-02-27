@@ -35,6 +35,7 @@ namespace Sunbird.External
                 new CubeMetaData(){Path = $"{dirCubes}DirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None},
                 new CubeMetaData(){Path = $"{dirCubes}LightStoneCubeTop", SheetRows = 1, SheetColumns = 3, FrameCount = 3, AnimState = AnimationState.None},
                 new CubeMetaData(){Path = $"{dirCubes}WaterCubeTop", SheetRows = 1, SheetColumns = 11, FrameCount = 11, AnimState = AnimationState.None},
+                new CubeMetaData(){Path = $"{dirCubes}WoodBridgeCubeTop", SheetRows = 1, SheetColumns = 4, FrameCount = 4, AnimState = AnimationState.None},
                 new CubeMetaData(){Path = $"{dirCubes}LavaCubeTop", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.Loop, FrameSpeed = 1.333f},
                 new CubeMetaData(){Path = $"{dirCubes}GraveyardGrassCubeTop", SheetRows = 2, SheetColumns = 4, FrameCount = 8, AnimState = AnimationState.None},
                 new CubeMetaData(){Path = $"{dirCubes}GraveyardDirtCubeTop", SheetRows = 1, SheetColumns = 8, FrameCount = 8, AnimState = AnimationState.None},

@@ -2,7 +2,7 @@
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <IsRandom>false</IsRandom>
   <CurrentDecoMetaData1x1>
-    <Path>Decos/1x1/3/TreeCon</Path>
+    <Path>Decos/1x1/3/TreePal</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>0</X>
@@ -51,7 +51,7 @@
     <SheetRows>1</SheetRows>
     <SheetColumns>2</SheetColumns>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>0</CurrentFrame>
+    <CurrentFrame>1</CurrentFrame>
     <FrameCount>2</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
@@ -61,7 +61,7 @@
       <Z>3</Z>
     </Dimensions>
   </CurrentDecoMetaData3x3>
-  <CurrentIndex1x1>5</CurrentIndex1x1>
+  <CurrentIndex1x1>0</CurrentIndex1x1>
   <CurrentIndex2x2>1</CurrentIndex2x2>
   <CurrentIndex3x3>2</CurrentIndex3x3>
   <DecoMetaDataLibrary1x1>
@@ -95,7 +95,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>1</CurrentFrame>
+      <CurrentFrame>0</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -115,7 +115,7 @@
       <SheetRows>2</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>3</CurrentFrame>
+      <CurrentFrame>0</CurrentFrame>
       <FrameCount>4</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>

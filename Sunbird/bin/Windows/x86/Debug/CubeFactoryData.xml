@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <IsRandomTop>false</IsRandomTop>
+  <IsRandomTop>true</IsRandomTop>
   <IsRandomBase>false</IsRandomBase>
   <CurrentCubeTopMetaData>
-    <Path>Cubes/WaterCubeTop</Path>
+    <Path>Cubes/DirtCubeTop</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>11</SheetColumns>
+    <SheetColumns>8</SheetColumns>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>9</CurrentFrame>
-    <FrameCount>11</FrameCount>
+    <CurrentFrame>7</CurrentFrame>
+    <FrameCount>8</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeTopMetaData>
   <CurrentCubeBaseMetaData>
-    <Path>Cubes/WaterCubeBase</Path>
+    <Path>Cubes/LightStoneCubeBase</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>2</SheetColumns>
+    <SheetColumns>1</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>2</FrameCount>
+    <FrameCount>1</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
-  <CurrentTopIndex>3</CurrentTopIndex>
+  <CurrentTopIndex>0</CurrentTopIndex>
   <CurrentBaseIndex>0</CurrentBaseIndex>
   <CubeTopMetaDataLibrary>
     <CubeMetaData>
@@ -30,7 +30,7 @@
       <SheetRows>3</SheetRows>
       <SheetColumns>4</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>11</CurrentFrame>
+      <CurrentFrame>9</CurrentFrame>
       <FrameCount>12</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -40,7 +40,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>8</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>7</CurrentFrame>
       <FrameCount>8</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -60,8 +60,18 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>11</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>9</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>11</FrameCount>
+      <FrameSpeed>0.133</FrameSpeed>
+      <AnimState>None</AnimState>
+    </CubeMetaData>
+    <CubeMetaData>
+      <Path>Cubes/WoodBridgeCubeTop</Path>
+      <SheetRows>1</SheetRows>
+      <SheetColumns>4</SheetColumns>
+      <StartFrame>0</StartFrame>
+      <CurrentFrame>1</CurrentFrame>
+      <FrameCount>4</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
     </CubeMetaData>
@@ -100,7 +110,7 @@
       <SheetRows>2</SheetRows>
       <SheetColumns>4</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>7</CurrentFrame>
       <FrameCount>8</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
