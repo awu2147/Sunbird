@@ -2,27 +2,27 @@
 <DecoFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <IsRandom>false</IsRandom>
   <CurrentDecoMetaData1x1>
-    <Path>Decos/1x1/3/TreePal</Path>
+    <Path>Decos/1x1/1/ConchP</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>0</X>
-      <Y>-72</Y>
+      <Y>0</Y>
     </PositionOffset>
     <SheetRows>1</SheetRows>
-    <SheetColumns>2</SheetColumns>
+    <SheetColumns>4</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>1</CurrentFrame>
-    <FrameCount>2</FrameCount>
+    <FrameCount>4</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
     <Dimensions>
       <X>1</X>
       <Y>1</Y>
-      <Z>3</Z>
+      <Z>1</Z>
     </Dimensions>
   </CurrentDecoMetaData1x1>
   <CurrentDecoMetaData2x2>
-    <Path>Decos/2x2/2/BloodBowl</Path>
+    <Path>Decos/2x2/2/RockM</Path>
     <TypeName>Sunbird.Core.Deco</TypeName>
     <PositionOffset>
       <X>-36</X>
@@ -75,7 +75,7 @@
       <SheetRows>2</SheetRows>
       <SheetColumns>3</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>6</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -95,7 +95,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -155,7 +155,7 @@
       <SheetRows>2</SheetRows>
       <SheetColumns>3</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>5</CurrentFrame>
       <FrameCount>6</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -175,7 +175,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -375,7 +375,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>4</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>4</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -395,7 +395,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>4</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>3</CurrentFrame>
       <FrameCount>4</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -435,7 +435,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
