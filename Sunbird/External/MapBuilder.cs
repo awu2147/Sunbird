@@ -61,6 +61,19 @@ namespace Sunbird.External
 
         private BuilderRibbon BuilderRibbon;
 
+        private Sprite water1;
+        private Sprite water2;
+        private Sprite water3;
+        private Sprite water4;
+
+        private Sprite water5;
+        private Sprite water6;
+        private Sprite water7;
+        private Sprite water8;
+        int waterCounter;
+        int waterSign = 1;
+        Sunbird.Core.Timer timer = new Sunbird.Core.Timer();
+
 
         private MapBuilder()
         {
@@ -185,6 +198,51 @@ namespace Sunbird.External
             }
 
             CreateOverlay();
+
+            var water1s = SpriteSheet.CreateNew(MainGame, "Temp/water1");
+            var botAlpha = 1f;
+            water1 = new Sprite(MainGame, water1s) { Alpha = botAlpha };
+            water2 = new Sprite(MainGame, water1s, new Vector2(-1920, -1080)) { Alpha = botAlpha };
+            water3 = new Sprite(MainGame, water1s, new Vector2(-1920, 0)) { Alpha = botAlpha };
+            water4 = new Sprite(MainGame, water1s, new Vector2(0, -1080)) { Alpha = botAlpha };
+            var water2s = SpriteSheet.CreateNew(MainGame, "Temp/water2");
+            var topAlpha = 0.7f;
+            water5 = new Sprite(MainGame, water2s) { Alpha = topAlpha };
+            water6 = new Sprite(MainGame, water2s, new Vector2(-1920, -1080)) { Alpha = topAlpha };
+            water7 = new Sprite(MainGame, water2s, new Vector2(-1920, 0)) { Alpha = topAlpha };
+            water8 = new Sprite(MainGame, water2s, new Vector2(0, -1080)) { Alpha = topAlpha };
+            timer.OnCompleted = () => 
+            { 
+                waterCounter++;
+                var shift1 = new Vector2(2, 1) * waterSign;
+                var shift2 = new Vector2(-2, -1) * waterSign;
+                water1.Position += shift1;
+                water2.Position += shift1;
+                water3.Position += shift1;
+                water4.Position += shift1;
+
+                water5.Position += shift2;
+                water6.Position += shift2;
+                water7.Position += shift2;
+                water8.Position += shift2;
+
+                if (waterCounter >= 200)
+                {
+                    waterCounter = 0;
+                    waterSign *= -1;
+                    //var backshift1 = new vector2(-200, -100);
+                    //var backshift2 = new vector2(200, 100);
+                    //water1.position += backshift1;
+                    //water2.position += backshift1;
+                    //water3.position += backshift1;
+                    //water4.position += backshift1;
+
+                    //water5.position += backshift2;
+                    //water6.position += backshift2;
+                    //water7.position += backshift2;
+                    //water8.position += backshift2;
+                }
+            };
 
             for (int i = 0; i < 10; i++)
             {
@@ -459,7 +517,16 @@ namespace Sunbird.External
 
                 if (Peripherals.KeyTapped(Keys.E) && MainGame.IsActive)
                 {
-                    CurrentLightingColor = CurrentLightingColor == Color.Black ? Color.LightGray : Color.Black;
+                    CurrentLightingColor = CurrentLightingColor == new Color(1, 0, 0) ? Color.LightGray : new Color(1, 0, 0);
+                }
+
+                if (Peripherals.KeyTapped(Keys.Left) && MainGame.IsActive)
+                {
+                    MainGame.Brightness += 0.1f;
+                }
+                if (Peripherals.KeyTapped(Keys.Right) && MainGame.IsActive)
+                {
+                    MainGame.Brightness -= 0.1f;
                 }
 
                 if (Peripherals.KeyTapped(Keys.R) && MainGame.IsActive)
@@ -682,6 +749,8 @@ namespace Sunbird.External
                     clickedSprite.OnClicked();
                 }
 
+                timer.WaitForMilliseconds(gameTime, 20);
+
                 // Move from DeferredOverlay to Overlay.
                 for (int i = 0; i < DeferredOverlay.Count(); i++)
                 {
@@ -735,7 +804,14 @@ namespace Sunbird.External
             {
                 // FIXME: make this circular and/or coord based?
                 var rect = new Rectangle((int)Player.Position.X - 10000, (int)Player.Position.Y - 10000, 20000, 20000);
-                
+                water1.Draw(gameTime, MainGame.SpriteBatchWater);
+                water2.Draw(gameTime, MainGame.SpriteBatchWater);
+                water3.Draw(gameTime, MainGame.SpriteBatchWater);
+                water4.Draw(gameTime, MainGame.SpriteBatchWater);
+                water5.Draw(gameTime, MainGame.SpriteBatchWater);
+                water6.Draw(gameTime, MainGame.SpriteBatchWater);
+                water7.Draw(gameTime, MainGame.SpriteBatchWater);
+                water8.Draw(gameTime, MainGame.SpriteBatchWater);
                 // Draw sorted sprites;
                 foreach (var sprite in World.Sort(LayerMap))
                 {
@@ -765,12 +841,23 @@ namespace Sunbird.External
                                 // Special case because number of frames can vary but AntiShadow remains the same.
                                 spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
                                 spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                                if (sprite.Animator.SpriteSheet.TexturePath == "Cubes/WaterCubeTop")
+                                {
+                                    //MainGame.SpriteBatchWater.Draw(sprite.Shadow, sprite.Animator.Position, Color.White);
+                                    MainGame.SpriteBatchWaterStencil.Draw(sprite.Shadow, sprite.Animator.Position, Color.White);
+                                }
+                                else
+                                {
+                                    //MainGame.SpriteBatchWater.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                                    MainGame.SpriteBatchWaterStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                                }
                             }
                             else
                             {
                                 // Sprites here have AntiShadow generated automatically for entire sheet so use SheetViewArea() to retrieve view rectangle.
                                 spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                                 spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                                MainGame.SpriteBatchWaterStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                             }
                         }
                         if (ShadowDict.ContainsKey(sprite.Coords))
@@ -801,7 +888,7 @@ namespace Sunbird.External
                             spriteBatchLighting.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White); // FIXME
                         }
                     }
-                }
+                }               
             }
         }
 

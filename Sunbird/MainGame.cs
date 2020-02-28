@@ -32,16 +32,22 @@ namespace Sunbird
         private RenderTarget2D ShadowRenderTarget;
         private RenderTarget2D LightingRenderTarget;
         private RenderTarget2D LightingStencilRenderTarget;
+        public RenderTarget2D WaterRenderTarget;
+        public RenderTarget2D WaterStencilRenderTarget;
 
         private SpriteBatch SpriteBatch;
         private SpriteBatch SpriteBatchShadow;
         private SpriteBatch SpriteBatchLighting;
         private SpriteBatch SpriteBatchLightingStencil;
+        public SpriteBatch SpriteBatchWater;
+        public SpriteBatch SpriteBatchWaterStencil;
 
         private Texture2D GameRender;
         private Texture2D ShadowRender;
         private Texture2D LightingRender;
         private Texture2D LightingStencilRender;
+        public Texture2D WaterRender;
+        public Texture2D WaterStencilRender;
 
         private readonly BlendState Subtractive = new BlendState
         {
@@ -50,6 +56,7 @@ namespace Sunbird
         };
 
         private Effect LightingStencil;
+        private Effect WaterStencil;
 
         private State _CurrentState;
         public State CurrentState
@@ -77,6 +84,8 @@ namespace Sunbird
         public int Height { get { return Graphics.PreferredBackBufferHeight; } }
 
         public bool CleanLoad { get; set; } = false;
+
+        public float Brightness = 0.5f;
 
         public MainGame()
         {
@@ -134,11 +143,15 @@ namespace Sunbird
             ShadowRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
             LightingRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
             LightingStencilRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
+            WaterRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
+            WaterStencilRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
 
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteBatchShadow = new SpriteBatch(GraphicsDevice);
             SpriteBatchLighting = new SpriteBatch(GraphicsDevice);
-            SpriteBatchLightingStencil = new SpriteBatch(GraphicsDevice);    
+            SpriteBatchLightingStencil = new SpriteBatch(GraphicsDevice);
+            SpriteBatchWater = new SpriteBatch(GraphicsDevice);
+            SpriteBatchWaterStencil = new SpriteBatch(GraphicsDevice);
 
             Exiting += MainGame_Exiting;
 
@@ -165,6 +178,7 @@ namespace Sunbird
         {
             DefaultFont = Content.Load<SpriteFont>("DefaultFont");
             LightingStencil = Content.Load<Effect>("Effects/LightingStencil");
+            WaterStencil = Content.Load<Effect>("Effects/WaterStencil");
 
             CurrentState = new MapBuilder(this, GraphicsDevice, Content);
         }
@@ -221,6 +235,8 @@ namespace Sunbird
             SpriteBatchShadow.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
             SpriteBatchLighting.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
             SpriteBatchLightingStencil.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchWater.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchWaterStencil.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
 
             // Game Render
             GraphicsDevice.SetRenderTarget(GameRenderTarget);
@@ -258,11 +274,37 @@ namespace Sunbird
             SpriteBatchLightingStencil.End();
 
             LightingStencilRender = LightingStencilRenderTarget;
-            GraphicsDevice.SetRenderTarget(null);        
+            GraphicsDevice.SetRenderTarget(null);
+
+            // Water Render
+            GraphicsDevice.SetRenderTarget(WaterRenderTarget);
+            GraphicsDevice.Clear(Color.Transparent);
+
+            SpriteBatchWater.End();
+
+            WaterRender = WaterRenderTarget;
+            GraphicsDevice.SetRenderTarget(null);
+
+            // Water Stencil Render
+            GraphicsDevice.SetRenderTarget(WaterStencilRenderTarget);
+            GraphicsDevice.Clear(new Color(1, 0, 0));
+
+            SpriteBatchWaterStencil.End();
+
+            WaterStencilRender = WaterStencilRenderTarget;
+            GraphicsDevice.SetRenderTarget(null);
 
             // Game Render Texture
             SpriteBatch.Begin();
             SpriteBatch.Draw(GameRender, Vector2.Zero, Color.White);
+            SpriteBatch.End();
+
+            WaterStencil.Parameters["WaterRender"].SetValue(WaterRender);
+            WaterStencil.Parameters["WaterStencilRender"].SetValue(WaterStencilRender);
+            WaterStencil.Parameters["Brightness"].SetValue(Brightness);
+
+            SpriteBatch.Begin(blendState: Subtractive, effect: WaterStencil);
+            SpriteBatch.Draw(WaterRender, Vector2.Zero, Color.White);
             SpriteBatch.End();
 
             // Shadow Render Texture (Subtractive)
