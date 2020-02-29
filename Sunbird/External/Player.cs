@@ -36,7 +36,7 @@ namespace Sunbird.External
 
         HashSet<Keys> CurrentMovementKeys { get; set; } = new HashSet<Keys>();
         private List<Keys> MovementKeyList => new List<Keys>() { Config.North, Config.East, Config.South, Config.West };
-        public float Speed { get; set; } = 3;
+        public float Speed { get; set; } = 4;
 
         public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_North => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_North, Config.North); };
         public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_West => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_West, Config.West); };
@@ -190,6 +190,13 @@ namespace Sunbird.External
                     ReconfigureAnimator(4, 1, 0.2f, AnimationState.None);
                 }
             }
+            
+            // Deal with 0.5f.
+            if ((int)(Position.Y * 2) % 2 != 0)
+            {
+                Position += new Vector2(0, 0.5f);
+            }
+
             if (Peripherals.KeyTapped(Keys.P))
             {
                 var ns = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet2", 1, 16);

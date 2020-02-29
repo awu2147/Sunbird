@@ -57,6 +57,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/2/GravestoneMS.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/2/WoodenBarrel.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/3/ObeliskS.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/3/TotemTorch.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/3/TreeBas.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/3/TreeCon.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/1x1/3/TreeConD.png</File>
@@ -67,8 +68,6 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Decos/MediumRock.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/DefaultFont.spritefont</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/LightingStencil.fx</File>
-    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/Water1.png</File>
-    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/Water2.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/WaterDown.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/WaterStencil.fx</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/WaterUp.png</File>
@@ -81,9 +80,12 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/PendantBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/RibbonBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/ScrollBarG.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/_100x100px.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/CubeAntiShadow.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/CubeShadow.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/dark_bg.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/flame.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/flame2.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/GridAxisGlyph.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/House.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/LavaCubeSheet.png</File>
@@ -92,8 +94,6 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/PlayerLight.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/sunbird.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/TopFaceSelectionMarker.png</File>
-    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/water1.png</File>
-    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/water2.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

@@ -78,7 +78,9 @@ namespace Sunbird.External
             }
             else
             {
-                new Thread(() => LoadContentFromFile()).Start();
+                //new Thread(() => LoadContentFromFile()).Start();
+                //var task = new Task(() => LoadContentFromFile());
+                Task.Run(() => LoadContentFromFile());
             }
             
         }

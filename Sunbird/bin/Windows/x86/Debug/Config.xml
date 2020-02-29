@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<Config xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <North>W</North>
   <East>D</East>
   <South>S</South>
   <West>A</West>
   <WindowWidth>850</WindowWidth>
   <WindowHeight>850</WindowHeight>
-  <WorldZoom>3</WorldZoom>
+  <WorldZoom>2</WorldZoom>
 </Config>

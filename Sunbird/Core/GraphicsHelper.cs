@@ -26,7 +26,7 @@ namespace Sunbird.Core
             graphicsDevice,
             graphicsDevice.PresentationParameters.BackBufferWidth,
             graphicsDevice.PresentationParameters.BackBufferHeight,
-            false,
+            true,
             graphicsDevice.PresentationParameters.BackBufferFormat,
             DepthFormat.None);
         }

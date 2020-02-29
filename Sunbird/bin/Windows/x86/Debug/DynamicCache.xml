@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="Cube">
+<Sprite xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Deco">
   <Animator>
     <SpriteSheet>
-      <TexturePath>Cubes/WaterCubeTop</TexturePath>
-      <Rows>1</Rows>
-      <Columns>11</Columns>
+      <TexturePath>Decos/1x1/3/TotemTorch</TexturePath>
+      <Rows>5</Rows>
+      <Columns>6</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>1</CurrentFrame>
-    <FramesInLoop>11</FramesInLoop>
+    <CurrentFrame>0</CurrentFrame>
+    <FramesInLoop>30</FramesInLoop>
     <FrameCounter>0</FrameCounter>
-    <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
+    <FrameSpeed>0.0166</FrameSpeed>
+    <AnimState>Loop</AnimState>
     <Timer>
       <TotalElapsedTime>0</TotalElapsedTime>
       <IsDone>true</IsDone>
@@ -19,12 +19,12 @@
   </Animator>
   <Alpha>1</Alpha>
   <Position>
-    <X>718</X>
-    <Y>730</Y>
+    <X>0</X>
+    <Y>0</Y>
   </Position>
   <PositionOffset>
     <X>0</X>
-    <Y>0</Y>
+    <Y>-72</Y>
   </PositionOffset>
   <Coords>
     <X>0</X>
@@ -33,23 +33,50 @@
   <Altitude>0</Altitude>
   <DrawPriority>0</DrawPriority>
   <IsHidden>false</IsHidden>
-  <ShadowPath>Temp/CubeShadow</ShadowPath>
-  <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
-  <AnimatorBase>
-    <SpriteSheet>
-      <TexturePath>Cubes/WaterCubeBase</TexturePath>
-      <Rows>1</Rows>
-      <Columns>2</Columns>
-    </SpriteSheet>
-    <StartFrame>0</StartFrame>
-    <CurrentFrame>0</CurrentFrame>
-    <FramesInLoop>2</FramesInLoop>
-    <FrameCounter>0</FrameCounter>
-    <FrameSpeed>0.133</FrameSpeed>
-    <AnimState>None</AnimState>
-    <Timer>
-      <TotalElapsedTime>0</TotalElapsedTime>
-      <IsDone>true</IsDone>
-    </Timer>
-  </AnimatorBase>
+  <OccupiedCoords>
+    <item>
+      <key>
+        <int>0</int>
+      </key>
+      <value>
+        <ArrayOfCoord>
+          <Coord>
+            <X>0</X>
+            <Y>0</Y>
+          </Coord>
+        </ArrayOfCoord>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>1</int>
+      </key>
+      <value>
+        <ArrayOfCoord>
+          <Coord>
+            <X>0</X>
+            <Y>0</Y>
+          </Coord>
+        </ArrayOfCoord>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>2</int>
+      </key>
+      <value>
+        <ArrayOfCoord>
+          <Coord>
+            <X>0</X>
+            <Y>0</Y>
+          </Coord>
+        </ArrayOfCoord>
+      </value>
+    </item>
+  </OccupiedCoords>
+  <Dimensions>
+    <X>1</X>
+    <Y>1</Y>
+    <Z>3</Z>
+  </Dimensions>
 </Sprite>

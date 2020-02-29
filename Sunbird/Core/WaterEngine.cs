@@ -27,11 +27,10 @@ namespace Sunbird.Core
             LoadContent(mainGame);
         }
 
-        public List<Sprite> WaterNoisePair = new List<Sprite>() { };
+        public List<Sprite> WaterNoisePanelPairs = new List<Sprite>() { };
 
         public void LoadContent(MainGame mainGame)
         {
-
             Timer.OnCompleted = () =>
             {
                 Tick++;               
@@ -40,17 +39,22 @@ namespace Sunbird.Core
                     Tick = 0;
                 }
             };
+         
+            var upSheet = SpriteSheet.CreateNew(mainGame, "Effects/WaterUp");
+            var downSheet = SpriteSheet.CreateNew(mainGame, "Effects/WaterDown");
 
-            WaterNoisePair.Add(new WaterNoisePanelPair(mainGame, Vector2.Zero));
-            WaterNoisePair.Add(new WaterNoisePanelPair(mainGame, new Vector2(-1800, -900)));
-            WaterNoisePair.Add(new WaterNoisePanelPair(mainGame, new Vector2(-1800, 0)));
-            WaterNoisePair.Add(new WaterNoisePanelPair(mainGame, new Vector2(0, -900)));
+            WaterNoisePanelPairs.Add(new WaterNoisePanelPair(mainGame, Vector2.Zero, upSheet, downSheet));
+            WaterNoisePanelPairs.Add(new WaterNoisePanelPair(mainGame, new Vector2(-1800, -900), upSheet, downSheet));
+            WaterNoisePanelPairs.Add(new WaterNoisePanelPair(mainGame, new Vector2(-1800, 0), upSheet, downSheet));
+            WaterNoisePanelPairs.Add(new WaterNoisePanelPair(mainGame, new Vector2(0, -900), upSheet, downSheet));
+            WaterNoisePanelPairs.Add(new WaterNoisePanelPair(mainGame, new Vector2(1800, 0), upSheet, downSheet));
+            WaterNoisePanelPairs.Add(new WaterNoisePanelPair(mainGame, new Vector2(1800, -900), upSheet, downSheet));
         }
 
         public void Update(GameTime gameTime)
         {
             Timer.WaitForMilliseconds(gameTime, 20);
-            foreach (var pair in WaterNoisePair)
+            foreach (var pair in WaterNoisePanelPairs)
             {
                 pair.Update(gameTime);
             }
@@ -58,7 +62,7 @@ namespace Sunbird.Core
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (var pair in WaterNoisePair)
+            foreach (var pair in WaterNoisePanelPairs)
             {
                 pair.Draw(gameTime, spriteBatch);
             }
@@ -71,12 +75,10 @@ namespace Sunbird.Core
         WaterNoisePanelUp WaterNoisePanelUp;
         WaterNoisePanelDown WaterNoisePanelDown;
 
-        public WaterNoisePanelPair(MainGame mainGame, Vector2 position)
+        public WaterNoisePanelPair(MainGame mainGame, Vector2 position, SpriteSheet upSheet, SpriteSheet downSheet)
         {
             Position = position;
-            var upSheet = SpriteSheet.CreateNew(mainGame, "Effects/WaterUp");
             WaterNoisePanelUp = new WaterNoisePanelUp(mainGame, upSheet, this);
-            var downSheet = SpriteSheet.CreateNew(mainGame, "Effects/WaterDown");
             WaterNoisePanelDown = new WaterNoisePanelDown(mainGame, downSheet, this) { Alpha = 0.7f };
         }
 
