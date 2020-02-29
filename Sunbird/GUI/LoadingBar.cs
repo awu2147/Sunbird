@@ -17,7 +17,7 @@ namespace Sunbird.GUI
     {
         Texture2D BarEmpty { get; set; }
         Texture2D BarFull { get; set; }
-        public int Progress { get; set; } = 0;
+        public int Progress { get; set; }
 
         public LoadingBar(Texture2D barEmpty, Texture2D barFull, Vector2 position) 
         {

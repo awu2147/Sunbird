@@ -17,54 +17,125 @@ using Sunbird.Controllers;
 
 namespace Sunbird.Core
 {
-    public static class WaterEngine
+    public class WaterEngine
     {
-        public static List<Sprite> WaterNoise1 = new List<Sprite>() { };
-        public static List<Sprite> WaterNoise2 = new List<Sprite>() { };
+        public static int Tick;
+        public static Timer Timer = new Timer();
 
-        private static SpriteSheet WaterNoiseSheet1;
-        private static SpriteSheet WaterNoiseSheet2;
-        private static int SheetWidth;
-        private static int SheetHeight;
-        private static int WindowWidth;
-        private static int WindowHeight;
-
-        public static void LoadContent(MainGame mainGame)
+        public WaterEngine(MainGame mainGame)
         {
-            WaterNoiseSheet1 = SpriteSheet.CreateNew(mainGame, "Effects/Water1");
-            WaterNoiseSheet2 = SpriteSheet.CreateNew(mainGame, "Effects/Water2");
-#if DEBUG
-            Debug.Assert(WaterNoiseSheet1.Texture.Width == WaterNoiseSheet2.Texture.Width);
-            Debug.Assert(WaterNoiseSheet1.Texture.Height == WaterNoiseSheet2.Texture.Height);
-#endif
-            SheetWidth = WaterNoiseSheet1.Texture.Width;
-            SheetHeight = WaterNoiseSheet1.Texture.Height;
+            LoadContent(mainGame);
+        }
 
-            WindowWidth = mainGame.Width;
-            WindowHeight = mainGame.Height;
+        public List<Sprite> WaterNoisePair = new List<Sprite>() { };
 
-            for (int i = -2; i <= (WindowWidth / SheetWidth) + 1; i++)
+        public void LoadContent(MainGame mainGame)
+        {
+
+            Timer.OnCompleted = () =>
             {
-                for (int j = -2; j <= (WindowHeight / SheetHeight) + 1; j++)
+                Tick++;               
+                if (Tick > 900)
                 {
-                    var position = new Vector2(SheetWidth * i, SheetHeight * j);
-                    var waterNoiseSprite = new Sprite(mainGame, WaterNoiseSheet1, position) { };
-                    WaterNoise1.Add(waterNoiseSprite);
+                    Tick = 0;
                 }
-            }
+            };
 
-            for (int i = 1; i >= -(WindowWidth / SheetWidth) - 2; i--)
+            WaterNoisePair.Add(new WaterNoisePanelPair(mainGame, Vector2.Zero));
+            WaterNoisePair.Add(new WaterNoisePanelPair(mainGame, new Vector2(-1800, -900)));
+            WaterNoisePair.Add(new WaterNoisePanelPair(mainGame, new Vector2(-1800, 0)));
+            WaterNoisePair.Add(new WaterNoisePanelPair(mainGame, new Vector2(0, -900)));
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            Timer.WaitForMilliseconds(gameTime, 20);
+            foreach (var pair in WaterNoisePair)
             {
-                for (int j = 1; j >= -(WindowHeight / SheetHeight) - 2; j--)
-                {
-                    var offset = new Vector2(WindowWidth, WindowHeight);
-                    var position = new Vector2(WindowWidth, WindowHeight) + new Vector2(SheetWidth * i, SheetHeight * j);
-                    var waterNoiseSprite = new Sprite(mainGame, WaterNoiseSheet2, position) { Alpha = 0.7f };
-                    WaterNoise2.Add(waterNoiseSprite);
-                }
+                pair.Update(gameTime);
             }
         }
 
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            foreach (var pair in WaterNoisePair)
+            {
+                pair.Draw(gameTime, spriteBatch);
+            }
+        }
 
+    }
+
+    public class WaterNoisePanelPair : Sprite
+    {
+        WaterNoisePanelUp WaterNoisePanelUp;
+        WaterNoisePanelDown WaterNoisePanelDown;
+
+        public WaterNoisePanelPair(MainGame mainGame, Vector2 position)
+        {
+            Position = position;
+            var upSheet = SpriteSheet.CreateNew(mainGame, "Effects/WaterUp");
+            WaterNoisePanelUp = new WaterNoisePanelUp(mainGame, upSheet, this);
+            var downSheet = SpriteSheet.CreateNew(mainGame, "Effects/WaterDown");
+            WaterNoisePanelDown = new WaterNoisePanelDown(mainGame, downSheet, this) { Alpha = 0.7f };
+        }
+
+        public override void Update(GameTime gameTime)
+        {       
+            WaterNoisePanelUp.Update(gameTime);
+            WaterNoisePanelDown.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            WaterNoisePanelUp.Draw(gameTime, spriteBatch);
+            WaterNoisePanelDown.Draw(gameTime, spriteBatch);
+        }
+    }
+
+    public class WaterNoisePanelUp : Sprite
+    {
+        public Point PanelDimensions = new Point(1800, 900);
+        public Point ViewPosition = new Point(0, 0);
+        public Rectangle View { get { return new Rectangle(ViewPosition, PanelDimensions); } }
+
+        public WaterNoisePanelUp(MainGame mainGame, SpriteSheet spriteSheet, WaterNoisePanelPair parent) : base(mainGame, spriteSheet)
+        {
+            Position = parent.Position;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            ViewPosition = new Point(0, WaterEngine.Tick);        
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Animator.SpriteSheet.Texture, Animator.Position, View, Color.White * Alpha);
+        }
+    }
+
+    public class WaterNoisePanelDown : Sprite
+    {       
+        public Point PanelDimensions = new Point(1800, 900);
+        public Point ViewPosition = new Point(0, 900);
+        public Rectangle View { get { return new Rectangle(ViewPosition, PanelDimensions); } }
+
+        public WaterNoisePanelDown(MainGame mainGame, SpriteSheet spriteSheet, WaterNoisePanelPair parent) : base(mainGame, spriteSheet)
+        {
+            Position = parent.Position;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            ViewPosition = new Point(0, 900 - WaterEngine.Tick);
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Animator.SpriteSheet.Texture, Animator.Position, View, Color.White * Alpha);
+        }
     }
 }

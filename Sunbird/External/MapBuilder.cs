@@ -61,19 +61,8 @@ namespace Sunbird.External
 
         private BuilderRibbon BuilderRibbon;
 
-        private Sprite water1;
-        private Sprite water2;
-        private Sprite water3;
-        private Sprite water4;
-
-        private Sprite water5;
-        private Sprite water6;
-        private Sprite water7;
-        private Sprite water8;
-        int waterCounter;
-        int waterSign = 1;
-        Sunbird.Core.Timer timer = new Sunbird.Core.Timer();
-
+        private WaterEngine WaterEngine;
+        
 
         private MapBuilder()
         {
@@ -91,6 +80,7 @@ namespace Sunbird.External
             {
                 new Thread(() => LoadContentFromFile()).Start();
             }
+            
         }
 
         private void MapBuilder_StateChanged(object sender, EventArgs e)
@@ -107,11 +97,15 @@ namespace Sunbird.External
             MainGame.CurrentState = Templates.LoadingScreenTemplates[0].CreateLoadingScreen(MainGame, GraphicsDevice, Content) as State;
             var currentState = MainGame.CurrentState as ILoadingScreen;
 
-            for (int i = 0; i < 25; i++)
-            {
-                Thread.Sleep(15);
-                currentState.LoadingBar.Progress += 2;
-            }
+            currentState.LoadingBar.Progress += 20;
+
+            CreateOverlay();
+
+            currentState.LoadingBar.Progress += 20;
+
+            WaterEngine = new WaterEngine(MainGame);
+
+            currentState.LoadingBar.Progress += 30;
 
             // Create first layer at 0 Altitude.
             LayerMap.Add(Altitude, new SpriteList<Sprite>());
@@ -127,18 +121,12 @@ namespace Sunbird.External
             // Should this be Add or AddCheck?
             LayerMap[Altitude].Add(Player);
 
-            CreateOverlay();
-
             // Instantiated BuildMode is _Cube. GhostMarker needs CubePreview to exist to morph so we must create it after the latter (which belongs to the overlay).
             GhostMarker = new GhostMarker(MainGame, SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker")) { DrawPriority = 1 };
             GhostMarker.MorphImage(CubePreview, MainGame, GraphicsDevice, Content);
             LayerMap[Altitude].Add(GhostMarker);
 
-            for (int i = 0; i < 25; i++)
-            {
-                Thread.Sleep(15);
-                currentState.LoadingBar.Progress += 2;
-            }
+            currentState.LoadingBar.Progress += 30;
 
             IsLoading = false;
             MainGame.CurrentState = this;
@@ -155,11 +143,15 @@ namespace Sunbird.External
             MainGame.CurrentState = Templates.LoadingScreenTemplates[0].CreateLoadingScreen(MainGame, GraphicsDevice, Content) as State;
             var currentState = MainGame.CurrentState as ILoadingScreen;
 
-            for (int i = 0; i < 20; i++)
-            {
-                Thread.Sleep(15);
-                currentState.LoadingBar.Progress += 2;
-            }
+            currentState.LoadingBar.Progress += 20;
+
+            CreateOverlay();
+
+            currentState.LoadingBar.Progress += 20;
+
+            WaterEngine = new WaterEngine(MainGame);
+
+            currentState.LoadingBar.Progress += 20;
 
             // Most time is spent here...
             var XmlData = Serializer.ReadXML<MapBuilder>(MapBuilderSerializer, SaveFilePath);
@@ -168,11 +160,7 @@ namespace Sunbird.External
             Authorization = XmlData.Authorization;
             BuildMode = XmlData.BuildMode;
 
-            for (int i = 0; i < 10; i++)
-            {
-                Thread.Sleep(15);
-                currentState.LoadingBar.Progress += 2;
-            }
+            currentState.LoadingBar.Progress += 20;
 
             LayerMap = XmlData.LayerMap;
             foreach (var layer in LayerMap)
@@ -191,83 +179,7 @@ namespace Sunbird.External
                 }
             }
 
-            for (int i = 0; i < 10; i++)
-            {
-                Thread.Sleep(15);
-                currentState.LoadingBar.Progress += 2;
-            }
-
-            CreateOverlay();
-
-            WaterEngine.LoadContent(MainGame);
-            //var water1s = SpriteSheet.CreateNew(MainGame, "Temp/water1");
-            //var botAlpha = 1f;
-            //water1 = new Sprite(MainGame, water1s) { Alpha = botAlpha };
-            //water2 = new Sprite(MainGame, water1s, new Vector2(-1920, -1080)) { Alpha = botAlpha };
-            //water3 = new Sprite(MainGame, water1s, new Vector2(-1920, 0)) { Alpha = botAlpha };
-            //water4 = new Sprite(MainGame, water1s, new Vector2(0, -1080)) { Alpha = botAlpha };
-            //var water2s = SpriteSheet.CreateNew(MainGame, "Temp/water2");
-            //var topAlpha = 0.7f;
-            //water5 = new Sprite(MainGame, water2s) { Alpha = topAlpha };
-            //water6 = new Sprite(MainGame, water2s, new Vector2(-1920, -1080)) { Alpha = topAlpha };
-            //water7 = new Sprite(MainGame, water2s, new Vector2(-1920, 0)) { Alpha = topAlpha };
-            //water8 = new Sprite(MainGame, water2s, new Vector2(0, -1080)) { Alpha = topAlpha };
-            timer.OnCompleted = () => 
-            { 
-                waterCounter++;
-                var shift1 = new Vector2(2, 1) * waterSign;
-                var shift2 = new Vector2(-2, -1) * waterSign;
-                foreach (var noise in WaterEngine.WaterNoise1)
-                {
-                    noise.Position += shift1;
-                }
-                foreach (var noise in WaterEngine.WaterNoise2)
-                {
-                    noise.Position += shift2;
-                }
-                //water1.Position += shift1;
-                //water2.Position += shift1;
-                //water3.Position += shift1;
-                //water4.Position += shift1;
-
-                //water5.Position += shift2;
-                //water6.Position += shift2;
-                //water7.Position += shift2;
-                //water8.Position += shift2;
-
-                if (waterCounter >= 900)
-                {
-                    waterCounter = 0;
-                    //waterSign *= -1;
-                    var backShift1 = new Vector2(-1800, -900);
-                    var backShift2 = new Vector2(1800, 900);
-
-                    foreach (var noise in WaterEngine.WaterNoise1)
-                    {
-                        noise.Position += backShift1;
-                    }
-                    foreach (var noise in WaterEngine.WaterNoise2)
-                    {
-                        noise.Position += backShift2;
-                    }
-
-                    //water1.position += backshift1;
-                    //water2.position += backshift1;
-                    //water3.position += backshift1;
-                    //water4.position += backshift1;
-
-                    //water5.position += backshift2;
-                    //water6.position += backshift2;
-                    //water7.position += backshift2;
-                    //water8.position += backshift2;
-                }
-            };
-
-            for (int i = 0; i < 10; i++)
-            {
-                Thread.Sleep(15);
-                currentState.LoadingBar.Progress += 2;
-            }
+            currentState.LoadingBar.Progress += 20;
 
             IsLoading = false;
             MainGame.CurrentState = this;
@@ -275,6 +187,7 @@ namespace Sunbird.External
             Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
             Peripherals.ScrollWheelDown += Peripherals_ScrollWheelDown;
             MainGame.Exiting += MainGame_Exiting;
+                        
         }
 
         private void CreateOverlay()
@@ -768,7 +681,7 @@ namespace Sunbird.External
                     clickedSprite.OnClicked();
                 }
 
-                timer.WaitForMilliseconds(gameTime, 20);
+                WaterEngine.Update(gameTime);
 
                 // Move from DeferredOverlay to Overlay.
                 for (int i = 0; i < DeferredOverlay.Count(); i++)
@@ -824,22 +737,9 @@ namespace Sunbird.External
             {
                 // FIXME: make this circular and/or coord based?
                 var rect = new Rectangle((int)Player.Position.X - 10000, (int)Player.Position.Y - 10000, 20000, 20000);
-                //water1.Draw(gameTime, MainGame.SpriteBatchWater);
-                //water2.Draw(gameTime, MainGame.SpriteBatchWater);
-                //water3.Draw(gameTime, MainGame.SpriteBatchWater);
-                //water4.Draw(gameTime, MainGame.SpriteBatchWater);
-                //water5.Draw(gameTime, MainGame.SpriteBatchWater);
-                //water6.Draw(gameTime, MainGame.SpriteBatchWater);
-                //water7.Draw(gameTime, MainGame.SpriteBatchWater);
-                //water8.Draw(gameTime, MainGame.SpriteBatchWater);
-                foreach (var noise in WaterEngine.WaterNoise1)
-                {
-                    noise.Draw(gameTime, MainGame.SpriteBatchWater);
-                }
-                foreach (var noise in WaterEngine.WaterNoise2)
-                {
-                    noise.Draw(gameTime, MainGame.SpriteBatchWater);
-                }
+
+                WaterEngine.Draw(gameTime, MainGame.SpriteBatchWater);
+
                 // Draw sorted sprites;
                 foreach (var sprite in World.Sort(LayerMap))
                 {

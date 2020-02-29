@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <IsRandomTop>true</IsRandomTop>
+  <IsRandomTop>false</IsRandomTop>
   <IsRandomBase>false</IsRandomBase>
   <CurrentCubeTopMetaData>
-    <Path>Cubes/GrassCubeTop</Path>
-    <SheetRows>3</SheetRows>
-    <SheetColumns>4</SheetColumns>
+    <Path>Cubes/WaterCubeTop</Path>
+    <SheetRows>1</SheetRows>
+    <SheetColumns>11</SheetColumns>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>9</CurrentFrame>
-    <FrameCount>12</FrameCount>
+    <CurrentFrame>1</CurrentFrame>
+    <FrameCount>11</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeTopMetaData>
   <CurrentCubeBaseMetaData>
-    <Path>Cubes/LightStoneCubeBase</Path>
+    <Path>Cubes/WaterCubeBase</Path>
     <SheetRows>1</SheetRows>
-    <SheetColumns>1</SheetColumns>
+    <SheetColumns>2</SheetColumns>
     <StartFrame>0</StartFrame>
     <CurrentFrame>0</CurrentFrame>
-    <FrameCount>1</FrameCount>
+    <FrameCount>2</FrameCount>
     <FrameSpeed>0.133</FrameSpeed>
     <AnimState>None</AnimState>
   </CurrentCubeBaseMetaData>
   <CurrentTopIndex>0</CurrentTopIndex>
-  <CurrentBaseIndex>0</CurrentBaseIndex>
+  <CurrentBaseIndex>6</CurrentBaseIndex>
   <CubeTopMetaDataLibrary>
     <CubeMetaData>
       <Path>Cubes/GrassCubeTop</Path>
