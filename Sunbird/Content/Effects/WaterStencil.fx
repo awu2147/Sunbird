@@ -34,10 +34,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
     float4 clear = float4(0.0f, 0.0f, 0.0f, 0.0f);
     float4 color = tex2D(WaterRenderSampler, input.TextureCoordinates);
     float4 colorStencil = tex2D(WaterStencilRenderSampler, input.TextureCoordinates);
-    if (colorStencil.r == float1(1) / float1(255))
-    {
-        return color.a = 0;
-    }
     if (colorStencil.r == float1(0))
     {
         return color.a = 0;

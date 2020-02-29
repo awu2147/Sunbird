@@ -137,7 +137,7 @@ namespace Sunbird
             else
             {
                 AssetLibraries.ImportLibraries(this);
-            }
+            }          
 
             GameRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
             ShadowRenderTarget = GraphicsHelper.NewRenderTarget2D(GraphicsDevice);
@@ -287,7 +287,7 @@ namespace Sunbird
 
             // Water Stencil Render
             GraphicsDevice.SetRenderTarget(WaterStencilRenderTarget);
-            GraphicsDevice.Clear(new Color(1, 0, 0));
+            GraphicsDevice.Clear(Color.Black);
 
             SpriteBatchWaterStencil.End();
 
@@ -299,6 +299,7 @@ namespace Sunbird
             SpriteBatch.Draw(GameRender, Vector2.Zero, Color.White);
             SpriteBatch.End();
 
+            // Water Render Texture (Subtractive)
             WaterStencil.Parameters["WaterRender"].SetValue(WaterRender);
             WaterStencil.Parameters["WaterStencilRender"].SetValue(WaterStencilRender);
             WaterStencil.Parameters["Brightness"].SetValue(Brightness);

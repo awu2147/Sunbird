@@ -57,6 +57,7 @@
     <Compile Include="Core\SpriteList.cs" />
     <Compile Include="Core\SpriteSheet.cs" />
     <Compile Include="Core\Timer.cs" />
+    <Compile Include="Core\WaterEngine.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="Core\XDictionary.cs" />
     <Compile Include="Decorations\House.cs" />

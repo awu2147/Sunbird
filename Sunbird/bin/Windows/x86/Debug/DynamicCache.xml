@@ -7,7 +7,7 @@
       <Columns>4</Columns>
     </SpriteSheet>
     <StartFrame>0</StartFrame>
-    <CurrentFrame>4</CurrentFrame>
+    <CurrentFrame>9</CurrentFrame>
     <FramesInLoop>12</FramesInLoop>
     <FrameCounter>0</FrameCounter>
     <FrameSpeed>0.133</FrameSpeed>
