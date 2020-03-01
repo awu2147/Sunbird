@@ -20,6 +20,20 @@ namespace Sunbird.Core
 {
     public static class GraphicsHelper
     {
+        public static int FPS;
+        private static int FPSCounter;
+        private static Timer FPSTimer = new Timer() { OnCompleted = () => 
+        {
+            FPS = FPSCounter;
+            FPSCounter = 0;
+        } };
+
+        public static void CalculateFPS(GameTime gameTime)
+        {
+            FPSCounter++;
+            FPSTimer.WaitForSeconds(gameTime, 1);
+        }
+
         public static RenderTarget2D NewRenderTarget2D(GraphicsDevice graphicsDevice)
         {
             return new RenderTarget2D(

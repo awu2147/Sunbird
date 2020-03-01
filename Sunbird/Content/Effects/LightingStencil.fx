@@ -30,14 +30,24 @@ struct VertexShaderOutput
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
-	float4 white = float4(0.1f, 1.0f, 1.0f, 1.0f);
-	float4 clear = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	float4 color = tex2D(LightingRenderSampler, input.TextureCoordinates);
 	float4 colorStencil = tex2D(LightingStencilRenderSampler, input.TextureCoordinates);
-	if (colorStencil.r == CurrentLighting.r)
-	{
-		return color.rgba = colorStencil.rgba;
-	}
+	
+	// Green = Current(Anti)Lighting, Red = Lighting, Black = Deco Stencil (AntiShadow mask).
+	// Propagate green to red and black.
+    color.g = CurrentLighting.g;
+	// Now subtract red channel value from green channel value.
+	// The smaller the result the brighter the light (following subtrative blendstate).
+    float green = color.g;
+    float red = color.r;
+    float diff = green - red;
+	// Assign result to all channels instead of just green.
+    color.rgb = float3(diff, diff, diff);
+	// Use second stencil to trim places where light overlaps with background.
+    if (colorStencil.g == CurrentLighting.g)
+	{ 
+        return color.rgba = CurrentLighting.ggga;
+    }
 	else
 	{
 		return color;

@@ -37,6 +37,10 @@ namespace Sunbird.External
         private HashSet<Keys> CurrentMovementKeys => new HashSet<Keys>();
         private List<Keys> MovementKeyList => new List<Keys>() { Config.North, Config.East, Config.South, Config.West };
         private List<Movement> MotionBlurConditions => new List<Movement>() { Movement.Walking };
+
+        /// <summary>
+        /// This must be a multiple of 6.
+        /// </summary>
         public float Speed { get; set; } = 6f;
 
         private Core.Timer WalkTimer = new Core.Timer();
@@ -194,7 +198,7 @@ namespace Sunbird.External
                 };
             }
 
-            WalkTimer.WaitForMilliseconds(gameTime, 10f);
+            WalkTimer.WaitForMilliseconds(gameTime, MainGame.RefreshRate);
             ApplyMotionBlur(MotionBlurConditions);
             Coords = World.TopFace_PositionToRelativeCoord(Position + new Vector2(36, 18), Altitude); // For now, offset so that center of player is center of cube.
 

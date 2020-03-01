@@ -17,12 +17,12 @@ using Sunbird.Controllers;
 
 namespace Sunbird.Core
 {
-    public class WaterEngine
+    public class WaterShader
     {
         public static int Tick;
         public static Timer Timer = new Timer();
 
-        public WaterEngine(MainGame mainGame)
+        public WaterShader(MainGame mainGame)
         {
             LoadContent(mainGame);
         }
@@ -109,7 +109,7 @@ namespace Sunbird.Core
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            ViewPosition = new Point(0, WaterEngine.Tick);        
+            ViewPosition = new Point(0, WaterShader.Tick);        
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -132,7 +132,7 @@ namespace Sunbird.Core
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            ViewPosition = new Point(0, 900 - WaterEngine.Tick);
+            ViewPosition = new Point(0, 900 - WaterShader.Tick);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

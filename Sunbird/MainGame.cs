@@ -49,7 +49,7 @@ namespace Sunbird
         public Texture2D WaterRender;
         public Texture2D WaterStencilRender;
 
-        private readonly BlendState Subtractive = new BlendState
+        private BlendState Subtractive => new BlendState
         {
             ColorSourceBlend = Blend.Zero,
             ColorDestinationBlend = Blend.InverseSourceColor,
@@ -76,16 +76,17 @@ namespace Sunbird
                 }
             }
         }
+
         public Config Config { get; set; }
         public Camera Camera { get; set; }
         public SamplerState SamplerState { get; set; } = SamplerState.PointClamp;
         public static SpriteFont DefaultFont { get; set; }
         public int Width { get { return Graphics.PreferredBackBufferWidth; } }
         public int Height { get { return Graphics.PreferredBackBufferHeight; } }
+        public float Brightness { get; set; } = 0.6f;
+        public float RefreshRate { get; set; } = (1000.0f / 60);
 
-        public bool CleanLoad { get; set; } = false;
-
-        public float Brightness = 0.6f;
+        public bool CleanLoad => false;
 
         public MainGame()
         {
@@ -94,9 +95,9 @@ namespace Sunbird
             IsMouseVisible = true;
 
             // Framerate Settings.
-#if false
-            Graphics.SynchronizeWithVerticalRetrace = false;
-            TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
+#if true
+            Graphics.SynchronizeWithVerticalRetrace = true;
+            TargetElapsedTime = TimeSpan.FromMilliseconds(RefreshRate);
 #endif
             IsFixedTimeStep = true;          
 
@@ -236,110 +237,98 @@ namespace Sunbird
         {
             if (World.ZoomRatio > 1) { SamplerState = SamplerState.PointClamp; }
 
-            if (CurrentState is ILoadingScreen)
-            {
-                SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            // Primary batch
+            SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchShadow.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchLighting.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchLightingStencil.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchWater.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatchWaterStencil.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
 
-                GraphicsDevice.SetRenderTarget(null);
+            // Game Render
+            GraphicsDevice.SetRenderTarget(GameRenderTarget);
+            GraphicsDevice.Clear(Color.LightGray);
 
-                CurrentState.Draw(gameTime, SpriteBatch, SpriteBatchShadow, SpriteBatchLighting, SpriteBatchLightingStencil);
+            CurrentState.Draw(gameTime, SpriteBatch, SpriteBatchShadow, SpriteBatchLighting, SpriteBatchLightingStencil);
 
-                SpriteBatch.End();
-            }
-            else
-            {
-                // Primary batch
-                SpriteBatch.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-                SpriteBatchShadow.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-                SpriteBatchLighting.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-                SpriteBatchLightingStencil.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-                SpriteBatchWater.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
-                SpriteBatchWaterStencil.Begin(transformMatrix: Camera.CurrentTransform, samplerState: SamplerState);
+            SpriteBatch.End();
 
-                // Game Render
-                GraphicsDevice.SetRenderTarget(GameRenderTarget);
-                GraphicsDevice.Clear(Color.LightGray);
+            GameRender = GameRenderTarget;
+            GraphicsDevice.SetRenderTarget(null);
 
-                CurrentState.Draw(gameTime, SpriteBatch, SpriteBatchShadow, SpriteBatchLighting, SpriteBatchLightingStencil);
+            // Shadow Render
+            GraphicsDevice.SetRenderTarget(ShadowRenderTarget);
+            GraphicsDevice.Clear(Color.Black);
 
-                SpriteBatch.End();
+            SpriteBatchShadow.End();
 
-                GameRender = GameRenderTarget;
-                GraphicsDevice.SetRenderTarget(null);
+            ShadowRender = ShadowRenderTarget;
+            GraphicsDevice.SetRenderTarget(null);
 
-                // Shadow Render
-                GraphicsDevice.SetRenderTarget(ShadowRenderTarget);
-                GraphicsDevice.Clear(Color.Black);
+            // Lighting Render
+            GraphicsDevice.SetRenderTarget(LightingRenderTarget);
+            GraphicsDevice.Clear(CurrentState.CurrentLightingColor);
 
-                SpriteBatchShadow.End();
+            SpriteBatchLighting.End();
 
-                ShadowRender = ShadowRenderTarget;
-                GraphicsDevice.SetRenderTarget(null);
+            LightingRender = LightingRenderTarget;
+            GraphicsDevice.SetRenderTarget(null);
 
-                // Lighting Render
-                GraphicsDevice.SetRenderTarget(LightingRenderTarget);
-                GraphicsDevice.Clear(CurrentState.CurrentLightingColor);
+            // Lighting Stencil Render
+            GraphicsDevice.SetRenderTarget(LightingStencilRenderTarget);
+            GraphicsDevice.Clear(CurrentState.CurrentLightingColor);
 
-                SpriteBatchLighting.End();
+            SpriteBatchLightingStencil.End();
 
-                LightingRender = LightingRenderTarget;
-                GraphicsDevice.SetRenderTarget(null);
+            LightingStencilRender = LightingStencilRenderTarget;
+            GraphicsDevice.SetRenderTarget(null);
 
-                // Lighting Stencil Render
-                GraphicsDevice.SetRenderTarget(LightingStencilRenderTarget);
-                GraphicsDevice.Clear(CurrentState.CurrentLightingColor);
+            // Water Render
+            GraphicsDevice.SetRenderTarget(WaterRenderTarget);
+            GraphicsDevice.Clear(Color.Transparent);
 
-                SpriteBatchLightingStencil.End();
+            SpriteBatchWater.End();
 
-                LightingStencilRender = LightingStencilRenderTarget;
-                GraphicsDevice.SetRenderTarget(null);
+            WaterRender = WaterRenderTarget;
+            GraphicsDevice.SetRenderTarget(null);
 
-                // Water Render
-                GraphicsDevice.SetRenderTarget(WaterRenderTarget);
-                GraphicsDevice.Clear(Color.Transparent);
+            // Water Stencil Render
+            GraphicsDevice.SetRenderTarget(WaterStencilRenderTarget);
+            GraphicsDevice.Clear(Color.Black);
 
-                SpriteBatchWater.End();
+            SpriteBatchWaterStencil.End();
 
-                WaterRender = WaterRenderTarget;
-                GraphicsDevice.SetRenderTarget(null);
+            WaterStencilRender = WaterStencilRenderTarget;
+            GraphicsDevice.SetRenderTarget(null);
 
-                // Water Stencil Render
-                GraphicsDevice.SetRenderTarget(WaterStencilRenderTarget);
-                GraphicsDevice.Clear(Color.Black);
+            // Game Render Texture
+            SpriteBatch.Begin();
+            SpriteBatch.Draw(GameRender, Vector2.Zero, Color.White);
+            SpriteBatch.End();
 
-                SpriteBatchWaterStencil.End();
+            // Water Render Texture (Subtractive)
+            WaterStencil.Parameters["WaterRender"].SetValue(WaterRender);
+            WaterStencil.Parameters["WaterStencilRender"].SetValue(WaterStencilRender);
+            WaterStencil.Parameters["Brightness"].SetValue(Brightness);
 
-                WaterStencilRender = WaterStencilRenderTarget;
-                GraphicsDevice.SetRenderTarget(null);
+            SpriteBatch.Begin(blendState: Subtractive, effect: WaterStencil);
+            SpriteBatch.Draw(WaterRender, Vector2.Zero, Color.White);
+            SpriteBatch.End();
 
-                // Game Render Texture
-                SpriteBatch.Begin();
-                SpriteBatch.Draw(GameRender, Vector2.Zero, Color.White);
-                SpriteBatch.End();
+            // Shadow Render Texture (Subtractive)
+            SpriteBatch.Begin(blendState: Subtractive);
+            SpriteBatch.Draw(ShadowRender, Vector2.Zero, Color.White);
+            SpriteBatch.End();
 
-                // Water Render Texture (Subtractive)
-                WaterStencil.Parameters["WaterRender"].SetValue(WaterRender);
-                WaterStencil.Parameters["WaterStencilRender"].SetValue(WaterStencilRender);
-                WaterStencil.Parameters["Brightness"].SetValue(Brightness);
+            LightingStencil.Parameters["LightingRender"].SetValue(LightingRender);
+            LightingStencil.Parameters["LightingStencilRender"].SetValue(LightingStencilRender);
+            LightingStencil.Parameters["CurrentLighting"].SetValue(CurrentState.CurrentLightingColor.ToVector4());
 
-                SpriteBatch.Begin(blendState: Subtractive, effect: WaterStencil);
-                SpriteBatch.Draw(WaterRender, Vector2.Zero, Color.White);
-                SpriteBatch.End();
-
-                // Shadow Render Texture (Subtractive)
-                SpriteBatch.Begin(blendState: Subtractive);
-                SpriteBatch.Draw(ShadowRender, Vector2.Zero, Color.White);
-                SpriteBatch.End();
-
-                LightingStencil.Parameters["LightingRender"].SetValue(LightingRender);
-                LightingStencil.Parameters["LightingStencilRender"].SetValue(LightingStencilRender);
-                LightingStencil.Parameters["CurrentLighting"].SetValue(CurrentState.CurrentLightingColor.ToVector4());
-
-                // Lighting Render Texture (Subtractive)
-                SpriteBatch.Begin(blendState: Subtractive, effect: LightingStencil);
-                SpriteBatch.Draw(LightingRender, Vector2.Zero, Color.White);
-                SpriteBatch.End();
-            }
+            // Lighting Render Texture (Subtractive)
+            SpriteBatch.Begin(blendState: Subtractive, effect: LightingStencil);
+            SpriteBatch.Draw(LightingRender, Vector2.Zero, Color.White);
+            SpriteBatch.End();
+            
 
             // Overlay batch
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);

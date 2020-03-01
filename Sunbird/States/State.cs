@@ -18,7 +18,7 @@ namespace Sunbird.States
         protected ContentManager Content { get; set; }
         protected GraphicsDevice GraphicsDevice { get; set; }
         protected MainGame MainGame { get; set; }
-        public Color CurrentLightingColor { get; set; } = new Color(1, 0, 0);
+        public Color CurrentLightingColor { get; set; } = new Color(0, 1, 0);
 
         public event EventHandler StateChanged;
 

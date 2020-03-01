@@ -61,11 +61,7 @@ namespace Sunbird.External
 
         private BuilderRibbon BuilderRibbon;
 
-        private WaterEngine WaterEngine;
-
-        private int FPS;
-        private int FPSCounter;
-        private Core.Timer FPSTimer = new Core.Timer();
+        private WaterShader WaterShader;
 
         private MapBuilder()
         {
@@ -74,12 +70,6 @@ namespace Sunbird.External
 
         public MapBuilder(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
         {
-            FPSTimer.OnCompleted = () =>
-            {
-                FPS = FPSCounter;
-                FPSCounter = 0;
-            };
-
             StateChanged += MapBuilder_StateChanged;
             if (mainGame.CleanLoad == true)
             {
@@ -114,7 +104,7 @@ namespace Sunbird.External
 
             currentState.LoadingBar.Progress += 20;
 
-            WaterEngine = new WaterEngine(MainGame);
+            WaterShader = new WaterShader(MainGame);
 
             currentState.LoadingBar.Progress += 30;
 
@@ -160,7 +150,7 @@ namespace Sunbird.External
 
             currentState.LoadingBar.Progress += 20;
 
-            WaterEngine = new WaterEngine(MainGame);
+            WaterShader = new WaterShader(MainGame);
 
             currentState.LoadingBar.Progress += 20;
 
@@ -442,10 +432,6 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
-                //FPSCounter++;
-                //FPSTimer.WaitForSeconds(gameTime, 1);
-
-                ShadowDict = new Dictionary<Coord, List<Sprite>>();
                 // Defined with respect to current mouse position.
                 var relativeTopFaceCoords = World.TopFace_PointToRelativeCoord(MainGame.Camera, Altitude);
                 var topFaceCoords = World.TopFace_PointToCoord(MainGame.Camera);
@@ -463,7 +449,7 @@ namespace Sunbird.External
 
                 if (Peripherals.KeyTapped(Keys.E) && MainGame.IsActive)
                 {
-                    CurrentLightingColor = CurrentLightingColor == new Color(1, 0, 0) ? Color.LightGray : new Color(1, 0, 0);
+                    CurrentLightingColor = CurrentLightingColor == new Color(0, 1, 0) ? new Color(0, 220, 0) : new Color(0, 1, 0);
                 }
 
                 if (Peripherals.KeyTapped(Keys.Left) && MainGame.IsActive)
@@ -635,6 +621,8 @@ namespace Sunbird.External
                 // Player management.
                 Player.Altitude = 1;
 
+                #region Pre Loop
+
                 // Rearrange sprites into their correct altitude layer.
                 var altitudeList = LayerMap.Keys.ToList();
                 altitudeList.Sort();
@@ -666,7 +654,13 @@ namespace Sunbird.External
                     }
                 }
 
+                #endregion
+
+                #region Main Loop
+
+                ShadowDict = new Dictionary<Coord, List<Sprite>>();
                 Sprite clickedSprite = null;
+
                 foreach (var sprite in World.Sort(LayerMap))
                 {
                     sprite.Update(gameTime);
@@ -695,7 +689,9 @@ namespace Sunbird.External
                     clickedSprite.OnClicked();
                 }
 
-                WaterEngine.Update(gameTime);
+                #endregion
+
+                WaterShader.Update(gameTime);
 
                 // Move from DeferredOverlay to Overlay.
                 for (int i = 0; i < DeferredOverlay.Count(); i++)
@@ -749,12 +745,13 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
-                FPSCounter++;
-                FPSTimer.WaitForSeconds(gameTime, 1);
+                GraphicsHelper.CalculateFPS(gameTime);
                 // FIXME: make this circular and/or coord based?
                 var rect = new Rectangle((int)Player.Position.X - 10000, (int)Player.Position.Y - 10000, 20000, 20000);
 
-                WaterEngine.Draw(gameTime, MainGame.SpriteBatchWater);
+                WaterShader.Draw(gameTime, MainGame.SpriteBatchWater);
+
+                #region Main Loop
 
                 // Draw sorted sprites;
                 foreach (var sprite in World.Sort(LayerMap))
@@ -785,15 +782,22 @@ namespace Sunbird.External
                                 // Special case because number of frames can vary but AntiShadow remains the same.
                                 spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
                                 spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
-                                if (sprite.Animator.SpriteSheet.TexturePath == "Cubes/WaterCubeTop")
+                                if (sprite.Light != null)
                                 {
-                                    //MainGame.SpriteBatchWater.Draw(sprite.Shadow, sprite.Animator.Position, Color.White);
-                                    MainGame.SpriteBatchWaterStencil.Draw(sprite.Shadow, sprite.Animator.Position, Color.White);
+                                    spriteBatchLightingStencil.Draw(sprite.Light, sprite.Animator.Position, Color.White);
+                                }
+                                else 
+                                {
+                                    //spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                                }
+
+                                if (sprite.Animator.SpriteSheet.TexturePath != "Cubes/WaterCubeTop")
+                                {
+                                    MainGame.SpriteBatchWaterStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);                      
                                 }
                                 else
                                 {
-                                    //MainGame.SpriteBatchWater.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
-                                    MainGame.SpriteBatchWaterStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, Color.White);
+                                    MainGame.SpriteBatchWaterStencil.Draw(sprite.Shadow, sprite.Animator.Position, Color.White);
                                 }
                             }
                             else
@@ -801,9 +805,23 @@ namespace Sunbird.External
                                 // Sprites here have AntiShadow generated automatically for entire sheet so use SheetViewArea() to retrieve view rectangle.
                                 spriteBatchShadow.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                                 spriteBatchLightingStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                                if (sprite.Light != null)
+                                {
+                                    spriteBatchLighting.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White);
+                                    
+                                }
+                                else if (sprite is Deco)
+                                {
+                                    var deco = sprite as Deco;
+                                    if (deco.Dimensions.Z > 2 && deco.Dimensions.X > 1)
+                                    {
+                                        spriteBatchLighting.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
+                                    }
+                                }
                                 MainGame.SpriteBatchWaterStencil.Draw(sprite.AntiShadow, sprite.Animator.Position, sprite.Animator.SheetViewArea(), Color.White);
                             }
                         }
+
                         if (ShadowDict.ContainsKey(sprite.Coords))
                         {
                             foreach (var higherSprite in ShadowDict[sprite.Coords])
@@ -826,13 +844,10 @@ namespace Sunbird.External
                             }
                         }
 
-                        // Lighting
-                        if (sprite.Light != null)
-                        {
-                            spriteBatchLighting.Draw(sprite.Light, sprite.Animator.Position + new Vector2(-180, -90), Color.White); // FIXME
-                        }
                     }
                 }
+
+                #endregion
             }
         }
 
@@ -847,7 +862,7 @@ namespace Sunbird.External
 
             spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetScaledMouseWorldPosition(MainGame.Camera).ToString() }", MessageLogBG.Position + new Vector2(12, 12), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude) }", MessageLogBG.Position + new Vector2(12,32), Color.White);            
-            spriteBatch.DrawString(MainGame.DefaultFont, $"FPS: { FPS.ToString() }", MessageLogBG.Position + new Vector2(12, 52), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"FPS: { GraphicsHelper.FPS.ToString() }", MessageLogBG.Position + new Vector2(12, 52), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", MessageLogBG.Position + new Vector2(12, 72), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", MessageLogBG.Position + new Vector2(12, 92), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Clicked sprite name: \n{ ClickedSpriteName }", MessageLogBG.Position + new Vector2(12, 112), Color.White);
