@@ -62,7 +62,10 @@ namespace Sunbird.External
         private BuilderRibbon BuilderRibbon;
 
         private WaterEngine WaterEngine;
-        
+
+        private int FPS;
+        private int FPSCounter;
+        private Core.Timer FPSTimer = new Core.Timer();
 
         private MapBuilder()
         {
@@ -71,6 +74,12 @@ namespace Sunbird.External
 
         public MapBuilder(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
         {
+            FPSTimer.OnCompleted = () =>
+            {
+                FPS = FPSCounter;
+                FPSCounter = 0;
+            };
+
             StateChanged += MapBuilder_StateChanged;
             if (mainGame.CleanLoad == true)
             {
@@ -433,6 +442,9 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+                //FPSCounter++;
+                //FPSTimer.WaitForSeconds(gameTime, 1);
+
                 ShadowDict = new Dictionary<Coord, List<Sprite>>();
                 // Defined with respect to current mouse position.
                 var relativeTopFaceCoords = World.TopFace_PointToRelativeCoord(MainGame.Camera, Altitude);
@@ -737,6 +749,8 @@ namespace Sunbird.External
         {
             if (!IsLoading)
             {
+                FPSCounter++;
+                FPSTimer.WaitForSeconds(gameTime, 1);
                 // FIXME: make this circular and/or coord based?
                 var rect = new Rectangle((int)Player.Position.X - 10000, (int)Player.Position.Y - 10000, 20000, 20000);
 
@@ -833,7 +847,7 @@ namespace Sunbird.External
 
             spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetScaledMouseWorldPosition(MainGame.Camera).ToString() }", MessageLogBG.Position + new Vector2(12, 12), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude) }", MessageLogBG.Position + new Vector2(12,32), Color.White);            
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Altitude: { Altitude.ToString() }", MessageLogBG.Position + new Vector2(12, 52), Color.White);
+            spriteBatch.DrawString(MainGame.DefaultFont, $"FPS: { FPS.ToString() }", MessageLogBG.Position + new Vector2(12, 52), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", MessageLogBG.Position + new Vector2(12, 72), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", MessageLogBG.Position + new Vector2(12, 92), Color.White);
             spriteBatch.DrawString(MainGame.DefaultFont, $"Clicked sprite name: \n{ ClickedSpriteName }", MessageLogBG.Position + new Vector2(12, 112), Color.White);

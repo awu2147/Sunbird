@@ -89,10 +89,16 @@ namespace Sunbird
 
         public MainGame()
         {
-            Graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);           
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            IsFixedTimeStep = true;
+
+            // Framerate Settings.
+#if false
+            Graphics.SynchronizeWithVerticalRetrace = false;
+            TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
+#endif
+            IsFixedTimeStep = true;          
 
             Serializer.ExtraTypes = new Type[]
             {

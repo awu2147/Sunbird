@@ -10,7 +10,7 @@ namespace Sunbird.Core
         public bool IsDone { get; set; } = true;
 
         [XmlIgnore]
-        public Action OnCompleted { get; set; }
+        public Action OnCompleted { get; set; } = () => { };
 
         public Timer()
         {

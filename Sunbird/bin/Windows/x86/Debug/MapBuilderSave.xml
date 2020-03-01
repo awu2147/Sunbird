@@ -67908,8 +67908,8 @@
               </Animator>
               <Alpha>0.3</Alpha>
               <Position>
-                <X>1116</X>
-                <Y>-594</Y>
+                <X>792</X>
+                <Y>-432</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
@@ -67917,10 +67917,10 @@
               </PositionOffset>
               <Coords>
                 <X>-1</X>
-                <Y>32</Y>
+                <Y>23</Y>
               </Coords>
               <Altitude>0</Altitude>
-              <DrawPriority>-1000</DrawPriority>
+              <DrawPriority>1</DrawPriority>
               <IsHidden>false</IsHidden>
               <Image xsi:type="Deco">
                 <Animator>
@@ -67930,20 +67930,20 @@
                     <Columns>6</Columns>
                   </SpriteSheet>
                   <StartFrame>0</StartFrame>
-                  <CurrentFrame>26</CurrentFrame>
+                  <CurrentFrame>6</CurrentFrame>
                   <FramesInLoop>30</FramesInLoop>
-                  <FrameCounter>26</FrameCounter>
+                  <FrameCounter>6</FrameCounter>
                   <FrameSpeed>0.0166</FrameSpeed>
                   <AnimState>Loop</AnimState>
                   <Timer>
                     <TotalElapsedTime>0.0166667</TotalElapsedTime>
-                    <IsDone>false</IsDone>
+                    <IsDone>true</IsDone>
                   </Timer>
                 </Animator>
-                <Alpha>0.3</Alpha>
+                <Alpha>1</Alpha>
                 <Position>
-                  <X>1116</X>
-                  <Y>-594</Y>
+                  <X>792</X>
+                  <Y>-432</Y>
                 </Position>
                 <PositionOffset>
                   <X>0</X>
@@ -72888,16 +72888,16 @@
               </Animator>
               <Alpha>1</Alpha>
               <Position>
-                <X>540</X>
-                <Y>26</Y>
+                <X>401</X>
+                <Y>-27</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
                 <Y>-21</Y>
               </PositionOffset>
               <Coords>
-                <X>9</X>
-                <Y>6</Y>
+                <X>6</X>
+                <Y>5</Y>
               </Coords>
               <Altitude>1</Altitude>
               <DrawPriority>0</DrawPriority>
@@ -72905,7 +72905,7 @@
               <LightPath>Temp/PlayerLight</LightPath>
               <Direction>South</Direction>
               <Movement>Standing</Movement>
-              <Speed>3</Speed>
+              <Speed>6</Speed>
             </Sprite>
           </Sprite>
           <Sprite>
@@ -78289,14 +78289,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>1</CurrentFrame>
+                <CurrentFrame>27</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>1</FrameCounter>
+                <FrameCounter>27</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.0166667</TotalElapsedTime>
-                  <IsDone>false</IsDone>
+                  <IsDone>true</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -78372,14 +78372,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>29</CurrentFrame>
+                <CurrentFrame>25</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>29</FrameCounter>
+                <FrameCounter>25</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.0166667</TotalElapsedTime>
-                  <IsDone>false</IsDone>
+                  <IsDone>true</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -79067,14 +79067,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>21</CurrentFrame>
+                <CurrentFrame>17</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>21</FrameCounter>
+                <FrameCounter>17</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.0166667</TotalElapsedTime>
-                  <IsDone>false</IsDone>
+                  <IsDone>true</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -80877,16 +80877,16 @@
     </Animator>
     <Alpha>1</Alpha>
     <Position>
-      <X>540</X>
-      <Y>26</Y>
+      <X>401</X>
+      <Y>-27</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
       <Y>-21</Y>
     </PositionOffset>
     <Coords>
-      <X>9</X>
-      <Y>6</Y>
+      <X>6</X>
+      <Y>5</Y>
     </Coords>
     <Altitude>1</Altitude>
     <DrawPriority>0</DrawPriority>
@@ -80894,7 +80894,7 @@
     <LightPath>Temp/PlayerLight</LightPath>
     <Direction>South</Direction>
     <Movement>Standing</Movement>
-    <Speed>3</Speed>
+    <Speed>6</Speed>
   </Player>
   <GhostMarker>
     <Animator>
@@ -80916,8 +80916,8 @@
     </Animator>
     <Alpha>0.3</Alpha>
     <Position>
-      <X>1116</X>
-      <Y>-594</Y>
+      <X>792</X>
+      <Y>-432</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
@@ -80925,10 +80925,10 @@
     </PositionOffset>
     <Coords>
       <X>-1</X>
-      <Y>32</Y>
+      <Y>23</Y>
     </Coords>
     <Altitude>0</Altitude>
-    <DrawPriority>-1000</DrawPriority>
+    <DrawPriority>1</DrawPriority>
     <IsHidden>false</IsHidden>
     <Image xsi:type="Deco">
       <Animator>
@@ -80938,20 +80938,20 @@
           <Columns>6</Columns>
         </SpriteSheet>
         <StartFrame>0</StartFrame>
-        <CurrentFrame>26</CurrentFrame>
+        <CurrentFrame>6</CurrentFrame>
         <FramesInLoop>30</FramesInLoop>
-        <FrameCounter>26</FrameCounter>
+        <FrameCounter>6</FrameCounter>
         <FrameSpeed>0.0166</FrameSpeed>
         <AnimState>Loop</AnimState>
         <Timer>
           <TotalElapsedTime>0.0166667</TotalElapsedTime>
-          <IsDone>false</IsDone>
+          <IsDone>true</IsDone>
         </Timer>
       </Animator>
-      <Alpha>0.3</Alpha>
+      <Alpha>1</Alpha>
       <Position>
-        <X>1116</X>
-        <Y>-594</Y>
+        <X>792</X>
+        <Y>-432</Y>
       </Position>
       <PositionOffset>
         <X>0</X>
