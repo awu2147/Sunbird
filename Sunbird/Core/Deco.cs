@@ -65,8 +65,26 @@ namespace Sunbird.Core
         public void LoadContent(MainGame mainGame)
         {
             Texture = mainGame.Content.Load<Texture2D>(Path);
-            AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, Texture);
-            SelfShadow = GraphicsHelper.GetSelfShadow(mainGame, Texture);
+
+            if (GraphicsHelper.AntiShadowLibrary.ContainsKey(Path))
+            {
+                AntiShadow = GraphicsHelper.AntiShadowLibrary[Path];
+            }
+            else
+            {
+                AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, Texture);
+                GraphicsHelper.AntiShadowLibrary.Add(Path, AntiShadow);
+            }
+
+            if (GraphicsHelper.SelfShadowLibrary.ContainsKey(Path))
+            {
+                SelfShadow = GraphicsHelper.SelfShadowLibrary[Path];
+            }
+            else
+            {
+                SelfShadow = GraphicsHelper.GetSelfShadow(mainGame, Texture);
+                GraphicsHelper.SelfShadowLibrary.Add(Path, SelfShadow);
+            }
         }
 
         public void NextFrame()

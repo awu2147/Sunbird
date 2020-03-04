@@ -75,7 +75,27 @@ namespace Sunbird.Core
             {
                 ReconfigureAnimator(animArgs);
             }
-            GraphicsHelper.GenerateShadowTextures(mainGame, spriteSheet.Texture, ref AntiShadow, ref SelfShadow);
+
+            if (GraphicsHelper.AntiShadowLibrary.ContainsKey(Animator.SpriteSheet.TexturePath))
+            {
+                AntiShadow = GraphicsHelper.AntiShadowLibrary[Animator.SpriteSheet.TexturePath];
+            }
+            else
+            {
+                AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, Animator.SpriteSheet.Texture);
+                GraphicsHelper.AntiShadowLibrary.Add(Animator.SpriteSheet.TexturePath, AntiShadow);
+            }
+
+            if (GraphicsHelper.SelfShadowLibrary.ContainsKey(Animator.SpriteSheet.TexturePath))
+            {
+                SelfShadow = GraphicsHelper.SelfShadowLibrary[Animator.SpriteSheet.TexturePath];
+            }
+            else
+            {
+                SelfShadow = GraphicsHelper.GetSelfShadow(mainGame, Animator.SpriteSheet.Texture);
+                GraphicsHelper.SelfShadowLibrary.Add(Animator.SpriteSheet.TexturePath, SelfShadow);
+            }
+
             if (alignment == Alignment.TopLeft)
             {
                 Position = position;
@@ -122,7 +142,28 @@ namespace Sunbird.Core
                 {
                     // This is very slow, assign textures through libraries where possible.
                     // Also results in memory leak if called after instantiation (use SafeLoadContent instead).
-                    GraphicsHelper.GenerateShadowTextures(mainGame, Animator.SpriteSheet.Texture, ref AntiShadow, ref SelfShadow);
+
+                    if (GraphicsHelper.AntiShadowLibrary.ContainsKey(Animator.SpriteSheet.TexturePath))
+                    {
+                        AntiShadow = GraphicsHelper.AntiShadowLibrary[Animator.SpriteSheet.TexturePath];
+                    }
+                    else
+                    {
+                        AntiShadow = GraphicsHelper.GetAntiShadow(mainGame, Animator.SpriteSheet.Texture);
+                        GraphicsHelper.AntiShadowLibrary.Add(Animator.SpriteSheet.TexturePath, AntiShadow);
+                    }
+
+                    if (GraphicsHelper.SelfShadowLibrary.ContainsKey(Animator.SpriteSheet.TexturePath))
+                    {
+                        SelfShadow = GraphicsHelper.SelfShadowLibrary[Animator.SpriteSheet.TexturePath];
+                    }
+                    else
+                    {
+                        SelfShadow = GraphicsHelper.GetSelfShadow(mainGame, Animator.SpriteSheet.Texture);
+                        GraphicsHelper.SelfShadowLibrary.Add(Animator.SpriteSheet.TexturePath, SelfShadow);
+                    }
+                    Debug.Print(GraphicsHelper.AntiShadowLibrary.Count().ToString());
+                    Debug.Print(GraphicsHelper.SelfShadowLibrary.Count().ToString());
                 }
             }
             // These are typically null if dynamic generation of texture occurs at some point in time i.e. here or library creation.

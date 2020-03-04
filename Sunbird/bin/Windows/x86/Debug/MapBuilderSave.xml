@@ -67908,19 +67908,19 @@
               </Animator>
               <Alpha>0.3</Alpha>
               <Position>
-                <X>936</X>
-                <Y>-648</Y>
+                <X>36</X>
+                <Y>-18</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
                 <Y>0</Y>
               </PositionOffset>
               <Coords>
-                <X>-5</X>
-                <Y>31</Y>
+                <X>0</X>
+                <Y>1</Y>
               </Coords>
               <Altitude>0</Altitude>
-              <DrawPriority>-1000</DrawPriority>
+              <DrawPriority>1</DrawPriority>
               <IsHidden>false</IsHidden>
               <Image xsi:type="Cube">
                 <Animator>
@@ -67930,7 +67930,7 @@
                     <Columns>4</Columns>
                   </SpriteSheet>
                   <StartFrame>0</StartFrame>
-                  <CurrentFrame>0</CurrentFrame>
+                  <CurrentFrame>6</CurrentFrame>
                   <FramesInLoop>8</FramesInLoop>
                   <FrameCounter>0</FrameCounter>
                   <FrameSpeed>0.133</FrameSpeed>
@@ -67940,10 +67940,10 @@
                     <IsDone>true</IsDone>
                   </Timer>
                 </Animator>
-                <Alpha>1</Alpha>
+                <Alpha>0.3</Alpha>
                 <Position>
-                  <X>936</X>
-                  <Y>-648</Y>
+                  <X>36</X>
+                  <Y>-18</Y>
                 </Position>
                 <PositionOffset>
                   <X>0</X>
@@ -72861,16 +72861,16 @@
               </Animator>
               <Alpha>1</Alpha>
               <Position>
-                <X>306</X>
-                <Y>-3</Y>
+                <X>174</X>
+                <Y>99</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
                 <Y>-21</Y>
               </PositionOffset>
               <Coords>
-                <X>5</X>
-                <Y>3</Y>
+                <X>6</X>
+                <Y>-1</Y>
               </Coords>
               <Altitude>1</Altitude>
               <DrawPriority>0</DrawPriority>
@@ -77657,14 +77657,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>11</CurrentFrame>
+                <CurrentFrame>15</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>11</FrameCounter>
+                <FrameCounter>15</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.017</TotalElapsedTime>
-                  <IsDone>true</IsDone>
+                  <IsDone>false</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -78173,14 +78173,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>3</CurrentFrame>
+                <CurrentFrame>7</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>3</FrameCounter>
+                <FrameCounter>7</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.017</TotalElapsedTime>
-                  <IsDone>true</IsDone>
+                  <IsDone>false</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -80998,14 +80998,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>14</CurrentFrame>
+                <CurrentFrame>19</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>14</FrameCounter>
+                <FrameCounter>19</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.017</TotalElapsedTime>
-                  <IsDone>false</IsDone>
+                  <IsDone>true</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -81081,14 +81081,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>23</CurrentFrame>
+                <CurrentFrame>27</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>23</FrameCounter>
+                <FrameCounter>27</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.017</TotalElapsedTime>
-                  <IsDone>true</IsDone>
+                  <IsDone>false</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -81164,14 +81164,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>26</CurrentFrame>
+                <CurrentFrame>1</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>26</FrameCounter>
+                <FrameCounter>1</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.017</TotalElapsedTime>
-                  <IsDone>false</IsDone>
+                  <IsDone>true</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -83589,14 +83589,14 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>20</CurrentFrame>
+                <CurrentFrame>24</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>20</FrameCounter>
+                <FrameCounter>24</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
                   <TotalElapsedTime>0.017</TotalElapsedTime>
-                  <IsDone>true</IsDone>
+                  <IsDone>false</IsDone>
                 </Timer>
               </Animator>
               <Alpha>1</Alpha>
@@ -84319,6 +84319,42 @@
         </SpriteListOfSprite>
       </value>
     </item>
+    <item>
+      <key>
+        <int>4</int>
+      </key>
+      <value>
+        <SpriteListOfSprite>
+          <OccupiedCoords>
+            <ArrayOfCoord />
+          </OccupiedCoords>
+        </SpriteListOfSprite>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>5</int>
+      </key>
+      <value>
+        <SpriteListOfSprite>
+          <OccupiedCoords>
+            <ArrayOfCoord />
+          </OccupiedCoords>
+        </SpriteListOfSprite>
+      </value>
+    </item>
+    <item>
+      <key>
+        <int>6</int>
+      </key>
+      <value>
+        <SpriteListOfSprite>
+          <OccupiedCoords>
+            <ArrayOfCoord />
+          </OccupiedCoords>
+        </SpriteListOfSprite>
+      </value>
+    </item>
   </LayerMap>
   <IsLoading>false</IsLoading>
   <Altitude>0</Altitude>
@@ -84342,16 +84378,16 @@
     </Animator>
     <Alpha>1</Alpha>
     <Position>
-      <X>306</X>
-      <Y>-3</Y>
+      <X>174</X>
+      <Y>99</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
       <Y>-21</Y>
     </PositionOffset>
     <Coords>
-      <X>5</X>
-      <Y>3</Y>
+      <X>6</X>
+      <Y>-1</Y>
     </Coords>
     <Altitude>1</Altitude>
     <DrawPriority>0</DrawPriority>
@@ -84381,19 +84417,19 @@
     </Animator>
     <Alpha>0.3</Alpha>
     <Position>
-      <X>936</X>
-      <Y>-648</Y>
+      <X>36</X>
+      <Y>-18</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
       <Y>0</Y>
     </PositionOffset>
     <Coords>
-      <X>-5</X>
-      <Y>31</Y>
+      <X>0</X>
+      <Y>1</Y>
     </Coords>
     <Altitude>0</Altitude>
-    <DrawPriority>-1000</DrawPriority>
+    <DrawPriority>1</DrawPriority>
     <IsHidden>false</IsHidden>
     <Image xsi:type="Cube">
       <Animator>
@@ -84403,7 +84439,7 @@
           <Columns>4</Columns>
         </SpriteSheet>
         <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
+        <CurrentFrame>6</CurrentFrame>
         <FramesInLoop>8</FramesInLoop>
         <FrameCounter>0</FrameCounter>
         <FrameSpeed>0.133</FrameSpeed>
@@ -84413,10 +84449,10 @@
           <IsDone>true</IsDone>
         </Timer>
       </Animator>
-      <Alpha>1</Alpha>
+      <Alpha>0.3</Alpha>
       <Position>
-        <X>936</X>
-        <Y>-648</Y>
+        <X>36</X>
+        <Y>-18</Y>
       </Position>
       <PositionOffset>
         <X>0</X>
@@ -84459,7 +84495,7 @@
         <Columns>4</Columns>
       </SpriteSheet>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>7</CurrentFrame>
       <FramesInLoop>8</FramesInLoop>
       <FrameCounter>0</FrameCounter>
       <FrameSpeed>0.133</FrameSpeed>
@@ -84471,8 +84507,8 @@
     </Animator>
     <Alpha>1</Alpha>
     <Position>
-      <X>718</X>
-      <Y>730</Y>
+      <X>668</X>
+      <Y>680</Y>
     </Position>
     <PositionOffset>
       <X>0</X>

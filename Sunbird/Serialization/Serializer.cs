@@ -15,11 +15,13 @@ using Sunbird.States;
 using Sunbird.Core;
 using Sunbird.Controllers;
 using System.Xml.Schema;
+using Sunbird.External;
 
 namespace Sunbird.Serialization
 {
     public static class Serializer
-    {
+    {             
+
         public static Type[] ExtraTypes { get; set; } = new Type[] { };
 
         public static T ReadXML<T>(XmlSerializer deserializer, string path)

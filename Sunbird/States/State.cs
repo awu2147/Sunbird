@@ -30,6 +30,13 @@ namespace Sunbird.States
 
         }
 
+        public State(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content, string path)
+        {
+            Content = content;
+            GraphicsDevice = graphicsDevice;
+            MainGame = mainGame;
+        }
+
         public State(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content)
         {
             Content = content;

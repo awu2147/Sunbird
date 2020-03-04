@@ -29,7 +29,7 @@ namespace Sunbird.External
 
         private Sprite MessageLogBG;
 
-        private string SaveFilePath = "MapBuilderSave.xml";
+        private readonly string SaveFilePath;
 
         /// <summary>
         /// For optimization reasons, create and assign value to this field during an update() loop so it is ready to be used in the draw() loop.
@@ -69,16 +69,16 @@ namespace Sunbird.External
 
         }
 
-        public MapBuilder(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content) : base(mainGame, graphicsDevice, content)
+        public MapBuilder(MainGame mainGame, GraphicsDevice graphicsDevice, ContentManager content, string path) : base(mainGame, graphicsDevice, content, path)
         {
+            SaveFilePath = path;
             StateChanged += MapBuilder_StateChanged;
             if (mainGame.CleanLoad == true)
             {
-                new Thread(() => CreateContent()).Start();
+                Task.Run(() => CreateContent());
             }
             else
-            {
-                //new Thread(() => LoadContentFromFile()).Start();          
+            {      
                 Task.Run(() => LoadContentFromFile());
             }
         }
@@ -99,10 +99,6 @@ namespace Sunbird.External
 
             currentState.LoadingBar.Progress += 20;
 
-            CreateOverlay();
-
-            currentState.LoadingBar.Progress += 20;
-
             WaterShader = new WaterShader(MainGame);
 
             currentState.LoadingBar.Progress += 30;
@@ -120,6 +116,10 @@ namespace Sunbird.External
             };
             // Should this be Add or AddCheck?
             LayerMap[Altitude].Add(Player);
+
+            currentState.LoadingBar.Progress += 20;
+
+            CreateOverlay();
 
             // Instantiated BuildMode is _Cube. GhostMarker needs CubePreview to exist to morph so we must create it after the latter (which belongs to the overlay).
             GhostMarker = new GhostMarker(MainGame, SpriteSheet.CreateNew(MainGame, "Temp/TopFaceSelectionMarker")) { DrawPriority = 1 };
@@ -142,10 +142,6 @@ namespace Sunbird.External
 
             MainGame.CurrentState = Templates.LoadingScreenTemplates[0].CreateLoadingScreen(MainGame, GraphicsDevice, Content) as State;
             var currentState = MainGame.CurrentState as ILoadingScreen;
-
-            currentState.LoadingBar.Progress += 20;
-
-            CreateOverlay();
 
             currentState.LoadingBar.Progress += 20;
 
@@ -178,6 +174,10 @@ namespace Sunbird.External
                     sprite.LoadContent(MainGame, GraphicsDevice, Content);
                 }
             }
+
+            currentState.LoadingBar.Progress += 20;
+
+            CreateOverlay();
 
             currentState.LoadingBar.Progress += 20;
 
@@ -448,6 +448,26 @@ namespace Sunbird.External
                 if (Peripherals.KeyTapped(Keys.E) && MainGame.IsActive)
                 {
                     CurrentLightingColor = CurrentLightingColor == new Color(0, 1, 0) ? new Color(0, 220, 0) : new Color(0, 1, 0);
+                }
+
+                if (Peripherals.KeyTapped(Keys.M) && MainGame.IsActive)
+                {
+                    Peripherals.ScrollWheelUp -= Peripherals_ScrollWheelUp;
+                    Peripherals.ScrollWheelDown -= Peripherals_ScrollWheelDown;
+                    MainGame.Exiting -= MainGame_Exiting;
+                    Serializer.WriteXML<MapBuilder>(MapBuilderSerializer, this, SaveFilePath);
+                    MainGame.CurrentState = new MapBuilder(MainGame, GraphicsDevice, Content, "housetest.xml");
+                    IsLoading = true;
+                }
+
+                if (Peripherals.KeyTapped(Keys.N) && MainGame.IsActive)
+                {
+                    Peripherals.ScrollWheelUp -= Peripherals_ScrollWheelUp;
+                    Peripherals.ScrollWheelDown -= Peripherals_ScrollWheelDown;
+                    MainGame.Exiting -= MainGame_Exiting;
+                    Serializer.WriteXML<MapBuilder>(MapBuilderSerializer, this, SaveFilePath);
+                    MainGame.CurrentState = new MapBuilder(MainGame, GraphicsDevice, Content, "MapBuilderSave.xml");
+                    IsLoading = true;
                 }
 
                 if (Peripherals.KeyTapped(Keys.Left) && MainGame.IsActive)
@@ -851,19 +871,26 @@ namespace Sunbird.External
 
         public override void DrawOverlay(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (var sprite in Overlay)
+            if (!IsLoading)
             {
-                sprite.Draw(gameTime, spriteBatch);
+                foreach (var sprite in Overlay)
+                {
+                    sprite.Draw(gameTime, spriteBatch);
+                }
+
+                // When loading the following objects can be null due to latency.
+                if (MessageLogBG != null)
+                {
+                    MessageLogBG.Draw(gameTime, spriteBatch);
+
+                    spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetScaledMouseWorldPosition(MainGame.Camera).ToString() }", MessageLogBG.Position + new Vector2(12, 12), Color.White);
+                    spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude) }", MessageLogBG.Position + new Vector2(12, 32), Color.White);
+                    spriteBatch.DrawString(MainGame.DefaultFont, $"FPS: { GraphicsHelper.FPS.ToString() }", MessageLogBG.Position + new Vector2(12, 52), Color.White);
+                    spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player?.Position.ToString() }", MessageLogBG.Position + new Vector2(12, 72), Color.White);
+                    spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player?.Coords.ToString() }", MessageLogBG.Position + new Vector2(12, 92), Color.White);
+                    spriteBatch.DrawString(MainGame.DefaultFont, $"Clicked Sprite Name: \n{ ClickedSpriteName }", MessageLogBG.Position + new Vector2(12, 112), Color.White);
+                }
             }
-
-            MessageLogBG.Draw(gameTime, spriteBatch);
-
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse World Position {Peripherals.GetScaledMouseWorldPosition(MainGame.Camera).ToString() }", MessageLogBG.Position + new Vector2(12, 12), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Mouse Coords {World.TopFace_PointToRelativeCoord(Peripherals.GetMouseWorldPosition(MainGame.Camera), Altitude) }", MessageLogBG.Position + new Vector2(12,32), Color.White);            
-            spriteBatch.DrawString(MainGame.DefaultFont, $"FPS: { GraphicsHelper.FPS.ToString() }", MessageLogBG.Position + new Vector2(12, 52), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Position: { Player.Position.ToString() }", MessageLogBG.Position + new Vector2(12, 72), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Player Coords: { Player.Coords.ToString() }", MessageLogBG.Position + new Vector2(12, 92), Color.White);
-            spriteBatch.DrawString(MainGame.DefaultFont, $"Clicked sprite name: \n{ ClickedSpriteName }", MessageLogBG.Position + new Vector2(12, 112), Color.White);
         }
     }
 

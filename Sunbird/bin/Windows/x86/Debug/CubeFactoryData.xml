@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CubeFactoryData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <IsRandomTop>false</IsRandomTop>
+  <IsRandomTop>true</IsRandomTop>
   <IsRandomBase>false</IsRandomBase>
   <CurrentCubeTopMetaData>
     <Path>Cubes/SandCubeTop</Path>
@@ -50,7 +50,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>3</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>2</CurrentFrame>
       <FrameCount>3</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
@@ -120,7 +120,7 @@
       <SheetRows>1</SheetRows>
       <SheetColumns>2</SheetColumns>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>0</CurrentFrame>
+      <CurrentFrame>1</CurrentFrame>
       <FrameCount>2</FrameCount>
       <FrameSpeed>0.133</FrameSpeed>
       <AnimState>None</AnimState>
