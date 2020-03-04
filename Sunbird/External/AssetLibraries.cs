@@ -142,6 +142,8 @@ namespace Sunbird.External
             {
                 new DecoMetaData(){Path = "Temp/House", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
                 PositionOffset = new Vector2(-87, -99), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName },
+                new DecoMetaData(){Path = "Temp/BeachHut", SheetRows = 1, SheetColumns = 2, FrameCount = 2, AnimState = AnimationState.None,
+                PositionOffset = new Vector2(-72, -114), Dimensions = new Dimension(3, 3, 3), TypeName = typeof(Deco).FullName },
             };
 
             // Generate library Textures, AntiShadows, and SelfShadows from Path and populate master DecoMetaDataLibrary (Dictionary).

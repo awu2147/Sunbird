@@ -19,6 +19,7 @@ using Sunbird.Core;
 using Sunbird.Controllers;
 using Sunbird.Serialization;
 using Sunbird.GUI;
+using System.Collections;
 
 namespace Sunbird.External
 {
@@ -77,11 +78,9 @@ namespace Sunbird.External
             }
             else
             {
-                //new Thread(() => LoadContentFromFile()).Start();
-                //var task = new Task(() => LoadContentFromFile());
+                //new Thread(() => LoadContentFromFile()).Start();          
                 Task.Run(() => LoadContentFromFile());
             }
-            
         }
 
         private void MapBuilder_StateChanged(object sender, EventArgs e)
@@ -188,12 +187,11 @@ namespace Sunbird.External
             Peripherals.ScrollWheelUp += Peripherals_ScrollWheelUp;
             Peripherals.ScrollWheelDown += Peripherals_ScrollWheelDown;
             MainGame.Exiting += MainGame_Exiting;
-                        
         }
 
         private void CreateOverlay()
         {
-            //CreateRibbon();
+            // Create ribbon.
             BuilderRibbon = new BuilderRibbon(MainGame, this, new Vector2(3, 3));
             BuilderRibbon.LoadContent();
             Overlay.Add(BuilderRibbon);

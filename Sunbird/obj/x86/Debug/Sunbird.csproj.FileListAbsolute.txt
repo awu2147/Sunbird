@@ -110,3 +110,5 @@ C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\_100
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\flame2.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\flame.xnb
 C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Decos\1x1\3\TotemTorch.xnb
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Sunbird.exe.config
+C:\Users\wuand\Documents\Sunbird\Sunbird\bin\Windows\x86\Debug\Content\Temp\BeachHut.xnb

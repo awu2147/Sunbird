@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Effects/LightingStencil.fx</SourceFile>
-  <SourceTime>2020-03-01T19:58:35.198798+00:00</SourceTime>
+  <SourceTime>2020-03-01T22:36:38.962323+00:00</SourceTime>
   <DestFile>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/bin/Windows/Effects/LightingStencil.xnb</DestFile>
-  <DestTime>2020-03-01T20:00:36.3344434+00:00</DestTime>
+  <DestTime>2020-03-03T23:28:11.8818904+00:00</DestTime>
   <Importer>EffectImporter</Importer>
   <ImporterTime>2018-12-08T16:35:54+00:00</ImporterTime>
   <Processor>EffectProcessor</Processor>

@@ -81,6 +81,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/RibbonBackground.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/GUI/ScrollBarG.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/_100x100px.png</File>
+    <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/BeachHut.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/CubeAntiShadow.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/CubeShadow.png</File>
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/dark_bg.png</File>
@@ -96,6 +97,7 @@
     <File>C:/Users/wuand/Documents/Sunbird/Sunbird/Content/Temp/TopFaceSelectionMarker.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
