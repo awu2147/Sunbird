@@ -765,7 +765,7 @@ namespace Sunbird.External
             {
                 GraphicsHelper.CalculateFPS(gameTime);
                 // FIXME: make this circular and/or coord based?
-                var rect = new Rectangle((int)Player.Position.X - 10000, (int)Player.Position.Y - 10000, 20000, 20000);
+                var rect = new Rectangle((int)Player.Position.X - 4000, (int)Player.Position.Y - 4000, 8000, 8000);
 
                 WaterShader.Draw(gameTime, MainGame.SpriteBatchWater);
 

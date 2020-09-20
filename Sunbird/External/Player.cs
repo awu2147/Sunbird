@@ -34,16 +34,16 @@ namespace Sunbird.External
         public Direction Direction { get; set; } = Direction.South;
         public Movement Movement { get; set; } = Movement.Standing;
 
-        private HashSet<Keys> CurrentMovementKeys => new HashSet<Keys>();
+        private HashSet<Keys> CurrentMovementKeys = new HashSet<Keys>();
         private List<Keys> MovementKeyList => new List<Keys>() { Config.North, Config.East, Config.South, Config.West };
-        private List<Movement> MotionBlurConditions => new List<Movement>() { Movement.Walking };
+
+        private List<Movement> MotionBlurConditions = new List<Movement>() { Movement.Walking };
 
         /// <summary>
         /// This must be a multiple of 6.
         /// </summary>
-        public float Speed { get; set; } = 6f;
-
-        private Core.Timer WalkTimer = new Core.Timer();
+        [XmlIgnore]
+        public float Speed { get; set; } = 3f;
 
         public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_North => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_North, Config.North); };
         public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_West => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_West, Config.West); };
@@ -101,10 +101,7 @@ namespace Sunbird.External
                     Direction = Direction.NorthEast;
                     ReconfigureAnimator(4, 4, 0.133f, AnimationState.Loop);
                 }
-                WalkTimer.OnCompleted = () =>
-                {
-                    Position += new Vector2(Speed, -Speed / 2);
-                };
+                Position += new Vector2(Speed, -Speed / 2);
             }
             else if (Peripherals.KeysPressed(Config.North, Config.West))
             {
@@ -114,10 +111,7 @@ namespace Sunbird.External
                     Direction = Direction.NorthWest;
                     ReconfigureAnimator(12, 4, 0.133f, AnimationState.Loop);
                 }
-                WalkTimer.OnCompleted = () =>
-                {
-                    Position += new Vector2(-Speed, -Speed / 2);
-                };
+                Position += new Vector2(-Speed, -Speed / 2);
             }
             else if (Peripherals.KeysPressed(Config.South, Config.East))
             {
@@ -127,10 +121,7 @@ namespace Sunbird.External
                     Direction = Direction.SouthEast;
                     ReconfigureAnimator(4, 4, 0.133f, AnimationState.Loop);
                 }
-                WalkTimer.OnCompleted = () =>
-                {
-                    Position += new Vector2(Speed, Speed / 2);
-                };
+                Position += new Vector2(Speed, Speed / 2);
             }
             else if (Peripherals.KeysPressed(Config.South, Config.West))
             {
@@ -140,10 +131,7 @@ namespace Sunbird.External
                     Direction = Direction.SouthWest;
                     ReconfigureAnimator(12, 4, 0.133f, AnimationState.Loop);
                 }
-                WalkTimer.OnCompleted = () =>
-                {
-                    Position += new Vector2(-Speed, Speed / 2);
-                };
+                Position += new Vector2(-Speed, Speed / 2);
             }
             else if (Peripherals.KeyPressed(Config.North))
             {
@@ -153,10 +141,7 @@ namespace Sunbird.External
                     Direction = Direction.North;
                     ReconfigureAnimator(0, 4, 0.1f, AnimationState.Loop);
                 }
-                WalkTimer.OnCompleted = () =>
-                {
-                    Position += new Vector2(0, -Speed);
-                };
+                Position += new Vector2(0, -Speed);
             }
             else if (Peripherals.KeyPressed(Config.West))
             {
@@ -166,10 +151,7 @@ namespace Sunbird.External
                     Direction = Direction.West;
                     ReconfigureAnimator(12, 4, 0.1f, AnimationState.Loop);
                 }
-                WalkTimer.OnCompleted = () =>
-                {
-                    Position += new Vector2(-Speed, 0);
-                };
+                Position += new Vector2(-Speed, 0);
             }
             else if (Peripherals.KeyPressed(Config.South))
             {
@@ -179,10 +161,7 @@ namespace Sunbird.External
                     Direction = Direction.South;
                     ReconfigureAnimator(8, 4, 0.1f, AnimationState.Loop);
                 }
-                WalkTimer.OnCompleted = () =>
-                {
-                    Position += new Vector2(0, Speed);
-                };
+                Position += new Vector2(0, Speed);
             }
             else if (Peripherals.KeyPressed(Config.East))
             {
@@ -192,36 +171,12 @@ namespace Sunbird.External
                     Direction = Direction.East;
                     ReconfigureAnimator(4, 4, 0.1f, AnimationState.Loop);
                 }
-                WalkTimer.OnCompleted = () =>
-                {
-                    Position += new Vector2(Speed, 0);
-                };
+                Position += new Vector2(Speed, 0);
             }
 
-            WalkTimer.WaitForMilliseconds(gameTime, MainGame.RefreshRate);
+            // For now, offset so that center of player is center of cube.
+            Coords = World.TopFace_PositionToRelativeCoord(Position + new Vector2(36, 18), Altitude); 
             ApplyMotionBlur(MotionBlurConditions);
-            Coords = World.TopFace_PositionToRelativeCoord(Position + new Vector2(36, 18), Altitude); // For now, offset so that center of player is center of cube.
-
-            if (!MovementKeyList.Any(x => Peripherals.currentPressedKeys.Contains(x)))
-            {
-                Movement = Movement.Standing;
-                if (Direction == Direction.North)
-                {
-                    ReconfigureAnimator(0, 1, 0.2f, AnimationState.None);
-                }
-                else if (Direction == Direction.West)
-                {
-                    ReconfigureAnimator(12, 1, 0.2f, AnimationState.None);
-                }
-                else if (Direction == Direction.South)
-                {
-                    ReconfigureAnimator(8, 1, 0.2f, AnimationState.None);
-                }
-                else if (Direction == Direction.East)
-                {
-                    ReconfigureAnimator(4, 1, 0.2f, AnimationState.None);
-                }
-            }
 
             if (Peripherals.KeyTapped(Keys.P))
             {
@@ -233,6 +188,7 @@ namespace Sunbird.External
                 var ns = SpriteSheet.CreateNew(MainGame, "Temp/PirateGirlSheet", 1, 16);
                 ReplaceSpriteSheet(ns);
             }
+            
         }
 
         private void ApplyMotionBlur(List<Movement> movements)
@@ -265,21 +221,7 @@ namespace Sunbird.External
                     {
                         ReconfigureAnimator(12, 1, 0.2f, AnimationState.None);
                     }
-
-                    WalkTimer.OnCompleted = () => { };
                 }
-            }
-        }
-
-        /// <summary>
-        /// It is best to not use this and avoid ending up with a floating point position in the first place.
-        /// </summary>
-        [Obsolete]
-        public void RoundPosition()
-        {
-            if ((int)(Position.Y * 2) % 2 != 0)
-            {
-                Position += new Vector2(0, 0.5f);
             }
         }
 

@@ -67888,6 +67888,89 @@
             </Sprite>
           </Sprite>
           <Sprite>
+            <Sprite xsi:type="Deco">
+              <Animator>
+                <SpriteSheet>
+                  <TexturePath>Decos/1x1/3/TreeBas</TexturePath>
+                  <Rows>2</Rows>
+                  <Columns>3</Columns>
+                </SpriteSheet>
+                <StartFrame>0</StartFrame>
+                <CurrentFrame>0</CurrentFrame>
+                <FramesInLoop>6</FramesInLoop>
+                <FrameCounter>0</FrameCounter>
+                <FrameSpeed>0.133</FrameSpeed>
+                <AnimState>None</AnimState>
+                <Timer>
+                  <TotalElapsedTime>0</TotalElapsedTime>
+                  <IsDone>true</IsDone>
+                </Timer>
+              </Animator>
+              <Alpha>1</Alpha>
+              <Position>
+                <X>1368</X>
+                <Y>-900</Y>
+              </Position>
+              <PositionOffset>
+                <X>0</X>
+                <Y>-72</Y>
+              </PositionOffset>
+              <Coords>
+                <X>-6</X>
+                <Y>44</Y>
+              </Coords>
+              <Altitude>0</Altitude>
+              <DrawPriority>0</DrawPriority>
+              <IsHidden>false</IsHidden>
+              <OccupiedCoords>
+                <item>
+                  <key>
+                    <int>0</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>-6</X>
+                        <Y>44</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+                <item>
+                  <key>
+                    <int>1</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>-6</X>
+                        <Y>44</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+                <item>
+                  <key>
+                    <int>2</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>-6</X>
+                        <Y>44</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+              </OccupiedCoords>
+              <Dimensions>
+                <X>1</X>
+                <Y>1</Y>
+                <Z>3</Z>
+              </Dimensions>
+            </Sprite>
+          </Sprite>
+          <Sprite>
             <Sprite xsi:type="GhostMarker">
               <Animator>
                 <SpriteSheet>
@@ -67908,8 +67991,8 @@
               </Animator>
               <Alpha>0.3</Alpha>
               <Position>
-                <X>36</X>
-                <Y>-18</Y>
+                <X>1116</X>
+                <Y>-558</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
@@ -67917,21 +68000,21 @@
               </PositionOffset>
               <Coords>
                 <X>0</X>
-                <Y>1</Y>
+                <Y>31</Y>
               </Coords>
               <Altitude>0</Altitude>
-              <DrawPriority>1</DrawPriority>
+              <DrawPriority>-1000</DrawPriority>
               <IsHidden>false</IsHidden>
-              <Image xsi:type="Cube">
+              <Image xsi:type="Deco">
                 <Animator>
                   <SpriteSheet>
-                    <TexturePath>Cubes/SandCubeTop</TexturePath>
-                    <Rows>2</Rows>
-                    <Columns>4</Columns>
+                    <TexturePath>Decos/1x1/3/TreePal</TexturePath>
+                    <Rows>1</Rows>
+                    <Columns>2</Columns>
                   </SpriteSheet>
                   <StartFrame>0</StartFrame>
-                  <CurrentFrame>6</CurrentFrame>
-                  <FramesInLoop>8</FramesInLoop>
+                  <CurrentFrame>0</CurrentFrame>
+                  <FramesInLoop>2</FramesInLoop>
                   <FrameCounter>0</FrameCounter>
                   <FrameSpeed>0.133</FrameSpeed>
                   <AnimState>None</AnimState>
@@ -67942,12 +68025,12 @@
                 </Animator>
                 <Alpha>0.3</Alpha>
                 <Position>
-                  <X>36</X>
-                  <Y>-18</Y>
+                  <X>1116</X>
+                  <Y>-558</Y>
                 </Position>
                 <PositionOffset>
                   <X>0</X>
-                  <Y>0</Y>
+                  <Y>-72</Y>
                 </PositionOffset>
                 <Coords>
                   <X>0</X>
@@ -67956,25 +68039,52 @@
                 <Altitude>0</Altitude>
                 <DrawPriority>0</DrawPriority>
                 <IsHidden>false</IsHidden>
-                <ShadowPath>Temp/CubeShadow</ShadowPath>
-                <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
-                <AnimatorBase>
-                  <SpriteSheet>
-                    <TexturePath>Cubes/LightStoneCubeBase</TexturePath>
-                    <Rows>1</Rows>
-                    <Columns>1</Columns>
-                  </SpriteSheet>
-                  <StartFrame>0</StartFrame>
-                  <CurrentFrame>0</CurrentFrame>
-                  <FramesInLoop>1</FramesInLoop>
-                  <FrameCounter>0</FrameCounter>
-                  <FrameSpeed>0.133</FrameSpeed>
-                  <AnimState>None</AnimState>
-                  <Timer>
-                    <TotalElapsedTime>0</TotalElapsedTime>
-                    <IsDone>true</IsDone>
-                  </Timer>
-                </AnimatorBase>
+                <OccupiedCoords>
+                  <item>
+                    <key>
+                      <int>0</int>
+                    </key>
+                    <value>
+                      <ArrayOfCoord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>0</Y>
+                        </Coord>
+                      </ArrayOfCoord>
+                    </value>
+                  </item>
+                  <item>
+                    <key>
+                      <int>1</int>
+                    </key>
+                    <value>
+                      <ArrayOfCoord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>0</Y>
+                        </Coord>
+                      </ArrayOfCoord>
+                    </value>
+                  </item>
+                  <item>
+                    <key>
+                      <int>2</int>
+                    </key>
+                    <value>
+                      <ArrayOfCoord>
+                        <Coord>
+                          <X>0</X>
+                          <Y>0</Y>
+                        </Coord>
+                      </ArrayOfCoord>
+                    </value>
+                  </item>
+                </OccupiedCoords>
+                <Dimensions>
+                  <X>1</X>
+                  <Y>1</Y>
+                  <Z>3</Z>
+                </Dimensions>
               </Image>
               <DrawDefaultMarker>true</DrawDefaultMarker>
             </Sprite>
@@ -72829,6 +72939,10 @@
                 <X>24</X>
                 <Y>24</Y>
               </Coord>
+              <Coord>
+                <X>-6</X>
+                <Y>44</Y>
+              </Coord>
             </ArrayOfCoord>
           </OccupiedCoords>
         </SpriteListOfSprite>
@@ -72861,8 +72975,8 @@
               </Animator>
               <Alpha>1</Alpha>
               <Position>
-                <X>174</X>
-                <Y>99</Y>
+                <X>717</X>
+                <Y>-169.5</Y>
               </Position>
               <PositionOffset>
                 <X>0</X>
@@ -72870,7 +72984,7 @@
               </PositionOffset>
               <Coords>
                 <X>6</X>
-                <Y>-1</Y>
+                <Y>14</Y>
               </Coords>
               <Altitude>1</Altitude>
               <DrawPriority>0</DrawPriority>
@@ -72878,64 +72992,6 @@
               <LightPath>Temp/PlayerLight</LightPath>
               <Direction>South</Direction>
               <Movement>Standing</Movement>
-              <Speed>6</Speed>
-            </Sprite>
-          </Sprite>
-          <Sprite>
-            <Sprite xsi:type="Deco">
-              <Animator>
-                <SpriteSheet>
-                  <TexturePath>Decos/1x1/1/WallRB</TexturePath>
-                  <Rows>2</Rows>
-                  <Columns>3</Columns>
-                </SpriteSheet>
-                <StartFrame>0</StartFrame>
-                <CurrentFrame>0</CurrentFrame>
-                <FramesInLoop>6</FramesInLoop>
-                <FrameCounter>0</FrameCounter>
-                <FrameSpeed>0.133</FrameSpeed>
-                <AnimState>None</AnimState>
-                <Timer>
-                  <TotalElapsedTime>0</TotalElapsedTime>
-                  <IsDone>true</IsDone>
-                </Timer>
-              </Animator>
-              <Alpha>1</Alpha>
-              <Position>
-                <X>108</X>
-                <Y>-18</Y>
-              </Position>
-              <PositionOffset>
-                <X>0</X>
-                <Y>0</Y>
-              </PositionOffset>
-              <Coords>
-                <X>2</X>
-                <Y>1</Y>
-              </Coords>
-              <Altitude>1</Altitude>
-              <DrawPriority>0</DrawPriority>
-              <IsHidden>false</IsHidden>
-              <OccupiedCoords>
-                <item>
-                  <key>
-                    <int>1</int>
-                  </key>
-                  <value>
-                    <ArrayOfCoord>
-                      <Coord>
-                        <X>2</X>
-                        <Y>1</Y>
-                      </Coord>
-                    </ArrayOfCoord>
-                  </value>
-                </item>
-              </OccupiedCoords>
-              <Dimensions>
-                <X>1</X>
-                <Y>1</Y>
-                <Z>1</Z>
-              </Dimensions>
             </Sprite>
           </Sprite>
           <Sprite>
@@ -73175,76 +73231,6 @@
                   <Columns>2</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>1</CurrentFrame>
-                <FramesInLoop>2</FramesInLoop>
-                <FrameCounter>0</FrameCounter>
-                <FrameSpeed>0.133</FrameSpeed>
-                <AnimState>None</AnimState>
-                <Timer>
-                  <TotalElapsedTime>0</TotalElapsedTime>
-                  <IsDone>true</IsDone>
-                </Timer>
-              </Animator>
-              <Alpha>1</Alpha>
-              <Position>
-                <X>144</X>
-                <Y>0</Y>
-              </Position>
-              <PositionOffset>
-                <X>0</X>
-                <Y>-36</Y>
-              </PositionOffset>
-              <Coords>
-                <X>3</X>
-                <Y>1</Y>
-              </Coords>
-              <Altitude>1</Altitude>
-              <DrawPriority>0</DrawPriority>
-              <IsHidden>false</IsHidden>
-              <OccupiedCoords>
-                <item>
-                  <key>
-                    <int>1</int>
-                  </key>
-                  <value>
-                    <ArrayOfCoord>
-                      <Coord>
-                        <X>3</X>
-                        <Y>1</Y>
-                      </Coord>
-                    </ArrayOfCoord>
-                  </value>
-                </item>
-                <item>
-                  <key>
-                    <int>2</int>
-                  </key>
-                  <value>
-                    <ArrayOfCoord>
-                      <Coord>
-                        <X>3</X>
-                        <Y>1</Y>
-                      </Coord>
-                    </ArrayOfCoord>
-                  </value>
-                </item>
-              </OccupiedCoords>
-              <Dimensions>
-                <X>1</X>
-                <Y>1</Y>
-                <Z>2</Z>
-              </Dimensions>
-            </Sprite>
-          </Sprite>
-          <Sprite>
-            <Sprite xsi:type="Deco">
-              <Animator>
-                <SpriteSheet>
-                  <TexturePath>Decos/1x1/2/WoodenBarrel</TexturePath>
-                  <Rows>1</Rows>
-                  <Columns>2</Columns>
-                </SpriteSheet>
-                <StartFrame>0</StartFrame>
                 <CurrentFrame>0</CurrentFrame>
                 <FramesInLoop>2</FramesInLoop>
                 <FrameCounter>0</FrameCounter>
@@ -73373,89 +73359,6 @@
                 <X>1</X>
                 <Y>1</Y>
                 <Z>2</Z>
-              </Dimensions>
-            </Sprite>
-          </Sprite>
-          <Sprite>
-            <Sprite xsi:type="Deco">
-              <Animator>
-                <SpriteSheet>
-                  <TexturePath>Decos/1x1/3/TreePal</TexturePath>
-                  <Rows>1</Rows>
-                  <Columns>2</Columns>
-                </SpriteSheet>
-                <StartFrame>0</StartFrame>
-                <CurrentFrame>1</CurrentFrame>
-                <FramesInLoop>2</FramesInLoop>
-                <FrameCounter>0</FrameCounter>
-                <FrameSpeed>0.133</FrameSpeed>
-                <AnimState>None</AnimState>
-                <Timer>
-                  <TotalElapsedTime>0</TotalElapsedTime>
-                  <IsDone>true</IsDone>
-                </Timer>
-              </Animator>
-              <Alpha>1</Alpha>
-              <Position>
-                <X>108</X>
-                <Y>18</Y>
-              </Position>
-              <PositionOffset>
-                <X>0</X>
-                <Y>-72</Y>
-              </PositionOffset>
-              <Coords>
-                <X>3</X>
-                <Y>0</Y>
-              </Coords>
-              <Altitude>1</Altitude>
-              <DrawPriority>0</DrawPriority>
-              <IsHidden>false</IsHidden>
-              <OccupiedCoords>
-                <item>
-                  <key>
-                    <int>1</int>
-                  </key>
-                  <value>
-                    <ArrayOfCoord>
-                      <Coord>
-                        <X>3</X>
-                        <Y>0</Y>
-                      </Coord>
-                    </ArrayOfCoord>
-                  </value>
-                </item>
-                <item>
-                  <key>
-                    <int>2</int>
-                  </key>
-                  <value>
-                    <ArrayOfCoord>
-                      <Coord>
-                        <X>3</X>
-                        <Y>0</Y>
-                      </Coord>
-                    </ArrayOfCoord>
-                  </value>
-                </item>
-                <item>
-                  <key>
-                    <int>3</int>
-                  </key>
-                  <value>
-                    <ArrayOfCoord>
-                      <Coord>
-                        <X>3</X>
-                        <Y>0</Y>
-                      </Coord>
-                    </ArrayOfCoord>
-                  </value>
-                </item>
-              </OccupiedCoords>
-              <Dimensions>
-                <X>1</X>
-                <Y>1</Y>
-                <Z>3</Z>
               </Dimensions>
             </Sprite>
           </Sprite>
@@ -77657,9 +77560,9 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>15</CurrentFrame>
+                <CurrentFrame>25</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>15</FrameCounter>
+                <FrameCounter>25</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
@@ -78173,9 +78076,9 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>7</CurrentFrame>
+                <CurrentFrame>17</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>7</FrameCounter>
+                <FrameCounter>17</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
@@ -80998,9 +80901,9 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>19</CurrentFrame>
+                <CurrentFrame>29</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>19</FrameCounter>
+                <FrameCounter>29</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
@@ -81081,9 +80984,9 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>27</CurrentFrame>
+                <CurrentFrame>7</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>27</FrameCounter>
+                <FrameCounter>7</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
@@ -81164,9 +81067,9 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>1</CurrentFrame>
+                <CurrentFrame>11</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>1</FrameCounter>
+                <FrameCounter>11</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
@@ -81675,6 +81578,146 @@
               </Dimensions>
             </Sprite>
           </Sprite>
+          <Sprite>
+            <Sprite xsi:type="Deco">
+              <Animator>
+                <SpriteSheet>
+                  <TexturePath>Decos/1x1/1/WallRB</TexturePath>
+                  <Rows>2</Rows>
+                  <Columns>3</Columns>
+                </SpriteSheet>
+                <StartFrame>0</StartFrame>
+                <CurrentFrame>0</CurrentFrame>
+                <FramesInLoop>6</FramesInLoop>
+                <FrameCounter>0</FrameCounter>
+                <FrameSpeed>0.133</FrameSpeed>
+                <AnimState>None</AnimState>
+                <Timer>
+                  <TotalElapsedTime>0</TotalElapsedTime>
+                  <IsDone>true</IsDone>
+                </Timer>
+              </Animator>
+              <Alpha>1</Alpha>
+              <Position>
+                <X>108</X>
+                <Y>-18</Y>
+              </Position>
+              <PositionOffset>
+                <X>0</X>
+                <Y>0</Y>
+              </PositionOffset>
+              <Coords>
+                <X>2</X>
+                <Y>1</Y>
+              </Coords>
+              <Altitude>1</Altitude>
+              <DrawPriority>0</DrawPriority>
+              <IsHidden>false</IsHidden>
+              <OccupiedCoords>
+                <item>
+                  <key>
+                    <int>1</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>2</X>
+                        <Y>1</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+              </OccupiedCoords>
+              <Dimensions>
+                <X>1</X>
+                <Y>1</Y>
+                <Z>1</Z>
+              </Dimensions>
+            </Sprite>
+          </Sprite>
+          <Sprite>
+            <Sprite xsi:type="Deco">
+              <Animator>
+                <SpriteSheet>
+                  <TexturePath>Decos/1x1/3/TreePal</TexturePath>
+                  <Rows>1</Rows>
+                  <Columns>2</Columns>
+                </SpriteSheet>
+                <StartFrame>0</StartFrame>
+                <CurrentFrame>0</CurrentFrame>
+                <FramesInLoop>2</FramesInLoop>
+                <FrameCounter>0</FrameCounter>
+                <FrameSpeed>0.133</FrameSpeed>
+                <AnimState>None</AnimState>
+                <Timer>
+                  <TotalElapsedTime>0</TotalElapsedTime>
+                  <IsDone>true</IsDone>
+                </Timer>
+              </Animator>
+              <Alpha>1</Alpha>
+              <Position>
+                <X>108</X>
+                <Y>18</Y>
+              </Position>
+              <PositionOffset>
+                <X>0</X>
+                <Y>-72</Y>
+              </PositionOffset>
+              <Coords>
+                <X>3</X>
+                <Y>0</Y>
+              </Coords>
+              <Altitude>1</Altitude>
+              <DrawPriority>0</DrawPriority>
+              <IsHidden>false</IsHidden>
+              <OccupiedCoords>
+                <item>
+                  <key>
+                    <int>1</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>3</X>
+                        <Y>0</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+                <item>
+                  <key>
+                    <int>2</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>3</X>
+                        <Y>0</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+                <item>
+                  <key>
+                    <int>3</int>
+                  </key>
+                  <value>
+                    <ArrayOfCoord>
+                      <Coord>
+                        <X>3</X>
+                        <Y>0</Y>
+                      </Coord>
+                    </ArrayOfCoord>
+                  </value>
+                </item>
+              </OccupiedCoords>
+              <Dimensions>
+                <X>1</X>
+                <Y>1</Y>
+                <Z>3</Z>
+              </Dimensions>
+            </Sprite>
+          </Sprite>
           <OccupiedCoords>
             <ArrayOfCoord>
               <Coord>
@@ -81700,10 +81743,6 @@
               <Coord>
                 <X>3</X>
                 <Y>0</Y>
-              </Coord>
-              <Coord>
-                <X>3</X>
-                <Y>1</Y>
               </Coord>
               <Coord>
                 <X>3</X>
@@ -83589,9 +83628,9 @@
                   <Columns>6</Columns>
                 </SpriteSheet>
                 <StartFrame>0</StartFrame>
-                <CurrentFrame>24</CurrentFrame>
+                <CurrentFrame>4</CurrentFrame>
                 <FramesInLoop>30</FramesInLoop>
-                <FrameCounter>24</FrameCounter>
+                <FrameCounter>4</FrameCounter>
                 <FrameSpeed>0.0166</FrameSpeed>
                 <AnimState>Loop</AnimState>
                 <Timer>
@@ -84378,8 +84417,8 @@
     </Animator>
     <Alpha>1</Alpha>
     <Position>
-      <X>174</X>
-      <Y>99</Y>
+      <X>717</X>
+      <Y>-169.5</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
@@ -84387,7 +84426,7 @@
     </PositionOffset>
     <Coords>
       <X>6</X>
-      <Y>-1</Y>
+      <Y>14</Y>
     </Coords>
     <Altitude>1</Altitude>
     <DrawPriority>0</DrawPriority>
@@ -84395,7 +84434,6 @@
     <LightPath>Temp/PlayerLight</LightPath>
     <Direction>South</Direction>
     <Movement>Standing</Movement>
-    <Speed>6</Speed>
   </Player>
   <GhostMarker>
     <Animator>
@@ -84417,8 +84455,8 @@
     </Animator>
     <Alpha>0.3</Alpha>
     <Position>
-      <X>36</X>
-      <Y>-18</Y>
+      <X>1116</X>
+      <Y>-558</Y>
     </Position>
     <PositionOffset>
       <X>0</X>
@@ -84426,21 +84464,21 @@
     </PositionOffset>
     <Coords>
       <X>0</X>
-      <Y>1</Y>
+      <Y>31</Y>
     </Coords>
     <Altitude>0</Altitude>
-    <DrawPriority>1</DrawPriority>
+    <DrawPriority>-1000</DrawPriority>
     <IsHidden>false</IsHidden>
-    <Image xsi:type="Cube">
+    <Image xsi:type="Deco">
       <Animator>
         <SpriteSheet>
-          <TexturePath>Cubes/SandCubeTop</TexturePath>
-          <Rows>2</Rows>
-          <Columns>4</Columns>
+          <TexturePath>Decos/1x1/3/TreePal</TexturePath>
+          <Rows>1</Rows>
+          <Columns>2</Columns>
         </SpriteSheet>
         <StartFrame>0</StartFrame>
-        <CurrentFrame>6</CurrentFrame>
-        <FramesInLoop>8</FramesInLoop>
+        <CurrentFrame>0</CurrentFrame>
+        <FramesInLoop>2</FramesInLoop>
         <FrameCounter>0</FrameCounter>
         <FrameSpeed>0.133</FrameSpeed>
         <AnimState>None</AnimState>
@@ -84451,12 +84489,12 @@
       </Animator>
       <Alpha>0.3</Alpha>
       <Position>
-        <X>36</X>
-        <Y>-18</Y>
+        <X>1116</X>
+        <Y>-558</Y>
       </Position>
       <PositionOffset>
         <X>0</X>
-        <Y>0</Y>
+        <Y>-72</Y>
       </PositionOffset>
       <Coords>
         <X>0</X>
@@ -84465,25 +84503,52 @@
       <Altitude>0</Altitude>
       <DrawPriority>0</DrawPriority>
       <IsHidden>false</IsHidden>
-      <ShadowPath>Temp/CubeShadow</ShadowPath>
-      <AntiShadowPath>Temp/CubeAntiShadow</AntiShadowPath>
-      <AnimatorBase>
-        <SpriteSheet>
-          <TexturePath>Cubes/LightStoneCubeBase</TexturePath>
-          <Rows>1</Rows>
-          <Columns>1</Columns>
-        </SpriteSheet>
-        <StartFrame>0</StartFrame>
-        <CurrentFrame>0</CurrentFrame>
-        <FramesInLoop>1</FramesInLoop>
-        <FrameCounter>0</FrameCounter>
-        <FrameSpeed>0.133</FrameSpeed>
-        <AnimState>None</AnimState>
-        <Timer>
-          <TotalElapsedTime>0</TotalElapsedTime>
-          <IsDone>true</IsDone>
-        </Timer>
-      </AnimatorBase>
+      <OccupiedCoords>
+        <item>
+          <key>
+            <int>0</int>
+          </key>
+          <value>
+            <ArrayOfCoord>
+              <Coord>
+                <X>0</X>
+                <Y>0</Y>
+              </Coord>
+            </ArrayOfCoord>
+          </value>
+        </item>
+        <item>
+          <key>
+            <int>1</int>
+          </key>
+          <value>
+            <ArrayOfCoord>
+              <Coord>
+                <X>0</X>
+                <Y>0</Y>
+              </Coord>
+            </ArrayOfCoord>
+          </value>
+        </item>
+        <item>
+          <key>
+            <int>2</int>
+          </key>
+          <value>
+            <ArrayOfCoord>
+              <Coord>
+                <X>0</X>
+                <Y>0</Y>
+              </Coord>
+            </ArrayOfCoord>
+          </value>
+        </item>
+      </OccupiedCoords>
+      <Dimensions>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>3</Z>
+      </Dimensions>
     </Image>
     <DrawDefaultMarker>true</DrawDefaultMarker>
   </GhostMarker>
@@ -84495,7 +84560,7 @@
         <Columns>4</Columns>
       </SpriteSheet>
       <StartFrame>0</StartFrame>
-      <CurrentFrame>7</CurrentFrame>
+      <CurrentFrame>5</CurrentFrame>
       <FramesInLoop>8</FramesInLoop>
       <FrameCounter>0</FrameCounter>
       <FrameSpeed>0.133</FrameSpeed>
@@ -84542,5 +84607,5 @@
     </AnimatorBase>
   </CubePreview>
   <Authorization>None</Authorization>
-  <BuildMode>_Cube</BuildMode>
+  <BuildMode>_1x1</BuildMode>
 </MapBuilder>
