@@ -42,7 +42,6 @@ namespace Sunbird.External
         /// <summary>
         /// This must be a multiple of 6.
         /// </summary>
-        [XmlIgnore]
         public float Speed { get; set; } = 3f;
 
         public EventHandler<KeyReleasedEventArgs> MovementKeyReleased_North => delegate (object sender, KeyReleasedEventArgs e) { MovementKeyReleased(sender, e, MovementKeyReleased_North, Config.North); };
